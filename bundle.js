@@ -30036,21 +30036,21 @@ Bb;k.WebGLRenderer=pg;k.WebGLUtils=Oh;k.WireframeGeometry=Kc;k.WireframeHelper=f
 
 		var vertices = [
 
-			// (┬▒1, ┬▒1, ┬▒1)
+			// (±1, ±1, ±1)
 			- 1, - 1, - 1,	- 1, - 1, 1,
 			- 1, 1, - 1, - 1, 1, 1,
 			1, - 1, - 1, 1, - 1, 1,
 			1, 1, - 1, 1, 1, 1,
 
-			// (0, ┬▒1/╧å, ┬▒╧å)
+			// (0, ±1/φ, ±φ)
 			 0, - r, - t, 0, - r, t,
 			 0, r, - t, 0, r, t,
 
-			// (┬▒1/╧å, ┬▒╧å, 0)
+			// (±1/φ, ±φ, 0)
 			- r, - t, 0, - r, t, 0,
 			 r, - t, 0, r, t, 0,
 
-			// (┬▒╧å, 0, ┬▒1/╧å)
+			// (±φ, 0, ±1/φ)
 			- t, 0, - r, t, 0, - r,
 			- t, 0, r, t, 0, r
 		];
@@ -38271,7 +38271,7 @@ Bb;k.WebGLRenderer=pg;k.WebGLUtils=Oh;k.WireframeGeometry=Kc;k.WireframeHelper=f
 	 * @author zz85 / http://www.lab4games.net/zz85/blog
 	 *
 	 * Bezier Curves formulas obtained from
-	 * http://en.wikipedia.org/wiki/B├⌐zier_curve
+	 * http://en.wikipedia.org/wiki/Bézier_curve
 	 */
 
 	function CatmullRom( t, p0, p1, p2, p3 ) {
@@ -42452,19 +42452,19 @@ Bb;k.WebGLRenderer=pg;k.WebGLUtils=Oh;k.WireframeGeometry=Kc;k.WireframeHelper=f
 			var coeff = this.coefficients;
 
 			// band 0
-			target.copy( coeff[ 0 ] ).multiplyScalar( 0.886227 ); // ╧Ç * 0.282095
+			target.copy( coeff[ 0 ] ).multiplyScalar( 0.886227 ); // π * 0.282095
 
 			// band 1
-			target.addScale( coeff[ 1 ], 2.0 * 0.511664 * y ); // ( 2 * ╧Ç / 3 ) * 0.488603
+			target.addScale( coeff[ 1 ], 2.0 * 0.511664 * y ); // ( 2 * π / 3 ) * 0.488603
 			target.addScale( coeff[ 2 ], 2.0 * 0.511664 * z );
 			target.addScale( coeff[ 3 ], 2.0 * 0.511664 * x );
 
 			// band 2
-			target.addScale( coeff[ 4 ], 2.0 * 0.429043 * x * y ); // ( ╧Ç / 4 ) * 1.092548
+			target.addScale( coeff[ 4 ], 2.0 * 0.429043 * x * y ); // ( π / 4 ) * 1.092548
 			target.addScale( coeff[ 5 ], 2.0 * 0.429043 * y * z );
-			target.addScale( coeff[ 6 ], 0.743125 * z * z - 0.247708 ); // ( ╧Ç / 4 ) * 0.315392 * 3
+			target.addScale( coeff[ 6 ], 0.743125 * z * z - 0.247708 ); // ( π / 4 ) * 0.315392 * 3
 			target.addScale( coeff[ 7 ], 2.0 * 0.429043 * x * z );
-			target.addScale( coeff[ 8 ], 0.429043 * ( x * x - y * y ) ); // ( ╧Ç / 4 ) * 0.546274
+			target.addScale( coeff[ 8 ], 0.429043 * ( x * x - y * y ) ); // ( π / 4 ) * 0.546274
 
 			return target;
 
@@ -51258,7 +51258,7 @@ var THREE = __importStar(require("three"));
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
-var geometry = new THREE.BoxGeometry(1, 1, 1);
+var geometry = new THREE.PlaneGeometry(1, 1, 1);
 var material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
 var cube = new THREE.Mesh(geometry, material);
 function render() {
@@ -51281,4 +51281,4 @@ function main() {
 }
 main();
 
-},{"three":3}]},{},[4,2,1]);
+},{"three":3}]},{},[4,1,2]);
