@@ -32,8 +32,21 @@ function update() {
   render();
 }
 
+function onDocumentKeyDown(event: any) {
+  var keyCode = event.which;
+  if (keyCode == 87) {  // W.
+    player.coor = ApplyDir(player.coor, player.dir, 1);
+  } else if (keyCode == 65) {  // A.
+    player.dir = DirCC(DirCC(DirCC(player.dir)));
+  } else if (keyCode == 68) {  // D.
+    player.dir = DirCC(player.dir);
+  } else if (keyCode == 83) {  // S.
+    player.coor = ApplyDir(player.coor, player.dir, -1);
+  }
+};
+
 function main() {
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(window.innerWidth, window.innerHeight - 100);
   document.body.appendChild(renderer.domElement);
   
   scene.add(light);
@@ -42,16 +55,17 @@ function main() {
   scene.add(cube);
 
   var map_walkable = [
-    false, false, false, false, false, false,
+    false, false, true, false, false, false,
     false, true, true, true, true, false,
-    false, true, true, true, true, false,
-    false, true, true, true, true, false,
-    false, true, true, true, true, false,
+    false, false, true, false, true, false,
+    false, true, true, false, true, false,
+    false, false, false, false, true, false,
     false, true, true, true, true, false,
     false, true, false, false, true, false,
-    false, false, false, false, false,
+    false, true, true, true, true, false,
+    false, false, false, false, false, false,
   ];
-  var map = new Map(new Grid(map_walkable, 5));
+  var map = new Map(new Grid(map_walkable, 6));
   for (let i = 0; i < map.meshes.length; i++) {
     console.log("mesh " + i);
     scene.add(map.meshes[i]);
@@ -62,17 +76,6 @@ function main() {
 }
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
-function onDocumentKeyDown(event: any) {
-    var keyCode = event.which;
-    if (keyCode == 87) {  // W.
-      player.coor = ApplyDir(player.coor, player.dir, 1);
-    } else if (keyCode == 65) {  // A.
-      player.dir = DirCC(DirCC(DirCC(player.dir)));
-    } else if (keyCode == 68) {  // D.
-      player.dir = DirCC(player.dir);
-    } else if (keyCode == 83) {  // S.
-      player.coor = ApplyDir(player.coor, player.dir, -1);
-    }
-};
+
 
 main();

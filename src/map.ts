@@ -10,7 +10,7 @@ function buildMeshes(walkable: Grid<boolean>): THREE.Mesh[] {
   var meshes: THREE.Mesh[] = [];
   for (let x = 0; x < walkable.width; x++) {
     for (let z = 0; z < walkable.depth; z++) {
-      if (!walkable.get(x - 1, z)) {
+      if (!walkable.get(x, z)) {
         var box = new THREE.Mesh(geometry, material);
         box.position.x = x * TILE_SIZE;
         box.position.z = z * TILE_SIZE;

@@ -1,0 +1,11 @@
+body {
+  background-color: black;
+  color: white;
+}
+
+#dialogue_div div {
+  width: 100%;
+  position: absolute;
+  top: 200;
+  left: 200;
+}

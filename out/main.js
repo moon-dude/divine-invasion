@@ -32,32 +32,6 @@ function update() {
     camera.rotation.y = jlib_1.DirRotation(player.dir);
     render();
 }
-function main() {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-    scene.add(light);
-    light2.position.set(0, 1, 0);
-    scene.add(light2);
-    scene.add(cube);
-    var map_walkable = [
-        false, false, false, false, false, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, false, false, true, false,
-        false, false, false, false, false,
-    ];
-    var map = new map_1.Map(new jlib_1.Grid(map_walkable, 5));
-    for (var i = 0; i < map.meshes.length; i++) {
-        console.log("mesh " + i);
-        scene.add(map.meshes[i]);
-    }
-    // Kick off update loop.
-    update();
-}
-document.addEventListener("keydown", onDocumentKeyDown, false);
 function onDocumentKeyDown(event) {
     var keyCode = event.which;
     if (keyCode == 87) { // W.
@@ -74,4 +48,31 @@ function onDocumentKeyDown(event) {
     }
 }
 ;
+function main() {
+    renderer.setSize(window.innerWidth, window.innerHeight - 100);
+    document.body.appendChild(renderer.domElement);
+    scene.add(light);
+    light2.position.set(0, 1, 0);
+    scene.add(light2);
+    scene.add(cube);
+    var map_walkable = [
+        false, false, true, false, false, false,
+        false, true, true, true, true, false,
+        false, false, true, false, true, false,
+        false, true, true, false, true, false,
+        false, false, false, false, true, false,
+        false, true, true, true, true, false,
+        false, true, false, false, true, false,
+        false, true, true, true, true, false,
+        false, false, false, false, false, false,
+    ];
+    var map = new map_1.Map(new jlib_1.Grid(map_walkable, 6));
+    for (var i = 0; i < map.meshes.length; i++) {
+        console.log("mesh " + i);
+        scene.add(map.meshes[i]);
+    }
+    // Kick off update loop.
+    update();
+}
+document.addEventListener("keydown", onDocumentKeyDown, false);
 main();
