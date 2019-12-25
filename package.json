@@ -1,0 +1,22 @@
+{
+  "name": "divinejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "bundle.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "browserify": "^16.5.0",
+    "three": "^0.111.0"
+  },
+  "dependencies": {
+    "tsify": "^4.0.1",
+    "typescript": "^3.7.4"
+  }
+}
