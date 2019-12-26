@@ -7,7 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "tsc": "tsc -p c:/Users/alpha/dev/divinejs/tsconfig.json --watch",
+    "watch": "watchify out/main.js lib/require.js lib/three.js -o bundle.js"
   },
   "author": "",
   "license": "ISC",

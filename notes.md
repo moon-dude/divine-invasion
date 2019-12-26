@@ -5,5 +5,8 @@ tsc -p c:\Users\alpha\dev\divinejs\tsconfig.json --watch
 
 watchify out/main.js lib/require.js lib/three.js -o bundle.js
 
+npm run-script tsc
+npm run-script watch
 
 https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
+
