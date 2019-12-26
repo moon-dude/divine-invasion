@@ -25,11 +25,16 @@ var npcs: Actor[] = [
   new Actor(new Coor(2, 2)) 
 ];
 
+var dialogue_div = document.getElementById("dialogue_div");
+
 function render() {
 	renderer.render(scene, camera);
 }
 
 function update() {
+  if (!dialogue_div) {
+    return;
+  }
 	requestAnimationFrame(update);
   cube.rotation.x += 0.01;
   cube.rotation.y += 0.01;
@@ -45,6 +50,7 @@ function update() {
   }
   camera.rotation.y += (target_rotation - camera.rotation.y) * 0.2;
 
+  dialogue_div.innerText = "";
   for (let n = 0; n < npcs.length; n++) {
     let npc: Actor = npcs[n];
     let diff_x = player_coor.x - npc.coor.x;
@@ -60,6 +66,10 @@ function update() {
     npc.mesh.position.z = (npc.coor.z + delta_z) * TILE_SIZE;
     
     npc.mesh.rotation.y = camera.rotation.y;
+
+    if (player_coor.x == npc.coor.x && player_coor.z == npc.coor.z) {
+      dialogue_div.innerText = "GUY: Hey";
+    }
   }
 
   render();
@@ -113,7 +123,6 @@ function main() {
   ];
   var map = new Map(new Grid(map_walkable, 6));
   for (let i = 0; i < map.meshes.length; i++) {
-    console.log("mesh " + i);
     scene.add(map.meshes[i]);
   }
 
