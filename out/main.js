@@ -25,7 +25,7 @@ var cube = new THREE.Mesh(geometry, material);
 var player_coor = new jlib_1.Coor(2, -2);
 var player_dir = jlib_1.Dir.S;
 var npcs = [
-    new actor_1.Actor(new jlib_1.Coor(2, 2))
+    new actor_1.Actor("John", new jlib_1.Coor(2, 2), "\"Hey have you seen my Ukobach?\"<br /><button>Yes</button><button>No</button>")
 ];
 var dialogue_div = document.getElementById("dialogue_div");
 function render() {
@@ -64,7 +64,7 @@ function update() {
         npc.mesh.position.z = (npc.coor.z + delta_z) * constants_1.TILE_SIZE;
         npc.mesh.rotation.y = camera.rotation.y;
         if (player_coor.x == npc.coor.x && player_coor.z == npc.coor.z) {
-            dialogue_div.innerText = "GUY: Hey";
+            dialogue_div.innerHTML = npc.dialogue();
         }
     }
     render();

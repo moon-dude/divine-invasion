@@ -11,9 +11,14 @@ var THREE = __importStar(require("three"));
 var geometry = new THREE.PlaneGeometry(2, 3);
 var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 var Actor = /** @class */ (function () {
-    function Actor(coor) {
+    function Actor(name, coor, dialogue) {
+        var _this = this;
+        this.name = name;
         this.coor = coor;
         this.mesh = new THREE.Mesh(geometry, material);
+        this.dialogue = function () {
+            return _this.name + ": " + dialogue;
+        };
     }
     return Actor;
 }());

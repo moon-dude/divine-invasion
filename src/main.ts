@@ -22,7 +22,7 @@ var player_coor: Coor = new Coor(2, -2);
 var player_dir: Dir = Dir.S;
 
 var npcs: Actor[] = [
-  new Actor(new Coor(2, 2)) 
+  new Actor("John", new Coor(2, 2), "\"Hey have you seen my Ukobach?\"<br /><button>Yes</button><button>No</button>") 
 ];
 
 var dialogue_div = document.getElementById("dialogue_div");
@@ -68,7 +68,7 @@ function update() {
     npc.mesh.rotation.y = camera.rotation.y;
 
     if (player_coor.x == npc.coor.x && player_coor.z == npc.coor.z) {
-      dialogue_div.innerText = "GUY: Hey";
+      dialogue_div.innerHTML = npc.dialogue();
     }
   }
 
