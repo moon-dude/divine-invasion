@@ -51357,8 +51357,10 @@ var map_1 = require("./map");
 var constants_1 = require("./constants");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
+var ACTOR_OFFSET_FRONT = .6;
+var ACTOR_OFFSET_SIDE = .4;
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(105, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
 var light = new THREE.AmbientLight(0x888888);
 var light2 = new THREE.PointLight(0xf00f00, 6, 100);
@@ -51377,18 +51379,30 @@ function update() {
     requestAnimationFrame(update);
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
-    camera.position.x = player_coor.x * constants_1.TILE_SIZE;
-    camera.position.z = player_coor.z * constants_1.TILE_SIZE;
-    camera.rotation.y = jlib_1.DirRotation(player_dir);
+    camera.position.x += (player_coor.x * constants_1.TILE_SIZE - camera.position.x) * 0.2;
+    camera.position.z += (player_coor.z * constants_1.TILE_SIZE - camera.position.z) * 0.2;
+    var target_rotation = jlib_1.DirRotation(player_dir);
+    while (target_rotation < camera.rotation.y - Math.PI) {
+        target_rotation += Math.PI * 2;
+    }
+    while (target_rotation > camera.rotation.y + Math.PI + 0.01) {
+        target_rotation -= Math.PI * 2;
+    }
+    camera.rotation.y += (target_rotation - camera.rotation.y) * 0.2;
     for (var n = 0; n < npcs.length; n++) {
         var npc = npcs[n];
-        npc.mesh.position.x = (npc.coor.x + .2) * constants_1.TILE_SIZE;
-        npc.mesh.position.z = (npc.coor.z + .2) * constants_1.TILE_SIZE;
         var diff_x = player_coor.x - npc.coor.x;
         var diff_z = player_coor.z - npc.coor.z;
-        var angle = Math.atan2(diff_x, diff_z);
-        console.log(angle);
-        npc.mesh.rotation.y = angle;
+        console.log("diff x: " + diff_x + ", z: " + diff_z);
+        var delta_x = Math.abs(diff_x) < .1 ?
+            (player_dir == jlib_1.Dir.E ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
+            (diff_x < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
+        var delta_z = Math.abs(diff_z) < .1 ?
+            (player_dir == jlib_1.Dir.S ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
+            (diff_z < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
+        npc.mesh.position.x = (npc.coor.x + delta_x) * constants_1.TILE_SIZE;
+        npc.mesh.position.z = (npc.coor.z + delta_z) * constants_1.TILE_SIZE;
+        npc.mesh.rotation.y = camera.rotation.y;
     }
     render();
 }
