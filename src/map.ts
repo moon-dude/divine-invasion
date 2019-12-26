@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Grid } from './jlib';
-
-export const TILE_SIZE = 4;
+import { TILE_SIZE } from './constants';
 
 const geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE,  TILE_SIZE);
 const material = new THREE.MeshStandardMaterial({ color: 0x0ffff0 });

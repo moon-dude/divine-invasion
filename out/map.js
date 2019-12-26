@@ -9,8 +9,8 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
-exports.TILE_SIZE = 4;
-var geometry = new THREE.BoxGeometry(exports.TILE_SIZE, exports.TILE_SIZE, exports.TILE_SIZE);
+var constants_1 = require("./constants");
+var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
 var material = new THREE.MeshStandardMaterial({ color: 0x0ffff0 });
 function buildMeshes(walkable) {
     var meshes = [];
@@ -18,8 +18,8 @@ function buildMeshes(walkable) {
         for (var z = 0; z < walkable.depth; z++) {
             if (!walkable.get(x, z)) {
                 var box = new THREE.Mesh(geometry, material);
-                box.position.x = x * exports.TILE_SIZE;
-                box.position.z = z * exports.TILE_SIZE;
+                box.position.x = x * constants_1.TILE_SIZE;
+                box.position.z = z * constants_1.TILE_SIZE;
                 meshes.push(box);
             }
         }
