@@ -53,3 +53,4 @@ export class Actor {
     this.mesh.rotation.y = player.camera.rotation.y;
   }
 }
+
