@@ -5,8 +5,8 @@ import { Player } from './player';
 import { TILE_SIZE } from './constants';
 
 
-const ACTOR_OFFSET_FRONT = .2;
-const ACTOR_OFFSET_SIDE = .6;
+const ACTOR_OFFSET_FRONT = 0.3;
+const ACTOR_OFFSET_SIDE = 0.3;
 
 const geometry = new THREE.PlaneGeometry(2, 3);
 const material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
@@ -25,17 +25,30 @@ export class Actor {
   }
 
   update(/* const */player: Player) {
-    let diff_x = player.coor.x - this.coor.x;
-    let diff_z = player.coor.z - this.coor.z;
-    let delta_x = Math.abs(diff_x) < .1 ? 
-      (player.dir == Dir.E ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) : 
-      (diff_x < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
-    let delta_z = Math.abs(diff_z) < .1 ? 
-      (player.dir == Dir.S ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) : 
-      (diff_z < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
+    // Always to the left of the camera.
+    let offset_x = 0;
+    let offset_z = 0;
+    switch (player.dir) {
+      case Dir.W:
+        offset_x = -ACTOR_OFFSET_FRONT;
+        offset_z = ACTOR_OFFSET_SIDE;
+        break;
+      case Dir.E:
+        offset_x = ACTOR_OFFSET_FRONT;
+        offset_z = -ACTOR_OFFSET_SIDE;
+        break;
+      case Dir.N:
+        offset_x = -ACTOR_OFFSET_SIDE;
+        offset_z = -ACTOR_OFFSET_FRONT;
+        break;
+      case Dir.S:
+        offset_x = ACTOR_OFFSET_SIDE;
+        offset_z = ACTOR_OFFSET_FRONT;
+        break;
+    }
 
-    this.mesh.position.x = (this.coor.x + delta_x) * TILE_SIZE;
-    this.mesh.position.z = (this.coor.z + delta_z) * TILE_SIZE;
+    this.mesh.position.x = (this.coor.x + offset_x) * TILE_SIZE;
+    this.mesh.position.z = (this.coor.z + offset_z) * TILE_SIZE;
     
     this.mesh.rotation.y = player.camera.rotation.y;
   }

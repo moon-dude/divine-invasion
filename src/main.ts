@@ -34,6 +34,12 @@ var npcs: Actor[] = [
     new Dialogue("My head hurts..."),
     new Dialogue("Think I'm possessed by a demon?"),
   ]),
+  new Actor("Chloe", new Coor(6, 1), [
+    new Dialogue("Isn't my incubus beautiful?..."),
+  ]),
+  new Actor("Incubus", new Coor(7, 1), [
+    new Dialogue("Hee hee hee..."),
+  ]),
 ];
 
 

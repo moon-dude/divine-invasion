@@ -10,8 +10,10 @@ export class Player {
   movement_locked: boolean = false;
 
   public update() {
-    this.camera.position.x += (this.coor.x * TILE_SIZE - this.camera.position.x) * 0.2;
-    this.camera.position.z += (this.coor.z * TILE_SIZE - this.camera.position.z) * 0.2;
+    const target_x = this.coor.x * TILE_SIZE;
+    const target_z = this.coor.z * TILE_SIZE;
+    this.camera.position.x += (target_x - this.camera.position.x) * 0.2;
+    this.camera.position.z += (target_z - this.camera.position.z) * 0.2;
     let target_rotation = DirRotation(this.dir);
     while (target_rotation < this.camera.rotation.y - Math.PI) {
       target_rotation += Math.PI * 2;

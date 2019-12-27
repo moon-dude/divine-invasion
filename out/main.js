@@ -34,6 +34,12 @@ var npcs = [
         new dialogue_1.Dialogue("My head hurts..."),
         new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
     ]),
+    new actor_1.Actor("Chloe", new jlib_1.Coor(6, 1), [
+        new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
+    ]),
+    new actor_1.Actor("Incubus", new jlib_1.Coor(7, 1), [
+        new dialogue_1.Dialogue("Hee hee hee..."),
+    ]),
 ];
 function render() {
     renderer.render(scene, player.camera);

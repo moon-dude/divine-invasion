@@ -18,8 +18,10 @@ var Player = /** @class */ (function () {
         this.movement_locked = false;
     }
     Player.prototype.update = function () {
-        this.camera.position.x += (this.coor.x * constants_1.TILE_SIZE - this.camera.position.x) * 0.2;
-        this.camera.position.z += (this.coor.z * constants_1.TILE_SIZE - this.camera.position.z) * 0.2;
+        var target_x = this.coor.x * constants_1.TILE_SIZE;
+        var target_z = this.coor.z * constants_1.TILE_SIZE;
+        this.camera.position.x += (target_x - this.camera.position.x) * 0.2;
+        this.camera.position.z += (target_z - this.camera.position.z) * 0.2;
         var target_rotation = jlib_1.DirRotation(this.dir);
         while (target_rotation < this.camera.rotation.y - Math.PI) {
             target_rotation += Math.PI * 2;
