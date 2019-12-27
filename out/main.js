@@ -14,6 +14,7 @@ var actor_1 = require("./actor");
 var dialogue_1 = require("./dialogue");
 var player_1 = require("./player");
 var input_1 = require("./input");
+var flags = new Set();
 var three_div = document.getElementById("three_div");
 var dialogue_div = document.getElementById("dialogue_div");
 var scene = new THREE.Scene();
@@ -30,17 +31,17 @@ var map_walkable = [
     1, 1, 0, 1, 1, 1, 0, 1, 1,
     1, 1, 0, 0, 0, 0, 0, 1, 1,
     1, 1, 1, 1, 1, 1, 0, 1, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 0, 1, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1,
+    1, 0, 1, 0, 0, 0, 0, 0, 1,
+    1, 0, 0, 0, 0, 0, 0, 0, 1,
+    1, 0, 1, 0, 0, 0, 0, 0, 1,
+    1, 1, 1, 1, 0, 1, 0, 1, 1,
+    1, 1, 1, 1, 0, 1, 1, 0, 1,
 ];
 var map = new map_1.Map(new jlib_1.Grid(map_walkable, 9));
 var npcs = [
     new actor_1.Actor("Abel", new jlib_1.Coor(2, 3), [
         new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
-            .set_info("<< Press SPACE to continue >>").lock(),
+            .set_info("<< SPACE: continue >>").lock(),
         new dialogue_1.Dialogue("You're expected in the divination room.").lock(),
         new dialogue_1.Dialogue("You know where that is right?"),
     ]),
@@ -52,7 +53,21 @@ var npcs = [
         new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
     ]),
     new actor_1.Actor("Incubus", new jlib_1.Coor(7, 1), [
-        new dialogue_1.Dialogue("Hee hee hee..."),
+        new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("You are!?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !flags.has('demon_blood'); }),
+    ]),
+    new actor_1.Actor("Daniel", new jlib_1.Coor(6, 5), [
+        new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
+        new dialogue_1.Dialogue("Have you practiced your rites?"),
+    ]),
+    new actor_1.Actor("Eve", new jlib_1.Coor(4, 9), [
+        new dialogue_1.Dialogue("The divination room? It's through here.").lock(),
+        new dialogue_1.Dialogue("Do you have your demon blood?").lock(),
+        new dialogue_1.Dialogue("You don't?").lock(),
+        new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").flag('demon_blood'),
+        new dialogue_1.Dialogue("Go find some demon blood and I'll let you through."),
     ]),
 ];
 function render() {
@@ -68,17 +83,25 @@ function update() {
         var npc = npcs[n];
         npc.update(player);
         if (player.coor.equals(npc.coor)) {
-            if (dialogue_idx < npc.dialogue.length) {
-                var dialogue = npc.dialogue[dialogue_idx];
-                if (dialogue.lock_player) {
-                    player.movement_locked = true;
-                }
-                else {
-                    player.movement_locked = false;
-                }
-                dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
-                    + "\"<br /><em>" + dialogue.info + "</em>";
+            while (dialogue_idx < npc.dialogue.length &&
+                !npc.dialogue[dialogue_idx].trigger_criteria()) {
+                dialogue_idx += 1;
             }
+            if (dialogue_idx >= npc.dialogue.length) {
+                continue;
+            }
+            var dialogue = npc.dialogue[dialogue_idx];
+            if (dialogue.lock_player) {
+                player.movement_locked = true;
+            }
+            else {
+                player.movement_locked = false;
+            }
+            for (var f = 0; f < dialogue.flags.length; f++) {
+                flags.add(dialogue.flags[f]);
+            }
+            dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
+                + "\"<br /><em>" + dialogue.info + "</em>";
         }
     }
     render();

@@ -6,8 +6,13 @@ var Dialogue = /** @class */ (function () {
         this.info = "";
         this.trigger_criteria = function () { return true; };
         this.lock_player = false;
+        this.flags = [];
         this.speech = speech;
     }
+    Dialogue.prototype.flag = function (s) {
+        this.flags.push(s);
+        return this;
+    };
     Dialogue.prototype.lock = function () {
         this.lock_player = true;
         return this;

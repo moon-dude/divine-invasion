@@ -4,9 +4,15 @@ export class Dialogue {
   public info: string = "";
   public trigger_criteria: () => boolean = () => true;
   public lock_player: boolean = false;
+  public flags: string[] = [];
 
   constructor(speech: string) {
     this.speech = speech;
+  }
+
+  public flag(s: string): Dialogue {
+    this.flags.push(s);
+    return this;
   }
 
   public lock(): Dialogue {

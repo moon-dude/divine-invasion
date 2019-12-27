@@ -7,6 +7,8 @@ import { Dialogue } from './dialogue';
 import { Player } from './player';
 import { Input } from './input';
 
+var flags: Set<string> = new Set();
+
 var three_div = document.getElementById("three_div");
 var dialogue_div = document.getElementById("dialogue_div");
 
@@ -30,18 +32,18 @@ var map_walkable = [
   1, 1, 0, 1, 1, 1, 0, 1, 1,
   1, 1, 0, 0, 0, 0, 0, 1, 1,
   1, 1, 1, 1, 1, 1, 0, 1, 1,
-  1, 0, 0, 0, 1, 0, 0, 0, 1,
-  1, 0, 0, 0, 1, 0, 0, 0, 1,
-  1, 0, 0, 0, 1, 0, 0, 0, 1,
-  1, 1, 1, 1, 1, 1, 0, 1, 1,
-  1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 0, 1, 0, 0, 0, 0, 0, 1,
+  1, 0, 0, 0, 0, 0, 0, 0, 1,
+  1, 0, 1, 0, 0, 0, 0, 0, 1,
+  1, 1, 1, 1, 0, 1, 0, 1, 1,
+  1, 1, 1, 1, 0, 1, 1, 0, 1,
 ];
 var map = new Map(new Grid(map_walkable, 9));
 
 var npcs: Actor[] = [
   new Actor("Abel", new Coor(2, 3), [
     new Dialogue("Well, well, it looks like the new recruit is finally awake.")
-      .set_info("<< Press SPACE to continue >>").lock(),
+      .set_info("<< SPACE: continue >>").lock(),
     new Dialogue("You're expected in the divination room.").lock(),
     new Dialogue("You know where that is right?"),
   ]),
@@ -53,7 +55,21 @@ var npcs: Actor[] = [
     new Dialogue("Isn't my incubus beautiful?..."),
   ]),
   new Actor("Incubus", new Coor(7, 1), [
-    new Dialogue("Hee hee hee..."),
+    new Dialogue("Need demon blood?").set_criteria(() => flags.has('demon_blood')).lock(),
+    new Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(() => flags.has('demon_blood')).lock(),
+    new Dialogue("You are!?").set_criteria(() => flags.has('demon_blood')).lock(),
+    new Dialogue("Hee hee hee...").set_criteria(() => !flags.has('demon_blood')),
+  ]),
+  new Actor("Daniel", new Coor(6, 5), [
+    new Dialogue("I can't wait until we start the summoning ritual!"),
+    new Dialogue("Have you practiced your rites?"),
+  ]),
+  new Actor("Eve", new Coor(4, 9), [
+    new Dialogue("The divination room? It's through here.").lock(),
+    new Dialogue("Do you have your demon blood?").lock(),
+    new Dialogue("You don't?").lock(),
+    new Dialogue("Well you'll have to go find demon blood somewhere...").flag('demon_blood'),
+    new Dialogue("Go find some demon blood and I'll let you through."),
   ]),
 ];
 
@@ -74,16 +90,26 @@ function update() {
     npc.update(player);
 
     if (player.coor.equals(npc.coor)) {
-      if (dialogue_idx < npc.dialogue.length) {
-        let dialogue = npc.dialogue[dialogue_idx];
-        if (dialogue.lock_player) {
-          player.movement_locked = true;
-        } else {
-          player.movement_locked = false;
-        }
-        dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
-          + "\"<br /><em>" + dialogue.info + "</em>";
+      while (dialogue_idx < npc.dialogue.length && 
+              !npc.dialogue[dialogue_idx].trigger_criteria()) {
+        dialogue_idx += 1;
       }
+      if (dialogue_idx >= npc.dialogue.length) {
+        continue;
+      }
+      let dialogue = npc.dialogue[dialogue_idx];
+      if (dialogue.lock_player) {
+        player.movement_locked = true;
+      } else {
+        player.movement_locked = false;
+      }
+
+      for (let f = 0; f < dialogue.flags.length; f++) {
+        flags.add(dialogue.flags[f]);
+      }
+      
+      dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
+        + "\"<br /><em>" + dialogue.info + "</em>";
     }
   }
 
