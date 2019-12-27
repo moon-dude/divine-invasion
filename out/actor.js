@@ -15,14 +15,17 @@ var ACTOR_OFFSET_SIDE = 0.3;
 var geometry = new THREE.PlaneGeometry(2, 3);
 var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 var Actor = /** @class */ (function () {
-    function Actor(name, coor, dialogue) {
+    function Actor(name, dialogue) {
         this.is_blocking = false;
         this.name = name;
-        this.coor = coor;
+        this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
         this.dialogue = dialogue;
     }
     Actor.prototype.update = function (/* const */ player) {
+        if (this.coor == null) {
+            return;
+        }
         // Always to the left of the camera.
         var offset_x = 0;
         var offset_z = 0;

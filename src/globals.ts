@@ -1,0 +1,1 @@
+export var flags: Set<string> = new Set();

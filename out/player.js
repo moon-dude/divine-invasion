@@ -37,7 +37,7 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+        if (map.walkable.get(move_coor.x, move_coor.z) == "1") {
             return false;
         }
         // Reorient towards npcs if going backwards.

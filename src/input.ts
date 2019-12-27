@@ -1,6 +1,6 @@
 import { Player } from "./player";
 import { ApplyDir, DirCW } from "./jlib";
-import { Map } from "./map";
+import { TileMap } from "./map";
 import { Actor } from "./actor";
 
 
@@ -17,7 +17,7 @@ export class InputResult {
 }
 
 export class Input {
-  public check(event: any, player: Player, map: Map, npcs: Actor[]): InputResult {
+  public check(event: any, player: Player, map: TileMap, npcs: Actor[]): InputResult {
     var keyCode = event.which;
     let moved = false;
     let turned = false;

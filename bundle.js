@@ -51262,14 +51262,17 @@ var ACTOR_OFFSET_SIDE = 0.3;
 var geometry = new THREE.PlaneGeometry(2, 3);
 var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 var Actor = /** @class */ (function () {
-    function Actor(name, coor, dialogue) {
+    function Actor(name, dialogue) {
         this.is_blocking = false;
         this.name = name;
-        this.coor = coor;
+        this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
         this.dialogue = dialogue;
     }
     Actor.prototype.update = function (/* const */ player) {
+        if (this.coor == null) {
+            return;
+        }
         // Always to the left of the camera.
         var offset_x = 0;
         var offset_z = 0;
@@ -51299,12 +51302,94 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./constants":5,"./jlib":8,"three":3}],5:[function(require,module,exports){
+},{"./constants":5,"./jlib":11,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
 },{}],6:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var jlib_1 = require("../../jlib");
+var actor_1 = require("../../actor");
+var dialogue_1 = require("../../dialogue");
+var globals_1 = require("../../globals");
+var map_1 = require("../../map");
+var map_walkable = "1111111111" +
+    "1001001CI1" +
+    "11A1101101" +
+    "1100B00001" +
+    "1111111101" +
+    "1D00000001" +
+    "1DE1G111F1" +
+    "1110000101" +
+    "1111111101";
+exports.level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
+var npc_map = new Map([
+    [
+        "A", new actor_1.Actor("Abel", [
+            new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+                .set_info("<< SPACE: continue >>").lock(),
+            new dialogue_1.Dialogue("You're expected in the divination room.").lock(),
+            new dialogue_1.Dialogue("You know where that is right?"),
+        ])
+    ],
+    ["B", new actor_1.Actor("Beth", [
+            new dialogue_1.Dialogue("My head hurts..."),
+            new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
+        ])],
+    ["C", new actor_1.Actor("Chloe", [
+            new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
+        ])],
+    ["I", new actor_1.Actor("Incubus", [
+            new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You are!?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
+                .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
+                .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< Recieved demon blood! >>").flag("has_demon_blood"),
+            new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
+        ])],
+    ["D", new actor_1.Actor("Daniel", [
+            new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
+            new dialogue_1.Dialogue("Have you practiced your rites?"),
+        ])],
+    ["E", new actor_1.Actor("Eve", [
+            new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
+            new dialogue_1.Dialogue("Do you have your demon blood?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).flag('demon_blood'),
+            new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }),
+            new dialogue_1.Dialogue("I see you have found some demon blood!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Now before you pass, you'll have to smear it over yourself.").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< You smear demon blood all over yourself >>").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Ha ha, wow you actually did it!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You sure smell now, haha!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
+        ])],
+    ["F", new actor_1.Actor("Frederick", [
+            new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+        ])],
+    ["G", new actor_1.Actor("George", [
+            new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
+        ])],
+    ["H", new actor_1.Actor("Harold", [
+            new dialogue_1.Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+        ])],
+]);
+exports.level1_actors = [];
+npc_map.forEach(function (actor, key, _) {
+    for (var x = 0; x < exports.level1_map.walkable.width; x++) {
+        for (var z = 0; z < exports.level1_map.walkable.width; z++) {
+            if (key == exports.level1_map.walkable.get(x, z)) {
+                actor.coor = new jlib_1.Coor(x, z);
+                exports.level1_actors.push(actor);
+            }
+        }
+    }
+});
+
+},{"../../actor":4,"../../dialogue":7,"../../globals":9,"../../jlib":11,"../../map":13}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /// These are stored in a list in each actor.
@@ -51341,7 +51426,63 @@ var Dialogue = /** @class */ (function () {
 }());
 exports.Dialogue = Dialogue;
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
+"use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var THREE = __importStar(require("three"));
+var input_1 = require("./input");
+var player_1 = require("./player");
+var world_1 = require("./world");
+var level1_1 = require("./data/levels/level1");
+var Game = /** @class */ (function () {
+    function Game(three_div, dialogue_div) {
+        // meta.
+        this.input = new input_1.Input();
+        this.player = new player_1.Player();
+        // rendering.
+        this.scene = new THREE.Scene;
+        this.renderer = new THREE.WebGLRenderer();
+        this.three_div = three_div;
+        this.dialogue_div = dialogue_div;
+        this.world = new world_1.World(this.scene, level1_1.level1_map, level1_1.level1_actors);
+        this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
+        three_div.appendChild(this.renderer.domElement);
+    }
+    Game.prototype.render = function () {
+        this.renderer.render(this.scene, this.player.camera);
+    };
+    Game.prototype.update = function () {
+        this.player.update();
+        this.dialogue_div.innerText = "";
+        this.world.update(this.player, this.dialogue_div);
+        this.render();
+    };
+    Game.prototype.key_down = function (event) {
+        var result = this.input.check(event, this.player, this.world.map, this.world.actors);
+        if (result.moved) {
+            this.world.dialogue_idx = 0;
+        }
+        if (result.actioned) {
+            this.world.dialogue_idx += 1;
+        }
+    };
+    return Game;
+}());
+exports.Game = Game;
+
+},{"./data/levels/level1":6,"./input":10,"./player":14,"./world":15,"three":3}],9:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.flags = new Set();
+
+},{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -51382,7 +51523,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],8:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -51395,6 +51536,13 @@ var Grid = /** @class */ (function () {
     Grid.prototype.get = function (x, z) {
         return this.values[z * this.width + x];
     };
+    Grid.from_string = function (s, width) {
+        var result = [];
+        for (var c = 0; c < s.length; c++) {
+            result.push(s[c]);
+        }
+        return new Grid(result, width);
+    };
     return Grid;
 }());
 exports.Grid = Grid;
@@ -51404,7 +51552,7 @@ var Coor = /** @class */ (function () {
         this.z = z;
     }
     Coor.prototype.equals = function (other) {
-        return this.x == other.x && this.z == other.z;
+        return other != null && this.x == other.x && this.z == other.z;
     };
     return Coor;
 }());
@@ -51456,175 +51604,36 @@ function DirCW(dir) {
 }
 exports.DirCW = DirCW;
 
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var THREE = __importStar(require("three"));
-var map_1 = require("./map");
-var jlib_1 = require("./jlib");
-var actor_1 = require("./actor");
-var dialogue_1 = require("./dialogue");
-var player_1 = require("./player");
-var input_1 = require("./input");
-var flags = new Set();
+var game_1 = require("./game");
+var game = null;
 var three_div = document.getElementById("three_div");
 var dialogue_div = document.getElementById("dialogue_div");
-var scene = new THREE.Scene();
-var renderer = new THREE.WebGLRenderer();
-var input = new input_1.Input();
-var light = new THREE.AmbientLight(0x888888);
-var light2 = new THREE.PointLight(0xf00f00, 6, 100);
-var player = new player_1.Player();
-var dialogue_idx = 0;
-var map_walkable = [
-    1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 1, 0, 1, 1, 1, 0, 1, 1,
-    1, 1, 0, 0, 0, 0, 0, 1, 1,
-    1, 1, 1, 1, 1, 1, 0, 1, 1,
-    1, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 0, 0, 0, 0, 0, 0, 0, 1,
-    1, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 0, 1, 1, 0, 1,
-    1, 0, 0, 0, 0, 0, 1, 0, 1,
-    1, 0, 1, 0, 1, 0, 1, 0, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1,
-];
-var map = new map_1.Map(new jlib_1.Grid(map_walkable, 9));
-var npcs = [
-    new actor_1.Actor("Abel", new jlib_1.Coor(2, 3), [
-        new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
-            .set_info("<< SPACE: continue >>").lock(),
-        new dialogue_1.Dialogue("You're expected in the divination room.").lock(),
-        new dialogue_1.Dialogue("You know where that is right?"),
-    ]),
-    new actor_1.Actor("Beth", new jlib_1.Coor(4, 4), [
-        new dialogue_1.Dialogue("My head hurts..."),
-        new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
-    ]),
-    new actor_1.Actor("Chloe", new jlib_1.Coor(6, 1), [
-        new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
-    ]),
-    new actor_1.Actor("Incubus", new jlib_1.Coor(7, 1), [
-        new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("You are!?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
-            .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
-            .set_criteria(function () { return flags.has('demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("<< Recieved demon blood! >>").flag("has_demon_blood"),
-        new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !flags.has('demon_blood'); }),
-    ]),
-    new actor_1.Actor("Daniel", new jlib_1.Coor(6, 5), [
-        new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
-        new dialogue_1.Dialogue("Have you practiced your rites?"),
-    ]),
-    new actor_1.Actor("Eve", new jlib_1.Coor(4, 9), [
-        new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !flags.has('has_demon_blood'); }).lock().set_actor_block(true),
-        new dialogue_1.Dialogue("Do you have your demon blood?").set_criteria(function () { return !flags.has('has_demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("You don't?").set_criteria(function () { return !flags.has('has_demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !flags.has('has_demon_blood'); }).flag('demon_blood'),
-        new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !flags.has('has_demon_blood'); }),
-        new dialogue_1.Dialogue("I see you have found some demon blood!").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("Now before you pass, you'll have to smear it over yourself.").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("<< You smear demon blood all over yourself >>").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("Ha ha, wow you actually did it!").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
-        new dialogue_1.Dialogue("You sure smell now, haha!").set_criteria(function () { return flags.has('has_demon_blood'); }).set_actor_block(false),
-    ]),
-    new actor_1.Actor("Frederick", new jlib_1.Coor(7, 9), [
-        new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
-    ]),
-    new actor_1.Actor("George", new jlib_1.Coor(1, 6), [
-        new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
-    ]),
-    new actor_1.Actor("Harold", new jlib_1.Coor(1, 8), [
-        new dialogue_1.Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
-    ]),
-];
-function render() {
-    renderer.render(scene, player.camera);
+if (!three_div) {
+    throw new Error("no three_div");
 }
-function update() {
-    if (!dialogue_div) {
-        return;
-    }
-    player.update();
-    dialogue_div.innerText = "";
-    for (var n = 0; n < npcs.length; n++) {
-        var npc = npcs[n];
-        npc.update(player);
-        if (!player.coor.equals(npc.coor)) {
-            continue;
-        }
-        var dialogue = npc.dialogue[dialogue_idx];
-        var meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
-        while (dialogue_idx < npc.dialogue.length && !meets_criteria) {
-            dialogue_idx += 1;
-            dialogue = npc.dialogue[dialogue_idx];
-            meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
-        }
-        if (!meets_criteria) {
-            if (npc.is_blocking) {
-                player.move(-1, map, npcs);
-            }
-            continue;
-        }
-        if (dialogue.lock_player) {
-            player.movement_locked = true;
-        }
-        else {
-            player.movement_locked = false;
-        }
-        npc.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : npc.is_blocking;
-        for (var f = 0; f < dialogue.flags.length; f++) {
-            flags.add(dialogue.flags[f]);
-        }
-        dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
-            + "\"<br /><em>" + dialogue.info + "</em>";
-    }
-    render();
-    requestAnimationFrame(update);
+else if (!dialogue_div) {
+    throw new Error("no dialogue_div");
+}
+else {
+    game = new game_1.Game(three_div, dialogue_div);
 }
 function onDocumentKeyDown(event) {
-    var result = input.check(event, player, map, npcs);
-    if (result.moved) {
-        dialogue_idx = 0;
-    }
-    if (result.actioned) {
-        dialogue_idx += 1;
-    }
+    var _a;
+    (_a = game) === null || _a === void 0 ? void 0 : _a.key_down(event);
 }
-function main() {
-    if (!three_div) {
-        return;
-    }
-    renderer.setSize(window.innerWidth, window.innerHeight - 100);
-    three_div.appendChild(renderer.domElement);
-    scene.add(light);
-    light2.position.set(0, 1, 0);
-    scene.add(light2);
-    var id = "";
-    for (id in npcs) {
-        scene.add(npcs[id].mesh);
-    }
-    for (var i = 0; i < map.meshes.length; i++) {
-        scene.add(map.meshes[i]);
-    }
-    document.addEventListener("keydown", onDocumentKeyDown, false);
-    // Kick off update loop.
-    update();
+document.addEventListener("keydown", onDocumentKeyDown, false);
+function update() {
+    var _a;
+    (_a = game) === null || _a === void 0 ? void 0 : _a.update();
+    requestAnimationFrame(update);
 }
-main();
+// Kick off update loop.
+update();
 
-},{"./actor":4,"./dialogue":6,"./input":7,"./jlib":8,"./map":10,"./player":11,"three":3}],10:[function(require,module,exports){
+},{"./game":8}],13:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51643,7 +51652,7 @@ function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
-            if (walkable.get(x, z) == 1) {
+            if (walkable.get(x, z) == "1") {
                 var box = new THREE.Mesh(geometry, material);
                 box.position.x = x * constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
@@ -51653,8 +51662,8 @@ function buildMeshes(walkable) {
     }
     return meshes;
 }
-var Map = /** @class */ (function () {
-    function Map(walkable) {
+var TileMap = /** @class */ (function () {
+    function TileMap(walkable) {
         this.walkable = walkable;
         var visited = [];
         while (visited.length < this.walkable.count) {
@@ -51663,11 +51672,11 @@ var Map = /** @class */ (function () {
         this.visited = new jlib_1.Grid(visited, this.walkable.width);
         this.meshes = buildMeshes(this.walkable);
     }
-    return Map;
+    return TileMap;
 }());
-exports.Map = Map;
+exports.TileMap = TileMap;
 
-},{"./constants":5,"./jlib":8,"three":3}],11:[function(require,module,exports){
+},{"./constants":5,"./jlib":11,"three":3}],14:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51707,7 +51716,7 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+        if (map.walkable.get(move_coor.x, move_coor.z) == "1") {
             return false;
         }
         // Reorient towards npcs if going backwards.
@@ -51739,4 +51748,68 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./constants":5,"./jlib":8,"three":3}]},{},[9,1,2]);
+},{"./constants":5,"./jlib":11,"three":3}],15:[function(require,module,exports){
+"use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var THREE = __importStar(require("three"));
+var globals_1 = require("./globals");
+var World = /** @class */ (function () {
+    function World(scene, map, actors) {
+        this.dialogue_idx = 0;
+        this.map = map;
+        this.actors = actors;
+        this.ambient_light = new THREE.AmbientLight();
+        scene.add(this.ambient_light);
+        for (var i = 0; i < this.actors.length; i++) {
+            scene.add(this.actors[i].mesh);
+        }
+        for (var i = 0; i < this.map.meshes.length; i++) {
+            scene.add(this.map.meshes[i]);
+        }
+    }
+    World.prototype.update = function (player, dialogue_div) {
+        for (var i = 0; i < this.actors.length; i++) {
+            var actor = this.actors[i];
+            actor.update(player);
+            if (!player.coor.equals(actor.coor)) {
+                continue;
+            }
+            var dialogue = actor.dialogue[this.dialogue_idx];
+            var meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
+            while (this.dialogue_idx < actor.dialogue.length && !meets_criteria) {
+                this.dialogue_idx += 1;
+                dialogue = actor.dialogue[this.dialogue_idx];
+                meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
+            }
+            if (!meets_criteria) {
+                if (actor.is_blocking) {
+                    player.move(-1, this.map, this.actors);
+                }
+                continue;
+            }
+            if (dialogue.lock_player) {
+                player.movement_locked = true;
+            }
+            else {
+                player.movement_locked = false;
+            }
+            actor.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : actor.is_blocking;
+            for (var f = 0; f < dialogue.flags.length; f++) {
+                globals_1.flags.add(dialogue.flags[f]);
+            }
+            dialogue_div.innerHTML = actor.name + ": <br />\"" + dialogue.speech
+                + "\"<br /><em>" + dialogue.info + "</em>";
+        }
+    };
+    return World;
+}());
+exports.World = World;
+
+},{"./globals":9,"three":3}]},{},[12,1,2]);

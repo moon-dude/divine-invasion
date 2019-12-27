@@ -16,7 +16,7 @@ function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
-            if (walkable.get(x, z) == 1) {
+            if (walkable.get(x, z) == "1") {
                 var box = new THREE.Mesh(geometry, material);
                 box.position.x = x * constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
@@ -26,8 +26,8 @@ function buildMeshes(walkable) {
     }
     return meshes;
 }
-var Map = /** @class */ (function () {
-    function Map(walkable) {
+var TileMap = /** @class */ (function () {
+    function TileMap(walkable) {
         this.walkable = walkable;
         var visited = [];
         while (visited.length < this.walkable.count) {
@@ -36,6 +36,6 @@ var Map = /** @class */ (function () {
         this.visited = new jlib_1.Grid(visited, this.walkable.width);
         this.meshes = buildMeshes(this.walkable);
     }
-    return Map;
+    return TileMap;
 }());
-exports.Map = Map;
+exports.TileMap = TileMap;

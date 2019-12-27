@@ -10,6 +10,13 @@ var Grid = /** @class */ (function () {
     Grid.prototype.get = function (x, z) {
         return this.values[z * this.width + x];
     };
+    Grid.from_string = function (s, width) {
+        var result = [];
+        for (var c = 0; c < s.length; c++) {
+            result.push(s[c]);
+        }
+        return new Grid(result, width);
+    };
     return Grid;
 }());
 exports.Grid = Grid;
@@ -19,7 +26,7 @@ var Coor = /** @class */ (function () {
         this.z = z;
     }
     Coor.prototype.equals = function (other) {
-        return this.x == other.x && this.z == other.z;
+        return other != null && this.x == other.x && this.z == other.z;
     };
     return Coor;
 }());

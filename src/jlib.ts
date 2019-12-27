@@ -14,6 +14,14 @@ export class Grid<T> {
   get(x: number, z: number) {
     return this.values[z * this.width + x];
   }
+
+  static from_string(s: string, width: number): Grid<string> {
+    let result = [];
+    for (let c = 0; c < s.length; c++) {
+      result.push(s[c]);
+    }
+    return new Grid<string>(result, width);
+  }
 }
 
 export class Coor {
@@ -25,8 +33,8 @@ export class Coor {
     this.z = z;
   }
 
-  equals(other: Coor): boolean {
-    return this.x == other.x && this.z == other.z;
+  equals(other: Coor | null): boolean {
+    return other != null && this.x == other.x && this.z == other.z;
   }
 }
 

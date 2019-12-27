@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
 import { TILE_SIZE } from './constants';
-import { Map } from './map';
+import { TileMap } from './map';
 import { Actor } from './actor';
 
 export class Player {
@@ -27,12 +27,12 @@ export class Player {
   }
 
   /// Returns true on a successful move.
-  move(steps: number, map: Map, npcs: Actor[]): boolean {
+  move(steps: number, map: TileMap, npcs: Actor[]): boolean {
     if (this.movement_locked) {
       return false;
     }
     let move_coor = ApplyDir(this.coor, this.dir, steps);
-    if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+    if (map.walkable.get(move_coor.x, move_coor.z) == "1") {
       return false;
     }
     // Reorient towards npcs if going backwards.

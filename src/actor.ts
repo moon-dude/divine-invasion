@@ -13,19 +13,22 @@ const material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 
 export class Actor {
   public name: string;
-  public coor: Coor;
+  public coor: Coor | null;
   public mesh: THREE.Mesh;
   public dialogue: Dialogue[];
   public is_blocking: boolean = false;
 
-  constructor(name: string, coor: Coor, dialogue: Dialogue[]) {
+  constructor(name: string, dialogue: Dialogue[]) {
     this.name = name;
-    this.coor = coor;
+    this.coor = null;
     this.mesh = new THREE.Mesh(geometry, material);
     this.dialogue = dialogue;
   }
 
   update(/* const */player: Player) {
+    if (this.coor == null) {
+      return;
+    }
     // Always to the left of the camera.
     let offset_x = 0;
     let offset_z = 0;
