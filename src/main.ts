@@ -35,8 +35,10 @@ var map_walkable = [
   1, 0, 1, 0, 0, 0, 0, 0, 1,
   1, 0, 0, 0, 0, 0, 0, 0, 1,
   1, 0, 1, 0, 0, 0, 0, 0, 1,
-  1, 1, 1, 1, 0, 1, 0, 1, 1,
   1, 1, 1, 1, 0, 1, 1, 0, 1,
+  1, 0, 0, 0, 0, 0, 1, 0, 1,
+  1, 0, 1, 0, 1, 0, 1, 0, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1,
 ];
 var map = new Map(new Grid(map_walkable, 9));
 
@@ -58,6 +60,10 @@ var npcs: Actor[] = [
     new Dialogue("Need demon blood?").set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("You are!?").set_criteria(() => flags.has('demon_blood')).lock(),
+    new Dialogue("<< You attacked Incubus and damaged it! >>")
+      .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
+      .set_criteria(() => flags.has('demon_blood')).lock(),
+    new Dialogue("<< Recieved demon blood! >>").flag("has_demon_blood"),
     new Dialogue("Hee hee hee...").set_criteria(() => !flags.has('demon_blood')),
   ]),
   new Actor("Daniel", new Coor(6, 5), [
@@ -65,14 +71,18 @@ var npcs: Actor[] = [
     new Dialogue("Have you practiced your rites?"),
   ]),
   new Actor("Eve", new Coor(4, 9), [
-    new Dialogue("The divination room? It's through here.").lock(),
-    new Dialogue("Do you have your demon blood?").lock(),
-    new Dialogue("You don't?").lock(),
-    new Dialogue("Well you'll have to go find demon blood somewhere...").flag('demon_blood'),
-    new Dialogue("Go find some demon blood and I'll let you through."),
+    new Dialogue("The divination room? It's through here.").set_criteria(() => !flags.has('has_demon_blood')).lock().set_actor_block(true),
+    new Dialogue("Do you have your demon blood?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
+    new Dialogue("You don't?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
+    new Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(() => !flags.has('has_demon_blood')).flag('demon_blood'),
+    new Dialogue("Go find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')),
+    new Dialogue("I see you have found some demon blood!").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("Now before you pass, you'll have to smear it over yourself.").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("<< You smear demon blood all over yourself >>").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("Ha ha, wow you actually did it!").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("You sure smell now, haha!").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
   ]),
 ];
-
 
 function render() {
 	renderer.render(scene, player.camera);
@@ -89,28 +99,35 @@ function update() {
     let npc: Actor = npcs[n];
     npc.update(player);
 
-    if (player.coor.equals(npc.coor)) {
-      while (dialogue_idx < npc.dialogue.length && 
-              !npc.dialogue[dialogue_idx].trigger_criteria()) {
-        dialogue_idx += 1;
-      }
-      if (dialogue_idx >= npc.dialogue.length) {
-        continue;
-      }
-      let dialogue = npc.dialogue[dialogue_idx];
-      if (dialogue.lock_player) {
-        player.movement_locked = true;
-      } else {
-        player.movement_locked = false;
-      }
-
-      for (let f = 0; f < dialogue.flags.length; f++) {
-        flags.add(dialogue.flags[f]);
-      }
-      
-      dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
-        + "\"<br /><em>" + dialogue.info + "</em>";
+    if (!player.coor.equals(npc.coor)) {
+      continue;
     }
+    let dialogue = npc.dialogue[dialogue_idx];
+    let meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
+    while (dialogue_idx < npc.dialogue.length && !meets_criteria) {
+      dialogue_idx += 1;
+      dialogue = npc.dialogue[dialogue_idx];
+      meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
+    }
+    if (!meets_criteria) {
+      if (npc.is_blocking) {
+        player.move(-1, map);
+      }
+      continue;
+    }
+    if (dialogue.lock_player) {
+      player.movement_locked = true;
+    } else {
+      player.movement_locked = false;
+    }
+    npc.is_blocking = dialogue.actor_block ? dialogue.actor_block : npc.is_blocking;
+
+    for (let f = 0; f < dialogue.flags.length; f++) {
+      flags.add(dialogue.flags[f]);
+    }
+    
+    dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
+      + "\"<br /><em>" + dialogue.info + "</em>";
   }
 
   render();

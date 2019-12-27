@@ -7,6 +7,7 @@ var Dialogue = /** @class */ (function () {
         this.trigger_criteria = function () { return true; };
         this.lock_player = false;
         this.flags = [];
+        this.actor_block = undefined;
         this.speech = speech;
     }
     Dialogue.prototype.flag = function (s) {
@@ -19,6 +20,10 @@ var Dialogue = /** @class */ (function () {
     };
     Dialogue.prototype.set_info = function (val) {
         this.info = val;
+        return this;
+    };
+    Dialogue.prototype.set_actor_block = function (val) {
+        this.actor_block = val;
         return this;
     };
     Dialogue.prototype.set_criteria = function (trigger_criteria) {

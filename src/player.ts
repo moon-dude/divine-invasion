@@ -1,6 +1,7 @@
 import * as THREE from 'three';
-import { Coor, Dir, DirRotation } from './jlib';
+import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
 import { TILE_SIZE } from './constants';
+import { Map } from './map';
 
 export class Player {
   coor: Coor = new Coor(1, 1);
@@ -22,5 +23,31 @@ export class Player {
       target_rotation -= Math.PI * 2;
     }
     this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
+  }
+
+  /// Returns true on a successful move.
+  move(steps: number, map: Map): boolean {
+    if (this.movement_locked) {
+      return false;
+    }
+    let move_coor = ApplyDir(this.coor, this.dir, steps);
+    if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+      return false;
+    }
+    this.coor = move_coor;
+    return true;
+  }
+  
+  /// Returns true on a successful turn.
+  turn(cw: boolean) {
+    if (this.movement_locked) {
+      return false;
+    }
+    if (cw) {
+      this.dir = DirCW(this.dir);
+    } else {
+      this.dir = DirCW(DirCW(DirCW(this.dir)));
+    }
+    return true;
   }
 }

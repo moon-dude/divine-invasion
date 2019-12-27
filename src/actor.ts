@@ -16,6 +16,7 @@ export class Actor {
   public coor: Coor;
   public mesh: THREE.Mesh;
   public dialogue: Dialogue[];
+  public is_blocking: boolean = false;
 
   constructor(name: string, coor: Coor, dialogue: Dialogue[]) {
     this.name = name;

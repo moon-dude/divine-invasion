@@ -51263,6 +51263,7 @@ var geometry = new THREE.PlaneGeometry(2, 3);
 var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 var Actor = /** @class */ (function () {
     function Actor(name, coor, dialogue) {
+        this.is_blocking = false;
         this.name = name;
         this.coor = coor;
         this.mesh = new THREE.Mesh(geometry, material);
@@ -51313,6 +51314,7 @@ var Dialogue = /** @class */ (function () {
         this.trigger_criteria = function () { return true; };
         this.lock_player = false;
         this.flags = [];
+        this.actor_block = undefined;
         this.speech = speech;
     }
     Dialogue.prototype.flag = function (s) {
@@ -51327,6 +51329,10 @@ var Dialogue = /** @class */ (function () {
         this.info = val;
         return this;
     };
+    Dialogue.prototype.set_actor_block = function (val) {
+        this.actor_block = val;
+        return this;
+    };
     Dialogue.prototype.set_criteria = function (trigger_criteria) {
         this.trigger_criteria = trigger_criteria;
         return this;
@@ -51338,32 +51344,6 @@ exports.Dialogue = Dialogue;
 },{}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var jlib_1 = require("./jlib");
-/// Returns true on a successful move.
-function move(player, steps, map) {
-    if (player.movement_locked) {
-        return false;
-    }
-    var move_coor = jlib_1.ApplyDir(player.coor, player.dir, steps);
-    if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
-        return false;
-    }
-    player.coor = move_coor;
-    return true;
-}
-/// Returns true on a successful turn.
-function turn(player, cw) {
-    if (player.movement_locked) {
-        return false;
-    }
-    if (cw) {
-        player.dir = jlib_1.DirCW(player.dir);
-    }
-    else {
-        player.dir = jlib_1.DirCW(jlib_1.DirCW(jlib_1.DirCW(player.dir)));
-    }
-    return true;
-}
 var InputResult = /** @class */ (function () {
     function InputResult(moved, turned, actioned) {
         this.moved = moved;
@@ -51382,16 +51362,16 @@ var Input = /** @class */ (function () {
         var turned = false;
         var actioned = false;
         if (keyCode == 87) { // W.
-            moved = move(player, 1, map);
+            moved = player.move(1, map);
         }
         else if (keyCode == 65) { // A.
-            turned = turn(player, false);
+            turned = player.turn(false);
         }
         else if (keyCode == 68) { // D.
-            turned = turn(player, true);
+            turned = player.turn(true);
         }
         else if (keyCode == 83) { // S.
-            moved = move(player, -1, map);
+            moved = player.move(-1, map);
         }
         else if (keyCode == 32) { // Space.
             actioned = true;
@@ -51402,7 +51382,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{"./jlib":8}],8:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -51513,8 +51493,10 @@ var map_walkable = [
     1, 0, 1, 0, 0, 0, 0, 0, 1,
     1, 0, 0, 0, 0, 0, 0, 0, 1,
     1, 0, 1, 0, 0, 0, 0, 0, 1,
-    1, 1, 1, 1, 0, 1, 0, 1, 1,
     1, 1, 1, 1, 0, 1, 1, 0, 1,
+    1, 0, 0, 0, 0, 0, 1, 0, 1,
+    1, 0, 1, 0, 1, 0, 1, 0, 1,
+    1, 1, 1, 1, 1, 1, 1, 1, 1,
 ];
 var map = new map_1.Map(new jlib_1.Grid(map_walkable, 9));
 var npcs = [
@@ -51535,6 +51517,10 @@ var npcs = [
         new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
         new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
         new dialogue_1.Dialogue("You are!?").set_criteria(function () { return flags.has('demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
+            .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
+            .set_criteria(function () { return flags.has('demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("<< Recieved demon blood! >>").flag("has_demon_blood"),
         new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !flags.has('demon_blood'); }),
     ]),
     new actor_1.Actor("Daniel", new jlib_1.Coor(6, 5), [
@@ -51542,11 +51528,16 @@ var npcs = [
         new dialogue_1.Dialogue("Have you practiced your rites?"),
     ]),
     new actor_1.Actor("Eve", new jlib_1.Coor(4, 9), [
-        new dialogue_1.Dialogue("The divination room? It's through here.").lock(),
-        new dialogue_1.Dialogue("Do you have your demon blood?").lock(),
-        new dialogue_1.Dialogue("You don't?").lock(),
-        new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").flag('demon_blood'),
-        new dialogue_1.Dialogue("Go find some demon blood and I'll let you through."),
+        new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !flags.has('has_demon_blood'); }).lock().set_actor_block(true),
+        new dialogue_1.Dialogue("Do you have your demon blood?").set_criteria(function () { return !flags.has('has_demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("You don't?").set_criteria(function () { return !flags.has('has_demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !flags.has('has_demon_blood'); }).flag('demon_blood'),
+        new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !flags.has('has_demon_blood'); }),
+        new dialogue_1.Dialogue("I see you have found some demon blood!").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("Now before you pass, you'll have to smear it over yourself.").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("<< You smear demon blood all over yourself >>").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("Ha ha, wow you actually did it!").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
+        new dialogue_1.Dialogue("You sure smell now, haha!").set_criteria(function () { return flags.has('has_demon_blood'); }).set_actor_block(false),
     ]),
 ];
 function render() {
@@ -51561,27 +51552,34 @@ function update() {
     for (var n = 0; n < npcs.length; n++) {
         var npc = npcs[n];
         npc.update(player);
-        if (player.coor.equals(npc.coor)) {
-            while (dialogue_idx < npc.dialogue.length &&
-                !npc.dialogue[dialogue_idx].trigger_criteria()) {
-                dialogue_idx += 1;
-            }
-            if (dialogue_idx >= npc.dialogue.length) {
-                continue;
-            }
-            var dialogue = npc.dialogue[dialogue_idx];
-            if (dialogue.lock_player) {
-                player.movement_locked = true;
-            }
-            else {
-                player.movement_locked = false;
-            }
-            for (var f = 0; f < dialogue.flags.length; f++) {
-                flags.add(dialogue.flags[f]);
-            }
-            dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
-                + "\"<br /><em>" + dialogue.info + "</em>";
+        if (!player.coor.equals(npc.coor)) {
+            continue;
         }
+        var dialogue = npc.dialogue[dialogue_idx];
+        var meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
+        while (dialogue_idx < npc.dialogue.length && !meets_criteria) {
+            dialogue_idx += 1;
+            dialogue = npc.dialogue[dialogue_idx];
+            meets_criteria = dialogue ? dialogue.trigger_criteria() : false;
+        }
+        if (!meets_criteria) {
+            if (npc.is_blocking) {
+                player.move(-1, map);
+            }
+            continue;
+        }
+        if (dialogue.lock_player) {
+            player.movement_locked = true;
+        }
+        else {
+            player.movement_locked = false;
+        }
+        npc.is_blocking = dialogue.actor_block ? dialogue.actor_block : npc.is_blocking;
+        for (var f = 0; f < dialogue.flags.length; f++) {
+            flags.add(dialogue.flags[f]);
+        }
+        dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
+            + "\"<br /><em>" + dialogue.info + "</em>";
     }
     render();
     requestAnimationFrame(update);
@@ -51693,6 +51691,31 @@ var Player = /** @class */ (function () {
             target_rotation -= Math.PI * 2;
         }
         this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
+    };
+    /// Returns true on a successful move.
+    Player.prototype.move = function (steps, map) {
+        if (this.movement_locked) {
+            return false;
+        }
+        var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
+        if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+            return false;
+        }
+        this.coor = move_coor;
+        return true;
+    };
+    /// Returns true on a successful turn.
+    Player.prototype.turn = function (cw) {
+        if (this.movement_locked) {
+            return false;
+        }
+        if (cw) {
+            this.dir = jlib_1.DirCW(this.dir);
+        }
+        else {
+            this.dir = jlib_1.DirCW(jlib_1.DirCW(jlib_1.DirCW(this.dir)));
+        }
+        return true;
     };
     return Player;
 }());

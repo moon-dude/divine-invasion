@@ -5,6 +5,7 @@ export class Dialogue {
   public trigger_criteria: () => boolean = () => true;
   public lock_player: boolean = false;
   public flags: string[] = [];
+  public actor_block?: boolean = undefined;
 
   constructor(speech: string) {
     this.speech = speech;
@@ -22,6 +23,11 @@ export class Dialogue {
 
   public set_info(val: string): Dialogue {
     this.info = val;
+    return this;
+  }
+
+  public set_actor_block(val: boolean): Dialogue {
+    this.actor_block = val;
     return this;
   }
 

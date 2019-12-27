@@ -16,6 +16,7 @@ var geometry = new THREE.PlaneGeometry(2, 3);
 var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 var Actor = /** @class */ (function () {
     function Actor(name, coor, dialogue) {
+        this.is_blocking = false;
         this.name = name;
         this.coor = coor;
         this.mesh = new THREE.Mesh(geometry, material);

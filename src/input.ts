@@ -2,31 +2,6 @@ import { Player } from "./player";
 import { ApplyDir, DirCW } from "./jlib";
 import { Map } from "./map";
 
-/// Returns true on a successful move.
-function move(player: Player, steps: number, map: Map): boolean {
-  if (player.movement_locked) {
-    return false;
-  }
-  let move_coor = ApplyDir(player.coor, player.dir, steps);
-  if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
-    return false;
-  }
-  player.coor = move_coor;
-  return true;
-}
-
-/// Returns true on a successful turn.
-function turn(player: Player, cw: boolean) {
-  if (player.movement_locked) {
-    return false;
-  }
-  if (cw) {
-    player.dir = DirCW(player.dir);
-  } else {
-    player.dir = DirCW(DirCW(DirCW(player.dir)));
-  }
-  return true;
-}
 
 export class InputResult {
   moved: boolean;
@@ -47,13 +22,13 @@ export class Input {
     let turned = false;
     let actioned = false;
     if (keyCode == 87) {  // W.
-      moved = move(player, 1, map);
+      moved = player.move(1, map);
     } else if (keyCode == 65) {  // A.
-      turned = turn(player, false);
+      turned = player.turn(false);
     } else if (keyCode == 68) {  // D.
-      turned = turn(player, true);
+      turned = player.turn(true);
     } else if (keyCode == 83) {  // S.
-      moved = move(player, -1, map);
+      moved = player.move(-1, map);
     } else if (keyCode == 32) {  // Space.
       actioned = true;
     }

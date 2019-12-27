@@ -31,6 +31,31 @@ var Player = /** @class */ (function () {
         }
         this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
     };
+    /// Returns true on a successful move.
+    Player.prototype.move = function (steps, map) {
+        if (this.movement_locked) {
+            return false;
+        }
+        var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
+        if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+            return false;
+        }
+        this.coor = move_coor;
+        return true;
+    };
+    /// Returns true on a successful turn.
+    Player.prototype.turn = function (cw) {
+        if (this.movement_locked) {
+            return false;
+        }
+        if (cw) {
+            this.dir = jlib_1.DirCW(this.dir);
+        }
+        else {
+            this.dir = jlib_1.DirCW(jlib_1.DirCW(jlib_1.DirCW(this.dir)));
+        }
+        return true;
+    };
     return Player;
 }());
 exports.Player = Player;
