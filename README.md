@@ -6,6 +6,8 @@ Made with Typescript + ThreeJS
 ## Play at HEAD
 https://moon-dude.github.io/divine-invasion/
 
+Controls: WASD to move, Space to skip dialogue.
+
 ## Run locally
 
 Run both these commands in parallel:
