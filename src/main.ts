@@ -1,7 +1,6 @@
 import * as THREE from 'three';
 import { Map } from './map';
-import { TILE_SIZE } from './constants';
-import { Grid, Coor, Dir, DirRotation } from './jlib';
+import { Grid, Coor } from './jlib';
 import { Actor } from './actor';
 import { Dialogue } from './dialogue';
 import { Player } from './player';
@@ -82,6 +81,15 @@ var npcs: Actor[] = [
     new Dialogue("Ha ha, wow you actually did it!").set_criteria(() => flags.has('has_demon_blood')).lock(),
     new Dialogue("You sure smell now, haha!").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
   ]),
+  new Actor("Frederick", new Coor(7, 9), [
+    new Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+  ]),
+  new Actor("George", new Coor(1, 6), [
+    new Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
+  ]),
+  new Actor("Harold", new Coor(1, 8), [
+    new Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+  ]),
 ];
 
 function render() {
@@ -111,7 +119,7 @@ function update() {
     }
     if (!meets_criteria) {
       if (npc.is_blocking) {
-        player.move(-1, map);
+        player.move(-1, map, npcs);
       }
       continue;
     }
@@ -120,7 +128,7 @@ function update() {
     } else {
       player.movement_locked = false;
     }
-    npc.is_blocking = dialogue.actor_block ? dialogue.actor_block : npc.is_blocking;
+    npc.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : npc.is_blocking;
 
     for (let f = 0; f < dialogue.flags.length; f++) {
       flags.add(dialogue.flags[f]);
@@ -135,7 +143,7 @@ function update() {
 }
 
 function onDocumentKeyDown(event: any) {
-  const result = input.check(event, player, map);
+  const result = input.check(event, player, map, npcs);
   if (result.moved) {
     dialogue_idx = 0;
   }

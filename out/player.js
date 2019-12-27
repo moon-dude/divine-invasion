@@ -32,13 +32,22 @@ var Player = /** @class */ (function () {
         this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
     };
     /// Returns true on a successful move.
-    Player.prototype.move = function (steps, map) {
+    Player.prototype.move = function (steps, map, npcs) {
         if (this.movement_locked) {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
         if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
             return false;
+        }
+        // Reorient towards npcs if going backwards.
+        if (steps < 0) {
+            for (var n = 0; n < npcs.length; n++) {
+                if (move_coor.equals(npcs[n].coor)) {
+                    this.dir = jlib_1.DirCW(jlib_1.DirCW(this.dir));
+                    break;
+                }
+            }
         }
         this.coor = move_coor;
         return true;

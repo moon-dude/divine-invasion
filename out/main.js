@@ -80,6 +80,15 @@ var npcs = [
         new dialogue_1.Dialogue("Ha ha, wow you actually did it!").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
         new dialogue_1.Dialogue("You sure smell now, haha!").set_criteria(function () { return flags.has('has_demon_blood'); }).set_actor_block(false),
     ]),
+    new actor_1.Actor("Frederick", new jlib_1.Coor(7, 9), [
+        new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+    ]),
+    new actor_1.Actor("George", new jlib_1.Coor(1, 6), [
+        new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
+    ]),
+    new actor_1.Actor("Harold", new jlib_1.Coor(1, 8), [
+        new dialogue_1.Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+    ]),
 ];
 function render() {
     renderer.render(scene, player.camera);
@@ -105,7 +114,7 @@ function update() {
         }
         if (!meets_criteria) {
             if (npc.is_blocking) {
-                player.move(-1, map);
+                player.move(-1, map, npcs);
             }
             continue;
         }
@@ -115,7 +124,7 @@ function update() {
         else {
             player.movement_locked = false;
         }
-        npc.is_blocking = dialogue.actor_block ? dialogue.actor_block : npc.is_blocking;
+        npc.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : npc.is_blocking;
         for (var f = 0; f < dialogue.flags.length; f++) {
             flags.add(dialogue.flags[f]);
         }
@@ -126,7 +135,7 @@ function update() {
     requestAnimationFrame(update);
 }
 function onDocumentKeyDown(event) {
-    var result = input.check(event, player, map);
+    var result = input.check(event, player, map, npcs);
     if (result.moved) {
         dialogue_idx = 0;
     }

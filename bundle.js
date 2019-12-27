@@ -51356,13 +51356,13 @@ exports.InputResult = InputResult;
 var Input = /** @class */ (function () {
     function Input() {
     }
-    Input.prototype.check = function (event, player, map) {
+    Input.prototype.check = function (event, player, map, npcs) {
         var keyCode = event.which;
         var moved = false;
         var turned = false;
         var actioned = false;
         if (keyCode == 87) { // W.
-            moved = player.move(1, map);
+            moved = player.move(1, map, npcs);
         }
         else if (keyCode == 65) { // A.
             turned = player.turn(false);
@@ -51371,7 +51371,7 @@ var Input = /** @class */ (function () {
             turned = player.turn(true);
         }
         else if (keyCode == 83) { // S.
-            moved = player.move(-1, map);
+            moved = player.move(-1, map, npcs);
         }
         else if (keyCode == 32) { // Space.
             actioned = true;
@@ -51539,6 +51539,15 @@ var npcs = [
         new dialogue_1.Dialogue("Ha ha, wow you actually did it!").set_criteria(function () { return flags.has('has_demon_blood'); }).lock(),
         new dialogue_1.Dialogue("You sure smell now, haha!").set_criteria(function () { return flags.has('has_demon_blood'); }).set_actor_block(false),
     ]),
+    new actor_1.Actor("Frederick", new jlib_1.Coor(7, 9), [
+        new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+    ]),
+    new actor_1.Actor("George", new jlib_1.Coor(1, 6), [
+        new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
+    ]),
+    new actor_1.Actor("Harold", new jlib_1.Coor(1, 8), [
+        new dialogue_1.Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+    ]),
 ];
 function render() {
     renderer.render(scene, player.camera);
@@ -51564,7 +51573,7 @@ function update() {
         }
         if (!meets_criteria) {
             if (npc.is_blocking) {
-                player.move(-1, map);
+                player.move(-1, map, npcs);
             }
             continue;
         }
@@ -51574,7 +51583,7 @@ function update() {
         else {
             player.movement_locked = false;
         }
-        npc.is_blocking = dialogue.actor_block ? dialogue.actor_block : npc.is_blocking;
+        npc.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : npc.is_blocking;
         for (var f = 0; f < dialogue.flags.length; f++) {
             flags.add(dialogue.flags[f]);
         }
@@ -51585,7 +51594,7 @@ function update() {
     requestAnimationFrame(update);
 }
 function onDocumentKeyDown(event) {
-    var result = input.check(event, player, map);
+    var result = input.check(event, player, map, npcs);
     if (result.moved) {
         dialogue_idx = 0;
     }
@@ -51693,13 +51702,22 @@ var Player = /** @class */ (function () {
         this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
     };
     /// Returns true on a successful move.
-    Player.prototype.move = function (steps, map) {
+    Player.prototype.move = function (steps, map, npcs) {
         if (this.movement_locked) {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
         if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
             return false;
+        }
+        // Reorient towards npcs if going backwards.
+        if (steps < 0) {
+            for (var n = 0; n < npcs.length; n++) {
+                if (move_coor.equals(npcs[n].coor)) {
+                    this.dir = jlib_1.DirCW(jlib_1.DirCW(this.dir));
+                    break;
+                }
+            }
         }
         this.coor = move_coor;
         return true;

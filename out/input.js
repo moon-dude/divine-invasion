@@ -12,13 +12,13 @@ exports.InputResult = InputResult;
 var Input = /** @class */ (function () {
     function Input() {
     }
-    Input.prototype.check = function (event, player, map) {
+    Input.prototype.check = function (event, player, map, npcs) {
         var keyCode = event.which;
         var moved = false;
         var turned = false;
         var actioned = false;
         if (keyCode == 87) { // W.
-            moved = player.move(1, map);
+            moved = player.move(1, map, npcs);
         }
         else if (keyCode == 65) { // A.
             turned = player.turn(false);
@@ -27,7 +27,7 @@ var Input = /** @class */ (function () {
             turned = player.turn(true);
         }
         else if (keyCode == 83) { // S.
-            moved = player.move(-1, map);
+            moved = player.move(-1, map, npcs);
         }
         else if (keyCode == 32) { // Space.
             actioned = true;

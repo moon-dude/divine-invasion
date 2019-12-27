@@ -1,6 +1,7 @@
 import { Player } from "./player";
 import { ApplyDir, DirCW } from "./jlib";
 import { Map } from "./map";
+import { Actor } from "./actor";
 
 
 export class InputResult {
@@ -16,19 +17,19 @@ export class InputResult {
 }
 
 export class Input {
-  public check(event: any, player: Player, map: Map): InputResult {
+  public check(event: any, player: Player, map: Map, npcs: Actor[]): InputResult {
     var keyCode = event.which;
     let moved = false;
     let turned = false;
     let actioned = false;
     if (keyCode == 87) {  // W.
-      moved = player.move(1, map);
+      moved = player.move(1, map, npcs);
     } else if (keyCode == 65) {  // A.
       turned = player.turn(false);
     } else if (keyCode == 68) {  // D.
       turned = player.turn(true);
     } else if (keyCode == 83) {  // S.
-      moved = player.move(-1, map);
+      moved = player.move(-1, map, npcs);
     } else if (keyCode == 32) {  // Space.
       actioned = true;
     }
