@@ -2,11 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 /// Returns true on a successful move.
-function move(player, steps) {
+function move(player, steps, map) {
     if (player.movement_locked) {
         return false;
     }
-    player.coor = jlib_1.ApplyDir(player.coor, player.dir, steps);
+    var move_coor = jlib_1.ApplyDir(player.coor, player.dir, steps);
+    if (map.walkable.get(move_coor.x, move_coor.z) == 1) {
+        return false;
+    }
+    player.coor = move_coor;
     return true;
 }
 /// Returns true on a successful turn.
@@ -34,13 +38,13 @@ exports.InputResult = InputResult;
 var Input = /** @class */ (function () {
     function Input() {
     }
-    Input.prototype.check = function (event, player) {
+    Input.prototype.check = function (event, player, map) {
         var keyCode = event.which;
         var moved = false;
         var turned = false;
         var actioned = false;
         if (keyCode == 87) { // W.
-            moved = move(player, 1);
+            moved = move(player, 1, map);
         }
         else if (keyCode == 65) { // A.
             turned = turn(player, false);
@@ -49,7 +53,7 @@ var Input = /** @class */ (function () {
             turned = turn(player, true);
         }
         else if (keyCode == 83) { // S.
-            moved = move(player, -1);
+            moved = move(player, -1, map);
         }
         else if (keyCode == 32) { // Space.
             actioned = true;

@@ -23,6 +23,21 @@ var player = new Player();
 
 var dialogue_idx = 0;
 
+var map_walkable = [
+  1, 1, 1, 1, 1, 1, 1, 1, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 1, 0, 1, 1, 1, 0, 1, 1,
+  1, 1, 0, 0, 0, 0, 0, 1, 1,
+  1, 1, 1, 1, 1, 1, 0, 1, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 0, 0, 0, 1, 0, 0, 0, 1,
+  1, 1, 1, 1, 1, 1, 0, 1, 1,
+  1, 1, 1, 1, 1, 1, 1, 1, 1,
+];
+var map = new Map(new Grid(map_walkable, 9));
+
 var npcs: Actor[] = [
   new Actor("Abel", new Coor(2, 3), [
     new Dialogue("Well, well, it looks like the new recruit is finally awake.")
@@ -77,7 +92,7 @@ function update() {
 }
 
 function onDocumentKeyDown(event: any) {
-  const result = input.check(event, player);
+  const result = input.check(event, player, map);
   if (result.moved) {
     dialogue_idx = 0;
   }
@@ -101,20 +116,6 @@ function main() {
     scene.add(npcs[id].mesh);
   }
 
-  var map_walkable = [
-    1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 1, 0, 1, 1, 1, 0, 1, 1,
-    1, 1, 0, 0, 0, 0, 0, 1, 1,
-    1, 1, 1, 1, 1, 1, 0, 1, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 0, 0, 0, 1, 0, 0, 0, 1,
-    1, 1, 1, 1, 1, 1, 0, 1, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1,
-  ];
-  var map = new Map(new Grid(map_walkable, 9));
   for (let i = 0; i < map.meshes.length; i++) {
     scene.add(map.meshes[i]);
   }
