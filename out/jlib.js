@@ -18,6 +18,9 @@ var Coor = /** @class */ (function () {
         this.x = x;
         this.z = z;
     }
+    Coor.prototype.equals = function (other) {
+        return this.x == other.x && this.z == other.z;
+    };
     return Coor;
 }());
 exports.Coor = Coor;
@@ -54,7 +57,7 @@ function DirRotation(dir) {
     }
 }
 exports.DirRotation = DirRotation;
-function DirCC(dir) {
+function DirCW(dir) {
     switch (dir) {
         case Dir.W:
             return Dir.N;
@@ -66,4 +69,4 @@ function DirCC(dir) {
             return Dir.W;
     }
 }
-exports.DirCC = DirCC;
+exports.DirCW = DirCW;

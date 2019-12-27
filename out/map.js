@@ -16,7 +16,7 @@ function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
-            if (!walkable.get(x, z)) {
+            if (walkable.get(x, z) == 1) {
                 var box = new THREE.Mesh(geometry, material);
                 box.position.x = x * constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;

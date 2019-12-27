@@ -9,119 +9,102 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var map_1 = require("./map");
-var constants_1 = require("./constants");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
-var ACTOR_OFFSET_FRONT = .6;
-var ACTOR_OFFSET_SIDE = .4;
+var dialogue_1 = require("./dialogue");
+var player_1 = require("./player");
+var input_1 = require("./input");
+var three_div = document.getElementById("three_div");
+var dialogue_div = document.getElementById("dialogue_div");
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(105, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
+var input = new input_1.Input();
 var light = new THREE.AmbientLight(0x888888);
 var light2 = new THREE.PointLight(0xf00f00, 6, 100);
-var geometry = new THREE.PlaneGeometry(1, 1, 1);
-var material = new THREE.MeshStandardMaterial({ color: 0x0ffff0 });
-var cube = new THREE.Mesh(geometry, material);
-var player_coor = new jlib_1.Coor(2, -2);
-var player_dir = jlib_1.Dir.S;
+var player = new player_1.Player();
+var dialogue_idx = 0;
 var npcs = [
-    new actor_1.Actor("John", new jlib_1.Coor(2, 2), "\"Hey have you seen my Ukobach?\"<br /><button>Yes</button><button>No</button>")
+    new actor_1.Actor("Abel", new jlib_1.Coor(2, 3), [
+        new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+            .set_info("<< Press SPACE to continue >>").lock(),
+        new dialogue_1.Dialogue("You're expected in the divination room.").lock(),
+        new dialogue_1.Dialogue("You know where that is right?"),
+    ]),
+    new actor_1.Actor("Beth", new jlib_1.Coor(4, 4), [
+        new dialogue_1.Dialogue("My head hurts..."),
+        new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
+    ]),
 ];
-var dialogue_div = document.getElementById("dialogue_div");
 function render() {
-    renderer.render(scene, camera);
+    renderer.render(scene, player.camera);
 }
 function update() {
     if (!dialogue_div) {
         return;
     }
-    requestAnimationFrame(update);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    camera.position.x += (player_coor.x * constants_1.TILE_SIZE - camera.position.x) * 0.2;
-    camera.position.z += (player_coor.z * constants_1.TILE_SIZE - camera.position.z) * 0.2;
-    var target_rotation = jlib_1.DirRotation(player_dir);
-    while (target_rotation < camera.rotation.y - Math.PI) {
-        target_rotation += Math.PI * 2;
-    }
-    while (target_rotation > camera.rotation.y + Math.PI + 0.01) {
-        target_rotation -= Math.PI * 2;
-    }
-    camera.rotation.y += (target_rotation - camera.rotation.y) * 0.2;
+    player.update();
     dialogue_div.innerText = "";
     for (var n = 0; n < npcs.length; n++) {
         var npc = npcs[n];
-        var diff_x = player_coor.x - npc.coor.x;
-        var diff_z = player_coor.z - npc.coor.z;
-        console.log("diff x: " + diff_x + ", z: " + diff_z);
-        var delta_x = Math.abs(diff_x) < .1 ?
-            (player_dir == jlib_1.Dir.E ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
-            (diff_x < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
-        var delta_z = Math.abs(diff_z) < .1 ?
-            (player_dir == jlib_1.Dir.S ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
-            (diff_z < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
-        npc.mesh.position.x = (npc.coor.x + delta_x) * constants_1.TILE_SIZE;
-        npc.mesh.position.z = (npc.coor.z + delta_z) * constants_1.TILE_SIZE;
-        npc.mesh.rotation.y = camera.rotation.y;
-        if (player_coor.x == npc.coor.x && player_coor.z == npc.coor.z) {
-            dialogue_div.innerHTML = npc.dialogue();
+        npc.update(player);
+        if (player.coor.equals(npc.coor)) {
+            if (dialogue_idx < npc.dialogue.length) {
+                var dialogue = npc.dialogue[dialogue_idx];
+                if (dialogue.lock_player) {
+                    player.movement_locked = true;
+                }
+                else {
+                    player.movement_locked = false;
+                }
+                dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
+                    + "\"<br /><em>" + dialogue.info + "</em>";
+            }
         }
     }
     render();
+    requestAnimationFrame(update);
 }
 function onDocumentKeyDown(event) {
-    var keyCode = event.which;
-    if (keyCode == 87) { // W.
-        player_coor = jlib_1.ApplyDir(player_coor, player_dir, 1);
+    var result = input.check(event, player);
+    if (result.moved) {
+        dialogue_idx = 0;
     }
-    else if (keyCode == 65) { // A.
-        player_dir = jlib_1.DirCC(jlib_1.DirCC(jlib_1.DirCC(player_dir)));
-    }
-    else if (keyCode == 68) { // D.
-        player_dir = jlib_1.DirCC(player_dir);
-    }
-    else if (keyCode == 83) { // S.
-        player_coor = jlib_1.ApplyDir(player_coor, player_dir, -1);
+    if (result.actioned) {
+        dialogue_idx += 1;
     }
 }
-;
 function main() {
+    if (!three_div) {
+        return;
+    }
     renderer.setSize(window.innerWidth, window.innerHeight - 100);
-    document.body.appendChild(renderer.domElement);
+    three_div.appendChild(renderer.domElement);
     scene.add(light);
     light2.position.set(0, 1, 0);
     scene.add(light2);
-    scene.add(cube);
     var id = "";
     for (id in npcs) {
         scene.add(npcs[id].mesh);
     }
-    // var map_walkable = [
-    //   false, false, true, false, false, false,
-    //   false, true, true, true, true, false,
-    //   false, false, true, false, true, false,
-    //   false, true, true, false, true, false,
-    //   false, false, false, false, true, false,
-    //   false, true, true, true, true, false,
-    //   false, true, false, false, true, false,
-    //   false, true, true, true, true, false,
-    //   false, false, false, false, false, false,
-    // ];
     var map_walkable = [
-        false, false, true, false, false, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, false, false, false, false, false,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 1, 0, 1, 1, 1, 0, 1, 1,
+        1, 1, 0, 0, 0, 0, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 0, 1, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
     ];
-    var map = new map_1.Map(new jlib_1.Grid(map_walkable, 6));
+    var map = new map_1.Map(new jlib_1.Grid(map_walkable, 9));
     for (var i = 0; i < map.meshes.length; i++) {
         scene.add(map.meshes[i]);
     }
+    document.addEventListener("keydown", onDocumentKeyDown, false);
     // Kick off update loop.
     update();
 }
-document.addEventListener("keydown", onDocumentKeyDown, false);
 main();

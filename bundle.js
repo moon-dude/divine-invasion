@@ -51254,29 +51254,133 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
+var constants_1 = require("./constants");
+var ACTOR_OFFSET_FRONT = .2;
+var ACTOR_OFFSET_SIDE = .6;
 var geometry = new THREE.PlaneGeometry(2, 3);
 var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
 var Actor = /** @class */ (function () {
     function Actor(name, coor, dialogue) {
-        var _this = this;
         this.name = name;
         this.coor = coor;
         this.mesh = new THREE.Mesh(geometry, material);
-        this.dialogue = function () {
-            return _this.name + ": " + dialogue;
-        };
+        this.dialogue = dialogue;
     }
+    Actor.prototype.update = function (/* const */ player) {
+        var diff_x = player.coor.x - this.coor.x;
+        var diff_z = player.coor.z - this.coor.z;
+        var delta_x = Math.abs(diff_x) < .1 ?
+            (player.dir == jlib_1.Dir.E ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
+            (diff_x < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
+        var delta_z = Math.abs(diff_z) < .1 ?
+            (player.dir == jlib_1.Dir.S ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
+            (diff_z < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
+        this.mesh.position.x = (this.coor.x + delta_x) * constants_1.TILE_SIZE;
+        this.mesh.position.z = (this.coor.z + delta_z) * constants_1.TILE_SIZE;
+        this.mesh.rotation.y = player.camera.rotation.y;
+    };
     return Actor;
 }());
 exports.Actor = Actor;
 
-},{"three":3}],5:[function(require,module,exports){
+},{"./constants":5,"./jlib":8,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
 },{}],6:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/// These are stored in a list in each actor.
+var Dialogue = /** @class */ (function () {
+    function Dialogue(speech) {
+        this.info = "";
+        this.trigger_criteria = function () { return true; };
+        this.lock_player = false;
+        this.speech = speech;
+    }
+    Dialogue.prototype.lock = function () {
+        this.lock_player = true;
+        return this;
+    };
+    Dialogue.prototype.set_info = function (val) {
+        this.info = val;
+        return this;
+    };
+    Dialogue.prototype.set_criteria = function (trigger_criteria) {
+        this.trigger_criteria = trigger_criteria;
+        return this;
+    };
+    return Dialogue;
+}());
+exports.Dialogue = Dialogue;
+
+},{}],7:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var jlib_1 = require("./jlib");
+/// Returns true on a successful move.
+function move(player, steps) {
+    if (player.movement_locked) {
+        return false;
+    }
+    player.coor = jlib_1.ApplyDir(player.coor, player.dir, steps);
+    return true;
+}
+/// Returns true on a successful turn.
+function turn(player, cw) {
+    if (player.movement_locked) {
+        return false;
+    }
+    if (cw) {
+        player.dir = jlib_1.DirCW(player.dir);
+    }
+    else {
+        player.dir = jlib_1.DirCW(jlib_1.DirCW(jlib_1.DirCW(player.dir)));
+    }
+    return true;
+}
+var InputResult = /** @class */ (function () {
+    function InputResult(moved, turned, actioned) {
+        this.moved = moved;
+        this.turned = turned;
+        this.actioned = actioned;
+    }
+    return InputResult;
+}());
+exports.InputResult = InputResult;
+var Input = /** @class */ (function () {
+    function Input() {
+    }
+    Input.prototype.check = function (event, player) {
+        var keyCode = event.which;
+        var moved = false;
+        var turned = false;
+        var actioned = false;
+        if (keyCode == 87) { // W.
+            moved = move(player, 1);
+        }
+        else if (keyCode == 65) { // A.
+            turned = turn(player, false);
+        }
+        else if (keyCode == 68) { // D.
+            turned = turn(player, true);
+        }
+        else if (keyCode == 83) { // S.
+            moved = move(player, -1);
+        }
+        else if (keyCode == 32) { // Space.
+            actioned = true;
+        }
+        return new InputResult(moved, turned, actioned);
+    };
+    return Input;
+}());
+exports.Input = Input;
+
+},{"./jlib":8}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -51297,6 +51401,9 @@ var Coor = /** @class */ (function () {
         this.x = x;
         this.z = z;
     }
+    Coor.prototype.equals = function (other) {
+        return this.x == other.x && this.z == other.z;
+    };
     return Coor;
 }());
 exports.Coor = Coor;
@@ -51333,7 +51440,7 @@ function DirRotation(dir) {
     }
 }
 exports.DirRotation = DirRotation;
-function DirCC(dir) {
+function DirCW(dir) {
     switch (dir) {
         case Dir.W:
             return Dir.N;
@@ -51345,9 +51452,9 @@ function DirCC(dir) {
             return Dir.W;
     }
 }
-exports.DirCC = DirCC;
+exports.DirCW = DirCW;
 
-},{}],7:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51359,124 +51466,107 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var map_1 = require("./map");
-var constants_1 = require("./constants");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
-var ACTOR_OFFSET_FRONT = .6;
-var ACTOR_OFFSET_SIDE = .4;
+var dialogue_1 = require("./dialogue");
+var player_1 = require("./player");
+var input_1 = require("./input");
+var three_div = document.getElementById("three_div");
+var dialogue_div = document.getElementById("dialogue_div");
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera(105, window.innerWidth / window.innerHeight, 0.1, 1000);
 var renderer = new THREE.WebGLRenderer();
+var input = new input_1.Input();
 var light = new THREE.AmbientLight(0x888888);
 var light2 = new THREE.PointLight(0xf00f00, 6, 100);
-var geometry = new THREE.PlaneGeometry(1, 1, 1);
-var material = new THREE.MeshStandardMaterial({ color: 0x0ffff0 });
-var cube = new THREE.Mesh(geometry, material);
-var player_coor = new jlib_1.Coor(2, -2);
-var player_dir = jlib_1.Dir.S;
+var player = new player_1.Player();
+var dialogue_idx = 0;
 var npcs = [
-    new actor_1.Actor("John", new jlib_1.Coor(2, 2), "\"Hey have you seen my Ukobach?\"<br /><button>Yes</button><button>No</button>")
+    new actor_1.Actor("Abel", new jlib_1.Coor(2, 3), [
+        new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+            .set_info("<< Press SPACE to continue >>").lock(),
+        new dialogue_1.Dialogue("You're expected in the divination room.").lock(),
+        new dialogue_1.Dialogue("You know where that is right?"),
+    ]),
+    new actor_1.Actor("Beth", new jlib_1.Coor(4, 4), [
+        new dialogue_1.Dialogue("My head hurts..."),
+        new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
+    ]),
 ];
-var dialogue_div = document.getElementById("dialogue_div");
 function render() {
-    renderer.render(scene, camera);
+    renderer.render(scene, player.camera);
 }
 function update() {
     if (!dialogue_div) {
         return;
     }
-    requestAnimationFrame(update);
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
-    camera.position.x += (player_coor.x * constants_1.TILE_SIZE - camera.position.x) * 0.2;
-    camera.position.z += (player_coor.z * constants_1.TILE_SIZE - camera.position.z) * 0.2;
-    var target_rotation = jlib_1.DirRotation(player_dir);
-    while (target_rotation < camera.rotation.y - Math.PI) {
-        target_rotation += Math.PI * 2;
-    }
-    while (target_rotation > camera.rotation.y + Math.PI + 0.01) {
-        target_rotation -= Math.PI * 2;
-    }
-    camera.rotation.y += (target_rotation - camera.rotation.y) * 0.2;
+    player.update();
     dialogue_div.innerText = "";
     for (var n = 0; n < npcs.length; n++) {
         var npc = npcs[n];
-        var diff_x = player_coor.x - npc.coor.x;
-        var diff_z = player_coor.z - npc.coor.z;
-        console.log("diff x: " + diff_x + ", z: " + diff_z);
-        var delta_x = Math.abs(diff_x) < .1 ?
-            (player_dir == jlib_1.Dir.E ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
-            (diff_x < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
-        var delta_z = Math.abs(diff_z) < .1 ?
-            (player_dir == jlib_1.Dir.S ? ACTOR_OFFSET_FRONT : -ACTOR_OFFSET_FRONT) :
-            (diff_z < 0 ? ACTOR_OFFSET_SIDE : -ACTOR_OFFSET_SIDE);
-        npc.mesh.position.x = (npc.coor.x + delta_x) * constants_1.TILE_SIZE;
-        npc.mesh.position.z = (npc.coor.z + delta_z) * constants_1.TILE_SIZE;
-        npc.mesh.rotation.y = camera.rotation.y;
-        if (player_coor.x == npc.coor.x && player_coor.z == npc.coor.z) {
-            dialogue_div.innerHTML = npc.dialogue();
+        npc.update(player);
+        if (player.coor.equals(npc.coor)) {
+            if (dialogue_idx < npc.dialogue.length) {
+                var dialogue = npc.dialogue[dialogue_idx];
+                if (dialogue.lock_player) {
+                    player.movement_locked = true;
+                }
+                else {
+                    player.movement_locked = false;
+                }
+                dialogue_div.innerHTML = npc.name + ": <br />\"" + dialogue.speech
+                    + "\"<br /><em>" + dialogue.info + "</em>";
+            }
         }
     }
     render();
+    requestAnimationFrame(update);
 }
 function onDocumentKeyDown(event) {
-    var keyCode = event.which;
-    if (keyCode == 87) { // W.
-        player_coor = jlib_1.ApplyDir(player_coor, player_dir, 1);
+    var result = input.check(event, player);
+    if (result.moved) {
+        dialogue_idx = 0;
     }
-    else if (keyCode == 65) { // A.
-        player_dir = jlib_1.DirCC(jlib_1.DirCC(jlib_1.DirCC(player_dir)));
-    }
-    else if (keyCode == 68) { // D.
-        player_dir = jlib_1.DirCC(player_dir);
-    }
-    else if (keyCode == 83) { // S.
-        player_coor = jlib_1.ApplyDir(player_coor, player_dir, -1);
+    if (result.actioned) {
+        dialogue_idx += 1;
     }
 }
-;
 function main() {
+    if (!three_div) {
+        return;
+    }
     renderer.setSize(window.innerWidth, window.innerHeight - 100);
-    document.body.appendChild(renderer.domElement);
+    three_div.appendChild(renderer.domElement);
     scene.add(light);
     light2.position.set(0, 1, 0);
     scene.add(light2);
-    scene.add(cube);
     var id = "";
     for (id in npcs) {
         scene.add(npcs[id].mesh);
     }
-    // var map_walkable = [
-    //   false, false, true, false, false, false,
-    //   false, true, true, true, true, false,
-    //   false, false, true, false, true, false,
-    //   false, true, true, false, true, false,
-    //   false, false, false, false, true, false,
-    //   false, true, true, true, true, false,
-    //   false, true, false, false, true, false,
-    //   false, true, true, true, true, false,
-    //   false, false, false, false, false, false,
-    // ];
     var map_walkable = [
-        false, false, true, false, false, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, true, true, true, true, false,
-        false, false, false, false, false, false,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 1, 0, 1, 1, 1, 0, 1, 1,
+        1, 1, 0, 0, 0, 0, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 0, 1, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 0, 0, 0, 1, 0, 0, 0, 1,
+        1, 1, 1, 1, 1, 1, 0, 1, 1,
+        1, 1, 1, 1, 1, 1, 1, 1, 1,
     ];
-    var map = new map_1.Map(new jlib_1.Grid(map_walkable, 6));
+    var map = new map_1.Map(new jlib_1.Grid(map_walkable, 9));
     for (var i = 0; i < map.meshes.length; i++) {
         scene.add(map.meshes[i]);
     }
+    document.addEventListener("keydown", onDocumentKeyDown, false);
     // Kick off update loop.
     update();
 }
-document.addEventListener("keydown", onDocumentKeyDown, false);
 main();
 
-},{"./actor":4,"./constants":5,"./jlib":6,"./map":8,"three":3}],8:[function(require,module,exports){
+},{"./actor":4,"./dialogue":6,"./input":7,"./jlib":8,"./map":10,"./player":11,"three":3}],10:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51495,7 +51585,7 @@ function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
-            if (!walkable.get(x, z)) {
+            if (walkable.get(x, z) == 1) {
                 var box = new THREE.Mesh(geometry, material);
                 box.position.x = x * constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
@@ -51519,4 +51609,40 @@ var Map = /** @class */ (function () {
 }());
 exports.Map = Map;
 
-},{"./constants":5,"./jlib":6,"three":3}]},{},[7,1,2]);
+},{"./constants":5,"./jlib":8,"three":3}],11:[function(require,module,exports){
+"use strict";
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var THREE = __importStar(require("three"));
+var jlib_1 = require("./jlib");
+var constants_1 = require("./constants");
+var Player = /** @class */ (function () {
+    function Player() {
+        this.coor = new jlib_1.Coor(1, 1);
+        this.dir = jlib_1.Dir.S;
+        this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.movement_locked = false;
+    }
+    Player.prototype.update = function () {
+        this.camera.position.x += (this.coor.x * constants_1.TILE_SIZE - this.camera.position.x) * 0.2;
+        this.camera.position.z += (this.coor.z * constants_1.TILE_SIZE - this.camera.position.z) * 0.2;
+        var target_rotation = jlib_1.DirRotation(this.dir);
+        while (target_rotation < this.camera.rotation.y - Math.PI) {
+            target_rotation += Math.PI * 2;
+        }
+        while (target_rotation > this.camera.rotation.y + Math.PI + 0.01) {
+            target_rotation -= Math.PI * 2;
+        }
+        this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
+    };
+    return Player;
+}());
+exports.Player = Player;
+
+},{"./constants":5,"./jlib":8,"three":3}]},{},[9,1,2]);

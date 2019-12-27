@@ -24,6 +24,10 @@ export class Coor {
     this.x = x;
     this.z = z;
   }
+
+  equals(other: Coor): boolean {
+    return this.x == other.x && this.z == other.z;
+  }
 }
 
 export enum Dir {
@@ -56,7 +60,7 @@ export function DirRotation(dir: Dir): number {
   }
 }
 
-export function DirCC(dir: Dir): Dir {
+export function DirCW(dir: Dir): Dir {
   switch (dir) {
     case Dir.W:
       return Dir.N
