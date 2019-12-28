@@ -5,15 +5,17 @@ import { flags } from "../../globals";
 import { TileMap } from "../../map";
 
 var map_walkable: string = 
-  "1111111111" +
-  "1001001CI1" +
-  "11A1101001" +
-  "1100B00001" +
-  "1111111101" +
-  "1D0000D001" +
-  "1HG1E111F1" +
-  "1110000101" +
-  "1111111101";
+  "//////////" +
+  "/-//--/CI/" +
+  "/-///-/--/" +
+  "/--A--B--/" +
+  "////////-/" +
+  "/-----D--/" +
+  "/HG/E///F/" +
+  "////-///-/" +
+  "/------/-/" +
+  "/-/-//-/-/" +
+  "////////-/";
 
 export var level1_map = new TileMap(Grid.from_string(map_walkable, 10));
 
@@ -51,15 +53,12 @@ var npc_map: Map<string, Actor> = new Map([
   ])],
   ["E", new Actor("Eve", [
     new Dialogue("The divination room? It's through here.").set_criteria(() => !flags.has('has_demon_blood')).lock().set_actor_block(true),
-    new Dialogue("Do you have your demon blood?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
-    new Dialogue("You don't?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
+    new Dialogue("Do you have your demon blood? You don't?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
     new Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(() => !flags.has('has_demon_blood')).flag('demon_blood'),
     new Dialogue("Go find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')),
-    new Dialogue("I see you have found some demon blood!").set_criteria(() => flags.has('has_demon_blood')).lock(),
-    new Dialogue("Now before you pass, you'll have to smear it over yourself.").set_criteria(() => flags.has('has_demon_blood')).lock(),
-    new Dialogue("<< You smear demon blood all over yourself >>").set_criteria(() => flags.has('has_demon_blood')).lock(),
-    new Dialogue("Ha ha, wow you actually did it!").set_criteria(() => flags.has('has_demon_blood')).lock(),
-    new Dialogue("You sure smell now, haha!").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
+    new Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("You're a psychopath!").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
   ])],
   ["F", new Actor("Frederick", [
     new Dialogue("New recruits aren't allowed any further.").set_actor_block(true),

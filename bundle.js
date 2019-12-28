@@ -51346,15 +51346,17 @@ var actor_1 = require("../../actor");
 var dialogue_1 = require("../../dialogue");
 var globals_1 = require("../../globals");
 var map_1 = require("../../map");
-var map_walkable = "1111111111" +
-    "1001001CI1" +
-    "11A1101001" +
-    "1100B00001" +
-    "1111111101" +
-    "1D0000D001" +
-    "1HG1E111F1" +
-    "1110000101" +
-    "1111111101";
+var map_walkable = "//////////" +
+    "/-//--/CI/" +
+    "/-///-/--/" +
+    "/--A--B--/" +
+    "////////-/" +
+    "/-----D--/" +
+    "/HG/E///F/" +
+    "////-///-/" +
+    "/------/-/" +
+    "/-/-//-/-/" +
+    "////////-/";
 exports.level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
 var npc_map = new Map([
     [
@@ -51388,15 +51390,12 @@ var npc_map = new Map([
         ])],
     ["E", new actor_1.Actor("Eve", [
             new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
-            new dialogue_1.Dialogue("Do you have your demon blood?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).flag('demon_blood'),
             new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }),
-            new dialogue_1.Dialogue("I see you have found some demon blood!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Now before you pass, you'll have to smear it over yourself.").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("<< You smear demon blood all over yourself >>").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Ha ha, wow you actually did it!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("You sure smell now, haha!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
+            new dialogue_1.Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
         ])],
     ["F", new actor_1.Actor("Frederick", [
             new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
@@ -51683,7 +51682,7 @@ function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
-            if (walkable.get(x, z) == "1") {
+            if (walkable.get(x, z) == "/") {
                 var box = new THREE.Mesh(geometry, material);
                 box.position.x = x * constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
