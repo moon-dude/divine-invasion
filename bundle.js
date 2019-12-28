@@ -51265,40 +51265,69 @@ var material = new THREE.MeshStandardMaterial({ map: texture, transparent: true 
 var Actor = /** @class */ (function () {
     function Actor(name, dialogue) {
         this.is_blocking = false;
+        this.placed = false;
         this.name = name;
         this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
         this.dialogue = dialogue;
     }
+    Actor.prototype.need_to_be_placed = function (player) {
+        if (this.coor == null) {
+            return false;
+        }
+        if (!this.placed) {
+            return true;
+        }
+        // player is on the same line (x or z) and facing towards me.
+        if (player.coor.x != this.coor.x && player.coor.z != this.coor.z) {
+            return false;
+        }
+        if (player.coor.x < this.coor.x) {
+            return player.dir == jlib_1.Dir.E;
+        }
+        if (player.coor.x > this.coor.x) {
+            return player.dir == jlib_1.Dir.W;
+        }
+        if (player.coor.z < this.coor.z) {
+            return player.dir == jlib_1.Dir.S;
+        }
+        if (player.coor.z < this.coor.z) {
+            return player.dir == jlib_1.Dir.N;
+        }
+        return false;
+    };
     Actor.prototype.update = function (/* const */ player) {
+        this.mesh.rotation.y = player.camera.rotation.y;
         if (this.coor == null) {
             return;
         }
-        // Always to the left of the camera.
-        var offset_x = 0;
-        var offset_z = 0;
-        switch (player.dir) {
-            case jlib_1.Dir.W:
-                offset_x = -ACTOR_OFFSET_FRONT;
-                offset_z = ACTOR_OFFSET_SIDE;
-                break;
-            case jlib_1.Dir.E:
-                offset_x = ACTOR_OFFSET_FRONT;
-                offset_z = -ACTOR_OFFSET_SIDE;
-                break;
-            case jlib_1.Dir.N:
-                offset_x = -ACTOR_OFFSET_SIDE;
-                offset_z = -ACTOR_OFFSET_FRONT;
-                break;
-            case jlib_1.Dir.S:
-                offset_x = ACTOR_OFFSET_SIDE;
-                offset_z = ACTOR_OFFSET_FRONT;
-                break;
+        if (this.need_to_be_placed(player)) {
+            // Always to the left of the camera.
+            var offset_x = 0;
+            var offset_z = 0;
+            switch (player.dir) {
+                case jlib_1.Dir.W:
+                    offset_x = -ACTOR_OFFSET_FRONT;
+                    offset_z = ACTOR_OFFSET_SIDE;
+                    break;
+                case jlib_1.Dir.E:
+                    offset_x = ACTOR_OFFSET_FRONT;
+                    offset_z = -ACTOR_OFFSET_SIDE;
+                    break;
+                case jlib_1.Dir.N:
+                    offset_x = -ACTOR_OFFSET_SIDE;
+                    offset_z = -ACTOR_OFFSET_FRONT;
+                    break;
+                case jlib_1.Dir.S:
+                    offset_x = ACTOR_OFFSET_SIDE;
+                    offset_z = ACTOR_OFFSET_FRONT;
+                    break;
+            }
+            this.mesh.position.x = (this.coor.x + offset_x) * constants_1.TILE_SIZE;
+            this.mesh.position.z = (this.coor.z + offset_z) * constants_1.TILE_SIZE;
+            this.mesh.position.y = -0.7;
+            this.placed = true;
         }
-        this.mesh.position.x = (this.coor.x + offset_x) * constants_1.TILE_SIZE;
-        this.mesh.position.z = (this.coor.z + offset_z) * constants_1.TILE_SIZE;
-        this.mesh.position.y = -0.7;
-        this.mesh.rotation.y = player.camera.rotation.y;
     };
     return Actor;
 }());
@@ -51376,7 +51405,7 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
         ])],
     ["H", new actor_1.Actor("Harold", [
-            new dialogue_1.Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+            new dialogue_1.Dialogue("Let's see how your laws do against my fist!").set_actor_block(true),
         ])],
 ]);
 exports.level1_actors = [];

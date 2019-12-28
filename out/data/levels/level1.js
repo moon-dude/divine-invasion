@@ -64,7 +64,7 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
         ])],
     ["H", new actor_1.Actor("Harold", [
-            new dialogue_1.Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+            new dialogue_1.Dialogue("Let's see how your laws do against my fist!").set_actor_block(true),
         ])],
 ]);
 exports.level1_actors = [];

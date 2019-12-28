@@ -8,7 +8,7 @@ import { TILE_SIZE } from './constants';
 const ACTOR_OFFSET_FRONT = 0.3;
 const ACTOR_OFFSET_SIDE = 0.3;
 
-var texture = new THREE.TextureLoader().load( 'assets/cultist.png' );
+var texture = new THREE.TextureLoader().load('assets/cultist.png');
 const geometry = new THREE.PlaneGeometry(2.5, 3.5);
 const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
 
@@ -18,6 +18,7 @@ export class Actor {
   public mesh: THREE.Mesh;
   public dialogue: Dialogue[];
   public is_blocking: boolean = false;
+  private placed: boolean = false;
 
   constructor(name: string, dialogue: Dialogue[]) {
     this.name = name;
@@ -26,37 +27,66 @@ export class Actor {
     this.dialogue = dialogue;
   }
 
-  update(/* const */player: Player) {
+  private need_to_be_placed(player: Player) {
+    if (this.coor == null) {
+      return false;
+    }
+    if (!this.placed) {
+      return true;
+    }
+    // player is on the same line (x or z) and facing towards me.
+    if (player.coor.x != this.coor.x && player.coor.z != this.coor.z) {
+      return false;
+    }
+    if (player.coor.x < this.coor.x) {
+      return player.dir == Dir.E;
+    }
+    if (player.coor.x > this.coor.x) {
+      return player.dir == Dir.W;
+    }
+    if (player.coor.z < this.coor.z) {
+      return player.dir == Dir.S;
+    }
+    if (player.coor.z < this.coor.z) {
+      return player.dir == Dir.N;
+    }
+    return false;
+  }
+
+  public update(/* const */player: Player) {
+    this.mesh.rotation.y = player.camera.rotation.y;
+
     if (this.coor == null) {
       return;
     }
-    // Always to the left of the camera.
-    let offset_x = 0;
-    let offset_z = 0;
-    switch (player.dir) {
-      case Dir.W:
-        offset_x = -ACTOR_OFFSET_FRONT;
-        offset_z = ACTOR_OFFSET_SIDE;
-        break;
-      case Dir.E:
-        offset_x = ACTOR_OFFSET_FRONT;
-        offset_z = -ACTOR_OFFSET_SIDE;
-        break;
-      case Dir.N:
-        offset_x = -ACTOR_OFFSET_SIDE;
-        offset_z = -ACTOR_OFFSET_FRONT;
-        break;
-      case Dir.S:
-        offset_x = ACTOR_OFFSET_SIDE;
-        offset_z = ACTOR_OFFSET_FRONT;
-        break;
-    }
 
-    this.mesh.position.x = (this.coor.x + offset_x) * TILE_SIZE;
-    this.mesh.position.z = (this.coor.z + offset_z) * TILE_SIZE;
-    this.mesh.position.y = -0.7;
-    
-    this.mesh.rotation.y = player.camera.rotation.y;
+    if (this.need_to_be_placed(player)) {
+      // Always to the left of the camera.
+      let offset_x = 0;
+      let offset_z = 0;
+      switch (player.dir) {
+        case Dir.W:
+          offset_x = -ACTOR_OFFSET_FRONT;
+          offset_z = ACTOR_OFFSET_SIDE;
+          break;
+        case Dir.E:
+          offset_x = ACTOR_OFFSET_FRONT;
+          offset_z = -ACTOR_OFFSET_SIDE;
+          break;
+        case Dir.N:
+          offset_x = -ACTOR_OFFSET_SIDE;
+          offset_z = -ACTOR_OFFSET_FRONT;
+          break;
+        case Dir.S:
+          offset_x = ACTOR_OFFSET_SIDE;
+          offset_z = ACTOR_OFFSET_FRONT;
+          break;
+      }
+      this.mesh.position.x = (this.coor.x + offset_x) * TILE_SIZE;
+      this.mesh.position.z = (this.coor.z + offset_z) * TILE_SIZE;
+      this.mesh.position.y = -0.7;  
+      this.placed = true;
+    }
   }
 }
 

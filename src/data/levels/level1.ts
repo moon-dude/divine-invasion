@@ -68,7 +68,7 @@ var npc_map: Map<string, Actor> = new Map([
     new Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
   ])],
   ["H", new Actor("Harold", [
-    new Dialogue("Let's see how your laws do against my fist?").set_actor_block(true),
+    new Dialogue("Let's see how your laws do against my fist!").set_actor_block(true),
   ])],
 ]);
 
