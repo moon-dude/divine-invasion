@@ -13,26 +13,24 @@ var player_1 = require("./player");
 var world_1 = require("./world");
 var level1_1 = require("./data/levels/level1");
 var Game = /** @class */ (function () {
-    function Game(three_div, dialogue_div) {
+    function Game() {
+        var _a;
         // meta.
         this.input = new input_1.Input();
         this.player = new player_1.Player();
         // rendering.
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
-        this.three_div = three_div;
-        this.dialogue_div = dialogue_div;
         this.world = new world_1.World(this.scene, level1_1.level1_map, level1_1.level1_actors);
         this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
-        three_div.appendChild(this.renderer.domElement);
+        (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
     }
     Game.prototype.render = function () {
         this.renderer.render(this.scene, this.player.camera);
     };
     Game.prototype.update = function () {
         this.player.update();
-        this.dialogue_div.innerText = "";
-        this.world.update(this.player, this.dialogue_div);
+        this.world.update(this.player);
         this.render();
     };
     Game.prototype.key_down = function (event) {

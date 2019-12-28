@@ -6,17 +6,28 @@ import { Player } from './player';
 import { flags } from './globals';
 
 export class World {
+  // data.
   map: TileMap;
   actors: Actor[];
-
   dialogue_idx: number = 0;
   
+  // Three objects.
   private ambient_light: THREE.AmbientLight;
+
+  // html.
+  private speaker_div: HTMLElement;
+  private speech_div: HTMLElement;
+  private info_div: HTMLElement;
 
   constructor(scene: THREE.Scene, map: TileMap, actors: Actor[]) {
     this.map = map;
     this.actors = actors;
     this.ambient_light = new THREE.AmbientLight();
+
+    this.speaker_div = document.getElementById("dialogue_speaker")!;
+    this.speech_div = document.getElementById("dialogue_speech")!;
+    this.info_div = document.getElementById("dialogue_info")!;
+
     scene.add(this.ambient_light);
     
     for (let i = 0; i < this.actors.length; i++) {
@@ -27,7 +38,11 @@ export class World {
       scene.add(this.map.meshes[i]);
     }
   }
-  public update(player: Player, dialogue_div: HTMLElement) {
+
+  public update(player: Player) {
+    this.speaker_div.innerHTML = "";
+    this.speech_div.innerHTML = "";
+    this.info_div.innerHTML = "";
     for (let i = 0; i < this.actors.length; i++) {
       let actor: Actor = this.actors[i];
       actor.update(player);
@@ -60,8 +75,9 @@ export class World {
         flags.add(dialogue.flags[f]);
       }
       
-      dialogue_div.innerHTML = actor.name + ": <br />\"" + dialogue.speech
-        + "\"<br /><em>" + dialogue.info + "</em>";
+      this.speaker_div.innerHTML = actor.name;
+      this.speech_div.innerHTML = dialogue.speech;
+      this.info_div.innerHTML = dialogue.info;
     }
   }
 }

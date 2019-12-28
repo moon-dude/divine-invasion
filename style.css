@@ -3,10 +3,19 @@ body {
   color: white;
 }
 
-#dialogue_div div {
+#dialogue_div {
   width: 100%;
-  position: absolute;
-  top: 200;
-  left: 200;
-  padding: 2em;
+  padding: .2em;
+  text-align: center;
+  font-size: 1.05em;
+}
+
+#dialogue_info {
+  color: #bbb;
+  font-size: 0.8em;
+}
+
+#dialogue_speaker {
+  color: #0055ff;
+  font-size: 0.9em;
 }

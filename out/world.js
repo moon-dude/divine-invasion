@@ -15,6 +15,9 @@ var World = /** @class */ (function () {
         this.map = map;
         this.actors = actors;
         this.ambient_light = new THREE.AmbientLight();
+        this.speaker_div = document.getElementById("dialogue_speaker");
+        this.speech_div = document.getElementById("dialogue_speech");
+        this.info_div = document.getElementById("dialogue_info");
         scene.add(this.ambient_light);
         for (var i = 0; i < this.actors.length; i++) {
             scene.add(this.actors[i].mesh);
@@ -23,7 +26,10 @@ var World = /** @class */ (function () {
             scene.add(this.map.meshes[i]);
         }
     }
-    World.prototype.update = function (player, dialogue_div) {
+    World.prototype.update = function (player) {
+        this.speaker_div.innerHTML = "";
+        this.speech_div.innerHTML = "";
+        this.info_div.innerHTML = "";
         for (var i = 0; i < this.actors.length; i++) {
             var actor = this.actors[i];
             actor.update(player);
@@ -54,8 +60,9 @@ var World = /** @class */ (function () {
             for (var f = 0; f < dialogue.flags.length; f++) {
                 globals_1.flags.add(dialogue.flags[f]);
             }
-            dialogue_div.innerHTML = actor.name + ": <br />\"" + dialogue.speech
-                + "\"<br /><em>" + dialogue.info + "</em>";
+            this.speaker_div.innerHTML = actor.name;
+            this.speech_div.innerHTML = dialogue.speech;
+            this.info_div.innerHTML = dialogue.info;
         }
     };
     return World;

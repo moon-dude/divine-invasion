@@ -15,16 +15,10 @@ export class Game {
   private scene: THREE.Scene = new THREE.Scene;
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
 
-  // html.
-  private three_div: HTMLElement;
-  private dialogue_div: HTMLElement;
-
-  constructor(three_div: HTMLElement, dialogue_div: HTMLElement) {
-    this.three_div = three_div;
-    this.dialogue_div = dialogue_div;
+  constructor() {
     this.world = new World(this.scene, level1_map, level1_actors);
     this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
-    three_div.appendChild(this.renderer.domElement);
+    document.getElementById("three_div")?.appendChild(this.renderer.domElement);
   }
   
   private render() {
@@ -33,8 +27,7 @@ export class Game {
 
   public update(): void {
     this.player.update();
-    this.dialogue_div.innerText = "";
-    this.world.update(this.player, this.dialogue_div);
+    this.world.update(this.player);
     this.render();
   }
 

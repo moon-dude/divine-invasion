@@ -51505,26 +51505,24 @@ var player_1 = require("./player");
 var world_1 = require("./world");
 var level1_1 = require("./data/levels/level1");
 var Game = /** @class */ (function () {
-    function Game(three_div, dialogue_div) {
+    function Game() {
+        var _a;
         // meta.
         this.input = new input_1.Input();
         this.player = new player_1.Player();
         // rendering.
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
-        this.three_div = three_div;
-        this.dialogue_div = dialogue_div;
         this.world = new world_1.World(this.scene, level1_1.level1_map, level1_1.level1_actors);
         this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
-        three_div.appendChild(this.renderer.domElement);
+        (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
     }
     Game.prototype.render = function () {
         this.renderer.render(this.scene, this.player.camera);
     };
     Game.prototype.update = function () {
         this.player.update();
-        this.dialogue_div.innerText = "";
-        this.world.update(this.player, this.dialogue_div);
+        this.world.update(this.player);
         this.render();
     };
     Game.prototype.key_down = function (event) {
@@ -51686,26 +51684,13 @@ exports.num_lt = num_lt;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
-var game = null;
-var three_div = document.getElementById("three_div");
-var dialogue_div = document.getElementById("dialogue_div");
-if (!three_div) {
-    throw new Error("no three_div");
-}
-else if (!dialogue_div) {
-    throw new Error("no dialogue_div");
-}
-else {
-    game = new game_1.Game(three_div, dialogue_div);
-}
+var game = new game_1.Game();
 function onDocumentKeyDown(event) {
-    var _a;
-    (_a = game) === null || _a === void 0 ? void 0 : _a.key_down(event);
+    game.key_down(event);
 }
 document.addEventListener("keydown", onDocumentKeyDown, false);
 function update() {
-    var _a;
-    (_a = game) === null || _a === void 0 ? void 0 : _a.update();
+    game.update();
     requestAnimationFrame(update);
 }
 // Kick off update loop.
@@ -51846,6 +51831,9 @@ var World = /** @class */ (function () {
         this.map = map;
         this.actors = actors;
         this.ambient_light = new THREE.AmbientLight();
+        this.speaker_div = document.getElementById("dialogue_speaker");
+        this.speech_div = document.getElementById("dialogue_speech");
+        this.info_div = document.getElementById("dialogue_info");
         scene.add(this.ambient_light);
         for (var i = 0; i < this.actors.length; i++) {
             scene.add(this.actors[i].mesh);
@@ -51854,7 +51842,10 @@ var World = /** @class */ (function () {
             scene.add(this.map.meshes[i]);
         }
     }
-    World.prototype.update = function (player, dialogue_div) {
+    World.prototype.update = function (player) {
+        this.speaker_div.innerHTML = "";
+        this.speech_div.innerHTML = "";
+        this.info_div.innerHTML = "";
         for (var i = 0; i < this.actors.length; i++) {
             var actor = this.actors[i];
             actor.update(player);
@@ -51885,8 +51876,9 @@ var World = /** @class */ (function () {
             for (var f = 0; f < dialogue.flags.length; f++) {
                 globals_1.flags.add(dialogue.flags[f]);
             }
-            dialogue_div.innerHTML = actor.name + ": <br />\"" + dialogue.speech
-                + "\"<br /><em>" + dialogue.info + "</em>";
+            this.speaker_div.innerHTML = actor.name;
+            this.speech_div.innerHTML = dialogue.speech;
+            this.info_div.innerHTML = dialogue.info;
         }
     };
     return World;
