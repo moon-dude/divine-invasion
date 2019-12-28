@@ -13,6 +13,7 @@ export class World {
   
   // Three objects.
   private ambient_light: THREE.AmbientLight;
+  private lights: THREE.PointLight[];
 
   // html.
   private speaker_div: HTMLElement;
@@ -22,7 +23,7 @@ export class World {
   constructor(scene: THREE.Scene, map: TileMap, actors: Actor[]) {
     this.map = map;
     this.actors = actors;
-    this.ambient_light = new THREE.AmbientLight();
+    this.ambient_light = new THREE.AmbientLight("#000099", .5);
 
     this.speaker_div = document.getElementById("dialogue_speaker")!;
     this.speech_div = document.getElementById("dialogue_speech")!;
@@ -36,6 +37,15 @@ export class World {
 
     for (let i = 0; i < this.map.meshes.length; i++) {
       scene.add(this.map.meshes[i]);
+    }
+
+    this.lights = [];
+    for (let x = 1; x < this.map.walkable.width; x += 4) {
+      for (let z = 1; z < this.map.walkable.width; z += 4) {
+        const new_light = new THREE.PointLight("#ff5500", .1);
+        this.lights.push(new_light);
+        scene.add(new_light);
+      }
     }
   }
 
