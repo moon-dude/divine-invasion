@@ -12,7 +12,6 @@ if (!three_div) {
   game = new Game(three_div, dialogue_div);
 }
 
-
 function onDocumentKeyDown(event: any) {
   game?.key_down(event); 
 }

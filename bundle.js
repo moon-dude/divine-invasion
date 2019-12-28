@@ -51257,19 +51257,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
-var ACTOR_OFFSET_FRONT = 0.3;
+var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
-var texture = new THREE.TextureLoader().load('assets/cultist.png');
+var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
+exports.CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true });
+var demon_texture = new THREE.TextureLoader().load('assets/demon.png');
+exports.DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true });
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
-var material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
 var Actor = /** @class */ (function () {
-    function Actor(name, dialogue) {
+    function Actor(name, dialogue, material, battle_stats) {
+        if (material === void 0) { material = exports.CULTIST_MAT; }
+        if (battle_stats === void 0) { battle_stats = null; }
         this.is_blocking = false;
         this.placed = false;
         this.name = name;
         this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
         this.dialogue = dialogue;
+        this.battle_stats = battle_stats;
     }
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
@@ -51279,19 +51284,19 @@ var Actor = /** @class */ (function () {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
-        if (player.coor.x != this.coor.x && player.coor.z != this.coor.z) {
+        if (!jlib_1.num_eq(player.coor.x, this.coor.x) && !jlib_1.num_eq(player.coor.z, this.coor.z)) {
             return false;
         }
-        if (player.coor.x < this.coor.x) {
+        if (jlib_1.num_lt(player.coor.x, this.coor.x)) {
             return player.dir == jlib_1.Dir.E;
         }
-        if (player.coor.x > this.coor.x) {
+        if (jlib_1.num_gt(player.coor.x, this.coor.x)) {
             return player.dir == jlib_1.Dir.W;
         }
-        if (player.coor.z < this.coor.z) {
+        if (jlib_1.num_lt(player.coor.z, this.coor.z)) {
             return player.dir == jlib_1.Dir.S;
         }
-        if (player.coor.z < this.coor.z) {
+        if (jlib_1.num_gt(player.coor.z, this.coor.z)) {
             return player.dir == jlib_1.Dir.N;
         }
         return false;
@@ -51333,12 +51338,39 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./constants":5,"./jlib":11,"three":3}],5:[function(require,module,exports){
+},{"./constants":6,"./jlib":12,"three":3}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// class Skill { }
+var BattleStats = /** @class */ (function () {
+    function BattleStats(hp, mp, attack_power) {
+        this.max_hp = hp;
+        this.hp = hp;
+        this.max_mp = mp;
+        this.mp = mp;
+        this.attack_power = attack_power;
+    }
+    return BattleStats;
+}());
+exports.BattleStats = BattleStats;
+// This class should be instantiated and destroyed without any move happening or Actors being destroyed.
+var Battle = /** @class */ (function () {
+    function Battle(player_supports, enemies) {
+        this.player_supports = player_supports;
+        this.enemies = enemies;
+    }
+    Battle.prototype.update = function () {
+    };
+    return Battle;
+}());
+exports.Battle = Battle;
+
+},{}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("../../jlib");
@@ -51346,8 +51378,9 @@ var actor_1 = require("../../actor");
 var dialogue_1 = require("../../dialogue");
 var globals_1 = require("../../globals");
 var map_1 = require("../../map");
+var battle_1 = require("../../battle");
 var map_walkable = "//////////" +
-    "/-//--/CI/" +
+    "/--/--/CI/" +
     "/-///-/--/" +
     "/--A--B--/" +
     "////////-/" +
@@ -51383,7 +51416,7 @@ var npc_map = new Map([
                 .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
             new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
-        ])],
+        ], actor_1.DEMON_MAT, new battle_1.BattleStats(22, 10, 5))],
     ["D", new actor_1.Actor("Daniel", [
             new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
             new dialogue_1.Dialogue("Have you practiced your rites?"),
@@ -51391,14 +51424,14 @@ var npc_map = new Map([
     ["E", new actor_1.Actor("Eve", [
             new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
             new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).flag('demon_blood'),
-            new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }),
+            new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().flag('demon_blood'),
+            new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
         ])],
     ["F", new actor_1.Actor("Frederick", [
-            new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+            new dialogue_1.Dialogue("New recruits aren't allowed any further.").lock().set_actor_block(true),
         ])],
     ["G", new actor_1.Actor("George", [
             new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
@@ -51419,7 +51452,7 @@ npc_map.forEach(function (actor, key, _) {
     }
 });
 
-},{"../../actor":4,"../../dialogue":7,"../../globals":9,"../../jlib":11,"../../map":13}],7:[function(require,module,exports){
+},{"../../actor":4,"../../battle":5,"../../dialogue":8,"../../globals":10,"../../jlib":12,"../../map":14}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /// These are stored in a list in each actor.
@@ -51456,7 +51489,7 @@ var Dialogue = /** @class */ (function () {
 }());
 exports.Dialogue = Dialogue;
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51507,12 +51540,12 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./data/levels/level1":6,"./input":10,"./player":14,"./world":15,"three":3}],9:[function(require,module,exports){
+},{"./data/levels/level1":7,"./input":11,"./player":15,"./world":16,"three":3}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -51553,7 +51586,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -51633,8 +51666,23 @@ function DirCW(dir) {
     }
 }
 exports.DirCW = DirCW;
+function num_eq(a, b, delta) {
+    if (delta === void 0) { delta = 0.01; }
+    return Math.abs(a - b) < delta;
+}
+exports.num_eq = num_eq;
+function num_gt(a, b, delta) {
+    if (delta === void 0) { delta = 0.01; }
+    return a > b + delta;
+}
+exports.num_gt = num_gt;
+function num_lt(a, b, delta) {
+    if (delta === void 0) { delta = 0.01; }
+    return a < b - delta;
+}
+exports.num_lt = num_lt;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -51663,7 +51711,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":8}],13:[function(require,module,exports){
+},{"./game":9}],14:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51706,7 +51754,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":5,"./jlib":11,"three":3}],14:[function(require,module,exports){
+},{"./constants":6,"./jlib":12,"three":3}],15:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51719,12 +51767,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
+var battle_1 = require("./battle");
 var Player = /** @class */ (function () {
     function Player() {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
         this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.movement_locked = false;
+        this.battle_stats = new battle_1.BattleStats(30, 0, 8);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -51746,7 +51796,7 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == "1") {
+        if (map.walkable.get(move_coor.x, move_coor.z) == "/") {
             return false;
         }
         // Reorient towards npcs if going backwards.
@@ -51778,7 +51828,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./constants":5,"./jlib":11,"three":3}],15:[function(require,module,exports){
+},{"./battle":5,"./constants":6,"./jlib":12,"three":3}],16:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51820,6 +51870,7 @@ var World = /** @class */ (function () {
             }
             if (!meets_criteria) {
                 if (actor.is_blocking) {
+                    player.movement_locked = false;
                     player.move(-1, this.map, this.actors);
                 }
                 continue;
@@ -51842,4 +51893,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./globals":9,"three":3}]},{},[12,1,2]);
+},{"./globals":10,"three":3}]},{},[13,1,2]);

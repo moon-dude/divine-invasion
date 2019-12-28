@@ -44,6 +44,7 @@ export class World {
       }
       if (!meets_criteria) {
         if (actor.is_blocking) {
+          player.movement_locked = false;
           player.move(-1, this.map, this.actors);
         }
         continue;

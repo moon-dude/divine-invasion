@@ -1,16 +1,21 @@
-import { Coor, Dir } from './jlib';
+import { Coor, Dir, num_eq, num_lt, num_gt } from './jlib';
 import { Dialogue } from './dialogue';
 import * as THREE from 'three';
 import { Player } from './player';
 import { TILE_SIZE } from './constants';
+import { BattleStats } from './battle';
 
 
-const ACTOR_OFFSET_FRONT = 0.3;
+const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
 
-var texture = new THREE.TextureLoader().load('assets/cultist.png');
+const cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
+export const CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true });
+
+const demon_texture = new THREE.TextureLoader().load('assets/demon.png');
+export const DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true });
+
 const geometry = new THREE.PlaneGeometry(2.5, 3.5);
-const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
 
 export class Actor {
   public name: string;
@@ -18,13 +23,16 @@ export class Actor {
   public mesh: THREE.Mesh;
   public dialogue: Dialogue[];
   public is_blocking: boolean = false;
+  public battle_stats: BattleStats | null;
   private placed: boolean = false;
 
-  constructor(name: string, dialogue: Dialogue[]) {
+  constructor(name: string, dialogue: Dialogue[], material: THREE.MeshStandardMaterial = CULTIST_MAT, 
+              battle_stats: BattleStats | null = null) {
     this.name = name;
     this.coor = null;
     this.mesh = new THREE.Mesh(geometry, material);
     this.dialogue = dialogue;
+    this.battle_stats = battle_stats;
   }
 
   private need_to_be_placed(player: Player) {
@@ -35,19 +43,19 @@ export class Actor {
       return true;
     }
     // player is on the same line (x or z) and facing towards me.
-    if (player.coor.x != this.coor.x && player.coor.z != this.coor.z) {
+    if (!num_eq(player.coor.x, this.coor.x) && !num_eq(player.coor.z, this.coor.z)) {
       return false;
     }
-    if (player.coor.x < this.coor.x) {
+    if (num_lt(player.coor.x, this.coor.x)) {
       return player.dir == Dir.E;
     }
-    if (player.coor.x > this.coor.x) {
+    if (num_gt(player.coor.x, this.coor.x)) {
       return player.dir == Dir.W;
     }
-    if (player.coor.z < this.coor.z) {
+    if (num_lt(player.coor.z, this.coor.z)) {
       return player.dir == Dir.S;
     }
-    if (player.coor.z < this.coor.z) {
+    if (num_gt(player.coor.z, this.coor.z)) {
       return player.dir == Dir.N;
     }
     return false;

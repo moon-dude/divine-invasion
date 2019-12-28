@@ -5,8 +5,9 @@ var actor_1 = require("../../actor");
 var dialogue_1 = require("../../dialogue");
 var globals_1 = require("../../globals");
 var map_1 = require("../../map");
+var battle_1 = require("../../battle");
 var map_walkable = "//////////" +
-    "/-//--/CI/" +
+    "/--/--/CI/" +
     "/-///-/--/" +
     "/--A--B--/" +
     "////////-/" +
@@ -42,7 +43,7 @@ var npc_map = new Map([
                 .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
             new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
-        ])],
+        ], actor_1.DEMON_MAT, new battle_1.BattleStats(22, 10, 5))],
     ["D", new actor_1.Actor("Daniel", [
             new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
             new dialogue_1.Dialogue("Have you practiced your rites?"),
@@ -50,14 +51,14 @@ var npc_map = new Map([
     ["E", new actor_1.Actor("Eve", [
             new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
             new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).flag('demon_blood'),
-            new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }),
+            new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().flag('demon_blood'),
+            new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
         ])],
     ["F", new actor_1.Actor("Frederick", [
-            new dialogue_1.Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+            new dialogue_1.Dialogue("New recruits aren't allowed any further.").lock().set_actor_block(true),
         ])],
     ["G", new actor_1.Actor("George", [
             new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),

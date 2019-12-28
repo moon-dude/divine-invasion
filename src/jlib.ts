@@ -80,3 +80,15 @@ export function DirCW(dir: Dir): Dir {
       return Dir.W;
   }
 }
+
+export function num_eq(a: number, b: number, delta: number = 0.01): boolean {
+  return Math.abs(a - b) < delta;
+}
+
+export function num_gt(a: number, b: number, delta: number = 0.01): boolean {
+  return a > b + delta;
+}
+
+export function num_lt(a: number, b: number, delta: number = 0.01): boolean {
+  return a < b - delta;
+}

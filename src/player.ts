@@ -3,6 +3,7 @@ import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
 import { TILE_SIZE } from './constants';
 import { TileMap } from './map';
 import { Actor } from './actor';
+import { BattleStats } from './battle';
 
 export class Player {
   coor: Coor = new Coor(1, 1);
@@ -10,6 +11,7 @@ export class Player {
   camera: THREE.PerspectiveCamera = 
     new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
   movement_locked: boolean = false;
+  battle_stats: BattleStats = new BattleStats(30, 0, 8);
 
   public update() {
     const target_x = this.coor.x * TILE_SIZE;
@@ -32,7 +34,7 @@ export class Player {
       return false;
     }
     let move_coor = ApplyDir(this.coor, this.dir, steps);
-    if (map.walkable.get(move_coor.x, move_coor.z) == "1") {
+    if (map.walkable.get(move_coor.x, move_coor.z) == "/") {
       return false;
     }
     // Reorient towards npcs if going backwards.

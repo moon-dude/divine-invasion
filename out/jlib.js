@@ -77,3 +77,18 @@ function DirCW(dir) {
     }
 }
 exports.DirCW = DirCW;
+function num_eq(a, b, delta) {
+    if (delta === void 0) { delta = 0.01; }
+    return Math.abs(a - b) < delta;
+}
+exports.num_eq = num_eq;
+function num_gt(a, b, delta) {
+    if (delta === void 0) { delta = 0.01; }
+    return a > b + delta;
+}
+exports.num_gt = num_gt;
+function num_lt(a, b, delta) {
+    if (delta === void 0) { delta = 0.01; }
+    return a < b - delta;
+}
+exports.num_lt = num_lt;

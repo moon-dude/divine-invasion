@@ -10,19 +10,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
-var ACTOR_OFFSET_FRONT = 0.3;
+var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
-var texture = new THREE.TextureLoader().load('assets/cultist.png');
+var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
+exports.CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true });
+var demon_texture = new THREE.TextureLoader().load('assets/demon.png');
+exports.DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true });
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
-var material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
 var Actor = /** @class */ (function () {
-    function Actor(name, dialogue) {
+    function Actor(name, dialogue, material, battle_stats) {
+        if (material === void 0) { material = exports.CULTIST_MAT; }
+        if (battle_stats === void 0) { battle_stats = null; }
         this.is_blocking = false;
         this.placed = false;
         this.name = name;
         this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
         this.dialogue = dialogue;
+        this.battle_stats = battle_stats;
     }
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
@@ -32,19 +37,19 @@ var Actor = /** @class */ (function () {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
-        if (player.coor.x != this.coor.x && player.coor.z != this.coor.z) {
+        if (!jlib_1.num_eq(player.coor.x, this.coor.x) && !jlib_1.num_eq(player.coor.z, this.coor.z)) {
             return false;
         }
-        if (player.coor.x < this.coor.x) {
+        if (jlib_1.num_lt(player.coor.x, this.coor.x)) {
             return player.dir == jlib_1.Dir.E;
         }
-        if (player.coor.x > this.coor.x) {
+        if (jlib_1.num_gt(player.coor.x, this.coor.x)) {
             return player.dir == jlib_1.Dir.W;
         }
-        if (player.coor.z < this.coor.z) {
+        if (jlib_1.num_lt(player.coor.z, this.coor.z)) {
             return player.dir == jlib_1.Dir.S;
         }
-        if (player.coor.z < this.coor.z) {
+        if (jlib_1.num_gt(player.coor.z, this.coor.z)) {
             return player.dir == jlib_1.Dir.N;
         }
         return false;

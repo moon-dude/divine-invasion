@@ -1,12 +1,13 @@
 import { Grid, Coor } from "../../jlib";
-import { Actor } from "../../actor";
+import { Actor, DEMON_MAT } from "../../actor";
 import { Dialogue } from "../../dialogue";
 import { flags } from "../../globals";
 import { TileMap } from "../../map";
+import { BattleStats } from "../../battle";
 
 var map_walkable: string = 
   "//////////" +
-  "/-//--/CI/" +
+  "/--/--/CI/" +
   "/-///-/--/" +
   "/--A--B--/" +
   "////////-/" +
@@ -46,7 +47,7 @@ var npc_map: Map<string, Actor> = new Map([
       .set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("<< Recieved demon blood! >>").set_criteria(() => flags.has('demon_blood')).flag("has_demon_blood"),
     new Dialogue("Hee hee hee...").set_criteria(() => !flags.has('demon_blood')),
-  ])],
+  ], DEMON_MAT, new BattleStats(22, 10, 5))],
   ["D", new Actor("Daniel", [
     new Dialogue("I can't wait until we start the summoning ritual!"),
     new Dialogue("Have you practiced your rites?"),
@@ -54,14 +55,14 @@ var npc_map: Map<string, Actor> = new Map([
   ["E", new Actor("Eve", [
     new Dialogue("The divination room? It's through here.").set_criteria(() => !flags.has('has_demon_blood')).lock().set_actor_block(true),
     new Dialogue("Do you have your demon blood? You don't?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
-    new Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(() => !flags.has('has_demon_blood')).flag('demon_blood'),
-    new Dialogue("Go find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')),
+    new Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(() => !flags.has('has_demon_blood')).lock().flag('demon_blood'),
+    new Dialogue("Go find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')).lock(),
     new Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(() => flags.has('has_demon_blood')).lock(),
     new Dialogue("You're a psychopath!").set_criteria(() => flags.has('has_demon_blood')).lock(),
     new Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
   ])],
   ["F", new Actor("Frederick", [
-    new Dialogue("New recruits aren't allowed any further.").set_actor_block(true),
+    new Dialogue("New recruits aren't allowed any further.").lock().set_actor_block(true),
   ])],
   ["G", new Actor("George", [
     new Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
