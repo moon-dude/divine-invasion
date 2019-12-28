@@ -10,10 +10,16 @@ Controls: WASD to move, Space to skip dialogue.
 
 ## Run locally
 
-Run both these commands in parallel:
+Install everything with `npm install`
+
+Run all of these commands in parallel:
 
 `npm run-script tsc`
 `npm run-script watch`
+`node server.js`
+
+Then visit:
+http://localhost:8080/
 
 Open the index.html file in a web browser.
 

@@ -7,6 +7,8 @@ watchify out/main.js lib/require.js lib/three.js -o bundle.js
 
 npm run-script tsc
 npm run-script watch
+node server.js
+http://localhost:8080/
 
 https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
 

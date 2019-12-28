@@ -12,8 +12,9 @@ var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
 var ACTOR_OFFSET_FRONT = 0.3;
 var ACTOR_OFFSET_SIDE = 0.3;
-var geometry = new THREE.PlaneGeometry(2, 3);
-var material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
+var texture = new THREE.TextureLoader().load('assets/cultist.png');
+var geometry = new THREE.PlaneGeometry(2.5, 3.5);
+var material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
 var Actor = /** @class */ (function () {
     function Actor(name, dialogue) {
         this.is_blocking = false;
@@ -49,6 +50,7 @@ var Actor = /** @class */ (function () {
         }
         this.mesh.position.x = (this.coor.x + offset_x) * constants_1.TILE_SIZE;
         this.mesh.position.z = (this.coor.z + offset_z) * constants_1.TILE_SIZE;
+        this.mesh.position.y = -0.7;
         this.mesh.rotation.y = player.camera.rotation.y;
     };
     return Actor;

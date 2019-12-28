@@ -8,8 +8,9 @@ import { TILE_SIZE } from './constants';
 const ACTOR_OFFSET_FRONT = 0.3;
 const ACTOR_OFFSET_SIDE = 0.3;
 
-const geometry = new THREE.PlaneGeometry(2, 3);
-const material = new THREE.MeshStandardMaterial({ color: 0xCC3300 });
+var texture = new THREE.TextureLoader().load( 'assets/cultist.png' );
+const geometry = new THREE.PlaneGeometry(2.5, 3.5);
+const material = new THREE.MeshStandardMaterial({ map: texture, transparent: true });
 
 export class Actor {
   public name: string;
@@ -53,6 +54,7 @@ export class Actor {
 
     this.mesh.position.x = (this.coor.x + offset_x) * TILE_SIZE;
     this.mesh.position.z = (this.coor.z + offset_z) * TILE_SIZE;
+    this.mesh.position.y = -0.7;
     
     this.mesh.rotation.y = player.camera.rotation.y;
   }

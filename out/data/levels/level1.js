@@ -7,11 +7,11 @@ var globals_1 = require("../../globals");
 var map_1 = require("../../map");
 var map_walkable = "1111111111" +
     "1001001CI1" +
-    "11A1101101" +
+    "11A1101001" +
     "1100B00001" +
     "1111111101" +
-    "1D00000001" +
-    "1DE1G111F1" +
+    "1D0000D001" +
+    "1HG1E111F1" +
     "1110000101" +
     "1111111101";
 exports.level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
@@ -38,7 +38,7 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
                 .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
                 .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("<< Recieved demon blood! >>").flag("has_demon_blood"),
+            new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
             new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
         ])],
     ["D", new actor_1.Actor("Daniel", [

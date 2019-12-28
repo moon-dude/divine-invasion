@@ -7,11 +7,11 @@ import { TileMap } from "../../map";
 var map_walkable: string = 
   "1111111111" +
   "1001001CI1" +
-  "11A1101101" +
+  "11A1101001" +
   "1100B00001" +
   "1111111101" +
-  "1D00000001" +
-  "1DE1G111F1" +
+  "1D0000D001" +
+  "1HG1E111F1" +
   "1110000101" +
   "1111111101";
 
@@ -42,7 +42,7 @@ var npc_map: Map<string, Actor> = new Map([
     new Dialogue("<< You attacked Incubus and damaged it! >>")
       .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
       .set_criteria(() => flags.has('demon_blood')).lock(),
-    new Dialogue("<< Recieved demon blood! >>").flag("has_demon_blood"),
+    new Dialogue("<< Recieved demon blood! >>").set_criteria(() => flags.has('demon_blood')).flag("has_demon_blood"),
     new Dialogue("Hee hee hee...").set_criteria(() => !flags.has('demon_blood')),
   ])],
   ["D", new Actor("Daniel", [
