@@ -8,8 +8,10 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var DEMON_LIST_JSON = __importStar(require("../raw/demon_list.json"));
-var MAP_ = new Map();
-for (var i = 0; i < DEMON_LIST_JSON.length; i++) {
-    MAP_.set(DEMON_LIST_JSON[i].name, DEMON_LIST_JSON[i]);
-}
-exports.DEMON_MAP = MAP_;
+var map = new Map();
+DEMON_LIST_JSON.demon_list.forEach(function (val) {
+    map.set(val.name, val);
+});
+exports.DEMON_MAP = map;
+console.log(DEMON_LIST_JSON);
+console.log(exports.DEMON_MAP);

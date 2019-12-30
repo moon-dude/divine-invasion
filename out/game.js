@@ -11,9 +11,10 @@ var THREE = __importStar(require("three"));
 var input_1 = require("./input");
 var player_1 = require("./player");
 var world_1 = require("./world");
-var level1_1 = require("./data/levels/level1");
+var level2_1 = require("./data/levels/level2");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
+var battle_1 = require("./battle");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -24,8 +25,8 @@ var Game = /** @class */ (function () {
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
         this.scene.add(this.player.body);
-        this.world = new world_1.World(this.scene, level1_1.level1_data);
-        this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
+        this.world = new world_1.World(this.scene, level2_1.level2_data);
+        this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
     }
     Game.prototype.render = function () {
@@ -57,8 +58,18 @@ var Game = /** @class */ (function () {
                 if (encounter_type != null) {
                     // spawn encounter enemies and start a battle.
                     // create enemy actors.
-                    var enemy_actors = encounter_type.enemies().map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
+                    var enemies = encounter_type.enemies();
+                    var actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
+                    var battle_data = actors.map(function (actor) { return [actor.name, actor.battle_data]; });
+                    for (var i = 0; i < actors.length; i++) {
+                        this.player.body.add(actors[i].mesh);
+                        actors[i].mesh.position.z = -2 + i * .0001;
+                        actors[i].mesh.position.x = 1 * (i - actors.length / 2);
+                    }
+                    battle_data.push(["Player", this.player.battle_data]);
                     console.log("well well 100");
+                    var battle = new battle_1.Battle(battle_data);
+                    this.player.movement_locked = true;
                 }
             }
         }

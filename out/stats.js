@@ -10,19 +10,20 @@ var Stats = /** @class */ (function () {
         this.hp = hp;
         this.mp = mp;
     }
-    Stats.prototype.mod = function (stats) {
-        // hp and mp are added/subtracted.
-        var result = new Stats(this.hp + stats.hp, this.mp + stats.mp);
-        // The rest are multiplied.
-        result.ag = this.ag * stats.ag;
-        result.dx = this.dx * stats.dx;
-        result.lu = this.lu * stats.lu;
-        result.ma = this.ma * stats.ma;
-        result.st = this.st * stats.st;
-        return result;
-    };
+    Stats.BASE_IDENTITY = new Stats(1, 1);
+    Stats.MOD_IDENTITY = new Stats(0, 0);
     return Stats;
 }());
 exports.Stats = Stats;
-exports.STATS_BASE_IDENTITY = new Stats(1, 1);
-exports.STATS_MOD_IDENTITY = new Stats(0, 0);
+function apply_stats_mod(base, mod) {
+    // hp and mp are added/subtracted.
+    var result = new Stats(base.hp + mod.hp, base.mp + mod.mp);
+    // The rest are multiplied.
+    result.ag = base.ag * mod.ag;
+    result.dx = base.dx * mod.dx;
+    result.lu = base.lu * mod.lu;
+    result.ma = base.ma * mod.ma;
+    result.st = base.st * mod.st;
+    return result;
+}
+exports.apply_stats_mod = apply_stats_mod;

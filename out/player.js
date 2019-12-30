@@ -10,17 +10,20 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
+var battle_1 = require("./battle");
+var stats_1 = require("./stats");
 var Player = /** @class */ (function () {
     function Player() {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.light = new THREE.PointLight("#ff9911", 2, 25);
+        this.light = new THREE.PointLight("#ff9911", 1, 20, .5);
         this.movement_locked = false;
+        this.battle_data = new battle_1.BattleData(battle_1.BattleSide.Our, new stats_1.Stats(500, 501), stats_1.Stats.MOD_IDENTITY);
         this.body.add(this.camera);
-        this.light.position.z = 10;
         this.body.add(this.light);
+        this.light.position.x = 5;
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;

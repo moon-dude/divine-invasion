@@ -3,6 +3,8 @@ import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
 import { TILE_SIZE } from './constants';
 import { TileMap } from './map';
 import { Actor } from './actor';
+import { BattleData, BattleSide } from './battle';
+import { Stats } from './stats';
 
 export class Player {
   coor: Coor = new Coor(1, 1);
@@ -10,13 +12,14 @@ export class Player {
   body: THREE.Object3D = new THREE.Object3D();
   camera: THREE.PerspectiveCamera = 
     new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-  private light: THREE.PointLight = new THREE.PointLight("#ff9911", 2, 25);
+  private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, .5);
   movement_locked: boolean = false;
+  battle_data = new BattleData(BattleSide.Our, new Stats(500, 501), Stats.MOD_IDENTITY);
 
   constructor() {
     this.body.add(this.camera);
-    this.light.position.z = 10;
     this.body.add(this.light);
+    this.light.position.x = 5;
   }
 
   public update() {

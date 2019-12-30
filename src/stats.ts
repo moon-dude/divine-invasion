@@ -1,4 +1,7 @@
-export class Stats {
+export class Stats {  
+  public static BASE_IDENTITY: Stats = new Stats(1, 1);
+  public static MOD_IDENTITY: Stats = new Stats(0, 0);
+
   ag: number = 1;
   dx: number = 1;
   hp: number;
@@ -11,22 +14,18 @@ export class Stats {
     this.hp = hp;
     this.mp = mp;
   }
-
-  public mod(stats: Stats): Stats {
-    // hp and mp are added/subtracted.
-    let result = new Stats(this.hp + stats.hp, this.mp + stats.mp);
-
-    // The rest are multiplied.
-    result.ag = this.ag * stats.ag;
-    result.dx = this.dx * stats.dx;
-    result.lu = this.lu * stats.lu;
-    result.ma = this.ma * stats.ma;
-    result.st = this.st * stats.st;
-
-    return result;
-  }
 }
 
-export const STATS_BASE_IDENTITY = new Stats(1, 1);
+export function apply_stats_mod(base: Stats, mod: Stats): Stats {
+  // hp and mp are added/subtracted.
+  let result = new Stats(base.hp + mod.hp, base.mp + mod.mp);
 
-export const STATS_MOD_IDENTITY = new Stats(0, 0);
+  // The rest are multiplied.
+  result.ag = base.ag * mod.ag;
+  result.dx = base.dx * mod.dx;
+  result.lu = base.lu * mod.lu;
+  result.ma = base.ma * mod.ma;
+  result.st = base.st * mod.st;
+
+  return result;
+}

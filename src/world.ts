@@ -51,7 +51,7 @@ export class World {
     this.lights = [];
     for (let x = 1; x < this.map.walkable.width; x += 4) {
       for (let z = 1; z < this.map.walkable.width; z += 4) {
-        const new_light = new THREE.PointLight("#113399", .5);
+        const new_light = new THREE.PointLight("#000033");
         new_light.position.x = x * TILE_SIZE;
         new_light.position.z = z * TILE_SIZE;
         new_light.position.y = 1;

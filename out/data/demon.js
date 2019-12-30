@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var stats_1 = require("../stats");
 var Demon = /** @class */ (function () {
     function Demon() {
         this.affinities = {};
@@ -8,7 +9,7 @@ var Demon = /** @class */ (function () {
         this.race = "";
         this.resists = {};
         this.skills = {};
-        this.stats = new Stats();
+        this.stats = stats_1.Stats.BASE_IDENTITY;
     }
     return Demon;
 }());

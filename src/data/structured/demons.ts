@@ -1,10 +1,13 @@
 import * as DEMON_LIST_JSON from '../raw/demon_list.json';
 import { Demon } from '../demon.js';
 
-let MAP_: Map<string, Demon> = new Map();
+let map: Map<string, Demon> = new Map();
 
-for (let i = 0; i < DEMON_LIST_JSON.length; i++) {
-  MAP_.set(DEMON_LIST_JSON[i].name, DEMON_LIST_JSON[i]);
-}
+DEMON_LIST_JSON.demon_list.forEach((val) => {
+  map.set(val.name, val);
+});
 
-export const DEMON_MAP = MAP_; 
+export const DEMON_MAP = map; 
+
+console.log(DEMON_LIST_JSON);
+console.log(DEMON_MAP);

@@ -3,20 +3,19 @@ import { Dialogue } from './dialogue';
 import * as THREE from 'three';
 import { Player } from './player';
 import { TILE_SIZE } from './constants';
-import * as DEMONS from './data/raw/demons.json';
 import { DEMON_MAP } from './data/structured/demons';
-import { Stats, STATS_BASE_IDENTITY, STATS_MOD_IDENTITY } from './stats';
-import { BattleData, BATTLE_DATA_IDENTITY } from './battle';
+import { Stats } from './stats';
+import { BattleData, BATTLE_DATA_IDENTITY, BattleSide } from './battle';
 
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
 
 const cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
-export const CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true });
+export const CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true, roughness: .3 });
 
 const demon_texture = new THREE.TextureLoader().load('assets/demon.png');
-export const DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true });
+export const DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true, roughness: .3 });
 
 const geometry = new THREE.PlaneGeometry(2.5, 3.5);
 
@@ -41,7 +40,12 @@ export class Actor {
   }
 
   public static from_demon(name: string, coor: Coor | null = null) {
-    return new Actor(name, [], DEMON_MAT, DEMON_MAP.get(name)?.stats || STATS_BASE_IDENTITY);
+    return new Actor(name, [], DEMON_MAT, 
+      new BattleData(
+        BattleSide.Their, 
+        (DEMON_MAP.get(name)?.stats || Stats.BASE_IDENTITY), 
+        Stats.MOD_IDENTITY)
+    );
   }
 
   private need_to_be_placed(player: Player) {

@@ -1,3 +1,5 @@
+import { Stats } from "../stats";
+
 export class Demon {
   affinities: Object = {};
   ailments?: Object = undefined;
@@ -5,5 +7,5 @@ export class Demon {
   race: string = ""; 
   resists: Object = {};
   skills: Object = {};
-  stats: Stats = new Stats();
+  stats: Stats = Stats.BASE_IDENTITY;
 }

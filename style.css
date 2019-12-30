@@ -19,3 +19,12 @@ body {
   color: #0055ff;
   font-size: 0.9em;
 }
+
+#battle_div th {
+  text-align: left;
+  font-size: .7em;
+}
+
+#battle_div td {
+  padding-right: 1.5em;
+}

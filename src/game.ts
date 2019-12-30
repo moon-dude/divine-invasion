@@ -6,6 +6,7 @@ import { level1_data } from './data/levels/level1';
 import { level2_data } from './data/levels/level2';
 import { random_array_element } from './jlib';
 import { Actor } from './actor';
+import { Battle, BattleData } from './battle';
 
 export class Game {
   private world: World;
@@ -20,8 +21,8 @@ export class Game {
 
   constructor() {
     this.scene.add(this.player.body);
-    this.world = new World(this.scene, level1_data);
-    this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
+    this.world = new World(this.scene, level2_data);
+    this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
   }
   
@@ -56,8 +57,19 @@ export class Game {
         if (encounter_type != null) {
           // spawn encounter enemies and start a battle.
           // create enemy actors.
-          let enemy_actors: Actor[] = encounter_type.enemies().map((id) => Actor.from_demon(id, coor));
+          const enemies = encounter_type.enemies();
+          let actors = enemies.map(id => Actor.from_demon(id, coor));
+          let battle_data: [string, BattleData][] = actors.map(
+            actor => [actor.name, actor.battle_data]);
+          for (let i = 0; i < actors.length; i++) {
+            this.player.body.add(actors[i].mesh);
+            actors[i].mesh.position.z = -2 + i * .0001;
+            actors[i].mesh.position.x = 1 * (i - actors.length / 2);
+          }
+          battle_data.push(["Player", this.player.battle_data]);
           console.log("well well 100");
+          let battle: Battle = new Battle(battle_data);
+          this.player.movement_locked = true;
         }
       }
     }

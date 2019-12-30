@@ -32,7 +32,7 @@ var World = /** @class */ (function () {
         this.lights = [];
         for (var x = 1; x < this.map.walkable.width; x += 4) {
             for (var z = 1; z < this.map.walkable.width; z += 4) {
-                var new_light = new THREE.PointLight("#113399", .5);
+                var new_light = new THREE.PointLight("#000033");
                 new_light.position.x = x * constants_1.TILE_SIZE;
                 new_light.position.z = z * constants_1.TILE_SIZE;
                 new_light.position.y = 1;
