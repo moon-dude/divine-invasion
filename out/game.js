@@ -11,7 +11,7 @@ var THREE = __importStar(require("three"));
 var input_1 = require("./input");
 var player_1 = require("./player");
 var world_1 = require("./world");
-var level2_1 = require("./data/levels/level2");
+var level1_1 = require("./data/levels/level1");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
 var Game = /** @class */ (function () {
@@ -23,7 +23,8 @@ var Game = /** @class */ (function () {
         // Rendering.
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
-        this.world = new world_1.World(this.scene, level2_1.level2_data);
+        this.scene.add(this.player.body);
+        this.world = new world_1.World(this.scene, level1_1.level1_data);
         this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
     }

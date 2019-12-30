@@ -11,7 +11,7 @@ var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
-var material = new THREE.MeshStandardMaterial({ color: 0x0ffff0 });
+var material = new THREE.MeshStandardMaterial({ color: 0x221111, roughness: 0.8 });
 function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {

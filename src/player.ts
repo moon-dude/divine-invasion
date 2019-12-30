@@ -7,23 +7,31 @@ import { Actor } from './actor';
 export class Player {
   coor: Coor = new Coor(1, 1);
   dir: Dir = Dir.S;
+  body: THREE.Object3D = new THREE.Object3D();
   camera: THREE.PerspectiveCamera = 
     new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+  private light: THREE.PointLight = new THREE.PointLight("#ff9911", 2, 25);
   movement_locked: boolean = false;
+
+  constructor() {
+    this.body.add(this.camera);
+    this.light.position.z = 10;
+    this.body.add(this.light);
+  }
 
   public update() {
     const target_x = this.coor.x * TILE_SIZE;
     const target_z = this.coor.z * TILE_SIZE;
-    this.camera.position.x += (target_x - this.camera.position.x) * 0.2;
-    this.camera.position.z += (target_z - this.camera.position.z) * 0.2;
+    this.body.position.x += (target_x - this.body.position.x) * 0.2;
+    this.body.position.z += (target_z - this.body.position.z) * 0.2;
     let target_rotation = DirRotation(this.dir);
-    while (target_rotation < this.camera.rotation.y - Math.PI) {
+    while (target_rotation < this.body.rotation.y - Math.PI) {
       target_rotation += Math.PI * 2;
     }
-    while (target_rotation > this.camera.rotation.y + Math.PI + 0.01) {
+    while (target_rotation > this.body.rotation.y + Math.PI + 0.01) {
       target_rotation -= Math.PI * 2;
     }
-    this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
+    this.body.rotation.y += (target_rotation - this.body.rotation.y) * 0.2;
   }
 
   /// Returns true on a successful move.

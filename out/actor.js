@@ -63,7 +63,7 @@ var Actor = /** @class */ (function () {
         return false;
     };
     Actor.prototype.update = function (/* const */ player) {
-        this.mesh.rotation.y = player.camera.rotation.y;
+        this.mesh.rotation.y = player.body.rotation.y;
         if (this.coor == null) {
             return;
         }

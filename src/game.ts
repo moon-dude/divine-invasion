@@ -19,7 +19,8 @@ export class Game {
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
 
   constructor() {
-    this.world = new World(this.scene, level2_data);
+    this.scene.add(this.player.body);
+    this.world = new World(this.scene, level1_data);
     this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
   }

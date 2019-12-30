@@ -71,7 +71,7 @@ export class Actor {
   }
 
   public update(/* const */player: Player) {
-    this.mesh.rotation.y = player.camera.rotation.y;
+    this.mesh.rotation.y = player.body.rotation.y;
 
     if (this.coor == null) {
       return;

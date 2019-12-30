@@ -51310,7 +51310,7 @@ var Actor = /** @class */ (function () {
         return false;
     };
     Actor.prototype.update = function (/* const */ player) {
-        this.mesh.rotation.y = player.camera.rotation.y;
+        this.mesh.rotation.y = player.body.rotation.y;
         if (this.coor == null) {
             return;
         }
@@ -51346,7 +51346,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./battle":5,"./constants":6,"./data/structured/demons":11,"./jlib":15,"./stats":19,"three":3}],5:[function(require,module,exports){
+},{"./battle":5,"./constants":6,"./data/structured/demons":10,"./jlib":15,"./stats":19,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -51385,39 +51385,88 @@ exports.TILE_SIZE = 4;
 },{}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var EncounterType = /** @class */ (function () {
-    function EncounterType(enemies) {
-        this.enemies = enemies;
-    }
-    return EncounterType;
-}());
-exports.EncounterType = EncounterType;
-exports.ENC_INCUBI = new EncounterType(function () {
-    return ["Pixie", "Pixie", "Pixie"];
-});
-
-},{}],8:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var map_1 = require("../../map");
 var jlib_1 = require("../../jlib");
+var actor_1 = require("../../actor");
+var dialogue_1 = require("../../dialogue");
+var globals_1 = require("../../globals");
+var map_1 = require("../../map");
 var level_data_1 = require("./level_data");
-var encounters_1 = require("../encounters");
+var battle_1 = require("../../battle");
 var map_walkable = "//////////" +
-    "/--/--/--/" +
+    "/--/--/CI/" +
     "/-///-/--/" +
-    "/--------/" +
+    "/--A--B--/" +
     "////////-/" +
-    "/--------/" +
-    "/--/-///-/" +
+    "/-----D--/" +
+    "/HG/E///F/" +
     "////-///-/" +
     "/------/-/" +
     "/-/-//-/-/" +
     "////////-/";
-var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
-exports.level2_data = new level_data_1.LevelData(level2_map, [], [encounters_1.ENC_INCUBI], 10);
+var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
+var npc_map = new Map([
+    [
+        "A", new actor_1.Actor("Abel", [
+            new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+                .set_info("<< SPACE: continue >>").lock(),
+            new dialogue_1.Dialogue("You're expected in the divination room.").lock(),
+            new dialogue_1.Dialogue("You know where that is right?"),
+        ])
+    ],
+    ["B", new actor_1.Actor("Beth", [
+            new dialogue_1.Dialogue("My head hurts..."),
+            new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
+        ])],
+    ["C", new actor_1.Actor("Chloe", [
+            new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
+        ])],
+    ["I", new actor_1.Actor("Incubus", [
+            new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You are!?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
+                .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
+                .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
+            new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
+        ], actor_1.DEMON_MAT, battle_1.BATTLE_DATA_IDENTITY)],
+    ["D", new actor_1.Actor("Daniel", [
+            new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
+            new dialogue_1.Dialogue("Have you practiced your rites?"),
+        ])],
+    ["E", new actor_1.Actor("Eve", [
+            new dialogue_1.Dialogue("The divination room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
+            new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().flag('demon_blood'),
+            new dialogue_1.Dialogue("Go find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
+        ])],
+    ["F", new actor_1.Actor("Frederick", [
+            new dialogue_1.Dialogue("New recruits aren't allowed any further.").lock().set_actor_block(true),
+        ])],
+    ["G", new actor_1.Actor("George", [
+            new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
+        ])],
+    ["H", new actor_1.Actor("Harold", [
+            new dialogue_1.Dialogue("Let's see how your laws do against my fist!").set_actor_block(true),
+        ])],
+]);
+var level1_actors = [];
+npc_map.forEach(function (actor, key, _) {
+    for (var x = 0; x < level1_map.walkable.width; x++) {
+        for (var z = 0; z < level1_map.walkable.width; z++) {
+            if (key == level1_map.walkable.get(x, z)) {
+                actor.coor = new jlib_1.Coor(x, z);
+                level1_actors.push(actor);
+            }
+        }
+    }
+});
+exports.level1_data = new level_data_1.LevelData(level1_map, level1_actors, [], 0);
 
-},{"../../jlib":15,"../../map":17,"../encounters":7,"./level_data":9}],9:[function(require,module,exports){
+},{"../../actor":4,"../../battle":5,"../../dialogue":11,"../../globals":13,"../../jlib":15,"../../map":17,"./level_data":8}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -51431,7 +51480,7 @@ var LevelData = /** @class */ (function () {
 }());
 exports.LevelData = LevelData;
 
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 module.exports=[
     {
         "name": "Pixie",
@@ -51530,7 +51579,7 @@ module.exports=[
     }
 ]
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51547,7 +51596,44 @@ for (var i = 0; i < DEMON_LIST_JSON.length; i++) {
 }
 exports.DEMON_MAP = MAP_;
 
-},{"../raw/demon_list.json":10}],12:[function(require,module,exports){
+},{"../raw/demon_list.json":9}],11:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/// These are stored in a list in each actor.
+var Dialogue = /** @class */ (function () {
+    function Dialogue(speech) {
+        this.info = "";
+        this.trigger_criteria = function () { return true; };
+        this.lock_player = false;
+        this.flags = [];
+        this.actor_block = undefined;
+        this.speech = speech;
+    }
+    Dialogue.prototype.flag = function (s) {
+        this.flags.push(s);
+        return this;
+    };
+    Dialogue.prototype.lock = function () {
+        this.lock_player = true;
+        return this;
+    };
+    Dialogue.prototype.set_info = function (val) {
+        this.info = val;
+        return this;
+    };
+    Dialogue.prototype.set_actor_block = function (val) {
+        this.actor_block = val;
+        return this;
+    };
+    Dialogue.prototype.set_criteria = function (trigger_criteria) {
+        this.trigger_criteria = trigger_criteria;
+        return this;
+    };
+    return Dialogue;
+}());
+exports.Dialogue = Dialogue;
+
+},{}],12:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51561,7 +51647,7 @@ var THREE = __importStar(require("three"));
 var input_1 = require("./input");
 var player_1 = require("./player");
 var world_1 = require("./world");
-var level2_1 = require("./data/levels/level2");
+var level1_1 = require("./data/levels/level1");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
 var Game = /** @class */ (function () {
@@ -51573,7 +51659,8 @@ var Game = /** @class */ (function () {
         // Rendering.
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
-        this.world = new world_1.World(this.scene, level2_1.level2_data);
+        this.scene.add(this.player.body);
+        this.world = new world_1.World(this.scene, level1_1.level1_data);
         this.renderer.setSize(window.innerWidth, window.innerHeight - 100);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
     }
@@ -51619,7 +51706,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actor":4,"./data/levels/level2":8,"./input":14,"./jlib":15,"./player":18,"./world":20,"three":3}],13:[function(require,module,exports){
+},{"./actor":4,"./data/levels/level1":7,"./input":14,"./jlib":15,"./player":18,"./world":20,"three":3}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
@@ -51818,7 +51905,7 @@ var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
-var material = new THREE.MeshStandardMaterial({ color: 0x0ffff0 });
+var material = new THREE.MeshStandardMaterial({ color: 0x221111, roughness: 0.8 });
 function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
@@ -51864,22 +51951,27 @@ var Player = /** @class */ (function () {
     function Player() {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
+        this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.light = new THREE.PointLight("#ff9911", 2, 25);
         this.movement_locked = false;
+        this.body.add(this.camera);
+        this.light.position.z = 10;
+        this.body.add(this.light);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
         var target_z = this.coor.z * constants_1.TILE_SIZE;
-        this.camera.position.x += (target_x - this.camera.position.x) * 0.2;
-        this.camera.position.z += (target_z - this.camera.position.z) * 0.2;
+        this.body.position.x += (target_x - this.body.position.x) * 0.2;
+        this.body.position.z += (target_z - this.body.position.z) * 0.2;
         var target_rotation = jlib_1.DirRotation(this.dir);
-        while (target_rotation < this.camera.rotation.y - Math.PI) {
+        while (target_rotation < this.body.rotation.y - Math.PI) {
             target_rotation += Math.PI * 2;
         }
-        while (target_rotation > this.camera.rotation.y + Math.PI + 0.01) {
+        while (target_rotation > this.body.rotation.y + Math.PI + 0.01) {
             target_rotation -= Math.PI * 2;
         }
-        this.camera.rotation.y += (target_rotation - this.camera.rotation.y) * 0.2;
+        this.body.rotation.y += (target_rotation - this.body.rotation.y) * 0.2;
     };
     /// Returns true on a successful move.
     Player.prototype.move = function (steps, map, npcs) {
@@ -51962,6 +52054,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var globals_1 = require("./globals");
 var jlib_1 = require("./jlib");
+var constants_1 = require("./constants");
 var World = /** @class */ (function () {
     function World(scene, level_data) {
         this.dialogue_idx = 0;
@@ -51969,7 +52062,7 @@ var World = /** @class */ (function () {
         this.actors = level_data.actors;
         this.encounter_types = level_data.encounter_types;
         this.encounters = this.make_encounters(this.map, level_data.encounter_count);
-        this.ambient_light = new THREE.AmbientLight("#000099", .5);
+        this.ambient_light = new THREE.AmbientLight("#000099", .2);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
@@ -51983,7 +52076,10 @@ var World = /** @class */ (function () {
         this.lights = [];
         for (var x = 1; x < this.map.walkable.width; x += 4) {
             for (var z = 1; z < this.map.walkable.width; z += 4) {
-                var new_light = new THREE.PointLight("#ff5500", .1);
+                var new_light = new THREE.PointLight("#113399", .5);
+                new_light.position.x = x * constants_1.TILE_SIZE;
+                new_light.position.z = z * constants_1.TILE_SIZE;
+                new_light.position.y = 1;
                 this.lights.push(new_light);
                 scene.add(new_light);
             }
@@ -52042,4 +52138,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./globals":13,"./jlib":15,"three":3}]},{},[16,1,2]);
+},{"./constants":6,"./globals":13,"./jlib":15,"three":3}]},{},[16,1,2]);
