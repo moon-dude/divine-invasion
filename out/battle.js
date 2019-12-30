@@ -8,10 +8,8 @@ var Battle = /** @class */ (function () {
     function Battle(fighters) {
         var _a, _b;
         this.battle_idx = -1;
-        this.battle_div = document.getElementById("battle_div");
         this.battle_tbody = document.getElementById("battle_tbody");
         this.info_div = document.getElementById("battle_info");
-        this.battle_div.style.visibility = "";
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
@@ -51,6 +49,26 @@ var Battle = /** @class */ (function () {
             fighter.data.modded_base_stats().hp + "/" + fighter.data.base_stats.hp + "</td><td>" +
             fighter.data.modded_base_stats().mp + "/" + fighter.data.base_stats.mp;
     };
+    // returns null if battle is not over.
+    Battle.prototype.battle_winner = function () {
+        var winner = battle_data_1.BattleSide.Their;
+        for (var i = 0; i < this.fighters.get(battle_data_1.BattleSide.Our).length; i++) {
+            if (this.fighters.get(battle_data_1.BattleSide.Our)[i].data.modded_base_stats().hp > 0) {
+                winner = battle_data_1.BattleSide.Our;
+                break;
+            }
+        }
+        if (winner == battle_data_1.BattleSide.Their) {
+            return winner;
+        }
+        for (var i = 0; i < this.fighters.get(battle_data_1.BattleSide.Their).length; i++) {
+            if (this.fighters.get(battle_data_1.BattleSide.Their)[i].data.modded_base_stats().hp > 0) {
+                winner = null;
+                break;
+            }
+        }
+        return winner;
+    };
     Battle.prototype.next_turn = function () {
         this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
         this.take_turn();
@@ -60,7 +78,7 @@ var Battle = /** @class */ (function () {
         var turn_index = this.turn_order[this.battle_idx];
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
         if (fighter.data.modded_base_stats().hp <= 0) {
-            this.info_div.innerHTML = "" + fighter.name + " is too dead to attack!";
+            this.info_div.innerHTML = "" + fighter.name + " is dead and can't attack!";
             return;
         }
         // choose a random target.

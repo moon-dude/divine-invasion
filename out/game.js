@@ -23,6 +23,7 @@ var Game = /** @class */ (function () {
         this.input = new input_1.Input();
         this.player = new player_1.Player();
         this.battle = null;
+        this.battle_actors = [];
         // Rendering.
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
@@ -30,6 +31,7 @@ var Game = /** @class */ (function () {
         this.world = new world_1.World(this.scene, level2_1.level2_data);
         this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
+        this.battle_div = document.getElementById("battle_div");
     }
     Game.prototype.render = function () {
         this.renderer.render(this.scene, this.player.camera);
@@ -41,6 +43,18 @@ var Game = /** @class */ (function () {
         this.player.update();
         this.world.update(this.player);
         this.render();
+        if (this.battle != null) {
+            var winner = this.battle.battle_winner();
+            if (winner != null) {
+                this.battle = null;
+                this.player.movement_locked = false;
+                for (var i = 0; i < this.battle_actors.length; i++) {
+                    this.player.body.remove(this.battle_actors[i].mesh);
+                }
+                this.battle_actors = [];
+                this.battle_div.style.visibility = "hidden";
+            }
+        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
@@ -62,16 +76,17 @@ var Game = /** @class */ (function () {
                     // spawn encounter enemies and start a battle.
                     // create enemy actors.
                     var enemies = encounter_type.enemies();
-                    var actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
-                    var battle_fighters = actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
-                    for (var i = 0; i < actors.length; i++) {
-                        this.player.body.add(actors[i].mesh);
-                        actors[i].mesh.position.z = -2 + i * .0001;
-                        actors[i].mesh.position.x = 1 * (i - actors.length / 2);
+                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
+                    var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
+                    for (var i = 0; i < this.battle_actors.length; i++) {
+                        this.player.body.add(this.battle_actors[i].mesh);
+                        this.battle_actors[i].mesh.position.z = -2 + i * .0001;
+                        this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
                     this.battle = new battle_1.Battle(battle_fighters);
                     this.player.movement_locked = true;
+                    this.battle_div.style.visibility = "";
                 }
             }
         }

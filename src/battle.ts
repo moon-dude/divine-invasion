@@ -8,15 +8,12 @@ export class Battle {
   private fighters: Map<BattleSide, BattleFighter[]>;
   private turn_order: BattleIndex[];
   private battle_idx = -1;
-  private battle_div: HTMLElement;
   private battle_tbody: HTMLElement;
   private info_div: HTMLElement;
 
   constructor(fighters: BattleFighter[]) {
-    this.battle_div = document.getElementById("battle_div")!;
     this.battle_tbody = document.getElementById("battle_tbody")!;
     this.info_div = document.getElementById("battle_info")!;
-    this.battle_div.style.visibility = "";
     this.fighters = new Map();
     this.fighters.set(BattleSide.Our, []);
     this.fighters.set(BattleSide.Their, []);
@@ -57,6 +54,27 @@ export class Battle {
       fighter.data.modded_base_stats().mp + "/" + fighter.data.base_stats.mp;
   }
 
+  // returns null if battle is not over.
+  public battle_winner(): BattleSide | null {
+    let winner: BattleSide | null = BattleSide.Their;
+    for (let i = 0; i < this.fighters.get(BattleSide.Our)!.length; i++) {
+      if (this.fighters.get(BattleSide.Our)![i]!.data.modded_base_stats().hp > 0) {
+        winner = BattleSide.Our;
+        break;
+      }
+    }
+    if (winner == BattleSide.Their) {
+      return winner;
+    }
+    for (let i = 0; i < this.fighters.get(BattleSide.Their)!.length; i++) {
+      if (this.fighters.get(BattleSide.Their)![i]!.data.modded_base_stats().hp > 0) {
+        winner = null;
+        break;
+      }
+    }
+    return winner;
+  }
+
   public next_turn() {
     this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
     this.take_turn();
@@ -67,7 +85,7 @@ export class Battle {
     let turn_index = this.turn_order[this.battle_idx]!;
     let fighter = this.fighters.get(turn_index.side)![turn_index.index]!;
     if (fighter.data.modded_base_stats().hp <= 0) {
-      this.info_div.innerHTML = "" + fighter.name + " is too dead to attack!";
+      this.info_div.innerHTML = "" + fighter.name + " is dead and can't attack!";
       return;
     }
     // choose a random target.

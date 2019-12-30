@@ -16,16 +16,19 @@ export class Game {
   private input: Input = new Input();
   private player: Player = new Player();
   private battle: Battle | null = null;
+  private battle_actors: Actor[] = [];
 
   // Rendering.
   private scene: THREE.Scene = new THREE.Scene;
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
+  private battle_div: HTMLElement;
 
   constructor() {
     this.scene.add(this.player.body);
     this.world = new World(this.scene, level2_data);
     this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
+    this.battle_div = document.getElementById("battle_div")!;
   }
   
   private render() {
@@ -39,6 +42,18 @@ export class Game {
     this.player.update();
     this.world.update(this.player);
     this.render();
+    if (this.battle != null) {
+      const winner = this.battle.battle_winner();
+      if (winner != null) {
+        this.battle = null;
+        this.player.movement_locked = false;
+        for (let i = 0; i < this.battle_actors.length; i++) {
+          this.player.body.remove(this.battle_actors[i].mesh);
+        }
+        this.battle_actors = [];
+        this.battle_div.style.visibility = "hidden";
+      }
+    }
   }
 
   public key_down(event: any) {
@@ -61,20 +76,22 @@ export class Game {
           // spawn encounter enemies and start a battle.
           // create enemy actors.
           const enemies = encounter_type.enemies();
-          let actors = enemies.map(id => Actor.from_demon(id, coor));
-          let battle_fighters: BattleFighter[] = actors.map(
+          this.battle_actors = enemies.map(id => Actor.from_demon(id, coor));
+          let battle_fighters: BattleFighter[] = this.battle_actors.map(
             actor => new BattleFighter(actor.name, actor.battle_data));
-          for (let i = 0; i < actors.length; i++) {
-            this.player.body.add(actors[i].mesh);
-            actors[i].mesh.position.z = -2 + i * .0001;
-            actors[i].mesh.position.x = 1 * (i - actors.length / 2);
+          for (let i = 0; i < this.battle_actors.length; i++) {
+            this.player.body.add(this.battle_actors[i].mesh);
+            this.battle_actors[i].mesh.position.z = -2 + i * .0001;
+            this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
           }
           battle_fighters.push(new BattleFighter("Player", this.player.battle_data));
           this.battle = new Battle(battle_fighters);
           this.player.movement_locked = true;
+          this.battle_div.style.visibility = "";
         }
       }
     }
+
     if (result.actioned) {
       this.world.dialogue_idx += 1;
       if (this.battle != null) {
