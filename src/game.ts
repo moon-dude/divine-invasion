@@ -6,7 +6,8 @@ import { level1_data } from './data/levels/level1';
 import { level2_data } from './data/levels/level2';
 import { random_array_element } from './jlib';
 import { Actor } from './actor';
-import { Battle, BattleData } from './battle';
+import { Battle } from './battle';
+import { BattleFighter } from './battle_data';
 
 export class Game {
   private world: World;
@@ -14,6 +15,7 @@ export class Game {
   // Meta.
   private input: Input = new Input();
   private player: Player = new Player();
+  private battle: Battle | null = null;
 
   // Rendering.
   private scene: THREE.Scene = new THREE.Scene;
@@ -28,6 +30,9 @@ export class Game {
   
   private render() {
     this.renderer.render(this.scene, this.player.camera);
+    if (this.battle != null) {
+      this.battle.render();
+    }
   }
 
   public update(): void {
@@ -39,7 +44,6 @@ export class Game {
   public key_down(event: any) {
     const result = this.input.check(event, this.player, this.world.map, this.world.actors);
     if (result.moved) {
-      console.log("well well a");
       this.world.dialogue_idx = 0;
       // check for encounter.
       let encounter_idx: number | null = null;
@@ -50,7 +54,6 @@ export class Game {
         }
       }
       if (encounter_idx != null) {
-        console.log("well well 50");
         // hit encounter.
         const coor = this.world.encounters.splice(encounter_idx, 1)[0];
         let encounter_type = random_array_element(this.world.encounter_types);
@@ -59,22 +62,24 @@ export class Game {
           // create enemy actors.
           const enemies = encounter_type.enemies();
           let actors = enemies.map(id => Actor.from_demon(id, coor));
-          let battle_data: [string, BattleData][] = actors.map(
-            actor => [actor.name, actor.battle_data]);
+          let battle_fighters: BattleFighter[] = actors.map(
+            actor => new BattleFighter(actor.name, actor.battle_data));
           for (let i = 0; i < actors.length; i++) {
             this.player.body.add(actors[i].mesh);
             actors[i].mesh.position.z = -2 + i * .0001;
             actors[i].mesh.position.x = 1 * (i - actors.length / 2);
           }
-          battle_data.push(["Player", this.player.battle_data]);
-          console.log("well well 100");
-          let battle: Battle = new Battle(battle_data);
+          battle_fighters.push(new BattleFighter("Player", this.player.battle_data));
+          this.battle = new Battle(battle_fighters);
           this.player.movement_locked = true;
         }
       }
     }
     if (result.actioned) {
       this.world.dialogue_idx += 1;
+      if (this.battle != null) {
+        this.battle.next_turn();
+      }
     }
   }
 }

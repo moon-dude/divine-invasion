@@ -3,7 +3,7 @@ import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
 import { TILE_SIZE } from './constants';
 import { TileMap } from './map';
 import { Actor } from './actor';
-import { BattleData, BattleSide } from './battle';
+import { BattleData, BattleSide } from './battle_data';
 import { Stats } from './stats';
 
 export class Player {

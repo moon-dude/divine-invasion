@@ -24,10 +24,10 @@ But don't actually make them the real deities. Make them like representations th
 This is like really the work of a religious scholar.
 
 Instead: Detailed Philosophical Archetypes:
-Buddha: Prince yogi archetype, middle way.
-Lucifer: Be True Detective's Matthew McCoughnehey.
-Krishna: Perfect, loving, compassionate, kind, great lover.
-Ameterasu: Aloof, intelligent, stand-off-ish, highly skilled.
+"Belle": Buddha: Prince yogi archetype, middle way. Neutral.
+"Lucky": Lucifer: Be True Detective's Matthew McCoughnehey. Chaos.
+"Chris": Krishna: Perfect, loving, compassionate, kind, great lover. Neutral?
+"Tera": Ameterasu: Aloof, intelligent, stand-off-ish, highly skilled, temper. Law.
 
 
 Major characters:

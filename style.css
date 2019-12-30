@@ -20,6 +20,10 @@ body {
   font-size: 0.9em;
 }
 
+#battle_div {
+  padding: .2em;
+}
+
 #battle_div th {
   text-align: left;
   font-size: .7em;
@@ -27,4 +31,5 @@ body {
 
 #battle_div td {
   padding-right: 1.5em;
+  font-size: .9em;
 }

@@ -5,8 +5,7 @@ import { Player } from './player';
 import { TILE_SIZE } from './constants';
 import { DEMON_MAP } from './data/structured/demons';
 import { Stats } from './stats';
-import { BattleData, BATTLE_DATA_IDENTITY, BattleSide } from './battle';
-
+import { BattleData, BattleSide } from './battle_data';
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
@@ -31,7 +30,7 @@ export class Actor {
 
   constructor(name: string, dialogue: Dialogue[], 
               material: THREE.MeshStandardMaterial = CULTIST_MAT, 
-              battle_data: BattleData = BATTLE_DATA_IDENTITY) {
+              battle_data: BattleData = BattleData.IDENTITY) {
     this.name = name;
     this.coor = null;
     this.mesh = new THREE.Mesh(geometry, material);

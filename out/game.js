@@ -15,12 +15,14 @@ var level2_1 = require("./data/levels/level2");
 var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
 var battle_1 = require("./battle");
+var battle_data_1 = require("./battle_data");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
         // Meta.
         this.input = new input_1.Input();
         this.player = new player_1.Player();
+        this.battle = null;
         // Rendering.
         this.scene = new THREE.Scene;
         this.renderer = new THREE.WebGLRenderer();
@@ -31,6 +33,9 @@ var Game = /** @class */ (function () {
     }
     Game.prototype.render = function () {
         this.renderer.render(this.scene, this.player.camera);
+        if (this.battle != null) {
+            this.battle.render();
+        }
     };
     Game.prototype.update = function () {
         this.player.update();
@@ -40,7 +45,6 @@ var Game = /** @class */ (function () {
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
         if (result.moved) {
-            console.log("well well a");
             this.world.dialogue_idx = 0;
             // check for encounter.
             var encounter_idx = null;
@@ -51,7 +55,6 @@ var Game = /** @class */ (function () {
                 }
             }
             if (encounter_idx != null) {
-                console.log("well well 50");
                 // hit encounter.
                 var coor_1 = this.world.encounters.splice(encounter_idx, 1)[0];
                 var encounter_type = jlib_1.random_array_element(this.world.encounter_types);
@@ -60,21 +63,23 @@ var Game = /** @class */ (function () {
                     // create enemy actors.
                     var enemies = encounter_type.enemies();
                     var actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
-                    var battle_data = actors.map(function (actor) { return [actor.name, actor.battle_data]; });
+                    var battle_fighters = actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < actors.length; i++) {
                         this.player.body.add(actors[i].mesh);
                         actors[i].mesh.position.z = -2 + i * .0001;
                         actors[i].mesh.position.x = 1 * (i - actors.length / 2);
                     }
-                    battle_data.push(["Player", this.player.battle_data]);
-                    console.log("well well 100");
-                    var battle = new battle_1.Battle(battle_data);
+                    battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
+                    this.battle = new battle_1.Battle(battle_fighters);
                     this.player.movement_locked = true;
                 }
             }
         }
         if (result.actioned) {
             this.world.dialogue_idx += 1;
+            if (this.battle != null) {
+                this.battle.next_turn();
+            }
         }
     };
     return Game;

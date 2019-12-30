@@ -4,7 +4,7 @@ import { Dialogue } from "../../dialogue";
 import { flags } from "../../globals";
 import { TileMap } from "../../map";
 import { LevelData } from "./level_data";
-import { BATTLE_DATA_IDENTITY } from "../../battle";
+import { BattleData } from "../../battle_data";
 
 var map_walkable: string = 
   "//////////" +
@@ -48,7 +48,7 @@ var npc_map: Map<string, Actor> = new Map([
       .set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("<< Recieved demon blood! >>").set_criteria(() => flags.has('demon_blood')).flag("has_demon_blood"),
     new Dialogue("Hee hee hee...").set_criteria(() => !flags.has('demon_blood')),
-  ], DEMON_MAT, BATTLE_DATA_IDENTITY)],
+  ], DEMON_MAT, BattleData.IDENTITY)],
   ["D", new Actor("Daniel", [
     new Dialogue("I can't wait until we start the summoning ritual!"),
     new Dialogue("Have you practiced your rites?"),

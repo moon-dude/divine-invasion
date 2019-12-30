@@ -6,7 +6,7 @@ var dialogue_1 = require("../../dialogue");
 var globals_1 = require("../../globals");
 var map_1 = require("../../map");
 var level_data_1 = require("./level_data");
-var battle_1 = require("../../battle");
+var battle_data_1 = require("../../battle_data");
 var map_walkable = "//////////" +
     "/--/--/CI/" +
     "/-///-/--/" +
@@ -44,7 +44,7 @@ var npc_map = new Map([
                 .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
             new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
-        ], actor_1.DEMON_MAT, battle_1.BATTLE_DATA_IDENTITY)],
+        ], actor_1.DEMON_MAT, battle_data_1.BattleData.IDENTITY)],
     ["D", new actor_1.Actor("Daniel", [
             new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
             new dialogue_1.Dialogue("Have you practiced your rites?"),

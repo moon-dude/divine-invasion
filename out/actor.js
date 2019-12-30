@@ -12,7 +12,7 @@ var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
 var demons_1 = require("./data/structured/demons");
 var stats_1 = require("./stats");
-var battle_1 = require("./battle");
+var battle_data_1 = require("./battle_data");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
@@ -23,7 +23,7 @@ var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {
     function Actor(name, dialogue, material, battle_data) {
         if (material === void 0) { material = exports.CULTIST_MAT; }
-        if (battle_data === void 0) { battle_data = battle_1.BATTLE_DATA_IDENTITY; }
+        if (battle_data === void 0) { battle_data = battle_data_1.BattleData.IDENTITY; }
         this.is_blocking = false;
         this.placed = false;
         this.name = name;
@@ -35,7 +35,7 @@ var Actor = /** @class */ (function () {
     Actor.from_demon = function (name, coor) {
         if (coor === void 0) { coor = null; }
         var _a;
-        return new Actor(name, [], exports.DEMON_MAT, new battle_1.BattleData(battle_1.BattleSide.Their, (((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.BASE_IDENTITY), stats_1.Stats.MOD_IDENTITY));
+        return new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.BASE_IDENTITY), stats_1.Stats.MOD_IDENTITY));
     };
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
