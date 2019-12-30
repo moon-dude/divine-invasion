@@ -20,10 +20,16 @@ var Player = /** @class */ (function () {
         this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.light = new THREE.PointLight("#ff9911", 1, 20, .5);
         this.movement_locked = false;
-        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, new stats_1.Stats(500, 501), stats_1.Stats.MOD_IDENTITY);
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
+        var stats = new stats_1.Stats(500, 100);
+        stats.ag = 40;
+        stats.dx = 40;
+        stats.lu = 40;
+        stats.ma = 40;
+        stats.st = 40;
+        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod());
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;

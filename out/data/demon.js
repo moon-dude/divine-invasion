@@ -9,7 +9,7 @@ var Demon = /** @class */ (function () {
         this.race = "";
         this.resists = {};
         this.skills = {};
-        this.stats = stats_1.Stats.BASE_IDENTITY;
+        this.stats = stats_1.Stats.new_base();
     }
     return Demon;
 }());

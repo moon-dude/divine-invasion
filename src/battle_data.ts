@@ -11,11 +11,11 @@ export function other_side(side: BattleSide): BattleSide {
 
 export class BattleData {
   public static IDENTITY: BattleData = 
-    new BattleData(BattleSide.Their, Stats.BASE_IDENTITY, Stats.MOD_IDENTITY);
+    new BattleData(BattleSide.Their, Stats.new_base(), Stats.new_mod());
 
-  side: BattleSide;
-  base_stats: Stats;
-  mod_stats: Stats;
+  public readonly side: BattleSide;
+  public readonly base_stats: Stats;
+  public mod_stats: Stats;
 
   constructor(side: BattleSide, base_stats: Stats, mod_stats: Stats) {
     this.side = side;

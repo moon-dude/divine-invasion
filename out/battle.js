@@ -10,15 +10,19 @@ var Battle = /** @class */ (function () {
         this.battle_idx = -1;
         this.battle_div = document.getElementById("battle_div");
         this.battle_tbody = document.getElementById("battle_tbody");
+        this.info_div = document.getElementById("battle_info");
         this.battle_div.style.visibility = "";
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
         this.turn_order = [];
         for (var i = 0; i < fighters.length; i++) {
-            (_a = this.fighters.get(fighters[i].data.side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
-            this.turn_order.push(new battle_data_1.BattleIndex(fighters[i].data.side, (((_b = this.fighters.get(fighters[i].data.side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
+            var side = fighters[i].data.side;
+            (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
+            this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
+        console.log(this.fighters);
+        console.log(this.turn_order);
     }
     Battle.prototype.render = function () {
         this.battle_tbody.innerHTML = "";
@@ -55,16 +59,26 @@ var Battle = /** @class */ (function () {
         // get who's turn it is.
         var turn_index = this.turn_order[this.battle_idx];
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
+        if (fighter.data.modded_base_stats().hp <= 0) {
+            this.info_div.innerHTML = "" + fighter.name + " is too dead to attack!";
+            return;
+        }
         // choose a random target.
-        var target = jlib_1.random_array_element(this.fighters.get(battle_data_1.other_side(fighter.data.side)));
+        var target = this.get_attack_target(fighter);
         if (target == null) {
+            this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
             return;
         }
         // attack target.
         this.attack(fighter, target);
     };
+    Battle.prototype.get_attack_target = function (attacker) {
+        return jlib_1.random_array_element(this.fighters.get(battle_data_1.other_side(attacker.data.side))
+            .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
+    };
     Battle.prototype.attack = function (attacker, target) {
         target.data.mod_stats.hp -= attacker.data.modded_base_stats().st + attacker.data.modded_base_stats().dx;
+        this.info_div.innerHTML = "" + attacker.name + " attacked " + target.name + "!";
     };
     return Battle;
 }());

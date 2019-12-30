@@ -10,14 +10,16 @@ var Stats = /** @class */ (function () {
         this.hp = hp;
         this.mp = mp;
     }
-    Stats.BASE_IDENTITY = new Stats(1, 1);
-    Stats.MOD_IDENTITY = new Stats(0, 0);
+    Stats.new_base = function () { return new Stats(1, 1); };
+    ;
+    Stats.new_mod = function () { return new Stats(0, 0); };
+    ;
     return Stats;
 }());
 exports.Stats = Stats;
 function apply_stats_mod(base, mod) {
     // hp and mp are added/subtracted.
-    var result = new Stats(base.hp + mod.hp, base.mp + mod.mp);
+    var result = new Stats(Math.max(0, base.hp + mod.hp), Math.max(0, base.mp + mod.mp));
     // The rest are multiplied.
     result.ag = base.ag * mod.ag;
     result.dx = base.dx * mod.dx;

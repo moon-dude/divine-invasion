@@ -7,5 +7,5 @@ export class Demon {
   race: string = ""; 
   resists: Object = {};
   skills: Object = {};
-  stats: Stats = Stats.BASE_IDENTITY;
+  stats: Stats = Stats.new_base();
 }

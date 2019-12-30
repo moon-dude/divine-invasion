@@ -1,5 +1,4 @@
 import { Player } from "./player";
-import { ApplyDir, DirCW } from "./jlib";
 import { TileMap } from "./map";
 import { Actor } from "./actor";
 

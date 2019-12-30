@@ -1,7 +1,4 @@
 export class Stats {  
-  public static BASE_IDENTITY: Stats = new Stats(1, 1);
-  public static MOD_IDENTITY: Stats = new Stats(0, 0);
-
   ag: number = 1;
   dx: number = 1;
   hp: number;
@@ -14,11 +11,16 @@ export class Stats {
     this.hp = hp;
     this.mp = mp;
   }
+
+  public static new_base(): Stats { return new Stats(1, 1); };
+  public static new_mod(): Stats { return new Stats(0, 0); };
 }
 
 export function apply_stats_mod(base: Stats, mod: Stats): Stats {
   // hp and mp are added/subtracted.
-  let result = new Stats(base.hp + mod.hp, base.mp + mod.mp);
+  let result = new Stats(
+    Math.max(0, base.hp + mod.hp), 
+    Math.max(0, base.mp + mod.mp));
 
   // The rest are multiplied.
   result.ag = base.ag * mod.ag;

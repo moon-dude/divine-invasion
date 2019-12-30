@@ -51282,7 +51282,7 @@ var Actor = /** @class */ (function () {
     Actor.from_demon = function (name, coor) {
         if (coor === void 0) { coor = null; }
         var _a;
-        return new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.BASE_IDENTITY), stats_1.Stats.MOD_IDENTITY));
+        return new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.new_base()), stats_1.Stats.new_mod()));
     };
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
@@ -51359,15 +51359,19 @@ var Battle = /** @class */ (function () {
         this.battle_idx = -1;
         this.battle_div = document.getElementById("battle_div");
         this.battle_tbody = document.getElementById("battle_tbody");
+        this.info_div = document.getElementById("battle_info");
         this.battle_div.style.visibility = "";
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
         this.turn_order = [];
         for (var i = 0; i < fighters.length; i++) {
-            (_a = this.fighters.get(fighters[i].data.side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
-            this.turn_order.push(new battle_data_1.BattleIndex(fighters[i].data.side, (((_b = this.fighters.get(fighters[i].data.side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
+            var side = fighters[i].data.side;
+            (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
+            this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
+        console.log(this.fighters);
+        console.log(this.turn_order);
     }
     Battle.prototype.render = function () {
         this.battle_tbody.innerHTML = "";
@@ -51404,16 +51408,26 @@ var Battle = /** @class */ (function () {
         // get who's turn it is.
         var turn_index = this.turn_order[this.battle_idx];
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
+        if (fighter.data.modded_base_stats().hp <= 0) {
+            this.info_div.innerHTML = "" + fighter.name + " is too dead to attack!";
+            return;
+        }
         // choose a random target.
-        var target = jlib_1.random_array_element(this.fighters.get(battle_data_1.other_side(fighter.data.side)));
+        var target = this.get_attack_target(fighter);
         if (target == null) {
+            this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
             return;
         }
         // attack target.
         this.attack(fighter, target);
     };
+    Battle.prototype.get_attack_target = function (attacker) {
+        return jlib_1.random_array_element(this.fighters.get(battle_data_1.other_side(attacker.data.side))
+            .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
+    };
     Battle.prototype.attack = function (attacker, target) {
         target.data.mod_stats.hp -= attacker.data.modded_base_stats().st + attacker.data.modded_base_stats().dx;
+        this.info_div.innerHTML = "" + attacker.name + " attacked " + target.name + "!";
     };
     return Battle;
 }());
@@ -51441,7 +51455,7 @@ var BattleData = /** @class */ (function () {
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
     };
-    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.BASE_IDENTITY, stats_1.Stats.MOD_IDENTITY);
+    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod());
     return BattleData;
 }());
 exports.BattleData = BattleData;
@@ -51893,6 +51907,22 @@ function random_array_element(array) {
     return array[Math.floor(array.length * Math.random())];
 }
 exports.random_array_element = random_array_element;
+var Unsigned = /** @class */ (function () {
+    function Unsigned(val) {
+        this.val = val > 0 ? val : 0;
+    }
+    Unsigned.prototype.plus = function (delta) {
+        this.val += delta;
+        if (this.val < 0) {
+            this.val = 0;
+        }
+    };
+    Unsigned.prototype.value = function () {
+        return this.val;
+    };
+    return Unsigned;
+}());
+exports.Unsigned = Unsigned;
 
 },{}],17:[function(require,module,exports){
 "use strict";
@@ -51976,10 +52006,16 @@ var Player = /** @class */ (function () {
         this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.light = new THREE.PointLight("#ff9911", 1, 20, .5);
         this.movement_locked = false;
-        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, new stats_1.Stats(500, 501), stats_1.Stats.MOD_IDENTITY);
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
+        var stats = new stats_1.Stats(500, 100);
+        stats.ag = 40;
+        stats.dx = 40;
+        stats.lu = 40;
+        stats.ma = 40;
+        stats.st = 40;
+        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod());
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -52046,14 +52082,16 @@ var Stats = /** @class */ (function () {
         this.hp = hp;
         this.mp = mp;
     }
-    Stats.BASE_IDENTITY = new Stats(1, 1);
-    Stats.MOD_IDENTITY = new Stats(0, 0);
+    Stats.new_base = function () { return new Stats(1, 1); };
+    ;
+    Stats.new_mod = function () { return new Stats(0, 0); };
+    ;
     return Stats;
 }());
 exports.Stats = Stats;
 function apply_stats_mod(base, mod) {
     // hp and mp are added/subtracted.
-    var result = new Stats(base.hp + mod.hp, base.mp + mod.mp);
+    var result = new Stats(Math.max(0, base.hp + mod.hp), Math.max(0, base.mp + mod.mp));
     // The rest are multiplied.
     result.ag = base.ag * mod.ag;
     result.dx = base.dx * mod.dx;

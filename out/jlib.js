@@ -119,3 +119,19 @@ function random_array_element(array) {
     return array[Math.floor(array.length * Math.random())];
 }
 exports.random_array_element = random_array_element;
+var Unsigned = /** @class */ (function () {
+    function Unsigned(val) {
+        this.val = val > 0 ? val : 0;
+    }
+    Unsigned.prototype.plus = function (delta) {
+        this.val += delta;
+        if (this.val < 0) {
+            this.val = 0;
+        }
+    };
+    Unsigned.prototype.value = function () {
+        return this.val;
+    };
+    return Unsigned;
+}());
+exports.Unsigned = Unsigned;

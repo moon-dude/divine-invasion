@@ -42,8 +42,8 @@ export class Actor {
     return new Actor(name, [], DEMON_MAT, 
       new BattleData(
         BattleSide.Their, 
-        (DEMON_MAP.get(name)?.stats || Stats.BASE_IDENTITY), 
-        Stats.MOD_IDENTITY)
+        (DEMON_MAP.get(name)?.stats || Stats.new_base()), 
+        Stats.new_mod())
     );
   }
 

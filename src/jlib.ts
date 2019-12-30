@@ -120,3 +120,22 @@ export function random_array_element<T>(array: T[]): T | null {
   }
   return array[Math.floor(array.length * Math.random())];
 }
+
+export class Unsigned {
+  private val: number;
+
+  constructor(val: number) {
+    this.val = val > 0 ? val : 0;
+  }
+
+  plus(delta: number): void {
+    this.val += delta;
+    if (this.val < 0) {
+      this.val = 0;
+    }
+  }
+
+  value(): number {
+    return this.val;
+  }
+}

@@ -19,7 +19,7 @@ var BattleData = /** @class */ (function () {
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
     };
-    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.BASE_IDENTITY, stats_1.Stats.MOD_IDENTITY);
+    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod());
     return BattleData;
 }());
 exports.BattleData = BattleData;
