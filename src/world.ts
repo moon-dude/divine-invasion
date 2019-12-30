@@ -4,12 +4,17 @@ import { TileMap } from "./map";
 import { Actor } from "./actor";
 import { Player } from './player';
 import { flags } from './globals';
+import { LevelData } from './data/levels/level_data';
+import { Coor, shuffle_array } from './jlib';
+import { EncounterType } from './data/encounters';
 
 export class World {
   // data.
   map: TileMap;
   actors: Actor[];
   dialogue_idx: number = 0;
+  encounter_types: EncounterType[];
+  encounters: Coor[];
   
   // Three objects.
   private ambient_light: THREE.AmbientLight;
@@ -20,9 +25,12 @@ export class World {
   private speech_div: HTMLElement;
   private info_div: HTMLElement;
 
-  constructor(scene: THREE.Scene, map: TileMap, actors: Actor[]) {
-    this.map = map;
-    this.actors = actors;
+  constructor(scene: THREE.Scene, level_data: LevelData) {
+    this.map = level_data.map;
+    this.actors = level_data.actors;
+    this.encounter_types = level_data.encounter_types;
+    this.encounters = this.make_encounters(this.map, level_data.encounter_count);
+
     this.ambient_light = new THREE.AmbientLight("#000099", .5);
 
     this.speaker_div = document.getElementById("dialogue_speaker")!;
@@ -47,6 +55,17 @@ export class World {
         scene.add(new_light);
       }
     }
+  }
+
+  /// Identify all of the open tiles and pick a random unique set.
+  private make_encounters(map: TileMap, count: number): Coor[] {
+    let open_coors: Coor[] = map.walkable.filter_eq("-");
+    shuffle_array(open_coors);
+    let result: Coor[] = [];
+    for (let i = 0; i < count && i < open_coors.length; i++) {
+      result.push(open_coors[i]);
+    }
+    return result;
   }
 
   public update(player: Player) {

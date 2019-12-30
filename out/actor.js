@@ -10,6 +10,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
+var demons_1 = require("./data/structured/demons");
+var stats_1 = require("./stats");
+var battle_1 = require("./battle");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
@@ -18,17 +21,22 @@ var demon_texture = new THREE.TextureLoader().load('assets/demon.png');
 exports.DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true });
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {
-    function Actor(name, dialogue, material, battle_stats) {
+    function Actor(name, dialogue, material, battle_data) {
         if (material === void 0) { material = exports.CULTIST_MAT; }
-        if (battle_stats === void 0) { battle_stats = null; }
+        if (battle_data === void 0) { battle_data = battle_1.BATTLE_DATA_IDENTITY; }
         this.is_blocking = false;
         this.placed = false;
         this.name = name;
         this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
         this.dialogue = dialogue;
-        this.battle_stats = battle_stats;
+        this.battle_data = battle_data;
     }
+    Actor.from_demon = function (name, coor) {
+        if (coor === void 0) { coor = null; }
+        var _a;
+        return new Actor(name, [], exports.DEMON_MAT, ((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.STATS_BASE_IDENTITY);
+    };
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
             return false;

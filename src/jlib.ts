@@ -11,8 +11,20 @@ export class Grid<T> {
     this.count = values.length;
   }
 
-  get(x: number, z: number) {
+  public get(x: number, z: number) {
     return this.values[z * this.width + x];
+  }
+
+  public filter_eq(value_match: T): Coor[] {
+    let result = [];
+    for (let x = 0; x < this.width; x++) {
+      for (let z = 0; z < this.depth; z++) {
+        if (this.get(x, z) == value_match) {
+          result.push(new Coor(x, z));
+        }
+      }
+    }
+    return result;
   }
 
   static from_string(s: string, width: number): Grid<string> {
@@ -91,4 +103,20 @@ export function num_gt(a: number, b: number, delta: number = 0.01): boolean {
 
 export function num_lt(a: number, b: number, delta: number = 0.01): boolean {
   return a < b - delta;
+}
+
+export function shuffle_array(array: any[]) {
+  for (var i = array.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+}
+
+export function random_array_element<T>(array: T[]): T | null {
+  if (array.length == 0) {
+    return null;
+  }
+  return array[Math.floor(array.length * Math.random())];
 }

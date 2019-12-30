@@ -3,7 +3,10 @@ import { Dialogue } from './dialogue';
 import * as THREE from 'three';
 import { Player } from './player';
 import { TILE_SIZE } from './constants';
-import { BattleStats } from './battle';
+import * as DEMONS from './data/raw/demons.json';
+import { DEMON_MAP } from './data/structured/demons';
+import { Stats, STATS_BASE_IDENTITY, STATS_MOD_IDENTITY } from './stats';
+import { BattleData, BATTLE_DATA_IDENTITY } from './battle';
 
 
 const ACTOR_OFFSET_FRONT = 0.4;
@@ -23,16 +26,22 @@ export class Actor {
   public mesh: THREE.Mesh;
   public dialogue: Dialogue[];
   public is_blocking: boolean = false;
-  public battle_stats: BattleStats | null;
+  public battle_data: BattleData;
+
   private placed: boolean = false;
 
-  constructor(name: string, dialogue: Dialogue[], material: THREE.MeshStandardMaterial = CULTIST_MAT, 
-              battle_stats: BattleStats | null = null) {
+  constructor(name: string, dialogue: Dialogue[], 
+              material: THREE.MeshStandardMaterial = CULTIST_MAT, 
+              battle_data: BattleData = BATTLE_DATA_IDENTITY) {
     this.name = name;
     this.coor = null;
     this.mesh = new THREE.Mesh(geometry, material);
     this.dialogue = dialogue;
-    this.battle_stats = battle_stats;
+    this.battle_data = battle_data;
+  }
+
+  public static from_demon(name: string, coor: Coor | null = null) {
+    return new Actor(name, [], DEMON_MAT, DEMON_MAP.get(name)?.stats || STATS_BASE_IDENTITY);
   }
 
   private need_to_be_placed(player: Player) {

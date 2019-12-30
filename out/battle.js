@@ -1,17 +1,21 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// class Skill { }
-var BattleStats = /** @class */ (function () {
-    function BattleStats(hp, mp, attack_power) {
-        this.max_hp = hp;
-        this.hp = hp;
-        this.max_mp = mp;
-        this.mp = mp;
-        this.attack_power = attack_power;
+var stats_1 = require("./stats");
+var BattleSide;
+(function (BattleSide) {
+    BattleSide[BattleSide["Our"] = 0] = "Our";
+    BattleSide[BattleSide["Their"] = 1] = "Their";
+})(BattleSide = exports.BattleSide || (exports.BattleSide = {}));
+var BattleData = /** @class */ (function () {
+    function BattleData(side, base_stats, mod_stats) {
+        this.side = side;
+        this.base_stats = base_stats;
+        this.mod_stats = mod_stats;
     }
-    return BattleStats;
+    return BattleData;
 }());
-exports.BattleStats = BattleStats;
+exports.BattleData = BattleData;
+exports.BATTLE_DATA_IDENTITY = new BattleData(BattleSide.Their, stats_1.STATS_BASE_IDENTITY, stats_1.STATS_MOD_IDENTITY);
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
     function Battle(player_supports, enemies) {

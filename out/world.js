@@ -9,11 +9,14 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var globals_1 = require("./globals");
+var jlib_1 = require("./jlib");
 var World = /** @class */ (function () {
-    function World(scene, map, actors) {
+    function World(scene, level_data) {
         this.dialogue_idx = 0;
-        this.map = map;
-        this.actors = actors;
+        this.map = level_data.map;
+        this.actors = level_data.actors;
+        this.encounter_types = level_data.encounter_types;
+        this.encounters = this.make_encounters(this.map, level_data.encounter_count);
         this.ambient_light = new THREE.AmbientLight("#000099", .5);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
@@ -34,6 +37,16 @@ var World = /** @class */ (function () {
             }
         }
     }
+    /// Identify all of the open tiles and pick a random unique set.
+    World.prototype.make_encounters = function (map, count) {
+        var open_coors = map.walkable.filter_eq("-");
+        jlib_1.shuffle_array(open_coors);
+        var result = [];
+        for (var i = 0; i < count && i < open_coors.length; i++) {
+            result.push(open_coors[i]);
+        }
+        return result;
+    };
     World.prototype.update = function (player) {
         this.speaker_div.innerHTML = "";
         this.speech_div.innerHTML = "";

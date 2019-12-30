@@ -5,6 +5,7 @@ var actor_1 = require("../../actor");
 var dialogue_1 = require("../../dialogue");
 var globals_1 = require("../../globals");
 var map_1 = require("../../map");
+var level_data_1 = require("./level_data");
 var battle_1 = require("../../battle");
 var map_walkable = "//////////" +
     "/--/--/CI/" +
@@ -17,7 +18,7 @@ var map_walkable = "//////////" +
     "/------/-/" +
     "/-/-//-/-/" +
     "////////-/";
-exports.level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
+var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
 var npc_map = new Map([
     [
         "A", new actor_1.Actor("Abel", [
@@ -43,7 +44,7 @@ var npc_map = new Map([
                 .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
             new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
-        ], actor_1.DEMON_MAT, new battle_1.BattleStats(22, 10, 5))],
+        ], actor_1.DEMON_MAT, battle_1.BATTLE_DATA_IDENTITY)],
     ["D", new actor_1.Actor("Daniel", [
             new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
             new dialogue_1.Dialogue("Have you practiced your rites?"),
@@ -67,14 +68,15 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("Let's see how your laws do against my fist!").set_actor_block(true),
         ])],
 ]);
-exports.level1_actors = [];
+var level1_actors = [];
 npc_map.forEach(function (actor, key, _) {
-    for (var x = 0; x < exports.level1_map.walkable.width; x++) {
-        for (var z = 0; z < exports.level1_map.walkable.width; z++) {
-            if (key == exports.level1_map.walkable.get(x, z)) {
+    for (var x = 0; x < level1_map.walkable.width; x++) {
+        for (var z = 0; z < level1_map.walkable.width; z++) {
+            if (key == level1_map.walkable.get(x, z)) {
                 actor.coor = new jlib_1.Coor(x, z);
-                exports.level1_actors.push(actor);
+                level1_actors.push(actor);
             }
         }
     }
 });
+exports.level1_data = new level_data_1.LevelData(level1_map, level1_actors, [], 0);

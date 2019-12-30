@@ -3,7 +3,8 @@ import { Actor, DEMON_MAT } from "../../actor";
 import { Dialogue } from "../../dialogue";
 import { flags } from "../../globals";
 import { TileMap } from "../../map";
-import { BattleStats } from "../../battle";
+import { LevelData } from "./level_data";
+import { BATTLE_DATA_IDENTITY } from "../../battle";
 
 var map_walkable: string = 
   "//////////" +
@@ -18,7 +19,7 @@ var map_walkable: string =
   "/-/-//-/-/" +
   "////////-/";
 
-export var level1_map = new TileMap(Grid.from_string(map_walkable, 10));
+var level1_map = new TileMap(Grid.from_string(map_walkable, 10));
 
 var npc_map: Map<string, Actor> = new Map([
   [
@@ -47,7 +48,7 @@ var npc_map: Map<string, Actor> = new Map([
       .set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("<< Recieved demon blood! >>").set_criteria(() => flags.has('demon_blood')).flag("has_demon_blood"),
     new Dialogue("Hee hee hee...").set_criteria(() => !flags.has('demon_blood')),
-  ], DEMON_MAT, new BattleStats(22, 10, 5))],
+  ], DEMON_MAT, BATTLE_DATA_IDENTITY)],
   ["D", new Actor("Daniel", [
     new Dialogue("I can't wait until we start the summoning ritual!"),
     new Dialogue("Have you practiced your rites?"),
@@ -72,7 +73,7 @@ var npc_map: Map<string, Actor> = new Map([
   ])],
 ]);
 
-export var level1_actors: Actor[] = [];
+var level1_actors: Actor[] = [];
 npc_map.forEach((actor, key, _) => {
   for (let x = 0; x < level1_map.walkable.width; x++) {
     for (let z = 0; z < level1_map.walkable.width; z++) {
@@ -83,3 +84,5 @@ npc_map.forEach((actor, key, _) => {
     }
   }
 });
+
+export let level1_data: LevelData = new LevelData(level1_map, level1_actors, [], 0);
