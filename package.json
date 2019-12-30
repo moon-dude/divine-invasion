@@ -8,9 +8,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc -p c:/Users/alpha/dev/divinejs/tsconfig.json --watch",
+    "tsc": "tsc -p tsconfig.json --watch",
     "watch": "watchify out/main.js lib/require.js lib/three.js -o bundle.js",
-    "server": "node server.js"
+    "server": "node server.js",
+    "dev-all": "npm run-script tsc & npm run-script watch & npm runs-script server"
   },
   "author": "",
   "license": "ISC",

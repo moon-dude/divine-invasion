@@ -52038,7 +52038,7 @@ var World = /** @class */ (function () {
         this.actors = level_data.actors;
         this.encounter_types = level_data.encounter_types;
         this.encounters = this.make_encounters(this.map, level_data.encounter_count);
-        this.ambient_light = new THREE.AmbientLight("#000099", .2);
+        this.ambient_light = new THREE.AmbientLight("#000099", .8);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
@@ -52052,7 +52052,7 @@ var World = /** @class */ (function () {
         this.lights = [];
         for (var x = 1; x < this.map.walkable.width; x += 4) {
             for (var z = 1; z < this.map.walkable.width; z += 4) {
-                var new_light = new THREE.PointLight("#000033");
+                var new_light = new THREE.PointLight("#0000ff");
                 new_light.position.x = x * constants_1.TILE_SIZE;
                 new_light.position.z = z * constants_1.TILE_SIZE;
                 new_light.position.y = 1;
