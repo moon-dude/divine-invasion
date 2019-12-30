@@ -7,7 +7,7 @@ import { level2_data } from './data/levels/level2';
 import { random_array_element } from './jlib';
 import { Actor } from './actor';
 import { Battle } from './battle';
-import { BattleFighter } from './battle_data';
+import { BattleFighter, BattleSide } from './battle_data';
 
 export class Game {
   private world: World;
@@ -46,12 +46,16 @@ export class Game {
       const winner = this.battle.battle_winner();
       if (winner != null) {
         this.battle = null;
-        this.player.movement_locked = false;
-        for (let i = 0; i < this.battle_actors.length; i++) {
-          this.player.body.remove(this.battle_actors[i].mesh);
+          if (winner == BattleSide.Our) {
+          this.player.movement_locked = false;
+          for (let i = 0; i < this.battle_actors.length; i++) {
+            this.player.body.remove(this.battle_actors[i].mesh);
+          }
+          this.battle_actors = [];
+          this.battle_div.style.visibility = "hidden";
+        } else {
+          this.battle_div.innerHTML = "YOU DIED";
         }
-        this.battle_actors = [];
-        this.battle_div.style.visibility = "hidden";
       }
     }
   }
