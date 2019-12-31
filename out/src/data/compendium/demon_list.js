@@ -1,37 +1,70 @@
-// import { Demon, RawDemon } from "../demon";
-// import { SkillElement, SkillResist } from "../skill";
-
-// import * as DEMONS_JSON from "../raw/mini/demons.json"
-
-// let demon_map: Map<string, Demon> = new Map();
-
-// for (const entry of DEMONS_JSON.entries) {
-//   demon_map.set(entry.name, entry);
-// }
-
-// function demon_from(name: string, demon: RawDemon): Demon {
-//   let result = new Demon();
-//   result.affinities = demon.affinities;
-//   result.ailments = demon.ailments;
-//   result.level = demon.lvl;
-//   result.race = demon.race;
-//   result.resists = structure_resists(demon.resists);
-//   for (const skill of demon.skills) {
-//     result.skills.set(skill[0], skill[1]);
-//   }
-//   return result;
-// }
-
-// export const DEMON_MAP: Map<string, Demon> = demon_map;
-
-// function structure_resists(resists: [string, string][]): Map<SkillElement, string> {
-//   let result: Map<SkillElement, string> = new Map();
-//   for (const entry of resists) {
-
-//   }
-//   return result;
-// }
-
+"use strict";
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+var e_1, _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+var demon_1 = require("../demon");
+var DEMONS_JSON = __importStar(require("../../../raw/mini/demons.json"));
+var demon_map = new Map();
+try {
+    for (var _b = __values(DEMONS_JSON.entries), _c = _b.next(); !_c.done; _c = _b.next()) {
+        var entry = _c.value;
+        demon_map.set(entry.name, demon_from(name, DEMONS_JSON[name]));
+    }
+}
+catch (e_1_1) { e_1 = { error: e_1_1 }; }
+finally {
+    try {
+        if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+    }
+    finally { if (e_1) throw e_1.error; }
+}
+function demon_from(name, demon) {
+    var e_2, _a;
+    var result = new demon_1.Demon();
+    result.affinities = demon.affinities;
+    result.ailments = demon.ailments;
+    result.level = demon.lvl;
+    result.race = demon.race;
+    result.resists = structure_resists(demon.resists);
+    try {
+        for (var _b = __values(demon.skills), _c = _b.next(); !_c.done; _c = _b.next()) {
+            var skill = _c.value;
+            result.skills.set(skill[0], skill[1]);
+        }
+    }
+    catch (e_2_1) { e_2 = { error: e_2_1 }; }
+    finally {
+        try {
+            if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+        }
+        finally { if (e_2) throw e_2.error; }
+    }
+    return result;
+}
+exports.DEMON_MAP = demon_map;
+function structure_resists(resists) {
+    var result = new Map();
+    for (var key in resists) {
+    }
+    return result;
+}
 // export const DEMON_MAP: Map<string, Demon> = new Map([
 //   {
 //     name: "Pixie",

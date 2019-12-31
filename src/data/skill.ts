@@ -1,18 +1,28 @@
 export enum SkillElement {
   Phys,
   Gun,
+  Fire,
+  Ice,
   Elec,
   Force,
   Dark,
   Light,
   Support,
   Recovery,
+  Ailment,
+  Almighty,
+}
+
+export enum SkillResist {
+  Weak,
+  Resist
 }
 
 export enum SkillPower {
   Weak = 2,
   Medium = 3,
-  Strong = 4,
+  Heavy = 4,
+  Severe = 5,
 }
 
 export enum SkillTarget {

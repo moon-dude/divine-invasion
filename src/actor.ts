@@ -5,7 +5,7 @@ import { Player } from './player';
 import { TILE_SIZE } from './constants';
 import { Stats } from './stats';
 import { BattleData, BattleSide } from './battle_data';
-import { DEMON_MAP } from './data/compendium/demon_list';
+import { DEMON_MAP } from './data/raw/demons';
 import { SKILL_MAP } from './data/compendium/skill_list';
 import { Demon } from './data/demon';
 import { Skill } from './data/skill';
@@ -44,14 +44,13 @@ export class Actor {
   public static from_demon(name: string, coor: Coor | null = null) {
     let demon: Demon = DEMON_MAP.get(name)!;
     let skills: Skill[] = [];
-    console.log(demon);
-    for (const entry of demon.skills.entries()) {
-      console.log("hey " + entry[0]);
-      if (entry[1] <= demon.level) {
-        skills.push(SKILL_MAP.get(entry[0])!);
+    if (demon.level) {
+      for (let i = 0; i < demon.skills.length; i++) {
+        if (demon.skills[i][1] <= demon.level) {
+          skills.push(SKILL_MAP.get(demon.skills[i][0])!);
+        }
       }
     }
-    console.log(skills);
     let actor = new Actor(name, [], DEMON_MAT, 
       new BattleData(
         BattleSide.Their, 

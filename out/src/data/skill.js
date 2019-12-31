@@ -4,16 +4,12 @@ var SkillElement;
 (function (SkillElement) {
     SkillElement[SkillElement["Phys"] = 0] = "Phys";
     SkillElement[SkillElement["Gun"] = 1] = "Gun";
-    SkillElement[SkillElement["Fire"] = 2] = "Fire";
-    SkillElement[SkillElement["Ice"] = 3] = "Ice";
-    SkillElement[SkillElement["Elec"] = 4] = "Elec";
-    SkillElement[SkillElement["Force"] = 5] = "Force";
-    SkillElement[SkillElement["Dark"] = 6] = "Dark";
-    SkillElement[SkillElement["Light"] = 7] = "Light";
-    SkillElement[SkillElement["Support"] = 8] = "Support";
-    SkillElement[SkillElement["Recovery"] = 9] = "Recovery";
-    SkillElement[SkillElement["Ailment"] = 10] = "Ailment";
-    SkillElement[SkillElement["Almighty"] = 11] = "Almighty";
+    SkillElement[SkillElement["Elec"] = 2] = "Elec";
+    SkillElement[SkillElement["Force"] = 3] = "Force";
+    SkillElement[SkillElement["Dark"] = 4] = "Dark";
+    SkillElement[SkillElement["Light"] = 5] = "Light";
+    SkillElement[SkillElement["Support"] = 6] = "Support";
+    SkillElement[SkillElement["Recovery"] = 7] = "Recovery";
 })(SkillElement = exports.SkillElement || (exports.SkillElement = {}));
 var SkillResist;
 (function (SkillResist) {

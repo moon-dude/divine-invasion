@@ -1,4 +1,15 @@
 "use strict";
+var __values = (this && this.__values) || function(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -12,7 +23,7 @@ var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
-var demons_1 = require("./data/raw/demons");
+var demon_list_1 = require("./data/compendium/demon_list");
 var skill_list_1 = require("./data/compendium/skill_list");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
@@ -34,16 +45,28 @@ var Actor = /** @class */ (function () {
         this.battle_data = battle_data;
     }
     Actor.from_demon = function (name, coor) {
+        var e_1, _a;
         if (coor === void 0) { coor = null; }
-        var demon = demons_1.DEMON_MAP.get(name);
+        var demon = demon_list_1.DEMON_MAP.get(name);
         var skills = [];
-        if (demon.level) {
-            for (var i = 0; i < demon.skills.length; i++) {
-                if (demon.skills[i][1] <= demon.level) {
-                    skills.push(skill_list_1.SKILL_MAP.get(demon.skills[i][0]));
+        console.log(demon);
+        try {
+            for (var _b = __values(demon.skills.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
+                var entry = _c.value;
+                console.log("hey " + entry[0]);
+                if (entry[1] <= demon.level) {
+                    skills.push(skill_list_1.SKILL_MAP.get(entry[0]));
                 }
             }
         }
+        catch (e_1_1) { e_1 = { error: e_1_1 }; }
+        finally {
+            try {
+                if (_c && !_c.done && (_a = _b.return)) _a.call(_b);
+            }
+            finally { if (e_1) throw e_1.error; }
+        }
+        console.log(skills);
         var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, demon.stats, stats_1.Stats.new_mod(), skills));
         actor.coor = coor;
         return actor;
