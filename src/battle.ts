@@ -141,20 +141,20 @@ export class Battle {
       if (skill.effect == SkillEffect.Damage) {
         let damage = 1;
         if (skill.element == SkillElement.Phys) {
-          damage = Math.floor(fighter.data.modded_base_stats().st * skill.power);
+          damage = Math.floor(fighter.data.modded_base_stats().st * skill.power!);
         } else if (skill.element == SkillElement.Gun) {
-          damage = Math.floor(fighter.data.modded_base_stats().dx * skill.power);
+          damage = Math.floor(fighter.data.modded_base_stats().dx * skill.power!);
         } else if (skill.element == SkillElement.Light || skill.element == SkillElement.Dark) {
-          damage = Math.floor(fighter.data.modded_base_stats().lu * skill.power);
+          damage = Math.floor(fighter.data.modded_base_stats().lu * skill.power!);
         } else {
-          damage = Math.floor(fighter.data.modded_base_stats().ma * skill.power);
+          damage = Math.floor(fighter.data.modded_base_stats().ma * skill.power!);
         }
         for (let t = 0; t < targets.length; t++) {
           targets[t].data.mod_stats.hp -= damage;
           this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage";
         }
       } else if (skill.effect == SkillEffect.Heal) {
-        let power = Math.floor(fighter.data.modded_base_stats().ma) * skill.power;
+        let power = Math.floor(fighter.data.modded_base_stats().ma) * skill.power!;
         for (let t = 0; t < targets.length; t++) {
           targets[t].data.mod_stats.hp += power;
           this.info_div.innerHTML += "<br/>" + targets[t].name + " healed for " + power + "";

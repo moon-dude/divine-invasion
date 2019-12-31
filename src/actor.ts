@@ -6,7 +6,7 @@ import { TILE_SIZE } from './constants';
 import { Stats } from './stats';
 import { BattleData, BattleSide } from './battle_data';
 import { DEMON_MAP } from './data/raw/demons';
-import { SKILL_MAP } from './data/compendium/skill_list';
+import { SKILL_MAP } from './data/raw/skills';
 import { Demon } from './data/demon';
 import { Skill } from './data/skill';
 
@@ -88,7 +88,7 @@ export class Actor {
     return false;
   }
 
-  public update(/* const */player: Player) {
+  public update(/*const */player: Player) {
     this.mesh.rotation.y = player.body.rotation.y;
 
     if (this.coor == null) {

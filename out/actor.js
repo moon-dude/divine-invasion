@@ -13,7 +13,7 @@ var constants_1 = require("./constants");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
 var demons_1 = require("./data/raw/demons");
-var skill_list_1 = require("./data/compendium/skill_list");
+var skills_1 = require("./data/raw/skills");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
@@ -40,7 +40,7 @@ var Actor = /** @class */ (function () {
         if (demon.level) {
             for (var i = 0; i < demon.skills.length; i++) {
                 if (demon.skills[i][1] <= demon.level) {
-                    skills.push(skill_list_1.SKILL_MAP.get(demon.skills[i][0]));
+                    skills.push(skills_1.SKILL_MAP.get(demon.skills[i][0]));
                 }
             }
         }
@@ -73,7 +73,7 @@ var Actor = /** @class */ (function () {
         }
         return false;
     };
-    Actor.prototype.update = function (/* const */ player) {
+    Actor.prototype.update = function (/*const */ player) {
         this.mesh.rotation.y = player.body.rotation.y;
         if (this.coor == null) {
             return;
