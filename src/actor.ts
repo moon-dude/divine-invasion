@@ -3,9 +3,9 @@ import { Dialogue } from './dialogue';
 import * as THREE from 'three';
 import { Player } from './player';
 import { TILE_SIZE } from './constants';
-import { DEMON_MAP } from './data/structured/demons';
 import { Stats } from './stats';
 import { BattleData, BattleSide } from './battle_data';
+import { DEMON_MAP } from './data/compendium/demon_list';
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
@@ -39,12 +39,14 @@ export class Actor {
   }
 
   public static from_demon(name: string, coor: Coor | null = null) {
-    return new Actor(name, [], DEMON_MAT, 
+    let actor = new Actor(name, [], DEMON_MAT, 
       new BattleData(
         BattleSide.Their, 
         (DEMON_MAP.get(name)?.stats || Stats.new_base()), 
         Stats.new_mod())
     );
+    actor.coor = coor;
+    return actor;
   }
 
   private need_to_be_placed(player: Player) {

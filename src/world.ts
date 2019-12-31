@@ -6,7 +6,7 @@ import { Player } from './player';
 import { flags } from './globals';
 import { LevelData } from './data/levels/level_data';
 import { Coor, shuffle_array } from './jlib';
-import { EncounterType } from './data/encounters';
+import { EncounterType } from './data/encounter_type';
 import { TILE_SIZE } from './constants';
 
 export class World {

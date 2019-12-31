@@ -23,12 +23,12 @@ var Player = /** @class */ (function () {
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
-        var stats = new stats_1.Stats(500, 100);
+        var stats = new stats_1.Stats(1024, 100);
         stats.ag = 40;
         stats.dx = 40;
         stats.lu = 40;
         stats.ma = 40;
-        stats.st = 40;
+        stats.st = 50;
         this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod());
     }
     Player.prototype.update = function () {

@@ -1,6 +1,6 @@
 import { TileMap } from "../../map";
 import { Actor } from "../../actor";
-import { EncounterType } from "../encounters";
+import { EncounterType } from "../encounter_type";
 
 export class LevelData {
   map: TileMap;

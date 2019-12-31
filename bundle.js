@@ -51257,9 +51257,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
-var demons_1 = require("./data/structured/demons");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
+var demon_list_1 = require("./data/compendium/demon_list");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
@@ -51282,7 +51282,9 @@ var Actor = /** @class */ (function () {
     Actor.from_demon = function (name, coor) {
         if (coor === void 0) { coor = null; }
         var _a;
-        return new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.new_base()), stats_1.Stats.new_mod()));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demon_list_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.new_base()), stats_1.Stats.new_mod()));
+        actor.coor = coor;
+        return actor;
     };
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
@@ -51346,7 +51348,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./battle_data":6,"./constants":7,"./data/structured/demons":12,"./jlib":16,"./stats":20,"three":3}],5:[function(require,module,exports){
+},{"./battle_data":6,"./constants":7,"./data/compendium/demon_list":8,"./jlib":16,"./stats":20,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
@@ -51501,6 +51503,81 @@ exports.TILE_SIZE = 4;
 
 },{}],8:[function(require,module,exports){
 "use strict";
+var _a;
+Object.defineProperty(exports, "__esModule", { value: true });
+var skill_1 = require("../skill");
+exports.DEMON_MAP = new Map([
+    {
+        name: "Pixie",
+        affinities: (_a = {},
+            _a[skill_1.SkillElement.Elec] = 1,
+            _a[skill_1.SkillElement.Recovery] = 1,
+            _a),
+        ailments: {
+            panic: "wk"
+        },
+        level: 9,
+        race: "Fairy",
+        resists: new Map([
+            [skill_1.SkillElement.Dark, "wk"],
+            [skill_1.SkillElement.Elec, "rs"],
+        ]),
+        skills: new Map([
+            ["Dia", 0],
+            ["Dormina", 12],
+            ["Healing Knowhow", 11],
+            ["Zio", 0],
+        ]),
+        stats: {
+            ag: 22,
+            dx: 13,
+            hp: 101,
+            lu: 15,
+            ma: 19,
+            mp: 86,
+            st: 11
+        }
+    },
+    {
+        name: "Poltergeist",
+        affinities: {
+            "ailment": 1,
+            "force": -4,
+            "gun": 2,
+            "light": -3,
+            "recovery": -2,
+            "support": 1
+        },
+        ailments: {
+            "panic": "rs"
+        },
+        attack: "Phys x1-2, 1 enemy",
+        level: 19,
+        race: "Spirit",
+        resists: new Map([
+            [skill_1.SkillElement.Force, "wk"],
+            [skill_1.SkillElement.Light, "wk"],
+        ]),
+        skills: new Map([
+            ["Healing Knowhow", 21],
+            ["Rapid Needle", 20],
+            ["Sukunda", 0],
+            ["Tathlum Shot", 0],
+        ]),
+        stats: {
+            ag: 25,
+            dx: 23,
+            hp: 157,
+            lu: 28,
+            ma: 32,
+            mp: 132,
+            st: 15
+        },
+    }
+].map(function (x) { return [x.name, x]; }));
+
+},{"../skill":12}],9:[function(require,module,exports){
+"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
     function EncounterType(enemies) {
@@ -51509,17 +51586,23 @@ var EncounterType = /** @class */ (function () {
     return EncounterType;
 }());
 exports.EncounterType = EncounterType;
-exports.ENC_INCUBI = new EncounterType(function () {
-    return ["Pixie", "Pixie", "Pixie"];
-});
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var map_1 = require("../../map");
 var jlib_1 = require("../../jlib");
 var level_data_1 = require("./level_data");
-var encounters_1 = require("../encounters");
+var encounter_type_1 = require("../encounter_type");
+var ENCOUNTER_1 = new encounter_type_1.EncounterType(function () {
+    return ["Pixie", "Poltergeist", "Pixie"];
+});
+var ENCOUNTER_2 = new encounter_type_1.EncounterType(function () {
+    return ["Pixie", "Pixie"];
+});
+var ENCOUNTER_3 = new encounter_type_1.EncounterType(function () {
+    return ["Poltergeist", "Poltergeist"];
+});
 var map_walkable = "//////////" +
     "/--/--/--/" +
     "/-///-/--/" +
@@ -51531,10 +51614,10 @@ var map_walkable = "//////////" +
     "/------/-/" +
     "/-/-//-/-/" +
     "////////-/";
-var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
-exports.level2_data = new level_data_1.LevelData(level2_map, [], [encounters_1.ENC_INCUBI], 10);
+var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 7));
+exports.level2_data = new level_data_1.LevelData(level2_map, [], [ENCOUNTER_1, ENCOUNTER_2, ENCOUNTER_3], 10);
 
-},{"../../jlib":16,"../../map":18,"../encounters":8,"./level_data":10}],10:[function(require,module,exports){
+},{"../../jlib":16,"../../map":18,"../encounter_type":9,"./level_data":11}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -51548,127 +51631,53 @@ var LevelData = /** @class */ (function () {
 }());
 exports.LevelData = LevelData;
 
-},{}],11:[function(require,module,exports){
-module.exports={
-    "demon_list": [
-        {
-            "name": "Pixie",
-            "affinities": {
-                "elec": 1,
-                "recovery": 1
-            },
-            "ailments": {
-                "panic": "wk"
-            },
-            "lvl": 9,
-            "race": "Fairy",
-            "resists": {
-                "dark": "wk",
-                "elec": "rs"
-            },
-            "skills": {
-                "Dia": 0,
-                "Dormina": 12,
-                "Healing Knowhow": 11,
-                "Zio": 0
-            },
-            "stats": {
-                "ag": 22,
-                "dx": 13,
-                "hp": 101,
-                "lu": 15,
-                "ma": 19,
-                "mp": 86,
-                "st": 11
-            }
-        },
-        {
-            "name": "Poltergeist",
-            "affinities": {
-                "ailment": 1,
-                "force": -4,
-                "gun": 2,
-                "light": -3,
-                "recovery": -2,
-                "support": 1
-            },
-            "ailments": {
-                "panic": "rs"
-            },
-            "attack": "Phys x1-2, 1 enemy",
-            "evolves": "Quicksilver",
-            "lvl": 19,
-            "race": "Spirit",
-            "resists": {
-                "force": "wk",
-                "light": "wk"
-            },
-            "skills": {
-                "Healing Knowhow": 21,
-                "Rapid Needle": 20,
-                "Sukunda": 0,
-                "Tathlum Shot": 0
-            },
-            "stats": {
-                "ag": 25,
-                "dx": 23,
-                "hp": 157,
-                "lu": 28,
-                "ma": 32,
-                "mp": 132,
-                "st": 15
-            }
-        },
-        {
-            "name": "Porewit",
-            "affinities": {
-                "fire": 3,
-                "ice": -3,
-                "support": -1
-            },
-            "lvl": 7,
-            "race": "Wilder",
-            "resists": {
-                "fire": "rs",
-                "ice": "wk"
-            },
-            "skills": {
-                "Agi": 0,
-                "Lunge": 8
-            },
-            "stats": {
-                "ag": 14,
-                "dx": 14,
-                "hp": 112,
-                "lu": 11,
-                "ma": 11,
-                "mp": 53,
-                "st": 15
-            }
-        }
-    ]
-}
-
 },{}],12:[function(require,module,exports){
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var DEMON_LIST_JSON = __importStar(require("../raw/demon_list.json"));
-var map = new Map();
-DEMON_LIST_JSON.demon_list.forEach(function (val) {
-    map.set(val.name, val);
-});
-exports.DEMON_MAP = map;
-console.log(DEMON_LIST_JSON);
-console.log(exports.DEMON_MAP);
+var SkillElement;
+(function (SkillElement) {
+    SkillElement[SkillElement["Support"] = 0] = "Support";
+    SkillElement[SkillElement["Recovery"] = 1] = "Recovery";
+    SkillElement[SkillElement["Elec"] = 2] = "Elec";
+    SkillElement[SkillElement["Force"] = 3] = "Force";
+    SkillElement[SkillElement["Dark"] = 4] = "Dark";
+    SkillElement[SkillElement["Light"] = 5] = "Light";
+})(SkillElement = exports.SkillElement || (exports.SkillElement = {}));
+var SkillPower;
+(function (SkillPower) {
+    SkillPower[SkillPower["Weak"] = 0] = "Weak";
+    SkillPower[SkillPower["Medium"] = 1] = "Medium";
+    SkillPower[SkillPower["Strong"] = 2] = "Strong";
+})(SkillPower = exports.SkillPower || (exports.SkillPower = {}));
+var SkillTarget;
+(function (SkillTarget) {
+    SkillTarget[SkillTarget["Single"] = 0] = "Single";
+})(SkillTarget = exports.SkillTarget || (exports.SkillTarget = {}));
+var SkillHits;
+(function (SkillHits) {
+    SkillHits[SkillHits["x1"] = 0] = "x1";
+})(SkillHits = exports.SkillHits || (exports.SkillHits = {}));
+var SkillEffect;
+(function (SkillEffect) {
+    SkillEffect[SkillEffect["Damage"] = 0] = "Damage";
+    SkillEffect[SkillEffect["Heal"] = 1] = "Heal";
+})(SkillEffect = exports.SkillEffect || (exports.SkillEffect = {}));
+var Skill = /** @class */ (function () {
+    function Skill(name, cost, effect, power, element, hits, rank, target) {
+        this.name = name;
+        this.cost = cost;
+        this.effect = effect;
+        this.power = power;
+        this.element = element;
+        this.hits = hits;
+        this.rank = rank;
+        this.target = target;
+    }
+    return Skill;
+}());
+exports.Skill = Skill;
 
-},{"../raw/demon_list.json":11}],13:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51777,7 +51786,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actor":4,"./battle":5,"./battle_data":6,"./data/levels/level2":9,"./input":15,"./jlib":16,"./player":19,"./world":21,"three":3}],14:[function(require,module,exports){
+},{"./actor":4,"./battle":5,"./battle_data":6,"./data/levels/level2":10,"./input":15,"./jlib":16,"./player":19,"./world":21,"three":3}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
@@ -52047,12 +52056,12 @@ var Player = /** @class */ (function () {
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
-        var stats = new stats_1.Stats(500, 100);
+        var stats = new stats_1.Stats(1024, 100);
         stats.ag = 40;
         stats.dx = 40;
         stats.lu = 40;
         stats.ma = 40;
-        stats.st = 40;
+        stats.st = 50;
         this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod());
     }
     Player.prototype.update = function () {

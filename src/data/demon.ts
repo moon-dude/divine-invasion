@@ -1,11 +1,12 @@
 import { Stats } from "../stats";
+import { SkillElement } from "./skill";
 
 export class Demon {
   affinities: Object = {};
   ailments?: Object = undefined;
-  lvl: number = 0;
+  level: number = 0;
   race: string = ""; 
-  resists: Object = {};
-  skills: Object = {};
+  resists: Map<SkillElement, string> = new Map();
+  skills: Map<string, number> = new Map();
   stats: Stats = Stats.new_base();
 }

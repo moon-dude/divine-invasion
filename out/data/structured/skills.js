@@ -7,9 +7,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var DEMON_LIST_JSON = __importStar(require("../raw/demon_list.json"));
+var SKILL_LIST_JSON = __importStar(require("../raw/skill_list.json"));
 var map = new Map();
-DEMON_LIST_JSON.demon_list.forEach(function (val) {
+SKILL_LIST_JSON.skill_list.forEach(function (val) {
     map.set(val.name, val);
 });
-exports.DEMON_MAP = map;
+exports.SKILL_MAP = map;

@@ -10,9 +10,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
 var constants_1 = require("./constants");
-var demons_1 = require("./data/structured/demons");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
+var demon_list_1 = require("./data/compendium/demon_list");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
@@ -35,7 +35,9 @@ var Actor = /** @class */ (function () {
     Actor.from_demon = function (name, coor) {
         if (coor === void 0) { coor = null; }
         var _a;
-        return new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demons_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.new_base()), stats_1.Stats.new_mod()));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, (((_a = demon_list_1.DEMON_MAP.get(name)) === null || _a === void 0 ? void 0 : _a.stats) || stats_1.Stats.new_base()), stats_1.Stats.new_mod()));
+        actor.coor = coor;
+        return actor;
     };
     Actor.prototype.need_to_be_placed = function (player) {
         if (this.coor == null) {
