@@ -1,20 +1,23 @@
 export enum SkillElement {
-  Support,
-  Recovery,
+  Phys,
+  Gun,
   Elec,
   Force,
   Dark,
   Light,
+  Support,
+  Recovery,
 }
 
 export enum SkillPower {
-  Weak,
-  Medium,
-  Strong,
+  Weak = 2,
+  Medium = 3,
+  Strong = 4,
 }
 
 export enum SkillTarget {
-  Single
+  Single,
+  AllEnemies,
 }
 
 export enum SkillHits {
@@ -24,6 +27,7 @@ export enum SkillHits {
 export enum SkillEffect {
   Damage,
   Heal,
+  DebuffHitEvade,
 }
 
 export class Skill {

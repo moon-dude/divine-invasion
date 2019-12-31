@@ -26,7 +26,7 @@ export class Player {
     stats.lu = 40;
     stats.ma = 40;
     stats.st = 50;
-    this.battle_data = new BattleData(BattleSide.Our, stats, Stats.new_mod());
+    this.battle_data = new BattleData(BattleSide.Our, stats, Stats.new_mod(), []);
   }
 
   public update() {

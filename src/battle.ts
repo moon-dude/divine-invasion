@@ -1,5 +1,6 @@
 import { random_array_element } from "./jlib";
 import { BattleSide, BattleFighter, BattleIndex, other_side } from "./battle_data";
+import { Skill, SkillTarget, SkillEffect, SkillElement } from "./data/skill";
 
 const EMPTY_ENTRY: string = "<td></td><td></td><td></td>";
 
@@ -23,8 +24,6 @@ export class Battle {
       this.fighters.get(side)?.push(fighters[i]);
       this.turn_order.push(new BattleIndex(side, (this.fighters.get(side)?.length || 0) - 1));
     }
-    console.log(this.fighters);
-    console.log(this.turn_order);
   }
 
   public render() {
@@ -88,14 +87,37 @@ export class Battle {
       this.info_div.innerHTML = "" + fighter.name + " is dead and can't attack!";
       return;
     }
-    // choose a random target.
-    let target = this.get_attack_target(fighter);
-    if (target == null) {
-      this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
-      return;
+    // Choose whether to attack or use skill.
+    let chosen_skill = this.choose_skill(fighter);
+    let targets = [];
+    if (chosen_skill == null || chosen_skill.target == SkillTarget.Single) {
+      // Choose a random target.
+      let target = this.get_attack_target(fighter);
+      if (target == null) {
+        this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
+        return;
+      } else {
+        targets.push(target);
+      }
+    } else if (chosen_skill.target == SkillTarget.AllEnemies) {
+      // TODO: select all enemies.
     }
     // attack target.
-    this.attack(fighter, target);
+    this.take_battle_action(fighter, chosen_skill, targets);
+  }
+
+  private choose_skill(attacker: BattleFighter): Skill | null {
+    let choice_idx = Math.floor(Math.random() * (attacker.data.skills.length + 1));
+    if (choice_idx >= attacker.data.skills.length) {
+      return null;
+    }
+    while (attacker.data.skills[choice_idx].cost > attacker.data.modded_base_stats().mp) {
+      choice_idx++;
+      if (choice_idx >= attacker.data.skills.length) {
+        return null;
+      }
+    }
+    return attacker.data.skills[choice_idx];
   }
 
   private get_attack_target(attacker: BattleFighter): BattleFighter | null {
@@ -105,8 +127,39 @@ export class Battle {
 
   }
 
-  private attack(attacker: BattleFighter, target: BattleFighter) {
-    target.data.mod_stats.hp -= attacker.data.modded_base_stats().st + attacker.data.modded_base_stats().dx;
-    this.info_div.innerHTML = "" + attacker.name + " attacked " + target.name + "!";
+  private take_battle_action(fighter: BattleFighter, skill: Skill | null, targets: BattleFighter[]) {
+    if (skill == null) {
+      this.info_div.innerHTML = "" + fighter.name + " attacked!";
+      let damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
+      for (let t = 0; t < targets.length; t++) {
+        targets[t].data.mod_stats.hp -= damage;
+        this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage!";
+      }
+    } else {
+      fighter.data.mod_stats.mp -= skill.cost;
+      this.info_div.innerHTML = "" + fighter.name + " used " + skill.name + "!";
+      if (skill.effect == SkillEffect.Damage) {
+        let damage = 1;
+        if (skill.element == SkillElement.Phys) {
+          damage = Math.floor(fighter.data.modded_base_stats().st * skill.power);
+        } else if (skill.element == SkillElement.Gun) {
+          damage = Math.floor(fighter.data.modded_base_stats().dx * skill.power);
+        } else if (skill.element == SkillElement.Light || skill.element == SkillElement.Dark) {
+          damage = Math.floor(fighter.data.modded_base_stats().lu * skill.power);
+        } else {
+          damage = Math.floor(fighter.data.modded_base_stats().ma * skill.power);
+        }
+        for (let t = 0; t < targets.length; t++) {
+          targets[t].data.mod_stats.hp -= damage;
+          this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage";
+        }
+      } else if (skill.effect == SkillEffect.Heal) {
+        let power = Math.floor(fighter.data.modded_base_stats().ma) * skill.power;
+        for (let t = 0; t < targets.length; t++) {
+          targets[t].data.mod_stats.hp += power;
+          this.info_div.innerHTML += "<br/>" + targets[t].name + " healed for " + power + "";
+        }
+      }
+    }
   }
 }

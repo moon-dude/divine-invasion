@@ -19,5 +19,24 @@ export const SKILL_MAP: Map<string, Skill> = new Map([
     "hits": SkillHits.x1,
     "rank": 2, 
     "target": SkillTarget.Single
-  }
+  }, {
+    "name": "Tathlum Shot",
+    "cost": 7, 
+    "effect": SkillEffect.Damage,
+    "power": SkillPower.Medium, 
+    "element": SkillElement.Gun, 
+    "hits": SkillHits.x1, 
+    "rank": 7, 
+    "target": SkillTarget.Single
+  }, 
+  {
+    "name": "Sukunda",
+    "cost": 25, 
+    "effect": SkillEffect.DebuffHitEvade,
+    "power": SkillPower.Weak, 
+    "element": SkillElement.Support, 
+    "hits": SkillHits.x1, 
+    "rank": 12, 
+    "target": SkillTarget.AllEnemies
+  }, 
 ].map(x => [x.name, x]));

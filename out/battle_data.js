@@ -11,15 +11,16 @@ function other_side(side) {
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
-    function BattleData(side, base_stats, mod_stats) {
+    function BattleData(side, base_stats, mod_stats, skills) {
         this.side = side;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
+        this.skills = skills;
     }
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
     };
-    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod());
+    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), []);
     return BattleData;
 }());
 exports.BattleData = BattleData;

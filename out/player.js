@@ -29,7 +29,7 @@ var Player = /** @class */ (function () {
         stats.lu = 40;
         stats.ma = 40;
         stats.st = 50;
-        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod());
+        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), []);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;

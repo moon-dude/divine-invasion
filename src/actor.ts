@@ -6,6 +6,9 @@ import { TILE_SIZE } from './constants';
 import { Stats } from './stats';
 import { BattleData, BattleSide } from './battle_data';
 import { DEMON_MAP } from './data/compendium/demon_list';
+import { SKILL_MAP } from './data/compendium/skill_list';
+import { Demon } from './data/demon';
+import { Skill } from './data/skill';
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
@@ -39,11 +42,22 @@ export class Actor {
   }
 
   public static from_demon(name: string, coor: Coor | null = null) {
+    let demon: Demon = DEMON_MAP.get(name)!;
+    let skills: Skill[] = [];
+    console.log(demon);
+    for (const entry of demon.skills.entries()) {
+      console.log("hey " + entry[0]);
+      if (entry[1] <= demon.level) {
+        skills.push(SKILL_MAP.get(entry[0])!);
+      }
+    }
+    console.log(skills);
     let actor = new Actor(name, [], DEMON_MAT, 
       new BattleData(
         BattleSide.Their, 
-        (DEMON_MAP.get(name)?.stats || Stats.new_base()), 
-        Stats.new_mod())
+        demon.stats, 
+        Stats.new_mod(), 
+        skills)
     );
     actor.coor = coor;
     return actor;

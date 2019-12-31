@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var battle_data_1 = require("./battle_data");
+var skill_1 = require("./data/skill");
 var EMPTY_ENTRY = "<td></td><td></td><td></td>";
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -19,8 +20,6 @@ var Battle = /** @class */ (function () {
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
-        console.log(this.fighters);
-        console.log(this.turn_order);
     }
     Battle.prototype.render = function () {
         this.battle_tbody.innerHTML = "";
@@ -81,22 +80,82 @@ var Battle = /** @class */ (function () {
             this.info_div.innerHTML = "" + fighter.name + " is dead and can't attack!";
             return;
         }
-        // choose a random target.
-        var target = this.get_attack_target(fighter);
-        if (target == null) {
-            this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
-            return;
+        // Choose whether to attack or use skill.
+        var chosen_skill = this.choose_skill(fighter);
+        var targets = [];
+        if (chosen_skill == null || chosen_skill.target == skill_1.SkillTarget.Single) {
+            // Choose a random target.
+            var target = this.get_attack_target(fighter);
+            if (target == null) {
+                this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
+                return;
+            }
+            else {
+                targets.push(target);
+            }
+        }
+        else if (chosen_skill.target == skill_1.SkillTarget.AllEnemies) {
+            // TODO: select all enemies.
         }
         // attack target.
-        this.attack(fighter, target);
+        this.take_battle_action(fighter, chosen_skill, targets);
+    };
+    Battle.prototype.choose_skill = function (attacker) {
+        var choice_idx = Math.floor(Math.random() * (attacker.data.skills.length + 1));
+        if (choice_idx >= attacker.data.skills.length) {
+            return null;
+        }
+        while (attacker.data.skills[choice_idx].cost > attacker.data.modded_base_stats().mp) {
+            choice_idx++;
+            if (choice_idx >= attacker.data.skills.length) {
+                return null;
+            }
+        }
+        return attacker.data.skills[choice_idx];
     };
     Battle.prototype.get_attack_target = function (attacker) {
         return jlib_1.random_array_element(this.fighters.get(battle_data_1.other_side(attacker.data.side))
             .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
     };
-    Battle.prototype.attack = function (attacker, target) {
-        target.data.mod_stats.hp -= attacker.data.modded_base_stats().st + attacker.data.modded_base_stats().dx;
-        this.info_div.innerHTML = "" + attacker.name + " attacked " + target.name + "!";
+    Battle.prototype.take_battle_action = function (fighter, skill, targets) {
+        if (skill == null) {
+            this.info_div.innerHTML = "" + fighter.name + " attacked!";
+            var damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
+            for (var t = 0; t < targets.length; t++) {
+                targets[t].data.mod_stats.hp -= damage;
+                this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage!";
+            }
+        }
+        else {
+            fighter.data.mod_stats.mp -= skill.cost;
+            this.info_div.innerHTML = "" + fighter.name + " used " + skill.name + "!";
+            if (skill.effect == skill_1.SkillEffect.Damage) {
+                var damage = 1;
+                if (skill.element == skill_1.SkillElement.Phys) {
+                    damage = Math.floor(fighter.data.modded_base_stats().st * skill.power);
+                }
+                else if (skill.element == skill_1.SkillElement.Gun) {
+                    damage = Math.floor(fighter.data.modded_base_stats().dx * skill.power);
+                }
+                else if (skill.element == skill_1.SkillElement.Light || skill.element == skill_1.SkillElement.Dark) {
+                    damage = Math.floor(fighter.data.modded_base_stats().lu * skill.power);
+                }
+                else {
+                    damage = Math.floor(fighter.data.modded_base_stats().ma * skill.power);
+                }
+                for (var t = 0; t < targets.length; t++) {
+                    targets[t].data.mod_stats.hp -= damage;
+                    this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage";
+                }
+            }
+            else if (skill.effect == skill_1.SkillEffect.Heal) {
+                var power = Math.floor(fighter.data.modded_base_stats().ma) * skill.power;
+                for (var t = 0; t < targets.length; t++) {
+                    targets[t].data.mod_stats.hp += power;
+                    this.info_div.innerHTML += "<br/>" + targets[t].name + " healed for " + power + "";
+                }
+            }
+        }
     };
     return Battle;
 }());
