@@ -1,14 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var skill_1 = require("../skill");
+var skill_effect_1 = require("../skill_effect");
 var DEMONS = [{
         "name": "Abaddon",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -17,8 +17,8 @@ var DEMONS = [{
         "level": 63,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rp"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rp"]
         ],
         "skills": [
             ["Eat Whole", 66],
@@ -39,16 +39,16 @@ var DEMONS = [{
     {
         "name": "Adramelech",
         "affinities": [
-            [skill_1.SkillElement.Fire, 6],
-            [skill_1.SkillElement.Ice, 5],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Fire, 6],
+            [skill_effect_1.SkillElement.Ice, 5],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "level": 68,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Bloody Glee", 71],
@@ -70,15 +70,15 @@ var DEMONS = [{
     {
         "name": "Aeros",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Force, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Force, 3]
         ],
         "level": 12,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"]
         ],
         "skills": [
             ["Force Pleroma", 0],
@@ -98,20 +98,20 @@ var DEMONS = [{
     {
         "name": "Agathion",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 12,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Dream Fist", 0],
@@ -132,11 +132,11 @@ var DEMONS = [{
     {
         "name": "Airavata",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["mute", "wk"],
@@ -147,12 +147,12 @@ var DEMONS = [{
         "level": 44,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Chakra Walk", 45],
@@ -172,12 +172,12 @@ var DEMONS = [{
     {
         "name": "Alciel",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, -4],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, -4],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -185,14 +185,14 @@ var DEMONS = [{
         "level": 67,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "wk"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "wk"]
         ],
         "skills": [
             ["Magaon", 68],
@@ -212,11 +212,11 @@ var DEMONS = [{
     {
         "name": "Alice",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Dark, 5],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Phys, -9],
-            [skill_1.SkillElement.Recovery, -5]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Dark, 5],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Phys, -9],
+            [skill_effect_1.SkillElement.Recovery, -5]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -230,9 +230,9 @@ var DEMONS = [{
         "level": 49,
         "race": "Undead",
         "resists": [
-            [skill_1.SkillElement.Dark, "rp"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rp"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Dekunda", 50],
@@ -254,9 +254,9 @@ var DEMONS = [{
     {
         "name": "Alilat",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -269,8 +269,8 @@ var DEMONS = [{
         "level": 84,
         "race": "Entity",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Concentrate", 85],
@@ -292,9 +292,9 @@ var DEMONS = [{
     {
         "name": "Alraune",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Gun, 2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Gun, 2]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -304,8 +304,8 @@ var DEMONS = [{
         "level": 48,
         "race": "Wood",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Blast Arrow", 49],
@@ -326,19 +326,19 @@ var DEMONS = [{
     {
         "name": "Amaterasu",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Ice, -2],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Ice, -2],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 79,
         "race": "Amatsu",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rp"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rp"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Mana Surge", 80],
@@ -360,18 +360,18 @@ var DEMONS = [{
     {
         "name": "Ame no Uzume",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "level": 22,
         "race": "Amatsu",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Light Mana Aid", 0],
@@ -393,9 +393,9 @@ var DEMONS = [{
     {
         "name": "Ammut",
         "affinities": [
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["panic", "wk"],
@@ -404,9 +404,9 @@ var DEMONS = [{
         "level": 64,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Energy Drain", 0],
@@ -427,18 +427,18 @@ var DEMONS = [{
     {
         "name": "Anat",
         "affinities": [
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 63,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Ally Retaliate", 65],
@@ -460,12 +460,12 @@ var DEMONS = [{
     {
         "name": "Angel",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "rs"]
@@ -474,9 +474,9 @@ var DEMONS = [{
         "level": 10,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Dia", 0],
@@ -498,11 +498,11 @@ var DEMONS = [{
     {
         "name": "Angel White Wings",
         "affinities": [
-            [skill_1.SkillElement.Dark, -6],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Light, 5],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 4]
+            [skill_effect_1.SkillElement.Dark, -6],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Light, 5],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 4]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -511,11 +511,11 @@ var DEMONS = [{
         "level": 82,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["High Light Pleroma", 84],
@@ -536,17 +536,17 @@ var DEMONS = [{
     {
         "name": "Aniel",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 6],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Light, 6]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 6],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Light, 6]
         ],
         "level": 90,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Elec, "rp"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "ab"]
+            [skill_effect_1.SkillElement.Elec, "rp"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "ab"]
         ],
         "skills": [
             ["Dekunda", 91],
@@ -568,10 +568,10 @@ var DEMONS = [{
     {
         "name": "Anubis",
         "affinities": [
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Light, 4],
-            [skill_1.SkillElement.Phys, -3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Light, 4],
+            [skill_effect_1.SkillElement.Phys, -3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -579,8 +579,8 @@ var DEMONS = [{
         "level": 60,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Dark Pleroma", 63],
@@ -602,13 +602,13 @@ var DEMONS = [{
     {
         "name": "Anzu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -616,9 +616,9 @@ var DEMONS = [{
         "level": 49,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Critical Eye", 52],
@@ -639,9 +639,9 @@ var DEMONS = [{
     {
         "name": "Apis",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["panic", "rs"],
@@ -650,8 +650,8 @@ var DEMONS = [{
         "level": 18,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Critical Wave", 0],
@@ -672,9 +672,9 @@ var DEMONS = [{
     {
         "name": "Apsaras",
         "affinities": [
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -685,8 +685,8 @@ var DEMONS = [{
         "level": 15,
         "race": "Nymph",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -707,17 +707,17 @@ var DEMONS = [{
     {
         "name": "Apsu",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Ice, 5],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Ice, 5],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "level": 82,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "rp"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rp"]
         ],
         "skills": [
             ["Ice Age", 0],
@@ -739,15 +739,15 @@ var DEMONS = [{
     {
         "name": "Aquans",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Ice, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Ice, 3]
         ],
         "level": 16,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Ice Pleroma", 0],
@@ -767,9 +767,9 @@ var DEMONS = [{
     {
         "name": "Arachne",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["bind", "rs"]
@@ -777,10 +777,10 @@ var DEMONS = [{
         "level": 44,
         "race": "Vermin",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Blast Arrow", 0],
@@ -800,24 +800,24 @@ var DEMONS = [{
     {
         "name": "Arahabaki",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, -2],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, -2],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "level": 57,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Concentrate", 58],
@@ -839,9 +839,9 @@ var DEMONS = [{
     {
         "name": "Aramisaki",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Ice, 3]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Ice, 3]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -850,8 +850,8 @@ var DEMONS = [{
         "level": 59,
         "race": "Zealot",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Blood Ritual", 61],
@@ -872,18 +872,18 @@ var DEMONS = [{
     {
         "name": "Archangel",
         "affinities": [
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "evolves": "Principality",
         "level": 18,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Agilao", 19],
@@ -904,11 +904,11 @@ var DEMONS = [{
     {
         "name": "Ares",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -916,8 +916,8 @@ var DEMONS = [{
         "level": 32,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Charge", 33],
@@ -938,21 +938,21 @@ var DEMONS = [{
     {
         "name": "Asherah",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "level": 51,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Diarama", 52],
@@ -974,20 +974,20 @@ var DEMONS = [{
     {
         "name": "Asura",
         "affinities": [
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 43,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Critical Eye", 44],
@@ -1008,16 +1008,16 @@ var DEMONS = [{
     {
         "name": "Atropos",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, 1]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, 1]
         ],
         "level": 46,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 47],
@@ -1038,10 +1038,10 @@ var DEMONS = [{
     {
         "name": "Attis",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -4],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Ailment, -4],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["panic", "wk"],
@@ -1050,8 +1050,8 @@ var DEMONS = [{
         "level": 74,
         "race": "Zealot",
         "resists": [
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Blood Ritual", 0],
@@ -1073,21 +1073,21 @@ var DEMONS = [{
     {
         "name": "Azazel",
         "affinities": [
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "level": 69,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "rp"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "rp"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Fire Pleroma", 70],
@@ -1109,20 +1109,20 @@ var DEMONS = [{
     {
         "name": "Azrael",
         "affinities": [
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Light, 4],
-            [skill_1.SkillElement.Phys, -5]
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Light, 4],
+            [skill_effect_1.SkillElement.Phys, -5]
         ],
         "level": 77,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rp"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rp"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -1144,14 +1144,14 @@ var DEMONS = [{
     {
         "name": "Azumi",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Ice, 3]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Ice, 3]
         ],
         "level": 19,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Ice Breath", 0],
@@ -1171,18 +1171,18 @@ var DEMONS = [{
     {
         "name": "Baal",
         "affinities": [
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -4],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -4],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "level": 79,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Ally Retaliate", 80],
@@ -1204,11 +1204,11 @@ var DEMONS = [{
     {
         "name": "Bai Suzhen",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -1216,9 +1216,9 @@ var DEMONS = [{
         "level": 21,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -1239,16 +1239,16 @@ var DEMONS = [{
     {
         "name": "Baihu",
         "affinities": [
-            [skill_1.SkillElement.Elec, 5],
-            [skill_1.SkillElement.Force, -7],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, 5],
+            [skill_effect_1.SkillElement.Force, -7],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 62,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["High Elec Pleroma", 65],
@@ -1269,17 +1269,17 @@ var DEMONS = [{
     {
         "name": "Baldur",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "level": 28,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Ally Counter", 32],
@@ -1301,10 +1301,10 @@ var DEMONS = [{
     {
         "name": "Balor",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -1312,10 +1312,10 @@ var DEMONS = [{
         "level": 36,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agidyne", 40],
@@ -1336,14 +1336,14 @@ var DEMONS = [{
     {
         "name": "Baphomet",
         "affinities": [
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "level": 25,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Dark Pleroma", 26],
@@ -1364,19 +1364,19 @@ var DEMONS = [{
     {
         "name": "Barbatos",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, 5]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, 5]
         ],
         "level": 69,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "rp"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "rp"]
         ],
         "skills": [
             ["Heaven's Bow", 0],
@@ -1398,12 +1398,12 @@ var DEMONS = [{
     {
         "name": "Barong",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["poison", "rs"],
@@ -1412,11 +1412,11 @@ var DEMONS = [{
         "level": 68,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Endure", 70],
@@ -1437,10 +1437,10 @@ var DEMONS = [{
     {
         "name": "Basilisk",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 6],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 6],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -1449,9 +1449,9 @@ var DEMONS = [{
         "level": 28,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Bind Voice", 0],
@@ -1472,17 +1472,17 @@ var DEMONS = [{
     {
         "name": "Beelzebub",
         "affinities": [
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Light, -1]
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Light, -1]
         ],
         "level": 79,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "ab"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "ab"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["High Dark Pleroma", 80],
@@ -1504,16 +1504,16 @@ var DEMONS = [{
     {
         "name": "Beiji-Weng",
         "affinities": [
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "level": 66,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Cold World", 67],
@@ -1534,16 +1534,16 @@ var DEMONS = [{
     {
         "name": "Belial",
         "affinities": [
-            [skill_1.SkillElement.Fire, 6],
-            [skill_1.SkillElement.Ice, -7],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Fire, 6],
+            [skill_effect_1.SkillElement.Ice, -7],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 70,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Fire of Lethargy", 0],
@@ -1564,10 +1564,10 @@ var DEMONS = [{
     {
         "name": "Berserker",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Phys, 6],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Phys, 6],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "nu"]
@@ -1575,8 +1575,8 @@ var DEMONS = [{
         "level": 64,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Phys, "nu"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Phys, "nu"]
         ],
         "skills": [
             ["Charge", 0],
@@ -1597,16 +1597,16 @@ var DEMONS = [{
     {
         "name": "Bifrons",
         "affinities": [
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "level": 20,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -1627,11 +1627,11 @@ var DEMONS = [{
     {
         "name": "Bilwis",
         "affinities": [
-            [skill_1.SkillElement.Gun, -2],
-            [skill_1.SkillElement.Ice, 1],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Gun, -2],
+            [skill_effect_1.SkillElement.Ice, 1],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["panic", "wk"],
@@ -1640,9 +1640,9 @@ var DEMONS = [{
         "level": 9,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Bufu", 10],
@@ -1662,19 +1662,19 @@ var DEMONS = [{
     {
         "name": "Bishamonten",
         "affinities": [
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 70,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -1695,12 +1695,12 @@ var DEMONS = [{
     {
         "name": "Black Frost",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["mute", "wk"]
@@ -1708,11 +1708,11 @@ var DEMONS = [{
         "level": 40,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Dark Pleroma", 0],
@@ -1734,14 +1734,14 @@ var DEMONS = [{
     {
         "name": "Black Maria",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "rs"]
@@ -1749,10 +1749,10 @@ var DEMONS = [{
         "level": 66,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -1774,17 +1774,17 @@ var DEMONS = [{
     {
         "name": "Black Rider",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 6]
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 6]
         ],
         "level": 93,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "ab"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "ab"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Glacial Blast", 94],
@@ -1806,17 +1806,17 @@ var DEMONS = [{
     {
         "name": "Botis",
         "affinities": [
-            [skill_1.SkillElement.Elec, 5],
-            [skill_1.SkillElement.Force, -7],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, 5],
+            [skill_effect_1.SkillElement.Force, -7],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "attack": "Phys x2, 1 enemy",
         "level": 83,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "rp"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "rp"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Dark Sword", 0],
@@ -1838,15 +1838,15 @@ var DEMONS = [{
     {
         "name": "Brigid",
         "affinities": [
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Ice, -6],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Ice, -6],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "level": 33,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -1867,11 +1867,11 @@ var DEMONS = [{
     {
         "name": "Cabracan",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Ice, -2]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Ice, -2]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -1879,9 +1879,9 @@ var DEMONS = [{
         "level": 59,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Acid Breath", 61],
@@ -1902,10 +1902,10 @@ var DEMONS = [{
     {
         "name": "Caladrius",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["sick", "rs"]
@@ -1914,8 +1914,8 @@ var DEMONS = [{
         "level": 4,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dia", 0],
@@ -1934,10 +1934,10 @@ var DEMONS = [{
     {
         "name": "Camazotz",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["daze", "wk"],
@@ -1946,9 +1946,9 @@ var DEMONS = [{
         "level": 25,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Axel Claw", 27],
@@ -1969,10 +1969,10 @@ var DEMONS = [{
     {
         "name": "Catoblepas",
         "affinities": [
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["mute", "wk"],
@@ -1981,8 +1981,8 @@ var DEMONS = [{
         "level": 52,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Eat Whole", 54],
@@ -2003,12 +2003,12 @@ var DEMONS = [{
     {
         "name": "Centaur",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, 1],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, 1],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -2016,11 +2016,11 @@ var DEMONS = [{
         "level": 4,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Bufu", 0],
@@ -2039,9 +2039,9 @@ var DEMONS = [{
     {
         "name": "Cerberus",
         "affinities": [
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -2051,8 +2051,8 @@ var DEMONS = [{
         "level": 69,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Fire, "rp"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rp"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -2073,11 +2073,11 @@ var DEMONS = [{
     {
         "name": "Cernunnos",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 6],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 6],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["mute", "wk"]
@@ -2085,10 +2085,10 @@ var DEMONS = [{
         "level": 71,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "rp"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rp"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Cough", 0],
@@ -2109,16 +2109,16 @@ var DEMONS = [{
     {
         "name": "Chagrin",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 1]
         ],
         "attack": "Phys x2, 1 enemy",
         "level": 11,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"]
         ],
         "skills": [
             ["Stun Needle", 12],
@@ -2139,12 +2139,12 @@ var DEMONS = [{
     {
         "name": "Chernobog",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Light, -2],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Light, -2],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -3]
         ],
         "ailments": [
             ["poison", "rs"],
@@ -2153,8 +2153,8 @@ var DEMONS = [{
         "level": 50,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Blight", 0],
@@ -2175,12 +2175,12 @@ var DEMONS = [{
     {
         "name": "Cherub",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, 4],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, 4],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["mute", "wk"]
@@ -2189,11 +2189,11 @@ var DEMONS = [{
         "level": 71,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "ab"],
-            [skill_1.SkillElement.Gun, "ab"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "ab"],
+            [skill_effect_1.SkillElement.Gun, "ab"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Gun Pleroma", 73],
@@ -2214,20 +2214,20 @@ var DEMONS = [{
     {
         "name": "Chi You",
         "affinities": [
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Ice, 5],
-            [skill_1.SkillElement.Phys, 5],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Ice, 5],
+            [skill_effect_1.SkillElement.Phys, 5],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 87,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rp"],
-            [skill_1.SkillElement.Ice, "rp"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rp"],
+            [skill_effect_1.SkillElement.Ice, "rp"]
         ],
         "skills": [
             ["Debilitate", 88],
@@ -2250,10 +2250,10 @@ var DEMONS = [{
     {
         "name": "Chimera",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -4],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -4],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -2263,9 +2263,9 @@ var DEMONS = [{
         "level": 46,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Elec Pleroma", 0],
@@ -2286,17 +2286,17 @@ var DEMONS = [{
     {
         "name": "Chironnupu",
         "affinities": [
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 4],
-            [skill_1.SkillElement.Support, 4]
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 4],
+            [skill_effect_1.SkillElement.Support, 4]
         ],
         "level": 26,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Enduring Cheer", 0],
@@ -2316,16 +2316,16 @@ var DEMONS = [{
     {
         "name": "Chupacabra",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "level": 21,
         "race": "Food",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dormina", 22],
@@ -2346,16 +2346,16 @@ var DEMONS = [{
     {
         "name": "Churel",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "level": 32,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Dark Pleroma", 34],
@@ -2376,13 +2376,13 @@ var DEMONS = [{
     {
         "name": "Cleopatra",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Ice, 5],
-            [skill_1.SkillElement.Light, 8],
-            [skill_1.SkillElement.Phys, -3],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Ice, 5],
+            [skill_effect_1.SkillElement.Light, 8],
+            [skill_effect_1.SkillElement.Phys, -3],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -2391,12 +2391,12 @@ var DEMONS = [{
         "level": 99,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "ab"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "ab"]
         ],
         "skills": [
             ["Adaptive Tactics", 0],
@@ -2420,11 +2420,11 @@ var DEMONS = [{
     {
         "name": "Clotho",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["sleep", "nu"]
@@ -2432,8 +2432,8 @@ var DEMONS = [{
         "level": 35,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Diarahan", 38],
@@ -2455,23 +2455,23 @@ var DEMONS = [{
     {
         "name": "Corpses",
         "affinities": [
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "evolves": "Nebiros",
         "level": 35,
         "race": "Undead",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Binding Claw", 0],
@@ -2491,11 +2491,11 @@ var DEMONS = [{
     {
         "name": "Cu Chulainn",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, -2],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Phys, 4]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, -2],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Phys, 4]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -2505,8 +2505,8 @@ var DEMONS = [{
         "level": 50,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Critical Eye", 54],
@@ -2529,10 +2529,10 @@ var DEMONS = [{
     {
         "name": "Da Peng",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Gun, -4]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Gun, -4]
         ],
         "ailments": [
             ["daze", "wk"]
@@ -2540,9 +2540,9 @@ var DEMONS = [{
         "level": 56,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Mazandyne", 58],
@@ -2563,11 +2563,11 @@ var DEMONS = [{
     {
         "name": "Dakini",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["charm", "wk"]
@@ -2577,9 +2577,9 @@ var DEMONS = [{
         "level": 63,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -2601,11 +2601,11 @@ var DEMONS = [{
     {
         "name": "Dantalian",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -2613,12 +2613,12 @@ var DEMONS = [{
         "level": 53,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Makajam", 0],
@@ -2640,11 +2640,11 @@ var DEMONS = [{
     {
         "name": "Daphne",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -2653,9 +2653,9 @@ var DEMONS = [{
         "level": 16,
         "race": "Tree",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Attack Knowhow", 17],
@@ -2676,11 +2676,11 @@ var DEMONS = [{
     {
         "name": "David",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Dark, 5],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Dark, 5],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -2693,11 +2693,11 @@ var DEMONS = [{
         "level": 82,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Haunting Rhapsody", 0],
@@ -2717,15 +2717,15 @@ var DEMONS = [{
     {
         "name": "Decarabia",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 1]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 1]
         ],
         "level": 5,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Agi", 6],
@@ -2744,26 +2744,26 @@ var DEMONS = [{
     {
         "name": "Demiurge",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, -3],
-            [skill_1.SkillElement.Recovery, -3]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, -3],
+            [skill_effect_1.SkillElement.Recovery, -3]
         ],
         "level": 95,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Antichthon", 0],
@@ -2785,18 +2785,18 @@ var DEMONS = [{
     {
         "name": "Demonee-Ho",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Phys, 4]
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Phys, 4]
         ],
         "attack": "Gun x1, 1 enemy",
         "level": 76,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Blank Bullet", 0],
@@ -2818,9 +2818,9 @@ var DEMONS = [{
     {
         "name": "Diana",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["bind", "nu"]
@@ -2828,8 +2828,8 @@ var DEMONS = [{
         "level": 41,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "nu"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"]
         ],
         "skills": [
             ["Blast Arrow", 0],
@@ -2850,13 +2850,13 @@ var DEMONS = [{
     {
         "name": "Dionysus",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Force, -1],
-            [skill_1.SkillElement.Ice, -4],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Force, -1],
+            [skill_effect_1.SkillElement.Ice, -4],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -2864,9 +2864,9 @@ var DEMONS = [{
         "level": 41,
         "race": "Zealot",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Concentrate", 43],
@@ -2887,12 +2887,12 @@ var DEMONS = [{
     {
         "name": "Dis",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 1],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 1],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -2902,10 +2902,10 @@ var DEMONS = [{
         "level": 29,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Chakra Walk", 32],
@@ -2927,20 +2927,20 @@ var DEMONS = [{
     {
         "name": "Dominion",
         "affinities": [
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "evolves": "Throne",
         "level": 51,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Dekunda", 53],
@@ -2961,10 +2961,10 @@ var DEMONS = [{
     {
         "name": "Dormarth",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -2975,8 +2975,8 @@ var DEMONS = [{
         "level": 58,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Bind Voice", 0],
@@ -2997,14 +2997,14 @@ var DEMONS = [{
     {
         "name": "Dwarf",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "level": 8,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Head Crush", 10],
@@ -3024,20 +3024,20 @@ var DEMONS = [{
     {
         "name": "Dybbuk",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Force, -1],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Force, -1],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "level": 10,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Hard Worker", 11],
@@ -3057,15 +3057,15 @@ var DEMONS = [{
     {
         "name": "Dzelarhons",
         "affinities": [
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "level": 19,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -3086,20 +3086,20 @@ var DEMONS = [{
     {
         "name": "Enku",
         "affinities": [
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "level": 38,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Damascus Claw", 0],
@@ -3119,10 +3119,10 @@ var DEMONS = [{
     {
         "name": "Erlkonig",
         "affinities": [
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Gun, 4]
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Gun, 4]
         ],
         "ailments": [
             ["daze", "rs"]
@@ -3130,11 +3130,11 @@ var DEMONS = [{
         "level": 70,
         "race": "Wood",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rp"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rp"]
         ],
         "skills": [
             ["Endure", 71],
@@ -3156,15 +3156,15 @@ var DEMONS = [{
     {
         "name": "Erthys",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -4]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -4]
         ],
         "level": 8,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Dormina", 9],
@@ -3184,11 +3184,11 @@ var DEMONS = [{
     {
         "name": "Fafnir",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -3198,9 +3198,9 @@ var DEMONS = [{
         "level": 75,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Phys, "ab"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Phys, "ab"]
         ],
         "skills": [
             ["Draconic Reaction", 77],
@@ -3221,18 +3221,18 @@ var DEMONS = [{
     {
         "name": "Feng Huang",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -7],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -7],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 63,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -3253,11 +3253,11 @@ var DEMONS = [{
     {
         "name": "Fenrir",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -3267,10 +3267,10 @@ var DEMONS = [{
         "level": 69,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "ab"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "ab"]
         ],
         "skills": [
             ["Critical Eye", 71],
@@ -3291,15 +3291,15 @@ var DEMONS = [{
     {
         "name": "Flaemis",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -4]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -4]
         ],
         "level": 20,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Fire Pleroma", 0],
@@ -3319,10 +3319,10 @@ var DEMONS = [{
     {
         "name": "Fomorian",
         "affinities": [
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 1],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 1],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["sleep", "wk"]
@@ -3330,8 +3330,8 @@ var DEMONS = [{
         "level": 6,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Head Crush", 0],
@@ -3350,16 +3350,16 @@ var DEMONS = [{
     {
         "name": "Fortuna",
         "affinities": [
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 11,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Dia", 0],
@@ -3380,17 +3380,17 @@ var DEMONS = [{
     {
         "name": "Frost Ace",
         "affinities": [
-            [skill_1.SkillElement.Fire, -1],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Light, 2]
+            [skill_effect_1.SkillElement.Fire, -1],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Light, 2]
         ],
         "level": 42,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Bufudyne", 44],
@@ -3416,9 +3416,9 @@ var DEMONS = [{
         "level": 50,
         "race": "Enigma",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Attack Knowhow", 0],
@@ -3440,17 +3440,17 @@ var DEMONS = [{
     {
         "name": "Fuu-Ki",
         "affinities": [
-            [skill_1.SkillElement.Elec, -6],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -6],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 49,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"]
         ],
         "skills": [
             ["Dark Sword", 50],
@@ -3471,10 +3471,10 @@ var DEMONS = [{
     {
         "name": "Fuxi",
         "affinities": [
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["panic", "rs"]
@@ -3482,8 +3482,8 @@ var DEMONS = [{
         "level": 6,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Bouncing Claw", 7],
@@ -3504,12 +3504,12 @@ var DEMONS = [{
     {
         "name": "Ganesha",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Elec, -6],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Elec, -6],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["panic", "rs"],
@@ -3519,11 +3519,11 @@ var DEMONS = [{
         "level": 72,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Charge", 73],
@@ -3544,10 +3544,10 @@ var DEMONS = [{
     {
         "name": "Garrote",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -3555,10 +3555,10 @@ var DEMONS = [{
         "level": 7,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Binding Claw", 9],
@@ -3579,12 +3579,12 @@ var DEMONS = [{
     {
         "name": "Garuda",
         "affinities": [
-            [skill_1.SkillElement.Elec, -4],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, -4],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -3592,11 +3592,11 @@ var DEMONS = [{
         "level": 72,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Fire, "rp"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rp"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Amrita", 0],
@@ -3617,10 +3617,10 @@ var DEMONS = [{
     {
         "name": "Gemori",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["charm", "nu"]
@@ -3628,10 +3628,10 @@ var DEMONS = [{
         "level": 58,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Mana Surge", 59],
@@ -3652,12 +3652,12 @@ var DEMONS = [{
     {
         "name": "Ghoul",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -3667,9 +3667,9 @@ var DEMONS = [{
         "level": 49,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Acid Breath", 51],
@@ -3690,13 +3690,13 @@ var DEMONS = [{
     {
         "name": "Girimehkala",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["poison", "rs"],
@@ -3705,11 +3705,11 @@ var DEMONS = [{
         "level": 62,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rp"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rp"]
         ],
         "skills": [
             ["Bind Voice", 0],
@@ -3730,15 +3730,15 @@ var DEMONS = [{
     {
         "name": "Gnome",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Force, -5]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Force, -5]
         ],
         "level": 24,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["High Elec Pleroma", 0],
@@ -3758,10 +3758,10 @@ var DEMONS = [{
     {
         "name": "Goblin",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["sleep", "wk"]
@@ -3769,8 +3769,8 @@ var DEMONS = [{
         "level": 3,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Gram Slice", 0],
@@ -3789,12 +3789,12 @@ var DEMONS = [{
     {
         "name": "Gogmagog",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -3805,12 +3805,12 @@ var DEMONS = [{
         "level": 61,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rp"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rp"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Ally Counter", 62],
@@ -3831,10 +3831,10 @@ var DEMONS = [{
     {
         "name": "Gremlin",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, 1]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, 1]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -3843,10 +3843,10 @@ var DEMONS = [{
         "level": 8,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufu", 0],
@@ -3866,9 +3866,9 @@ var DEMONS = [{
     {
         "name": "Grendel",
         "affinities": [
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -3]
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -3]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -3877,9 +3877,9 @@ var DEMONS = [{
         "level": 50,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Head Crush", 0],
@@ -3900,8 +3900,8 @@ var DEMONS = [{
     {
         "name": "Gryphon",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -3909,9 +3909,9 @@ var DEMONS = [{
         "level": 40,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Damascus Claw", 41],
@@ -3931,10 +3931,10 @@ var DEMONS = [{
     {
         "name": "Gu Huo Niao",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["sick", "wk"],
@@ -3943,11 +3943,11 @@ var DEMONS = [{
         "level": 16,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rp"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rp"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -3967,20 +3967,20 @@ var DEMONS = [{
     {
         "name": "Gucumatz",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 27,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Heat Wave", 0],
@@ -4002,10 +4002,10 @@ var DEMONS = [{
     {
         "name": "Guedhe",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -4014,7 +4014,7 @@ var DEMONS = [{
         "level": 63,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"]
+            [skill_effect_1.SkillElement.Dark, "nu"]
         ],
         "skills": [
             ["Amrita", 0],
@@ -4036,16 +4036,16 @@ var DEMONS = [{
     {
         "name": "Gui Xian",
         "affinities": [
-            [skill_1.SkillElement.Fire, -7],
-            [skill_1.SkillElement.Ice, 5],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Fire, -7],
+            [skill_effect_1.SkillElement.Ice, 5],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "attack": "Phys x2, 1 enemy",
         "level": 60,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -4066,12 +4066,12 @@ var DEMONS = [{
     {
         "name": "Gurr",
         "affinities": [
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["daze", "wk"],
@@ -4080,9 +4080,9 @@ var DEMONS = [{
         "level": 42,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Axel Claw", 0],
@@ -4103,19 +4103,19 @@ var DEMONS = [{
     {
         "name": "Hachiman",
         "affinities": [
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 75,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rp"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rp"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Berserker God", 76],
@@ -4137,8 +4137,8 @@ var DEMONS = [{
     {
         "name": "Hagen",
         "affinities": [
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 56,
@@ -4164,9 +4164,9 @@ var DEMONS = [{
     {
         "name": "Hairy Jack",
         "affinities": [
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -4175,8 +4175,8 @@ var DEMONS = [{
         "level": 30,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Axel Claw", 31],
@@ -4197,18 +4197,18 @@ var DEMONS = [{
     {
         "name": "Halphas",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Support, 5]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Support, 5]
         ],
         "level": 24,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Fatal Sword", 26],
@@ -4229,10 +4229,10 @@ var DEMONS = [{
     {
         "name": "Hamsa",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -4241,9 +4241,9 @@ var DEMONS = [{
         "level": 10,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Attack Knowhow", 0],
@@ -4264,10 +4264,10 @@ var DEMONS = [{
     {
         "name": "Hanuman",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["sick", "rs"]
@@ -4275,9 +4275,9 @@ var DEMONS = [{
         "level": 66,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Ally Retaliate", 68],
@@ -4298,17 +4298,17 @@ var DEMONS = [{
     {
         "name": "Haoma",
         "affinities": [
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 54,
         "race": "Tree",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Amrita", 0],
@@ -4329,11 +4329,11 @@ var DEMONS = [{
     {
         "name": "Hare of Inaba",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -4341,8 +4341,8 @@ var DEMONS = [{
         "level": 38,
         "race": "Food",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -4364,10 +4364,10 @@ var DEMONS = [{
     {
         "name": "Hariti",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, -1],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, -1],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -4375,7 +4375,7 @@ var DEMONS = [{
         "level": 36,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -4396,11 +4396,11 @@ var DEMONS = [{
     {
         "name": "Harpy",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["bind", "rs"]
@@ -4408,10 +4408,10 @@ var DEMONS = [{
         "level": 35,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Bind Voice", 0],
@@ -4433,20 +4433,20 @@ var DEMONS = [{
     {
         "name": "Hathor",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 1],
-            [skill_1.SkillElement.Phys, -4],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 1],
+            [skill_effect_1.SkillElement.Phys, -4],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 18,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "wk"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "wk"]
         ],
         "skills": [
             ["Patra", 0],
@@ -4468,11 +4468,11 @@ var DEMONS = [{
     {
         "name": "Heimdall",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -4],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, -4],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -4482,9 +4482,9 @@ var DEMONS = [{
         "level": 73,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Dekunda", 0],
@@ -4506,11 +4506,11 @@ var DEMONS = [{
     {
         "name": "Hekatoncheires",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, -2],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -3]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, -2],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -3]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -4520,9 +4520,9 @@ var DEMONS = [{
         "level": 68,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Bloody Glee", 72],
@@ -4543,16 +4543,16 @@ var DEMONS = [{
     {
         "name": "Hel",
         "affinities": [
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 4]
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 4]
         ],
         "level": 43,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 45],
@@ -4574,10 +4574,10 @@ var DEMONS = [{
     {
         "name": "Heqet",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["poison", "nu"]
@@ -4586,8 +4586,8 @@ var DEMONS = [{
         "level": 13,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Healing Knowhow", 0],
@@ -4608,7 +4608,7 @@ var DEMONS = [{
     {
         "name": "High Pixie",
         "affinities": [
-            [skill_1.SkillElement.Elec, 5]
+            [skill_effect_1.SkillElement.Elec, 5]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -4618,7 +4618,7 @@ var DEMONS = [{
         "level": 29,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"]
+            [skill_effect_1.SkillElement.Force, "rs"]
         ],
         "skills": [
             ["Elec Pleroma", 31],
@@ -4639,18 +4639,18 @@ var DEMONS = [{
     {
         "name": "Hitokoto-Nushi",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -2],
-            [skill_1.SkillElement.Light, 3]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -2],
+            [skill_effect_1.SkillElement.Light, 3]
         ],
         "level": 49,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"]
         ],
         "skills": [
             ["Dekunda", 0],
@@ -4671,20 +4671,20 @@ var DEMONS = [{
     {
         "name": "Hooligan",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "attack": "Gun x2, 1 enemy",
         "level": 10,
         "race": "Foul",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Attack Knowhow", 12],
@@ -4704,9 +4704,9 @@ var DEMONS = [{
     {
         "name": "Horkos",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -4715,9 +4715,9 @@ var DEMONS = [{
         "level": 26,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Counter", 28],
@@ -4738,21 +4738,21 @@ var DEMONS = [{
     {
         "name": "Hresvelgr",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -6],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -6],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 70,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "ab"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "ab"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Mazandyne", 73],
@@ -4773,9 +4773,9 @@ var DEMONS = [{
     {
         "name": "Hsing-Hsing",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -4784,9 +4784,9 @@ var DEMONS = [{
         "level": 48,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Beastly Reaction", 50],
@@ -4808,14 +4808,14 @@ var DEMONS = [{
     {
         "name": "Hua Po",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, 2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, 2]
         ],
         "level": 12,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"]
         ],
         "skills": [
             ["Agi", 0],
@@ -4836,18 +4836,18 @@ var DEMONS = [{
     {
         "name": "Huang Di",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "level": 86,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Great Logos", 87],
@@ -4870,7 +4870,7 @@ var DEMONS = [{
     {
         "name": "Huang Long",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3]
+            [skill_effect_1.SkillElement.Almighty, 3]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -4879,11 +4879,11 @@ var DEMONS = [{
         "level": 78,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Luster Candy", 80],
@@ -4904,10 +4904,10 @@ var DEMONS = [{
     {
         "name": "Huoniao",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Ice, -5]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Ice, -5]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -4917,9 +4917,9 @@ var DEMONS = [{
         "level": 65,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Fire, "rp"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rp"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agidyne", 66],
@@ -4940,12 +4940,12 @@ var DEMONS = [{
     {
         "name": "Ictinike",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -4953,9 +4953,9 @@ var DEMONS = [{
         "level": 18,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Damascus Claw", 0],
@@ -4976,10 +4976,10 @@ var DEMONS = [{
     {
         "name": "Illuyanka",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -4],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Ailment, -4],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -4988,8 +4988,8 @@ var DEMONS = [{
         "level": 47,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -5010,22 +5010,22 @@ var DEMONS = [{
     {
         "name": "Inanna",
         "affinities": [
-            [skill_1.SkillElement.Elec, 6],
-            [skill_1.SkillElement.Fire, 6],
-            [skill_1.SkillElement.Force, 6],
-            [skill_1.SkillElement.Ice, 6],
-            [skill_1.SkillElement.Phys, -4],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Elec, 6],
+            [skill_effect_1.SkillElement.Fire, 6],
+            [skill_effect_1.SkillElement.Force, 6],
+            [skill_effect_1.SkillElement.Ice, 6],
+            [skill_effect_1.SkillElement.Phys, -4],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "level": 91,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Concentrate", 92],
@@ -5048,10 +5048,10 @@ var DEMONS = [{
     {
         "name": "Incubus",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Elec, -4],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Elec, -4],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -5061,9 +5061,9 @@ var DEMONS = [{
         "level": 23,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dream Needle", 0],
@@ -5084,18 +5084,18 @@ var DEMONS = [{
     {
         "name": "Inferno",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Ice, -8],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Ice, -8],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "level": 31,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Agilao", 32],
@@ -5116,17 +5116,17 @@ var DEMONS = [{
     {
         "name": "Inti",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, 2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, 2]
         ],
         "level": 34,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Fire Pleroma", 0],
@@ -5147,17 +5147,17 @@ var DEMONS = [{
     {
         "name": "Inugami",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 20,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Fire Breath", 0],
@@ -5178,9 +5178,9 @@ var DEMONS = [{
     {
         "name": "Ippon-Datara",
         "affinities": [
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -5189,8 +5189,8 @@ var DEMONS = [{
         "level": 16,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Mudo", 0],
@@ -5210,12 +5210,12 @@ var DEMONS = [{
     {
         "name": "Ishtar",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -2],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -2],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["charm", "rs"]
@@ -5223,10 +5223,10 @@ var DEMONS = [{
         "level": 44,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Concentrate", 46],
@@ -5247,15 +5247,15 @@ var DEMONS = [{
     {
         "name": "Isis",
         "affinities": [
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Phys, -4],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Phys, -4],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "level": 59,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "rs"]
         ],
         "skills": [
             ["Mana Surge", 61],
@@ -5276,11 +5276,11 @@ var DEMONS = [{
     {
         "name": "Israfel",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, 3]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, 3]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -5288,10 +5288,10 @@ var DEMONS = [{
         "level": 68,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "ab"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "ab"]
         ],
         "skills": [
             ["Ally Retaliate", 71],
@@ -5313,19 +5313,19 @@ var DEMONS = [{
     {
         "name": "Itsumade",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "level": 19,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Makakaja", 0],
@@ -5346,10 +5346,10 @@ var DEMONS = [{
     {
         "name": "Ixtab",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -5359,8 +5359,8 @@ var DEMONS = [{
         "level": 76,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "rp"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rp"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Eternal Rest", 0],
@@ -5381,11 +5381,11 @@ var DEMONS = [{
     {
         "name": "Izanami",
         "affinities": [
-            [skill_1.SkillElement.Dark, 5],
-            [skill_1.SkillElement.Elec, 6],
-            [skill_1.SkillElement.Fire, -6],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Dark, 5],
+            [skill_effect_1.SkillElement.Elec, 6],
+            [skill_effect_1.SkillElement.Fire, -6],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["charm", "nu"]
@@ -5393,10 +5393,10 @@ var DEMONS = [{
         "level": 82,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Concentrate", 0],
@@ -5418,15 +5418,15 @@ var DEMONS = [{
     {
         "name": "Jack Frost",
         "affinities": [
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 4]
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 4]
         ],
         "evolves": "Wendigo",
         "level": 20,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -5447,11 +5447,11 @@ var DEMONS = [{
     {
         "name": "Jack the Ripper",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["sick", "rs"]
@@ -5459,9 +5459,9 @@ var DEMONS = [{
         "level": 7,
         "race": "Foul",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Light Life Aid", 10],
@@ -5481,8 +5481,8 @@ var DEMONS = [{
     {
         "name": "Jarilo",
         "affinities": [
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -5491,8 +5491,8 @@ var DEMONS = [{
         "level": 61,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "nu"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"]
         ],
         "skills": [
             ["Diarahan", 0],
@@ -5513,20 +5513,20 @@ var DEMONS = [{
     {
         "name": "Jeanne D'Arc",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Dark, -2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Recovery, 4],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Dark, -2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Recovery, 4],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 42,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["High Heal Pleroma", 0],
@@ -5548,18 +5548,18 @@ var DEMONS = [{
     {
         "name": "Jikokuten",
         "affinities": [
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 65,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Endure", 67],
@@ -5580,12 +5580,12 @@ var DEMONS = [{
     {
         "name": "Jueyuan",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -5594,8 +5594,8 @@ var DEMONS = [{
         "level": 26,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -5615,10 +5615,10 @@ var DEMONS = [{
     {
         "name": "Kabuso",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["panic", "rs"]
@@ -5627,8 +5627,8 @@ var DEMONS = [{
         "level": 6,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Binding Claw", 0],
@@ -5648,16 +5648,16 @@ var DEMONS = [{
     {
         "name": "Kaiming Shou",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 40,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Dekaja", 0],
@@ -5678,9 +5678,9 @@ var DEMONS = [{
     {
         "name": "Kaiwan",
         "affinities": [
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "ailments": [
             ["mute", "rs"],
@@ -5689,9 +5689,9 @@ var DEMONS = [{
         "level": 39,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Dark Pleroma", 42],
@@ -5711,11 +5711,11 @@ var DEMONS = [{
     {
         "name": "Kali",
         "affinities": [
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -5725,8 +5725,8 @@ var DEMONS = [{
         "level": 75,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Force, "ab"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Force, "ab"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dark Sword", 0],
@@ -5747,19 +5747,19 @@ var DEMONS = [{
     {
         "name": "Kama",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "attack": "Phys x1-2, 1 enemy",
         "level": 72,
         "race": "Enigma",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "ab"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "ab"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Dekaja", 74],
@@ -5780,11 +5780,11 @@ var DEMONS = [{
     {
         "name": "Kamapua'a",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -5793,13 +5793,13 @@ var DEMONS = [{
         "level": 23,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Media", 0],
@@ -5820,9 +5820,9 @@ var DEMONS = [{
     {
         "name": "Kanbari",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["bind", "wk"]
@@ -5830,10 +5830,10 @@ var DEMONS = [{
         "level": 27,
         "race": "Enigma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "wk"]
         ],
         "skills": [
             ["Chakra Walk", 29],
@@ -5854,10 +5854,10 @@ var DEMONS = [{
     {
         "name": "Kangiten",
         "affinities": [
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Ice, -1],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Ice, -1],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -5865,8 +5865,8 @@ var DEMONS = [{
         "level": 80,
         "race": "Enigma",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Invitation", 0],
@@ -5887,14 +5887,14 @@ var DEMONS = [{
     {
         "name": "Kanseiteikun",
         "affinities": [
-            [skill_1.SkillElement.Phys, 4]
+            [skill_effect_1.SkillElement.Phys, 4]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 67,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Ally Retaliate", 68],
@@ -5916,12 +5916,12 @@ var DEMONS = [{
     {
         "name": "Karasu Tengu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -5929,10 +5929,10 @@ var DEMONS = [{
         "level": 24,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -5954,9 +5954,9 @@ var DEMONS = [{
     {
         "name": "Kartikeya",
         "affinities": [
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Recovery, -3]
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Recovery, -3]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -5964,9 +5964,9 @@ var DEMONS = [{
         "level": 78,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Charge", 79],
@@ -5987,14 +5987,14 @@ var DEMONS = [{
     {
         "name": "Kaso",
         "affinities": [
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "level": 10,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agi", 0],
@@ -6014,11 +6014,11 @@ var DEMONS = [{
     {
         "name": "Katakirauwa",
         "affinities": [
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Force, -2],
-            [skill_1.SkillElement.Ice, -2],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Force, -2],
+            [skill_effect_1.SkillElement.Ice, -2],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "ailments": [
             ["sick", "rs"]
@@ -6026,12 +6026,12 @@ var DEMONS = [{
         "level": 1,
         "race": "Food",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "wk"]
         ],
         "skills": [
             ["Bouncing Claw", 0],
@@ -6051,21 +6051,21 @@ var DEMONS = [{
     {
         "name": "Kazfiel",
         "affinities": [
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 82,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "rp"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "rp"]
         ],
         "skills": [
             ["Dark Sword", 0],
@@ -6094,8 +6094,8 @@ var DEMONS = [{
         "level": 31,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Tarunda", 0],
@@ -6114,8 +6114,8 @@ var DEMONS = [{
     {
         "name": "Kikimora",
         "affinities": [
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -6123,8 +6123,8 @@ var DEMONS = [{
         "level": 28,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Axel Claw", 0],
@@ -6145,11 +6145,11 @@ var DEMONS = [{
     {
         "name": "Kikuri-Hime",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "rs"]
@@ -6157,9 +6157,9 @@ var DEMONS = [{
         "level": 36,
         "race": "Nymph",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -6181,18 +6181,18 @@ var DEMONS = [{
     {
         "name": "Kin-Ki",
         "affinities": [
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 43,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Charge", 44],
@@ -6213,17 +6213,17 @@ var DEMONS = [{
     {
         "name": "King Frost",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -6],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -6],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 30,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -6246,22 +6246,22 @@ var DEMONS = [{
     {
         "name": "Kingu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 39,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Panic Voice", 41],
@@ -6282,19 +6282,19 @@ var DEMONS = [{
     {
         "name": "Kinmamon",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "level": 60,
         "race": "Enigma",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Mediarama", 0],
@@ -6314,14 +6314,14 @@ var DEMONS = [{
     {
         "name": "Knocker",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 1]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 1]
         ],
         "level": 17,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"]
         ],
         "skills": [
             ["Magaon", 18],
@@ -6341,10 +6341,10 @@ var DEMONS = [{
     {
         "name": "Koppa Tengu",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -6353,9 +6353,9 @@ var DEMONS = [{
         "level": 16,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Bad Company", 17],
@@ -6375,18 +6375,18 @@ var DEMONS = [{
     {
         "name": "Koumokuten",
         "affinities": [
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 60,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Mortal Jihad", 0],
@@ -6407,8 +6407,8 @@ var DEMONS = [{
     {
         "name": "Kresnik",
         "affinities": [
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, 3]
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, 3]
         ],
         "ailments": [
             ["charm", "nu"]
@@ -6416,9 +6416,9 @@ var DEMONS = [{
         "level": 56,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Grand Tack", 0],
@@ -6441,12 +6441,12 @@ var DEMONS = [{
     {
         "name": "Krishna",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 5],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 5],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["charm", "nu"]
@@ -6454,8 +6454,8 @@ var DEMONS = [{
         "level": 87,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Combat Tara", 89],
@@ -6479,16 +6479,16 @@ var DEMONS = [{
     {
         "name": "Kuda",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Ice, 3]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Ice, 3]
         ],
         "level": 27,
         "race": "Food",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Blight", 28],
@@ -6509,12 +6509,12 @@ var DEMONS = [{
     {
         "name": "Kudlak",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -6523,10 +6523,10 @@ var DEMONS = [{
         "level": 66,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Death's Door", 68],
@@ -6547,9 +6547,9 @@ var DEMONS = [{
     {
         "name": "Kukunochi",
         "affinities": [
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -6557,9 +6557,9 @@ var DEMONS = [{
         "level": 44,
         "race": "Tree",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Energy Drain", 45],
@@ -6579,10 +6579,10 @@ var DEMONS = [{
     {
         "name": "Kurama Tengu",
         "affinities": [
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 2]
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 2]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -6590,9 +6590,9 @@ var DEMONS = [{
         "level": 43,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Mahama", 0],
@@ -6613,11 +6613,11 @@ var DEMONS = [{
     {
         "name": "Kushinada-Hime",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "wk"]
@@ -6625,8 +6625,8 @@ var DEMONS = [{
         "level": 40,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Heal Pleroma", 42],
@@ -6648,11 +6648,11 @@ var DEMONS = [{
     {
         "name": "Kwancha",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -6662,7 +6662,7 @@ var DEMONS = [{
         "level": 22,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Bind Voice", 0],
@@ -6683,10 +6683,10 @@ var DEMONS = [{
     {
         "name": "Lachesis",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Support, 4]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Support, 4]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -6700,8 +6700,8 @@ var DEMONS = [{
         "level": 41,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Concentrate", 42],
@@ -6721,17 +6721,17 @@ var DEMONS = [{
     {
         "name": "Lailah",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "level": 54,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Light Pleroma", 0],
@@ -6753,10 +6753,10 @@ var DEMONS = [{
     {
         "name": "Lakshmi",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "ailments": [
             ["charm", "nu"]
@@ -6764,9 +6764,9 @@ var DEMONS = [{
         "level": 77,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Floral Gust", 0],
@@ -6787,8 +6787,8 @@ var DEMONS = [{
     {
         "name": "Lanling Wang",
         "affinities": [
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -6797,8 +6797,8 @@ var DEMONS = [{
         "level": 49,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Gun, "nu"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Gun, "nu"]
         ],
         "skills": [
             ["Ally Counter", 0],
@@ -6819,10 +6819,10 @@ var DEMONS = [{
     {
         "name": "Leanan Sidhe",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, -1],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, -1],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -6830,7 +6830,7 @@ var DEMONS = [{
         "level": 9,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Dia", 0],
@@ -6851,17 +6851,17 @@ var DEMONS = [{
     {
         "name": "Legion",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "level": 4,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Dream Needle", 0],
@@ -6881,10 +6881,10 @@ var DEMONS = [{
     {
         "name": "Lham Dearg",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["poison", "wk"]
@@ -6893,9 +6893,9 @@ var DEMONS = [{
         "level": 22,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Critical Wave", 0],
@@ -6915,10 +6915,10 @@ var DEMONS = [{
     {
         "name": "Lilim",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -6927,8 +6927,8 @@ var DEMONS = [{
         "level": 33,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Lullaby", 34],
@@ -6949,11 +6949,11 @@ var DEMONS = [{
     {
         "name": "Loki",
         "affinities": [
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -6964,10 +6964,10 @@ var DEMONS = [{
         "level": 58,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Agidyne", 59],
@@ -6990,16 +6990,16 @@ var DEMONS = [{
     {
         "name": "Long",
         "affinities": [
-            [skill_1.SkillElement.Elec, -7],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -7],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 61,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Acid Breath", 0],
@@ -7020,18 +7020,18 @@ var DEMONS = [{
     {
         "name": "Lord Nandou",
         "affinities": [
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 48,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -7052,11 +7052,11 @@ var DEMONS = [{
     {
         "name": "Lorelei",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -7065,8 +7065,8 @@ var DEMONS = [{
         "level": 58,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"]
         ],
         "skills": [
             ["Mabufula", 0],
@@ -7087,12 +7087,12 @@ var DEMONS = [{
     {
         "name": "Lucifer",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 5],
-            [skill_1.SkillElement.Dark, 6],
-            [skill_1.SkillElement.Gun, 6],
-            [skill_1.SkillElement.Ice, 6],
-            [skill_1.SkillElement.Light, -6],
-            [skill_1.SkillElement.Phys, 6]
+            [skill_effect_1.SkillElement.Almighty, 5],
+            [skill_effect_1.SkillElement.Dark, 6],
+            [skill_effect_1.SkillElement.Gun, 6],
+            [skill_effect_1.SkillElement.Ice, 6],
+            [skill_effect_1.SkillElement.Light, -6],
+            [skill_effect_1.SkillElement.Phys, 6]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -7106,8 +7106,8 @@ var DEMONS = [{
         "level": 99,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Evil Shine", 0],
@@ -7128,19 +7128,19 @@ var DEMONS = [{
     {
         "name": "Lucifuge",
         "affinities": [
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 73,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rp"],
-            [skill_1.SkillElement.Gun, "rp"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rp"],
+            [skill_effect_1.SkillElement.Gun, "rp"]
         ],
         "skills": [
             ["Grand Tack", 74],
@@ -7162,12 +7162,12 @@ var DEMONS = [{
     {
         "name": "Macabre",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 6],
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 6],
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["panic", "rs"],
@@ -7177,9 +7177,9 @@ var DEMONS = [{
         "level": 45,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Blight", 0],
@@ -7200,9 +7200,9 @@ var DEMONS = [{
     {
         "name": "Mad Gasser",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 6],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Ailment, 6],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["panic", "rs"],
@@ -7213,8 +7213,8 @@ var DEMONS = [{
         "level": 37,
         "race": "Foul",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Bind Voice", 0],
@@ -7235,13 +7235,13 @@ var DEMONS = [{
     {
         "name": "Mahamayuri",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Elec, -6],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Elec, -6],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["sleep", "nu"]
@@ -7249,10 +7249,10 @@ var DEMONS = [{
         "level": 67,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Diarahan", 0],
@@ -7273,22 +7273,22 @@ var DEMONS = [{
     {
         "name": "Maitreya",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 83,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["5.67 Billion Hands", 84],
@@ -7311,14 +7311,14 @@ var DEMONS = [{
     {
         "name": "Makami",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "level": 33,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -7339,15 +7339,15 @@ var DEMONS = [{
     {
         "name": "Makara",
         "affinities": [
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Ice, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Ice, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 13,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufu", 0],
@@ -7367,8 +7367,8 @@ var DEMONS = [{
     {
         "name": "Mamedanuki",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Gun, -5]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Gun, -5]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -7377,9 +7377,9 @@ var DEMONS = [{
         "level": 9,
         "race": "Food",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Frenzied Chomp", 11],
@@ -7399,9 +7399,9 @@ var DEMONS = [{
     {
         "name": "Mandrake",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["bind", "nu"]
@@ -7409,7 +7409,7 @@ var DEMONS = [{
         "level": 4,
         "race": "Wood",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"]
+            [skill_effect_1.SkillElement.Fire, "wk"]
         ],
         "skills": [
             ["Patra", 6],
@@ -7429,12 +7429,12 @@ var DEMONS = [{
     {
         "name": "Manticore",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Gun, 1],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Gun, 1],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "ailments": [
             ["mute", "wk"],
@@ -7443,9 +7443,9 @@ var DEMONS = [{
         "level": 45,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Acid Breath", 47],
@@ -7466,9 +7466,9 @@ var DEMONS = [{
     {
         "name": "Mara",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Ice, -6],
-            [skill_1.SkillElement.Phys, 5]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Ice, -6],
+            [skill_effect_1.SkillElement.Phys, 5]
         ],
         "ailments": [
             ["charm", "nu"]
@@ -7476,11 +7476,11 @@ var DEMONS = [{
         "level": 92,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Gun, "ab"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Gun, "ab"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Charge", 0],
@@ -7503,13 +7503,13 @@ var DEMONS = [{
     {
         "name": "Marishiten",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -7518,8 +7518,8 @@ var DEMONS = [{
         "level": 75,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Berserker God", 0],
@@ -7540,14 +7540,14 @@ var DEMONS = [{
     {
         "name": "Mastema",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Light, 4]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Light, 4]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -7555,11 +7555,11 @@ var DEMONS = [{
         "level": 93,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rp"],
-            [skill_1.SkillElement.Ice, "rp"],
-            [skill_1.SkillElement.Light, "rp"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rp"],
+            [skill_effect_1.SkillElement.Ice, "rp"],
+            [skill_effect_1.SkillElement.Light, "rp"]
         ],
         "skills": [
             ["Ice Age", 95],
@@ -7582,12 +7582,12 @@ var DEMONS = [{
     {
         "name": "Master Therion",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, -5]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, -5]
         ],
         "ailments": [
             ["daze", "wk"],
@@ -7596,11 +7596,11 @@ var DEMONS = [{
         "level": 61,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -7621,19 +7621,19 @@ var DEMONS = [{
     {
         "name": "Matador",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 5]
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 5]
         ],
         "attack": "Phys x1-2, 1 enemy",
         "level": 87,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Andalusia", 0],
@@ -7655,11 +7655,11 @@ var DEMONS = [{
     {
         "name": "Maya",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, -5],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, -5],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -7668,9 +7668,9 @@ var DEMONS = [{
         "level": 77,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Makarakarn", 0],
@@ -7692,11 +7692,11 @@ var DEMONS = [{
     {
         "name": "Mayahuel",
         "affinities": [
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Phys, -3],
-            [skill_1.SkillElement.Recovery, 5]
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Phys, -3],
+            [skill_effect_1.SkillElement.Recovery, 5]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -7704,8 +7704,8 @@ var DEMONS = [{
         "level": 34,
         "race": "Tree",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"]
         ],
         "skills": [
             ["High Heal Pleroma", 36],
@@ -7726,18 +7726,18 @@ var DEMONS = [{
     {
         "name": "Medusa",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Gun, 3]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Gun, 3]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 39,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Grand Tack", 41],
@@ -7760,11 +7760,11 @@ var DEMONS = [{
     {
         "name": "Melchom",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["bind", "wk"]
@@ -7772,11 +7772,11 @@ var DEMONS = [{
         "level": 13,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Agi", 0],
@@ -7797,19 +7797,19 @@ var DEMONS = [{
     {
         "name": "Mephisto",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 5],
-            [skill_1.SkillElement.Dark, 8],
-            [skill_1.SkillElement.Light, -8],
-            [skill_1.SkillElement.Phys, 6],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Almighty, 5],
+            [skill_effect_1.SkillElement.Dark, 8],
+            [skill_effect_1.SkillElement.Light, -8],
+            [skill_effect_1.SkillElement.Phys, 6],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "level": 99,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "nu"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "nu"]
         ],
         "skills": [
             ["Dark Pierce", 0],
@@ -7831,12 +7831,12 @@ var DEMONS = [{
     {
         "name": "Merkabah",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 5],
-            [skill_1.SkillElement.Dark, -6],
-            [skill_1.SkillElement.Elec, 6],
-            [skill_1.SkillElement.Force, 6],
-            [skill_1.SkillElement.Gun, 6],
-            [skill_1.SkillElement.Light, 6]
+            [skill_effect_1.SkillElement.Almighty, 5],
+            [skill_effect_1.SkillElement.Dark, -6],
+            [skill_effect_1.SkillElement.Elec, 6],
+            [skill_effect_1.SkillElement.Force, 6],
+            [skill_effect_1.SkillElement.Gun, 6],
+            [skill_effect_1.SkillElement.Light, 6]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -7849,8 +7849,8 @@ var DEMONS = [{
         "level": 99,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "ab"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "ab"]
         ],
         "skills": [
             ["Chariot", 0],
@@ -7871,13 +7871,13 @@ var DEMONS = [{
     {
         "name": "Mermaid",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -7885,9 +7885,9 @@ var DEMONS = [{
         "level": 15,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -7909,21 +7909,21 @@ var DEMONS = [{
     {
         "name": "Metatron",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 6],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Light, 5]
+            [skill_effect_1.SkillElement.Almighty, 6],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Light, 5]
         ],
         "level": 98,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rp"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rp"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Almighty Pleroma", 99],
@@ -7945,11 +7945,11 @@ var DEMONS = [{
     {
         "name": "Mishaguji",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -6],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -6],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -7957,10 +7957,10 @@ var DEMONS = [{
         "level": 37,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Elec Pleroma", 39],
@@ -7981,15 +7981,15 @@ var DEMONS = [{
     {
         "name": "Mithras",
         "affinities": [
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "level": 21,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Fatal Sword", 23],
@@ -8010,22 +8010,22 @@ var DEMONS = [{
     {
         "name": "Mitra-Buddha",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 5],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, 6],
-            [skill_1.SkillElement.Phys, 6]
+            [skill_effect_1.SkillElement.Almighty, 5],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, 6],
+            [skill_effect_1.SkillElement.Phys, 6]
         ],
         "attack": "Phys x2-3, 1 enemy",
         "level": 96,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Berserker God", 0],
@@ -8048,18 +8048,18 @@ var DEMONS = [{
     {
         "name": "Moh Shuvuu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "level": 12,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dia", 0],
@@ -8080,11 +8080,11 @@ var DEMONS = [{
     {
         "name": "Mokoi",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -8092,8 +8092,8 @@ var DEMONS = [{
         "level": 18,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Dream Fist", 19],
@@ -8114,9 +8114,9 @@ var DEMONS = [{
     {
         "name": "Momunofu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -6],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, -6],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -8129,9 +8129,9 @@ var DEMONS = [{
         "level": 25,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Charge", 0],
@@ -8152,10 +8152,10 @@ var DEMONS = [{
     {
         "name": "Morax",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -8163,10 +8163,10 @@ var DEMONS = [{
         "level": 14,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Counter", 0],
@@ -8187,18 +8187,18 @@ var DEMONS = [{
     {
         "name": "Mot",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Elec, -6],
-            [skill_1.SkillElement.Force, 4]
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Elec, -6],
+            [skill_effect_1.SkillElement.Force, 4]
         ],
         "level": 89,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "rp"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rp"]
+            [skill_effect_1.SkillElement.Dark, "rp"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rp"]
         ],
         "skills": [
             ["Makakaja", 0],
@@ -8219,8 +8219,8 @@ var DEMONS = [{
     {
         "name": "Mother Harlot",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Almighty, 6]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Almighty, 6]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -8234,11 +8234,11 @@ var DEMONS = [{
         "level": 99,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "nu"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "nu"]
         ],
         "skills": [
             ["Babylon Goblet", 0],
@@ -8259,10 +8259,10 @@ var DEMONS = [{
     {
         "name": "Mothman",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -8272,9 +8272,9 @@ var DEMONS = [{
         "level": 11,
         "race": "Vermin",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Mana Bonus", 12],
@@ -8294,17 +8294,17 @@ var DEMONS = [{
     {
         "name": "Mou-Ryo",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "evolves": "Inferno",
         "level": 23,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Mudo", 0],
@@ -8325,12 +8325,12 @@ var DEMONS = [{
     {
         "name": "Murmur",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["charm", "wk"]
@@ -8338,11 +8338,11 @@ var DEMONS = [{
         "level": 63,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "rp"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "rp"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Madness Nails", 0],
@@ -8362,11 +8362,11 @@ var DEMONS = [{
     {
         "name": "Mushussu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Force, -7],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Force, -7],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["daze", "wk"],
@@ -8376,9 +8376,9 @@ var DEMONS = [{
         "level": 47,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Axel Claw", 48],
@@ -8398,12 +8398,12 @@ var DEMONS = [{
     {
         "name": "Myrmecolion",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -8411,9 +8411,9 @@ var DEMONS = [{
         "level": 29,
         "race": "Vermin",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Frenzied Chomp", 0],
@@ -8434,15 +8434,15 @@ var DEMONS = [{
     {
         "name": "Nadja",
         "affinities": [
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "level": 6,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Dia", 7],
@@ -8462,10 +8462,10 @@ var DEMONS = [{
     {
         "name": "Naga",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Ice, 1],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Ice, 1],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -8474,11 +8474,11 @@ var DEMONS = [{
         "level": 19,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -8499,10 +8499,10 @@ var DEMONS = [{
     {
         "name": "Napaea",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 1],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 1],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["charm", "rs"]
@@ -8510,8 +8510,8 @@ var DEMONS = [{
         "level": 12,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agi", 14],
@@ -8533,13 +8533,13 @@ var DEMONS = [{
     {
         "name": "Narcissus",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -8548,9 +8548,9 @@ var DEMONS = [{
         "level": 29,
         "race": "Tree",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Chakra Walk", 31],
@@ -8571,9 +8571,9 @@ var DEMONS = [{
     {
         "name": "Nata Taishi",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["poison", "rs"]
@@ -8581,7 +8581,7 @@ var DEMONS = [{
         "level": 23,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Charge", 25],
@@ -8602,11 +8602,11 @@ var DEMONS = [{
     {
         "name": "Nebiros",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -8615,11 +8615,11 @@ var DEMONS = [{
         "level": 46,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "nu"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "nu"]
         ],
         "skills": [
             ["Dark Pleroma", 47],
@@ -8640,11 +8640,11 @@ var DEMONS = [{
     {
         "name": "Nekomata",
         "affinities": [
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -8655,10 +8655,10 @@ var DEMONS = [{
         "level": 35,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Axel Claw", 0],
@@ -8679,19 +8679,19 @@ var DEMONS = [{
     {
         "name": "Nergal",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 81,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "rp"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rp"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Berserker God", 83],
@@ -8712,12 +8712,12 @@ var DEMONS = [{
     {
         "name": "Niddhoggr",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -8726,11 +8726,11 @@ var DEMONS = [{
         "level": 60,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "rp"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rp"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Eat Whole", 63],
@@ -8751,8 +8751,8 @@ var DEMONS = [{
     {
         "name": "Night Stalker",
         "affinities": [
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["sleep", "rs"]
@@ -8760,7 +8760,7 @@ var DEMONS = [{
         "level": 22,
         "race": "Foul",
         "resists": [
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Attack Knowhow", 23],
@@ -8780,8 +8780,8 @@ var DEMONS = [{
     {
         "name": "Norn",
         "affinities": [
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -8789,8 +8789,8 @@ var DEMONS = [{
         "level": 69,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Chakra Walk", 71],
@@ -8812,10 +8812,10 @@ var DEMONS = [{
     {
         "name": "Nozuchi",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["poison", "rs"]
@@ -8823,12 +8823,12 @@ var DEMONS = [{
         "level": 23,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Critical Wave", 25],
@@ -8849,16 +8849,16 @@ var DEMONS = [{
     {
         "name": "Nue",
         "affinities": [
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, -4]
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, -4]
         ],
         "level": 39,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Axel Claw", 0],
@@ -8879,11 +8879,11 @@ var DEMONS = [{
     {
         "name": "Obariyon",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["bind", "nu"]
@@ -8891,10 +8891,10 @@ var DEMONS = [{
         "level": 18,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Binding Claw", 0],
@@ -8914,10 +8914,10 @@ var DEMONS = [{
     {
         "name": "Oberon",
         "affinities": [
-            [skill_1.SkillElement.Elec, -4],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Elec, -4],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["charm", "wk"]
@@ -8925,8 +8925,8 @@ var DEMONS = [{
         "level": 64,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "ab"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "ab"]
         ],
         "skills": [
             ["Diarahan", 65],
@@ -8947,18 +8947,18 @@ var DEMONS = [{
     {
         "name": "Odin",
         "affinities": [
-            [skill_1.SkillElement.Elec, 7],
-            [skill_1.SkillElement.Force, -7],
-            [skill_1.SkillElement.Phys, 5]
+            [skill_effect_1.SkillElement.Elec, 7],
+            [skill_effect_1.SkillElement.Force, -7],
+            [skill_effect_1.SkillElement.Phys, 5]
         ],
         "level": 85,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "rp"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rp"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "rp"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rp"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Concentrate", 0],
@@ -8981,10 +8981,10 @@ var DEMONS = [{
     {
         "name": "Ogre",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -3]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -3]
         ],
         "ailments": [
             ["bind", "wk"]
@@ -8992,9 +8992,9 @@ var DEMONS = [{
         "level": 45,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Bloody Glee", 47],
@@ -9014,15 +9014,15 @@ var DEMONS = [{
     {
         "name": "Ogun",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "level": 24,
         "race": "Zealot",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"]
         ],
         "skills": [
             ["Blight", 0],
@@ -9043,22 +9043,22 @@ var DEMONS = [{
     {
         "name": "Okiku-Mushi",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 34,
         "race": "Vermin",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Mudoon", 36],
@@ -9079,17 +9079,17 @@ var DEMONS = [{
     {
         "name": "Okuninushi",
         "affinities": [
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "attack": "Phys x2, 1 enemy",
         "level": 30,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -9111,11 +9111,11 @@ var DEMONS = [{
     {
         "name": "Ometeotl",
         "affinities": [
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, -5],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, -5],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -9123,8 +9123,8 @@ var DEMONS = [{
         "level": 59,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -9145,18 +9145,18 @@ var DEMONS = [{
     {
         "name": "Ongyo-Ki",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Light, -4],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Light, -4],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 78,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Dark Sword", 0],
@@ -9179,10 +9179,10 @@ var DEMONS = [{
     {
         "name": "Oni",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -9192,7 +9192,7 @@ var DEMONS = [{
         "level": 13,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"]
         ],
         "skills": [
             ["Critical Wave", 15],
@@ -9211,15 +9211,15 @@ var DEMONS = [{
     {
         "name": "Onmoraki",
         "affinities": [
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "level": 5,
         "race": "Food",
         "resists": [
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agi", 0],
@@ -9238,21 +9238,21 @@ var DEMONS = [{
     {
         "name": "Orcus",
         "affinities": [
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "level": 50,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Mamudoon", 0],
@@ -9272,11 +9272,11 @@ var DEMONS = [{
     {
         "name": "Orias",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["sick", "nu"]
@@ -9285,10 +9285,10 @@ var DEMONS = [{
         "level": 38,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Attack Knowhow", 41],
@@ -9309,12 +9309,12 @@ var DEMONS = [{
     {
         "name": "Orochi",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -7],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, -7],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -9327,9 +9327,9 @@ var DEMONS = [{
         "level": 51,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -9351,9 +9351,9 @@ var DEMONS = [{
     {
         "name": "Orthrus",
         "affinities": [
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -6],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -6],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["panic", "rs"],
@@ -9363,9 +9363,9 @@ var DEMONS = [{
         "level": 52,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Eat Whole", 53],
@@ -9386,8 +9386,8 @@ var DEMONS = [{
     {
         "name": "Ose",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -9397,7 +9397,7 @@ var DEMONS = [{
         "level": 32,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"]
         ],
         "skills": [
             ["Beastly Reaction", 33],
@@ -9419,16 +9419,16 @@ var DEMONS = [{
     {
         "name": "Osiris",
         "affinities": [
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Light, -2],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Light, -2],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 53,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Dark Pleroma", 0],
@@ -9449,14 +9449,14 @@ var DEMONS = [{
     {
         "name": "Oumitsunu",
         "affinities": [
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 65,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Berserker God", 0],
@@ -9477,11 +9477,11 @@ var DEMONS = [{
     {
         "name": "Ouroboros",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, -4],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, -4],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["mute", "nu"],
@@ -9490,12 +9490,12 @@ var DEMONS = [{
         "level": 47,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Makakaja", 50],
@@ -9516,9 +9516,9 @@ var DEMONS = [{
     {
         "name": "Pabilsag",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, 2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, 2]
         ],
         "ailments": [
             ["poison", "nu"]
@@ -9526,10 +9526,10 @@ var DEMONS = [{
         "level": 24,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Rapid Needle", 25],
@@ -9549,12 +9549,12 @@ var DEMONS = [{
     {
         "name": "Pachacamac",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -9563,10 +9563,10 @@ var DEMONS = [{
         "level": 47,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Mamudoon", 48],
@@ -9586,12 +9586,12 @@ var DEMONS = [{
     {
         "name": "Pale Rider",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 6],
-            [skill_1.SkillElement.Phys, 6],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 6],
+            [skill_effect_1.SkillElement.Phys, 6],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -9600,11 +9600,11 @@ var DEMONS = [{
         "level": 95,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rp"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rp"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Deadly Wind", 96],
@@ -9626,10 +9626,10 @@ var DEMONS = [{
     {
         "name": "Pales",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 2]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -9639,10 +9639,10 @@ var DEMONS = [{
         "level": 73,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Beastly Reaction", 75],
@@ -9663,12 +9663,12 @@ var DEMONS = [{
     {
         "name": "Pallas Athena",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -9678,10 +9678,10 @@ var DEMONS = [{
         "level": 51,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "nu"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Chakra Walk", 53],
@@ -9702,19 +9702,19 @@ var DEMONS = [{
     {
         "name": "Parvati",
         "affinities": [
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Phys, -3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Phys, -3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 25,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Chakra Walk", 26],
@@ -9735,11 +9735,11 @@ var DEMONS = [{
     {
         "name": "Patrimpas",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "ailments": [
             ["daze", "wk"]
@@ -9747,10 +9747,10 @@ var DEMONS = [{
         "level": 20,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -9771,20 +9771,20 @@ var DEMONS = [{
     {
         "name": "Patriot",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Recovery, -5],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Recovery, -5],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "attack": "Gun x2, 1 enemy",
         "level": 45,
         "race": "Undead",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Cough", 0],
@@ -9806,11 +9806,11 @@ var DEMONS = [{
     {
         "name": "Peallaidh",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -9819,9 +9819,9 @@ var DEMONS = [{
         "level": 17,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Hellish Mask", 20],
@@ -9842,15 +9842,15 @@ var DEMONS = [{
     {
         "name": "Pele",
         "affinities": [
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "level": 7,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agi", 0],
@@ -9871,20 +9871,20 @@ var DEMONS = [{
     {
         "name": "Pendragon",
         "affinities": [
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Force, -2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Force, -2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 66,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rp"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rp"]
         ],
         "skills": [
             ["Acid Breath", 0],
@@ -9905,11 +9905,11 @@ var DEMONS = [{
     {
         "name": "Peri",
         "affinities": [
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -9918,10 +9918,10 @@ var DEMONS = [{
         "level": 62,
         "race": "Nymph",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Chakra Walk", 63],
@@ -9942,19 +9942,19 @@ var DEMONS = [{
     {
         "name": "Persephone",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 57,
         "race": "Reaper",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -9974,17 +9974,17 @@ var DEMONS = [{
     {
         "name": "Phoenix",
         "affinities": [
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Ice, -4],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Ice, -4],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "level": 24,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Fire Breath", 0],
@@ -10005,14 +10005,14 @@ var DEMONS = [{
     {
         "name": "Pisaca",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -10021,10 +10021,10 @@ var DEMONS = [{
         "level": 54,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Acid Breath", 57],
@@ -10046,8 +10046,8 @@ var DEMONS = [{
     {
         "name": "Pixie",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -10055,8 +10055,8 @@ var DEMONS = [{
         "level": 9,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"]
         ],
         "skills": [
             ["Dia", 0],
@@ -10077,12 +10077,12 @@ var DEMONS = [{
     {
         "name": "Poltergeist",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Force, -4],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Force, -4],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["panic", "rs"]
@@ -10092,8 +10092,8 @@ var DEMONS = [{
         "level": 19,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Healing Knowhow", 21],
@@ -10114,15 +10114,15 @@ var DEMONS = [{
     {
         "name": "Porewit",
         "affinities": [
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "level": 7,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agi", 0],
@@ -10141,13 +10141,13 @@ var DEMONS = [{
     {
         "name": "Power",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Dark, -6],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, 1],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Dark, -6],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, 1],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -10157,10 +10157,10 @@ var DEMONS = [{
         "level": 33,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -10181,22 +10181,22 @@ var DEMONS = [{
     {
         "name": "Preta",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "level": 11,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Bad Company", 0],
@@ -10217,17 +10217,17 @@ var DEMONS = [{
     {
         "name": "Principality",
         "affinities": [
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 4]
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 4]
         ],
         "evolves": "Power",
         "level": 26,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Light Pleroma", 29],
@@ -10249,11 +10249,11 @@ var DEMONS = [{
     {
         "name": "Prometheus",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Ice, -7],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Ice, -7],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["bind", "wk"]
@@ -10261,9 +10261,9 @@ var DEMONS = [{
         "level": 40,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Fire Breath", 0],
@@ -10285,15 +10285,15 @@ var DEMONS = [{
     {
         "name": "Pyro Jack",
         "affinities": [
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Light, -1]
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Light, -1]
         ],
         "level": 25,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agilao", 0],
@@ -10314,12 +10314,12 @@ var DEMONS = [{
     {
         "name": "Python",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -10328,10 +10328,10 @@ var DEMONS = [{
         "level": 70,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Fog Breath", 0],
@@ -10352,10 +10352,10 @@ var DEMONS = [{
     {
         "name": "Qing Niugai",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["daze", "wk"],
@@ -10365,10 +10365,10 @@ var DEMONS = [{
         "level": 29,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Life Gain", 30],
@@ -10389,12 +10389,12 @@ var DEMONS = [{
     {
         "name": "Queen Mab",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Phys, -4],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Phys, -4],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -10404,10 +10404,10 @@ var DEMONS = [{
         "level": 61,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Amrita", 62],
@@ -10428,19 +10428,19 @@ var DEMONS = [{
     {
         "name": "Quetzalcoatl",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 67,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -10462,11 +10462,11 @@ var DEMONS = [{
     {
         "name": "Quicksilver",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -4],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -4],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["bind", "rs"]
@@ -10476,10 +10476,10 @@ var DEMONS = [{
         "level": 25,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Mazio", 0],
@@ -10498,17 +10498,17 @@ var DEMONS = [{
     {
         "name": "Raijuu",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "level": 33,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Binding Claw", 0],
@@ -10529,11 +10529,11 @@ var DEMONS = [{
     {
         "name": "Rakshasa",
         "affinities": [
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -10542,8 +10542,8 @@ var DEMONS = [{
         "level": 38,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Charge", 39],
@@ -10565,15 +10565,15 @@ var DEMONS = [{
     {
         "name": "Rama",
         "affinities": [
-            [skill_1.SkillElement.Dark, -2],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -2],
-            [skill_1.SkillElement.Phys, 4]
+            [skill_effect_1.SkillElement.Dark, -2],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -2],
+            [skill_effect_1.SkillElement.Phys, 4]
         ],
         "level": 74,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"]
+            [skill_effect_1.SkillElement.Fire, "nu"]
         ],
         "skills": [
             ["Cold World", 75],
@@ -10594,11 +10594,11 @@ var DEMONS = [{
     {
         "name": "Rangda",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["daze", "wk"],
@@ -10607,8 +10607,8 @@ var DEMONS = [{
         "level": 68,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Phys, "rp"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rp"]
         ],
         "skills": [
             ["Binding Claw", 0],
@@ -10629,11 +10629,11 @@ var DEMONS = [{
     {
         "name": "Red Rider",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Fire, 6],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 6]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Fire, 6],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 6]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -10641,11 +10641,11 @@ var DEMONS = [{
         "level": 91,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rp"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rp"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Blade of Terror", 0],
@@ -10667,18 +10667,18 @@ var DEMONS = [{
     {
         "name": "Rukh",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 47,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Charge", 0],
@@ -10699,15 +10699,15 @@ var DEMONS = [{
     {
         "name": "Salamander",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Ice, -7]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Ice, -7]
         ],
         "level": 36,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["High Fire Pleroma", 0],
@@ -10727,11 +10727,11 @@ var DEMONS = [{
     {
         "name": "Samael",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Almighty, 4],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Almighty, 4],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -10739,8 +10739,8 @@ var DEMONS = [{
         "level": 90,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Doping", 91],
@@ -10762,13 +10762,13 @@ var DEMONS = [{
     {
         "name": "Samyaza",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Elec, 5],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Elec, 5],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -10776,11 +10776,11 @@ var DEMONS = [{
         "level": 76,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Elec Pleroma", 77],
@@ -10802,8 +10802,8 @@ var DEMONS = [{
     {
         "name": "Sandman",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, 1]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, 1]
         ],
         "ailments": [
             ["sleep", "nu"]
@@ -10812,8 +10812,8 @@ var DEMONS = [{
         "level": 10,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"]
         ],
         "skills": [
             ["Dream Needle", 0],
@@ -10833,10 +10833,10 @@ var DEMONS = [{
     {
         "name": "Sarasvati",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -10846,9 +10846,9 @@ var DEMONS = [{
         "level": 48,
         "race": "Nymph",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -10869,10 +10869,10 @@ var DEMONS = [{
     {
         "name": "Satan",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 8],
-            [skill_1.SkillElement.Fire, 8],
-            [skill_1.SkillElement.Gun, 6],
-            [skill_1.SkillElement.Phys, 8]
+            [skill_effect_1.SkillElement.Almighty, 8],
+            [skill_effect_1.SkillElement.Fire, 8],
+            [skill_effect_1.SkillElement.Gun, 6],
+            [skill_effect_1.SkillElement.Phys, 8]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -10887,11 +10887,11 @@ var DEMONS = [{
         "level": 120,
         "race": "Primal",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "ab"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "ab"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Akasha Arts", 0],
@@ -10913,10 +10913,10 @@ var DEMONS = [{
     {
         "name": "Scathach",
         "affinities": [
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -10924,10 +10924,10 @@ var DEMONS = [{
         "level": 39,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Grand Tack", 42],
@@ -10948,19 +10948,19 @@ var DEMONS = [{
     {
         "name": "Sedna",
         "affinities": [
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "level": 27,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Diarama", 29],
@@ -10981,12 +10981,12 @@ var DEMONS = [{
     {
         "name": "Senri",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -10995,9 +10995,9 @@ var DEMONS = [{
         "level": 26,
         "race": "Nymph",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"]
         ],
         "skills": [
             ["Force Pleroma", 27],
@@ -11018,22 +11018,22 @@ var DEMONS = [{
     {
         "name": "Seraph",
         "affinities": [
-            [skill_1.SkillElement.Fire, 6],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Fire, 6],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "attack": "Phys x1, all enemies",
         "level": 94,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "ab"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "ab"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["High Gun Pleroma", 97],
@@ -11055,12 +11055,12 @@ var DEMONS = [{
     {
         "name": "Setanta",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -11071,9 +11071,9 @@ var DEMONS = [{
         "level": 35,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"]
         ],
         "skills": [
             ["Charge", 0],
@@ -11094,19 +11094,19 @@ var DEMONS = [{
     {
         "name": "Seth",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 80,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "ab"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "nu"]
+            [skill_effect_1.SkillElement.Dark, "ab"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"]
         ],
         "skills": [
             ["Draconic Reaction", 88],
@@ -11129,9 +11129,9 @@ var DEMONS = [{
     {
         "name": "Shan Xiao",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "ailments": [
             ["panic", "rs"]
@@ -11139,8 +11139,8 @@ var DEMONS = [{
         "level": 11,
         "race": "Wood",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Binding Claw", 0],
@@ -11160,22 +11160,22 @@ var DEMONS = [{
     {
         "name": "Shax",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 74,
         "race": "Fallen",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rp"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rp"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -11196,16 +11196,16 @@ var DEMONS = [{
     {
         "name": "Shiisaa",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, -1],
-            [skill_1.SkillElement.Force, 4]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, -1],
+            [skill_effect_1.SkillElement.Force, 4]
         ],
         "level": 14,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"]
         ],
         "skills": [
             ["Frenzied Chomp", 16],
@@ -11225,11 +11225,11 @@ var DEMONS = [{
     {
         "name": "Shikome",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "ailments": [
             ["poison", "rs"]
@@ -11238,10 +11238,10 @@ var DEMONS = [{
         "level": 23,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Rapid Needle", 24],
@@ -11261,14 +11261,14 @@ var DEMONS = [{
     {
         "name": "Shiva",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -5],
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Gun, 4],
-            [skill_1.SkillElement.Phys, 7],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, -5],
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Gun, 4],
+            [skill_effect_1.SkillElement.Phys, 7],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -11278,9 +11278,9 @@ var DEMONS = [{
         "level": 95,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Akasha Arts", 99],
@@ -11303,9 +11303,9 @@ var DEMONS = [{
     {
         "name": "Shiwanna",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 2]
         ],
         "ailments": [
             ["daze", "rs"],
@@ -11315,10 +11315,10 @@ var DEMONS = [{
         "level": 38,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Fog Breath", 39],
@@ -11339,15 +11339,15 @@ var DEMONS = [{
     {
         "name": "Siegfried",
         "affinities": [
-            [skill_1.SkillElement.Gun, -5],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Gun, -5],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 62,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Phys, "ab"]
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Phys, "ab"]
         ],
         "skills": [
             ["Blood Ritual", 63],
@@ -11369,11 +11369,11 @@ var DEMONS = [{
     {
         "name": "Silky",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Phys, -3],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Phys, -3],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -11383,8 +11383,8 @@ var DEMONS = [{
         "level": 44,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 46],
@@ -11405,11 +11405,11 @@ var DEMONS = [{
     {
         "name": "Skadi",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "ailments": [
             ["mute", "nu"]
@@ -11417,8 +11417,8 @@ var DEMONS = [{
         "level": 73,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "ab"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "ab"]
         ],
         "skills": [
             ["Cold World", 0],
@@ -11439,16 +11439,16 @@ var DEMONS = [{
     {
         "name": "Skogsra",
         "affinities": [
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 31,
         "race": "Wood",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"]
         ],
         "skills": [
             ["Rakunda", 0],
@@ -11468,11 +11468,11 @@ var DEMONS = [{
     {
         "name": "Sleipnir",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["mute", "rs"],
@@ -11481,9 +11481,9 @@ var DEMONS = [{
         "level": 55,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Dekunda", 58],
@@ -11504,13 +11504,13 @@ var DEMONS = [{
     {
         "name": "Slime",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -11519,12 +11519,12 @@ var DEMONS = [{
         "level": 2,
         "race": "Foul",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "wk"]
         ],
         "skills": [
             ["Life Bonus", 6],
@@ -11544,12 +11544,12 @@ var DEMONS = [{
     {
         "name": "Sphinx",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 4]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 4]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -11558,11 +11558,11 @@ var DEMONS = [{
         "level": 71,
         "race": "Holy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Gun, "ab"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rp"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Gun, "ab"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rp"]
         ],
         "skills": [
             ["Grand Tack", 72],
@@ -11583,12 +11583,12 @@ var DEMONS = [{
     {
         "name": "Spriggan",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Gun, -1],
-            [skill_1.SkillElement.Light, -5],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Gun, -1],
+            [skill_effect_1.SkillElement.Light, -5],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -11597,10 +11597,10 @@ var DEMONS = [{
         "level": 14,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Dormina", 0],
@@ -11622,18 +11622,18 @@ var DEMONS = [{
     {
         "name": "Sraosha",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Almighty, 2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "level": 86,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "ab"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "ab"]
         ],
         "skills": [
             ["Concentrate", 87],
@@ -11656,10 +11656,10 @@ var DEMONS = [{
     {
         "name": "Stonka",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Gun, -2],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Gun, -2],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["charm", "wk"]
@@ -11667,9 +11667,9 @@ var DEMONS = [{
         "level": 26,
         "race": "Beast",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Counter", 28],
@@ -11690,17 +11690,17 @@ var DEMONS = [{
     {
         "name": "Strigoii",
         "affinities": [
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -1]
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -1]
         ],
         "level": 6,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Life Drain", 0],
@@ -11720,10 +11720,10 @@ var DEMONS = [{
     {
         "name": "Strix",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 1]
         ],
         "ailments": [
             ["sleep", "nu"]
@@ -11731,10 +11731,10 @@ var DEMONS = [{
         "level": 17,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bouncing Claw", 18],
@@ -11755,13 +11755,13 @@ var DEMONS = [{
     {
         "name": "Succubus",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -11770,10 +11770,10 @@ var DEMONS = [{
         "level": 45,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Me Patra", 46],
@@ -11794,11 +11794,11 @@ var DEMONS = [{
     {
         "name": "Sudama",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "ailments": [
             ["panic", "rs"]
@@ -11806,9 +11806,9 @@ var DEMONS = [{
         "level": 3,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Pulinpa", 0],
@@ -11827,17 +11827,17 @@ var DEMONS = [{
     {
         "name": "Sui-Ki",
         "affinities": [
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 54,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -11858,12 +11858,12 @@ var DEMONS = [{
     {
         "name": "Sukuna-Hikona",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -1],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -1],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -11871,10 +11871,10 @@ var DEMONS = [{
         "level": 34,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Concentrate", 36],
@@ -11896,10 +11896,10 @@ var DEMONS = [{
     {
         "name": "Suparna",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "rs"]
@@ -11907,10 +11907,10 @@ var DEMONS = [{
         "level": 15,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Diarama", 0],
@@ -11931,15 +11931,15 @@ var DEMONS = [{
     {
         "name": "Surt",
         "affinities": [
-            [skill_1.SkillElement.Fire, 7],
-            [skill_1.SkillElement.Ice, -7],
-            [skill_1.SkillElement.Phys, 4]
+            [skill_effect_1.SkillElement.Fire, 7],
+            [skill_effect_1.SkillElement.Ice, -7],
+            [skill_effect_1.SkillElement.Phys, 4]
         ],
         "level": 81,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Berserker God", 0],
@@ -11961,14 +11961,14 @@ var DEMONS = [{
     {
         "name": "Susano-o",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -5],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 5],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 6],
-            [skill_1.SkillElement.Recovery, -4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -5],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 5],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 6],
+            [skill_effect_1.SkillElement.Recovery, -4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["daze", "rs"]
@@ -11976,9 +11976,9 @@ var DEMONS = [{
         "level": 84,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "ab"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "ab"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Critical Eye", 85],
@@ -12000,14 +12000,14 @@ var DEMONS = [{
     {
         "name": "Sylph",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, 4]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, 4]
         ],
         "level": 28,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"]
+            [skill_effect_1.SkillElement.Elec, "nu"]
         ],
         "skills": [
             ["Bind Voice", 29],
@@ -12027,16 +12027,16 @@ var DEMONS = [{
     {
         "name": "Take-Mikazuchi",
         "affinities": [
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 55,
         "race": "Amatsu",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Berserker God", 57],
@@ -12057,10 +12057,10 @@ var DEMONS = [{
     {
         "name": "Take-Minakata",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["bind", "wk"]
@@ -12068,8 +12068,8 @@ var DEMONS = [{
         "level": 21,
         "race": "Kunitsu",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"]
         ],
         "skills": [
             ["Counter", 0],
@@ -12090,11 +12090,11 @@ var DEMONS = [{
     {
         "name": "Tam Lin",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Dark, -2],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Dark, -2],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["sick", "wk"]
@@ -12103,8 +12103,8 @@ var DEMONS = [{
         "level": 13,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Estoma", 14],
@@ -12125,10 +12125,10 @@ var DEMONS = [{
     {
         "name": "Tangata Manu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Force, 1],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Force, 1],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["sick", "wk"],
@@ -12137,10 +12137,10 @@ var DEMONS = [{
         "level": 22,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dream Needle", 0],
@@ -12161,22 +12161,22 @@ var DEMONS = [{
     {
         "name": "Taotie",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "evolves": "Taowu",
         "level": 58,
         "race": "Vile",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Endure", 62],
@@ -12197,10 +12197,10 @@ var DEMONS = [{
     {
         "name": "Taowu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Phys, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Phys, 2]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -12213,8 +12213,8 @@ var DEMONS = [{
         "level": 64,
         "race": "Wilder",
         "resists": [
-            [skill_1.SkillElement.Elec, "rp"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rp"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Beastly Reaction", 66],
@@ -12235,17 +12235,17 @@ var DEMONS = [{
     {
         "name": "Taraka",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "level": 59,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Dark Sword", 0],
@@ -12266,15 +12266,15 @@ var DEMONS = [{
     {
         "name": "Tattooed Man",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "level": 27,
         "race": "Foul",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Counter", 29],
@@ -12295,16 +12295,16 @@ var DEMONS = [{
     {
         "name": "Tenkai",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Phys, 5],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Phys, 5],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 77,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Ally Retaliate", 78],
@@ -12326,11 +12326,11 @@ var DEMONS = [{
     {
         "name": "Tezcatlipoca",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Force, 4],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Force, 4],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -12338,10 +12338,10 @@ var DEMONS = [{
         "level": 82,
         "race": "Zealot",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Madness Nails", 84],
@@ -12362,23 +12362,23 @@ var DEMONS = [{
     {
         "name": "Thor",
         "affinities": [
-            [skill_1.SkillElement.Elec, 6],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, 6],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "attack": "Phys x1-2, 1 enemy",
         "level": 80,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Berserker God", 81],
@@ -12400,19 +12400,19 @@ var DEMONS = [{
     {
         "name": "Thoth",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 30,
         "race": "Deity",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Hamaon", 0],
@@ -12434,19 +12434,19 @@ var DEMONS = [{
     {
         "name": "Throne",
         "affinities": [
-            [skill_1.SkillElement.Dark, -7],
-            [skill_1.SkillElement.Fire, 4],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Light, 4]
+            [skill_effect_1.SkillElement.Dark, -7],
+            [skill_effect_1.SkillElement.Fire, 4],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Light, 4]
         ],
         "evolves": "Cherub",
         "level": 62,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -12467,9 +12467,9 @@ var DEMONS = [{
     {
         "name": "Thunderbird",
         "affinities": [
-            [skill_1.SkillElement.Elec, 4],
-            [skill_1.SkillElement.Force, -4],
-            [skill_1.SkillElement.Gun, -3]
+            [skill_effect_1.SkillElement.Elec, 4],
+            [skill_effect_1.SkillElement.Force, -4],
+            [skill_effect_1.SkillElement.Gun, -3]
         ],
         "ailments": [
             ["bind", "nu"]
@@ -12477,8 +12477,8 @@ var DEMONS = [{
         "level": 42,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Elec Pleroma", 0],
@@ -12499,19 +12499,19 @@ var DEMONS = [{
     {
         "name": "Tiamat",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Ice, 2]
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Ice, 2]
         ],
         "evolves": "Ym",
         "level": 55,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Chakra Walk", 56],
@@ -12532,9 +12532,9 @@ var DEMONS = [{
     {
         "name": "Titan",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -6],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -6],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -12544,7 +12544,7 @@ var DEMONS = [{
         "level": 37,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Critical Eye", 0],
@@ -12565,11 +12565,11 @@ var DEMONS = [{
     {
         "name": "Titania",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Recovery, 3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Recovery, 3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -12578,11 +12578,11 @@ var DEMONS = [{
         "level": 70,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Dekunda", 72],
@@ -12604,18 +12604,18 @@ var DEMONS = [{
     {
         "name": "Tlaloc",
         "affinities": [
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Ice, 2]
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Ice, 2]
         ],
         "level": 39,
         "race": "Genma",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -12636,13 +12636,13 @@ var DEMONS = [{
     {
         "name": "Tlaltecuhtli",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 1],
-            [skill_1.SkillElement.Dark, -2],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Force, -2],
-            [skill_1.SkillElement.Ice, -2],
-            [skill_1.SkillElement.Light, -2]
+            [skill_effect_1.SkillElement.Almighty, 1],
+            [skill_effect_1.SkillElement.Dark, -2],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Force, -2],
+            [skill_effect_1.SkillElement.Ice, -2],
+            [skill_effect_1.SkillElement.Light, -2]
         ],
         "ailments": [
             ["mute", "rs"]
@@ -12650,9 +12650,9 @@ var DEMONS = [{
         "level": 46,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Agidyne", 48],
@@ -12673,10 +12673,10 @@ var DEMONS = [{
     {
         "name": "Tlazolteotl",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -12685,9 +12685,9 @@ var DEMONS = [{
         "level": 57,
         "race": "Megami",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "ab"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "ab"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Mabufudyne", 0],
@@ -12708,17 +12708,17 @@ var DEMONS = [{
     {
         "name": "Tokisada",
         "affinities": [
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Gun, -3],
-            [skill_1.SkillElement.Light, 4],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Gun, -3],
+            [skill_effect_1.SkillElement.Light, 4],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "level": 80,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Debilitate", 0],
@@ -12739,17 +12739,17 @@ var DEMONS = [{
     {
         "name": "Tonatiuh",
         "affinities": [
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 37,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Charge", 39],
@@ -12770,9 +12770,9 @@ var DEMONS = [{
     {
         "name": "Toubyou",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -12783,8 +12783,8 @@ var DEMONS = [{
         "level": 14,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Attack Knowhow", 16],
@@ -12805,13 +12805,13 @@ var DEMONS = [{
     {
         "name": "Trumpeter",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Almighty, 5],
-            [skill_1.SkillElement.Dark, 4],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, 4],
-            [skill_1.SkillElement.Phys, -8],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Almighty, 5],
+            [skill_effect_1.SkillElement.Dark, 4],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, 4],
+            [skill_effect_1.SkillElement.Phys, -8],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -12824,13 +12824,13 @@ var DEMONS = [{
         "level": 97,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Evil Melody", 0],
@@ -12851,12 +12851,12 @@ var DEMONS = [{
     {
         "name": "Tsuchigumo",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Gun, 1],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Gun, 1],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "ailments": [
             ["poison", "rs"]
@@ -12864,8 +12864,8 @@ var DEMONS = [{
         "level": 31,
         "race": "Jirae",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Mazionga", 33],
@@ -12886,10 +12886,10 @@ var DEMONS = [{
     {
         "name": "Tuofei",
         "affinities": [
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Light, -2],
-            [skill_1.SkillElement.Recovery, 2]
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Light, -2],
+            [skill_effect_1.SkillElement.Recovery, 2]
         ],
         "ailments": [
             ["bind", "rs"]
@@ -12897,9 +12897,9 @@ var DEMONS = [{
         "level": 30,
         "race": "Flight",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rp"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rp"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Ice Breath", 0],
@@ -12920,10 +12920,10 @@ var DEMONS = [{
     {
         "name": "Tzitzimitl",
         "affinities": [
-            [skill_1.SkillElement.Gun, -2],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Phys, -2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Gun, -2],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Phys, -2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["panic", "wk"],
@@ -12933,8 +12933,8 @@ var DEMONS = [{
         "level": 75,
         "race": "Tyrant",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Bufudyne", 0],
@@ -12955,9 +12955,9 @@ var DEMONS = [{
     {
         "name": "Ubu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Gun, 1],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Gun, 1],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "ailments": [
             ["poison", "rs"]
@@ -12967,9 +12967,9 @@ var DEMONS = [{
         "level": 21,
         "race": "Vermin",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Rapid Needle", 23],
@@ -12990,8 +12990,8 @@ var DEMONS = [{
     {
         "name": "Ukano Mitama",
         "affinities": [
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Recovery, 3]
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Recovery, 3]
         ],
         "ailments": [
             ["panic", "nu"]
@@ -12999,10 +12999,10 @@ var DEMONS = [{
         "level": 53,
         "race": "Avatar",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Healing Knowhow", 0],
@@ -13023,14 +13023,14 @@ var DEMONS = [{
     {
         "name": "Undine",
         "affinities": [
-            [skill_1.SkillElement.Fire, -7],
-            [skill_1.SkillElement.Ice, 5]
+            [skill_effect_1.SkillElement.Fire, -7],
+            [skill_effect_1.SkillElement.Ice, 5]
         ],
         "level": 32,
         "race": "Element",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["High Ice Pleroma", 0],
@@ -13050,9 +13050,9 @@ var DEMONS = [{
     {
         "name": "Valkyrie",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Phys, 3]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Phys, 3]
         ],
         "ailments": [
             ["charm", "rs"]
@@ -13061,10 +13061,10 @@ var DEMONS = [{
         "level": 43,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Blast Arrow", 0],
@@ -13085,17 +13085,17 @@ var DEMONS = [{
     {
         "name": "Vasuki",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Support, -4]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Support, -4]
         ],
         "level": 88,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "ab"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "ab"]
         ],
         "skills": [
             ["Glacial Blast", 0],
@@ -13117,13 +13117,13 @@ var DEMONS = [{
     {
         "name": "Vetala",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Dark, 3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 3]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Dark, 3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 3]
         ],
         "ailments": [
             ["charm", "wk"]
@@ -13131,9 +13131,9 @@ var DEMONS = [{
         "level": 74,
         "race": "Ghost",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Acid Breath", 0],
@@ -13154,10 +13154,10 @@ var DEMONS = [{
     {
         "name": "Victor",
         "affinities": [
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Light, 4]
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Light, 4]
         ],
         "ailments": [
             ["sleep", "nu"]
@@ -13165,11 +13165,11 @@ var DEMONS = [{
         "level": 61,
         "race": "Herald",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Hamaon", 0],
@@ -13190,18 +13190,18 @@ var DEMONS = [{
     {
         "name": "Vidofnir",
         "affinities": [
-            [skill_1.SkillElement.Elec, 2],
-            [skill_1.SkillElement.Force, -1],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Phys, 1]
+            [skill_effect_1.SkillElement.Elec, 2],
+            [skill_effect_1.SkillElement.Force, -1],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Phys, 1]
         ],
         "attack": "Phys x2, 1 enemy",
         "level": 34,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Ally Counter", 35],
@@ -13222,20 +13222,20 @@ var DEMONS = [{
     {
         "name": "Virtue",
         "affinities": [
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Elec, -5],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Elec, -5],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "evolves": "Dominion",
         "level": 41,
         "race": "Divine",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Hamaon", 0],
@@ -13256,11 +13256,11 @@ var DEMONS = [{
     {
         "name": "Vivian",
         "affinities": [
-            [skill_1.SkillElement.Dark, -5],
-            [skill_1.SkillElement.Fire, -6],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Light, 2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Dark, -5],
+            [skill_effect_1.SkillElement.Fire, -6],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Light, 2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["charm", "rs"],
@@ -13271,10 +13271,10 @@ var DEMONS = [{
         "level": 52,
         "race": "Fairy",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Dark Sword", 0],
@@ -13296,16 +13296,16 @@ var DEMONS = [{
     {
         "name": "Vodyanik",
         "affinities": [
-            [skill_1.SkillElement.Elec, 1],
-            [skill_1.SkillElement.Fire, -1],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Support, -1]
+            [skill_effect_1.SkillElement.Elec, 1],
+            [skill_effect_1.SkillElement.Fire, -1],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Support, -1]
         ],
         "level": 8,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Force, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"]
         ],
         "skills": [
             ["Bouncing Claw", 0],
@@ -13325,10 +13325,10 @@ var DEMONS = [{
     {
         "name": "Vouivre",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, 3],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Ice, -3]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, 3],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Ice, -3]
         ],
         "ailments": [
             ["poison", "nu"]
@@ -13336,9 +13336,9 @@ var DEMONS = [{
         "level": 28,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Blight", 0],
@@ -13359,11 +13359,11 @@ var DEMONS = [{
     {
         "name": "Wendigo",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -13372,8 +13372,8 @@ var DEMONS = [{
         "level": 30,
         "race": "Jaki",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Mabufula", 0],
@@ -13394,12 +13394,12 @@ var DEMONS = [{
     {
         "name": "White Rider",
         "affinities": [
-            [skill_1.SkillElement.Almighty, 3],
-            [skill_1.SkillElement.Elec, 6],
-            [skill_1.SkillElement.Force, -5],
-            [skill_1.SkillElement.Gun, 6],
-            [skill_1.SkillElement.Light, 6],
-            [skill_1.SkillElement.Phys, -3]
+            [skill_effect_1.SkillElement.Almighty, 3],
+            [skill_effect_1.SkillElement.Elec, 6],
+            [skill_effect_1.SkillElement.Force, -5],
+            [skill_effect_1.SkillElement.Gun, 6],
+            [skill_effect_1.SkillElement.Light, 6],
+            [skill_effect_1.SkillElement.Phys, -3]
         ],
         "ailments": [
             ["bind", "rs"],
@@ -13411,10 +13411,10 @@ var DEMONS = [{
         "level": 89,
         "race": "Fiend",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "ab"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "ab"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Elec Pierce", 93],
@@ -13437,12 +13437,12 @@ var DEMONS = [{
     {
         "name": "Wicker Man",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Light, -2],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Light, -2],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["sick", "nu"]
@@ -13450,10 +13450,10 @@ var DEMONS = [{
         "level": 38,
         "race": "Spirit",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Magaon", 39],
@@ -13474,16 +13474,16 @@ var DEMONS = [{
     {
         "name": "Wild Hunt",
         "affinities": [
-            [skill_1.SkillElement.Dark, 1],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, -3]
+            [skill_effect_1.SkillElement.Dark, 1],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, -3]
         ],
         "evolves": "Abaddon",
         "level": 53,
         "race": "Night",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Blast Arrow", 0],
@@ -13504,11 +13504,11 @@ var DEMONS = [{
     {
         "name": "Wu Kong",
         "affinities": [
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Ice, -3],
-            [skill_1.SkillElement.Phys, 4],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Ice, -3],
+            [skill_effect_1.SkillElement.Phys, 4],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["daze", "rs"]
@@ -13516,12 +13516,12 @@ var DEMONS = [{
         "level": 57,
         "race": "Fury",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Light, "rs"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Light, "rs"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Charge", 0],
@@ -13543,10 +13543,10 @@ var DEMONS = [{
     {
         "name": "Xi Wangmu",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Recovery, -3],
-            [skill_1.SkillElement.Support, 4]
+            [skill_effect_1.SkillElement.Ailment, 3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Recovery, -3],
+            [skill_effect_1.SkillElement.Support, 4]
         ],
         "ailments": [
             ["charm", "nu"],
@@ -13555,8 +13555,8 @@ var DEMONS = [{
         "level": 79,
         "race": "Lady",
         "resists": [
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Doping", 81],
@@ -13578,11 +13578,11 @@ var DEMONS = [{
     {
         "name": "Xiuhtecuhtli",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -4],
-            [skill_1.SkillElement.Fire, 5],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, -6],
-            [skill_1.SkillElement.Support, -3]
+            [skill_effect_1.SkillElement.Ailment, -4],
+            [skill_effect_1.SkillElement.Fire, 5],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, -6],
+            [skill_effect_1.SkillElement.Support, -3]
         ],
         "ailments": [
             ["mute", "wk"],
@@ -13591,9 +13591,9 @@ var DEMONS = [{
         "level": 48,
         "race": "Yoma",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Gun, "nu"],
-            [skill_1.SkillElement.Ice, "wk"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Gun, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"]
         ],
         "skills": [
             ["Agidyne", 0],
@@ -13613,12 +13613,12 @@ var DEMONS = [{
     {
         "name": "Yaksha",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Ice, 3],
-            [skill_1.SkillElement.Recovery, 1],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Ice, 3],
+            [skill_effect_1.SkillElement.Recovery, 1],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "wk"],
@@ -13627,9 +13627,9 @@ var DEMONS = [{
         "level": 71,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "rp"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rp"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Magaon", 0],
@@ -13650,12 +13650,12 @@ var DEMONS = [{
     {
         "name": "Yamawaro",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -3],
-            [skill_1.SkillElement.Dark, -3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -3],
+            [skill_effect_1.SkillElement.Dark, -3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["charm", "wk"],
@@ -13664,10 +13664,10 @@ var DEMONS = [{
         "level": 32,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"],
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"],
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Attack Knowhow", 34],
@@ -13688,17 +13688,17 @@ var DEMONS = [{
     {
         "name": "Yatagarasu",
         "affinities": [
-            [skill_1.SkillElement.Fire, 3],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Ice, -5]
+            [skill_effect_1.SkillElement.Fire, 3],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Ice, -5]
         ],
         "level": 52,
         "race": "Avian",
         "resists": [
-            [skill_1.SkillElement.Fire, "ab"],
-            [skill_1.SkillElement.Gun, "wk"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "nu"]
+            [skill_effect_1.SkillElement.Fire, "ab"],
+            [skill_effect_1.SkillElement.Gun, "wk"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "nu"]
         ],
         "skills": [
             ["Grand Tack", 53],
@@ -13719,10 +13719,10 @@ var DEMONS = [{
     {
         "name": "Yggdrasil",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 1],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 1],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["bind", "nu"]
@@ -13731,8 +13731,8 @@ var DEMONS = [{
         "level": 65,
         "race": "Tree",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Gun, "nu"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Gun, "nu"]
         ],
         "skills": [
             ["Dekaja", 0],
@@ -13753,11 +13753,11 @@ var DEMONS = [{
     {
         "name": "Ym",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -1],
-            [skill_1.SkillElement.Elec, -3],
-            [skill_1.SkillElement.Fire, -4],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, -1],
+            [skill_effect_1.SkillElement.Elec, -3],
+            [skill_effect_1.SkillElement.Fire, -4],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["mute", "wk"]
@@ -13765,9 +13765,9 @@ var DEMONS = [{
         "level": 65,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Ice, "ab"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Ice, "ab"]
         ],
         "skills": [
             ["Concentrate", 0],
@@ -13788,11 +13788,11 @@ var DEMONS = [{
     {
         "name": "Yomotsu-Ikusa",
         "affinities": [
-            [skill_1.SkillElement.Ailment, -2],
-            [skill_1.SkillElement.Gun, 3],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -2]
+            [skill_effect_1.SkillElement.Ailment, -2],
+            [skill_effect_1.SkillElement.Gun, 3],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -2]
         ],
         "ailments": [
             ["panic", "wk"]
@@ -13800,9 +13800,9 @@ var DEMONS = [{
         "level": 37,
         "race": "Brute",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Blast Arrow", 38],
@@ -13823,14 +13823,14 @@ var DEMONS = [{
     {
         "name": "Yoshitsune",
         "affinities": [
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, 1]
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, 1]
         ],
         "attack": "Phys x1-3, 1 enemy",
         "level": 36,
         "race": "Famed",
         "resists": [
-            [skill_1.SkillElement.Phys, "rs"]
+            [skill_effect_1.SkillElement.Phys, "rs"]
         ],
         "skills": [
             ["Bad Company", 0],
@@ -13852,16 +13852,16 @@ var DEMONS = [{
     {
         "name": "Yuki Jyorou",
         "affinities": [
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Ice, 4],
-            [skill_1.SkillElement.Phys, -2]
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Ice, 4],
+            [skill_effect_1.SkillElement.Phys, -2]
         ],
         "level": 30,
         "race": "Femme",
         "resists": [
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "rs"]
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "rs"]
         ],
         "skills": [
             ["Bufula", 0],
@@ -13882,9 +13882,9 @@ var DEMONS = [{
     {
         "name": "Yurlungur",
         "affinities": [
-            [skill_1.SkillElement.Fire, -5],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, 2]
+            [skill_effect_1.SkillElement.Fire, -5],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, 2]
         ],
         "ailments": [
             ["mute", "wk"],
@@ -13893,10 +13893,10 @@ var DEMONS = [{
         "level": 29,
         "race": "Snake",
         "resists": [
-            [skill_1.SkillElement.Dark, "wk"],
-            [skill_1.SkillElement.Elec, "rs"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Dark, "wk"],
+            [skill_effect_1.SkillElement.Elec, "rs"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Diarama", 30],
@@ -13917,11 +13917,11 @@ var DEMONS = [{
     {
         "name": "Zaccoum",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 4],
-            [skill_1.SkillElement.Fire, -1],
-            [skill_1.SkillElement.Force, -2],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 4],
+            [skill_effect_1.SkillElement.Fire, -1],
+            [skill_effect_1.SkillElement.Force, -2],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["mute", "nu"],
@@ -13932,10 +13932,10 @@ var DEMONS = [{
         "level": 41,
         "race": "Wood",
         "resists": [
-            [skill_1.SkillElement.Dark, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Ice, "nu"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Ice, "nu"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Acid Breath", 0],
@@ -13956,9 +13956,9 @@ var DEMONS = [{
     {
         "name": "Zhen",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 6],
-            [skill_1.SkillElement.Gun, -4],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Ailment, 6],
+            [skill_effect_1.SkillElement.Gun, -4],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -13968,8 +13968,8 @@ var DEMONS = [{
         "level": 31,
         "race": "Raptor",
         "resists": [
-            [skill_1.SkillElement.Force, "rs"],
-            [skill_1.SkillElement.Gun, "wk"]
+            [skill_effect_1.SkillElement.Force, "rs"],
+            [skill_effect_1.SkillElement.Gun, "wk"]
         ],
         "skills": [
             ["Pandemic Bomb", 0],
@@ -13990,12 +13990,12 @@ var DEMONS = [{
     {
         "name": "Zhong Kui",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 2],
-            [skill_1.SkillElement.Force, -3],
-            [skill_1.SkillElement.Light, 1],
-            [skill_1.SkillElement.Phys, 3],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 2]
+            [skill_effect_1.SkillElement.Ailment, 2],
+            [skill_effect_1.SkillElement.Force, -3],
+            [skill_effect_1.SkillElement.Light, 1],
+            [skill_effect_1.SkillElement.Phys, 3],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 2]
         ],
         "ailments": [
             ["poison", "nu"],
@@ -14004,9 +14004,9 @@ var DEMONS = [{
         "level": 50,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Fire, "rs"],
-            [skill_1.SkillElement.Force, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "rs"],
+            [skill_effect_1.SkillElement.Force, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Berserker God", 52],
@@ -14028,17 +14028,17 @@ var DEMONS = [{
     {
         "name": "Zhu Tun She",
         "affinities": [
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Phys, 1],
-            [skill_1.SkillElement.Support, -2]
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Phys, 1],
+            [skill_effect_1.SkillElement.Support, -2]
         ],
         "level": 8,
         "race": "Drake",
         "resists": [
-            [skill_1.SkillElement.Elec, "wk"],
-            [skill_1.SkillElement.Gun, "rs"],
-            [skill_1.SkillElement.Ice, "rs"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Elec, "wk"],
+            [skill_effect_1.SkillElement.Gun, "rs"],
+            [skill_effect_1.SkillElement.Ice, "rs"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Bufu", 9],
@@ -14057,18 +14057,18 @@ var DEMONS = [{
     {
         "name": "Zhu Yin",
         "affinities": [
-            [skill_1.SkillElement.Elec, -2],
-            [skill_1.SkillElement.Fire, -2],
-            [skill_1.SkillElement.Force, 2],
-            [skill_1.SkillElement.Ice, 2],
-            [skill_1.SkillElement.Phys, -7],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Elec, -2],
+            [skill_effect_1.SkillElement.Fire, -2],
+            [skill_effect_1.SkillElement.Force, 2],
+            [skill_effect_1.SkillElement.Ice, 2],
+            [skill_effect_1.SkillElement.Phys, -7],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 55,
         "race": "Dragon",
         "resists": [
-            [skill_1.SkillElement.Force, "nu"],
-            [skill_1.SkillElement.Ice, "nu"]
+            [skill_effect_1.SkillElement.Force, "nu"],
+            [skill_effect_1.SkillElement.Ice, "nu"]
         ],
         "skills": [
             ["Dekaja", 57],
@@ -14089,12 +14089,12 @@ var DEMONS = [{
     {
         "name": "Zombie Cop",
         "affinities": [
-            [skill_1.SkillElement.Ailment, 5],
-            [skill_1.SkillElement.Dark, 2],
-            [skill_1.SkillElement.Fire, -3],
-            [skill_1.SkillElement.Gun, 1],
-            [skill_1.SkillElement.Light, -3],
-            [skill_1.SkillElement.Recovery, -5]
+            [skill_effect_1.SkillElement.Ailment, 5],
+            [skill_effect_1.SkillElement.Dark, 2],
+            [skill_effect_1.SkillElement.Fire, -3],
+            [skill_effect_1.SkillElement.Gun, 1],
+            [skill_effect_1.SkillElement.Light, -3],
+            [skill_effect_1.SkillElement.Recovery, -5]
         ],
         "ailments": [
             ["bind", "nu"],
@@ -14104,9 +14104,9 @@ var DEMONS = [{
         "level": 17,
         "race": "Undead",
         "resists": [
-            [skill_1.SkillElement.Dark, "nu"],
-            [skill_1.SkillElement.Fire, "wk"],
-            [skill_1.SkillElement.Light, "wk"]
+            [skill_effect_1.SkillElement.Dark, "nu"],
+            [skill_effect_1.SkillElement.Fire, "wk"],
+            [skill_effect_1.SkillElement.Light, "wk"]
         ],
         "skills": [
             ["Cough", 0],
@@ -14126,19 +14126,19 @@ var DEMONS = [{
     {
         "name": "Zouchouten",
         "affinities": [
-            [skill_1.SkillElement.Fire, 2],
-            [skill_1.SkillElement.Gun, 2],
-            [skill_1.SkillElement.Ice, -5],
-            [skill_1.SkillElement.Phys, 2],
-            [skill_1.SkillElement.Recovery, -2],
-            [skill_1.SkillElement.Support, 1]
+            [skill_effect_1.SkillElement.Fire, 2],
+            [skill_effect_1.SkillElement.Gun, 2],
+            [skill_effect_1.SkillElement.Ice, -5],
+            [skill_effect_1.SkillElement.Phys, 2],
+            [skill_effect_1.SkillElement.Recovery, -2],
+            [skill_effect_1.SkillElement.Support, 1]
         ],
         "level": 55,
         "race": "Kishin",
         "resists": [
-            [skill_1.SkillElement.Fire, "nu"],
-            [skill_1.SkillElement.Ice, "wk"],
-            [skill_1.SkillElement.Light, "rs"]
+            [skill_effect_1.SkillElement.Fire, "nu"],
+            [skill_effect_1.SkillElement.Ice, "wk"],
+            [skill_effect_1.SkillElement.Light, "rs"]
         ],
         "skills": [
             ["Agidyne", 0],

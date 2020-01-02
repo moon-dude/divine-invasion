@@ -1,5 +1,7 @@
 import { Stats, apply_stats_mod } from "./stats";
 import { Skill } from "./data/skill";
+import { Buffs } from "./data/buffs";
+import { SkillEffect } from "./data/skill_effect";
 
 export enum BattleSide {
   Our,
@@ -19,12 +21,33 @@ export class BattleData {
   public readonly skills: Skill[];
 
   public mod_stats: Stats;
+  public buffs: Buffs = new Buffs();
+  public ailments: Set<SkillEffect> = new Set();
 
   constructor(side: BattleSide, base_stats: Stats, mod_stats: Stats, skills: Skill[]) {
     this.side = side;
     this.base_stats = base_stats;
     this.mod_stats = mod_stats;
     this.skills = skills;
+  }
+
+  public take_damage(amount: number) {
+    if (amount <= 0) {
+      return;
+    }
+    if (this.buffs.defense.get() > 1) {
+      amount /= this.buffs.defense.get();
+    } else if (this.buffs.defense.get() < -1) {
+      amount *= -this.buffs.defense.get();
+    }
+    this.mod_stats.hp -= amount;
+  }
+
+  public heal_for(amount: number) {
+    if (amount <= 0) {
+      return;
+    }
+    this.mod_stats.hp = Math.min(this.mod_stats.hp + amount, 0);
   }
 
   public modded_base_stats(): Stats {

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var battle_data_1 = require("./battle_data");
-var skill_1 = require("./data/skill");
+var skill_effect_1 = require("./data/skill_effect");
 var EMPTY_ENTRY = "<td></td><td></td><td></td>";
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -83,7 +83,7 @@ var Battle = /** @class */ (function () {
         // Choose whether to attack or use skill.
         var chosen_skill = this.choose_skill(fighter);
         var targets = [];
-        if (chosen_skill == null || chosen_skill.target == skill_1.SkillTarget.Single) {
+        if (chosen_skill == null || chosen_skill.target == skill_effect_1.SkillTarget.Single) {
             // Choose a random target.
             var target = this.get_attack_target(fighter);
             if (target == null) {
@@ -94,7 +94,7 @@ var Battle = /** @class */ (function () {
                 targets.push(target);
             }
         }
-        else if (chosen_skill.target == skill_1.SkillTarget.AllEnemies) {
+        else if (chosen_skill.target == skill_effect_1.SkillTarget.AllEnemies) {
             // TODO: select all enemies.
         }
         // attack target.
@@ -129,32 +129,7 @@ var Battle = /** @class */ (function () {
         else {
             fighter.data.mod_stats.mp -= skill.cost;
             this.info_div.innerHTML = "" + fighter.name + " used " + skill.name + "!";
-            if (skill.effect == skill_1.SkillEffect.Damage) {
-                var damage = 1;
-                if (skill.element == skill_1.SkillElement.Phys) {
-                    damage = Math.floor(fighter.data.modded_base_stats().st * skill.power);
-                }
-                else if (skill.element == skill_1.SkillElement.Gun) {
-                    damage = Math.floor(fighter.data.modded_base_stats().dx * skill.power);
-                }
-                else if (skill.element == skill_1.SkillElement.Light || skill.element == skill_1.SkillElement.Dark) {
-                    damage = Math.floor(fighter.data.modded_base_stats().lu * skill.power);
-                }
-                else {
-                    damage = Math.floor(fighter.data.modded_base_stats().ma * skill.power);
-                }
-                for (var t = 0; t < targets.length; t++) {
-                    targets[t].data.mod_stats.hp -= damage;
-                    this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage";
-                }
-            }
-            else if (skill.effect == skill_1.SkillEffect.Heal) {
-                var power = Math.floor(fighter.data.modded_base_stats().ma) * skill.power;
-                for (var t = 0; t < targets.length; t++) {
-                    targets[t].data.mod_stats.hp += power;
-                    this.info_div.innerHTML += "<br/>" + targets[t].name + " healed for " + power + "";
-                }
-            }
+            this.info_div.innerHTML += skill_effect_1.resolve_skill_effect(fighter, skill, targets);
         }
     };
     return Battle;

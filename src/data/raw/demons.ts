@@ -1,5 +1,5 @@
 import { Demon } from "../demon";
-import { SkillElement } from "../skill";
+import { SkillElement } from "../skill_effect";
 
 const DEMONS: Demon[] = [{
     "name": "Abaddon",

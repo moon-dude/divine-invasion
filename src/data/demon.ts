@@ -1,5 +1,5 @@
 import { Stats } from "../stats";
-import { SkillElement } from "./skill";
+import { SkillElement } from "./skill_effect";
 
 export class Demon {
   name: string = ""

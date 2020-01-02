@@ -1,24 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var skill_1 = require("../skill");
+var skill_effect_1 = require("../skill_effect");
 var SKILLS = [
     {
         "name": "5.67 Billion Hands",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: Increased power",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Acid Breath",
         "cost": 65,
-        "element": skill_1.SkillElement.Support,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 17,
-        "target": skill_1.SkillTarget.AllEnemies,
+        "target": skill_effect_1.SkillTarget.AllEnemies,
         "also_cast": ["Rakunda", "Sukunda"],
     },
     // {
@@ -32,52 +32,52 @@ var SKILLS = [
     {
         "name": "Agi",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Agidyne",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Agilao",
         "cost": 10,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Akasha Arts",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 31,
         "remark": "Smirk: Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Alluring Banter",
         "cost": 36,
-        "effect": skill_1.SkillEffect.Charm,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Charm,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 0,
         "remark": "Minimize defense",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Ally Counter", 
@@ -100,31 +100,31 @@ var SKILLS = [
     {
         "name": "Amrita",
         "cost": 20,
-        "effect": skill_1.SkillEffect.CuresAllAilments,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.CuresAllAilments,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 23,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Andalusia",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X4To12,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X4To12,
         "rank": 0,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Antichthon",
         "cost": 110,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 31,
         "remark": "Smirk: Debilitate",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Attack Knowhow", 
@@ -135,23 +135,23 @@ var SKILLS = [
     {
         "name": "Axel Claw",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 13,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Babylon Goblet",
         "cost": 70,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Panic,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Panic,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Bad Company", 
@@ -169,85 +169,85 @@ var SKILLS = [
     {
         "name": "Berserker God",
         "cost": 13,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 21,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Bind Voice",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Bind,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Bind,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Binding Claw",
         "cost": 11,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Bind,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Bind,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Blade of Terror",
         "cost": 35,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To5,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To5,
         "rank": 0,
         "remark": "Pierce, Panic",
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Blank Bullet",
         "cost": 22,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Panic,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X2,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Panic,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X2,
         "rank": 0,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Blast Arrow",
         "cost": 19,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 17,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Blight",
         "cost": 18,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Poison,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Poison,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Blink of Death",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Rakunda, Smirk: 100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Blood Ritual", 
@@ -266,52 +266,52 @@ var SKILLS = [
     {
         "name": "Bouncing Claw",
         "cost": 4,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Breath",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1To5,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1To5,
         "rank": 0,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Bufu",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Bufudyne",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Bufula",
         "cost": 10,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Chakra Walk", 
@@ -330,48 +330,48 @@ var SKILLS = [
     {
         "name": "Chariot",
         "cost": 60,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Sukunda",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Cold World",
         "cost": 70,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 27,
         "remark": "Instant kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Combat Tara",
         "cost": 60,
-        "effect": skill_1.SkillEffect.BuffAllStats,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.BuffAllStats,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 0,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Concentrate",
         "cost": 11,
-        "effect": skill_1.SkillEffect.NextMagicAttackX2AndHalfDamage,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.NextMagicAttackX2AndHalfDamage,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 23,
-        "target": skill_1.SkillTarget.Self
+        "target": skill_effect_1.SkillTarget.Self
     },
     {
         "name": "Cough",
         "cost": 4,
-        "effect": skill_1.SkillEffect.Sick,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Sick,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Counter", 
@@ -382,50 +382,50 @@ var SKILLS = [
     {
         "name": "Critical Eye",
         "cost": 11,
-        "effect": skill_1.SkillEffect.NextPhysGunAttackGuaranteedCrit,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.NextPhysGunAttackGuaranteedCrit,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 17,
-        "target": skill_1.SkillTarget.Self
+        "target": skill_effect_1.SkillTarget.Self
     },
     {
         "name": "Critical Wave",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
         "remark": "High crit/low hit",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Damascus Claw",
         "cost": 7,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Dance of Mara",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Charm,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Charm,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 0,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Dark Grudge",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Dark Pierce", 
@@ -442,129 +442,129 @@ var SKILLS = [
     {
         "name": "Dark Sword",
         "cost": 16,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Mute,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X2,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Mute,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X2,
         "rank": 21,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Dazzle Ray",
         "cost": 35,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Deadly Wind",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Death Lust",
         "cost": 70,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "secondary_effect": skill_1.SkillEffect.Charm,
-        "target": skill_1.SkillTarget.AllEnemies
+        "secondary_effect": skill_effect_1.SkillEffect.Charm,
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Death's Door",
         "cost": 35,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 21,
         "remark": "HP to 1 for sick targets",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Debilitate",
         "cost": 100,
-        "effect": skill_1.SkillEffect.DebuffAllStats,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.DebuffAllStats,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 28,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Dekaja",
         "cost": 30,
-        "effect": skill_1.SkillEffect.RemoveAllBuffs,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.RemoveAllBuffs,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 23,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Dekunda",
         "cost": 30,
-        "effect": skill_1.SkillEffect.RemoveAllDebuffs,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.RemoveAllDebuffs,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 23,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Desperate Hit",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1To5,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1To5,
         "rank": 0,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Dia",
         "cost": 8,
-        "effect": skill_1.SkillEffect.Heal,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.Heal,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Diarahan",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Heal,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.Heal,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 20,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Diarama",
         "cost": 16,
-        "effect": skill_1.SkillEffect.Heal,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.Heal,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 8,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Die for Me!",
         "cost": 56,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 80% kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Doping", 
@@ -577,10 +577,10 @@ var SKILLS = [
     {
         "name": "Dormina",
         "cost": 4,
-        "effect": skill_1.SkillEffect.Sleep,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Sleep,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Draconic Reaction", 
@@ -640,57 +640,57 @@ var SKILLS = [
     {
         "name": "Dream Fist",
         "cost": 9,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Sleep,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Sleep,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Dream Needle",
         "cost": 9,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Sleep,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Sleep,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Dream Raga",
         "cost": 65,
-        "effect": skill_1.SkillEffect.Sleep,
-        "secondary_effect": skill_1.SkillEffect.Panic,
-        "tertiary_effect": skill_1.SkillEffect.Charm,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Sleep,
+        "secondary_effect": skill_effect_1.SkillEffect.Panic,
+        "tertiary_effect": skill_effect_1.SkillEffect.Charm,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 0,
         "remark": "Rakunda x2",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Earthquake",
         "cost": 25,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 20,
         "remark": "Daze",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Eat Whole",
         "cost": 14,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 23,
         "remark": "Absorbs HP",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Elec Pierce", 
@@ -727,13 +727,13 @@ var SKILLS = [
     {
         "name": "Energy Drain",
         "cost": 7,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 23,
         "remark": "Absorbs HP/MP",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Enlightenment", 
@@ -764,66 +764,66 @@ var SKILLS = [
     {
         "name": "Evil Melody",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Evil Shine",
         "cost": 110,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Panic,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Panic,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Fang Breaker",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "Tarunda",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Fatal Sword",
         "cost": 8,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Fear Darkness",
         "cost": 35,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Fire Breath",
         "cost": 21,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1To4,
         "rank": 9,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     // {
     //     "name": "Fire Pierce", 
@@ -840,33 +840,33 @@ var SKILLS = [
     {
         "name": "Fire of Lethargy",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Rakunda + Sukunda",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Fire of Sinai",
         "cost": 55,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1To5,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1To5,
         "rank": 0,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Floral Gust",
         "cost": 60,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1To4,
         "rank": 27,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     // {
     //     "name": "Fog Breath", 
@@ -891,75 +891,75 @@ var SKILLS = [
     {
         "name": "Frenzied Chomp",
         "cost": 6,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "Poison/Bind/Charm",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Glacial Blast",
         "cost": 60,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1To4,
         "rank": 28,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "God's Bow",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Gram Slice",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Grand Tack",
         "cost": 11,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Great Logos",
         "cost": 100,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 30,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Growing Hate",
         "cost": 100,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Stronger vs dark resistance",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Gun Pierce", 
@@ -976,45 +976,45 @@ var SKILLS = [
     {
         "name": "Gungnir",
         "cost": 22,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Hades Blast",
         "cost": 42,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 23,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Hama",
         "cost": 6,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
         "remark": "Smirk: 30% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Hamaon",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 13,
         "remark": "Smirk: 55% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Hard Worker", 
@@ -1025,22 +1025,22 @@ var SKILLS = [
     {
         "name": "Haunting Rhapsody",
         "cost": 100,
-        "effect": skill_1.SkillEffect.Panic,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Panic,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 0,
         "remark": "Debilitate",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Head Crush",
         "cost": 6,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
         "remark": "Daze",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Heal Pleroma", 
@@ -1057,44 +1057,44 @@ var SKILLS = [
     {
         "name": "Heat Wave",
         "cost": 13,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Heaven's Bow",
         "cost": 33,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 22,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Hell Thrust",
         "cost": 28,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X2To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X2To4,
         "rank": 29,
         "remark": "Smirk: Rakunda",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Hellish Brand",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Dekaja",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Hellish Mask", 
@@ -1159,34 +1159,34 @@ var SKILLS = [
     {
         "name": "Holy Wrath",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 20,
         "remark": "Strong vs Chaos",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Ice Age",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Ice Breath",
         "cost": 21,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1To4,
         "rank": 9,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     // {
     //     "name": "Ice Pierce", 
@@ -1210,13 +1210,13 @@ var SKILLS = [
     {
         "name": "Infernal Hail",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Sukunda",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Invitation", 
@@ -1228,55 +1228,55 @@ var SKILLS = [
     {
         "name": "Iron Judgment",
         "cost": 8,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Javelin Rain",
         "cost": 25,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 17,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Judgment",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 20,
         "remark": "Strong vs Neutral",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Judgment Light",
         "cost": 56,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 23,
         "remark": "Smirk: 80% kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "King Bufula",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: Rakunda",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Life Aid", 
@@ -1293,13 +1293,13 @@ var SKILLS = [
     {
         "name": "Life Drain",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
         "remark": "Absorbs HP",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Life Gain", 
@@ -1316,13 +1316,13 @@ var SKILLS = [
     {
         "name": "Light Devourer",
         "cost": 33,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Absorbs HP",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Light Life Aid", 
@@ -1351,91 +1351,91 @@ var SKILLS = [
     {
         "name": "Loyalty Slash",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Lullaby",
         "cost": 11,
-        "effect": skill_1.SkillEffect.Sleep,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Sleep,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Lunge",
         "cost": 6,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
         "remark": "High crit/low hit",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Luster Candy",
         "cost": 80,
-        "effect": skill_1.SkillEffect.BuffAllStats,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.BuffAllStats,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 27,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Mabufu",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mabufudyne",
         "cost": 48,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 22,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mabufula",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 16,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Madness Nails",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 21,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Madness Needle",
         "cost": 11,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Panic,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Panic,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Magaon", 
@@ -1448,58 +1448,58 @@ var SKILLS = [
     {
         "name": "Magic Torrent",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X4To6,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X4To6,
         "rank": 0,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Mahama",
         "cost": 14,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 9,
         "remark": "Smirk: 30% kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mahamaon",
         "cost": 28,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Light,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Light,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 18,
         "remark": "Smirk: 55% kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Makajam",
         "cost": 4,
-        "effect": skill_1.SkillEffect.Mute,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Mute,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 15,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Makajamaon",
         "cost": 15,
-        "effect": skill_1.SkillEffect.Mute,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Mute,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 23,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Makakaja",
         "cost": 20,
-        "effect": skill_1.SkillEffect.BuffMagic,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.BuffMagicAttack,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 8,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     // {
     //     "name": "Makarabreak", 
@@ -1520,24 +1520,24 @@ var SKILLS = [
     {
         "name": "Mamudo",
         "cost": 14,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 9,
         "remark": "Smirk: 30% kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mamudoon",
         "cost": 28,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 18,
         "remark": "Smirk: 55% kill",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Mana Aid", 
@@ -1566,271 +1566,271 @@ var SKILLS = [
     {
         "name": "Maragi",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Maragidyne",
         "cost": 48,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 22,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Maragion",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 16,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Marin Karin",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Charm,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Charm,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Mazan",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mazandyne",
         "cost": 48,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 22,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mazanma",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 16,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mazio",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Maziodyne",
         "cost": 48,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 22,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mazionga",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 16,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Me Patra",
         "cost": 18,
-        "effect": skill_1.SkillEffect.CuresAllAilments,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.CuresAllAilments,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 15,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Media",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Heal,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.Heal,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 12,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mediarahan",
         "cost": 90,
-        "effect": skill_1.SkillEffect.Heal,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.Heal,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 27,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mediarama",
         "cost": 48,
-        "effect": skill_1.SkillEffect.Heal,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.Heal,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 23,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Megaton Press",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 17,
         "remark": "High crit/low hit",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Megiddo Ark",
         "cost": 60,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Megido",
         "cost": 25,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 18,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Megidola",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 23,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Megidolaon",
         "cost": 70,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 28,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Mist Rush",
         "cost": 28,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X2To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X2To4,
         "rank": 27,
         "remark": "Daze",
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Mortal Jihad",
         "cost": 14,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 21,
         "remark": "High crit/low hit",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Mudo",
         "cost": 6,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
         "remark": "Smirk: 30% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Mudoon",
         "cost": 12,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Dark,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Dark,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 13,
         "remark": "Smirk: 55% kill",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Myriad Arrows",
         "cost": 28,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X2To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X2To4,
         "rank": 27,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Needle Shot",
         "cost": 4,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Needlestorm",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Daze",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Nihil Claw",
         "cost": 11,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 19,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Null Dark", 
@@ -1895,48 +1895,48 @@ var SKILLS = [
     {
         "name": "Oni-Kagura",
         "cost": 14,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "High crit/low hit",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Pandemic Bomb",
         "cost": 15,
-        "effect": skill_1.SkillEffect.Sick,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Sick,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Panic Voice",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Panic,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Panic,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Patra",
         "cost": 6,
-        "effect": skill_1.SkillEffect.CuresAllAilments,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.CuresAllAilments,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Pestilence",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Pierce, Strong vs ailment",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Phys Pierce", 
@@ -1953,173 +1953,173 @@ var SKILLS = [
     {
         "name": "Poisma",
         "cost": 4,
-        "effect": skill_1.SkillEffect.Poison,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Poison,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Poison Breath",
         "cost": 15,
-        "effect": skill_1.SkillEffect.Poison,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Poison,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Poison Claw",
         "cost": 9,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Poison,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Poison,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Posumudi",
         "cost": 6,
-        "effect": skill_1.SkillEffect.CurePoisonSick,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.CurePoisonSick,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Power Punch",
         "cost": 9,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "Smirk: Daze",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Pulinpa",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Panic,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Panic,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Purple Smoke",
         "cost": 22,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Panic,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Panic,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 19,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Raging Blizzard",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Ice,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Ice,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Fire weakness",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Raging Hellfire",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Ice weakness",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Raging Lightning",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Force weakness",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Raging Tempest",
         "cost": 45,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Elec weakness",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Ragnarok",
         "cost": 60,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1To4,
         "rank": 28,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Rakukaja",
         "cost": 20,
-        "effect": skill_1.SkillEffect.BuffDefense,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.BuffDefense,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 8,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Rakunda",
         "cost": 25,
-        "effect": skill_1.SkillEffect.DebuffDefense,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.DebuffDefense,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 12,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Rapid Needle",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 5,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Recarm",
         "cost": 20,
-        "effect": skill_1.SkillEffect.ReviveWithHalfHP,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.ReviveWithHalfHP,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 12,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Recarmdra",
         "cost": 6,
-        "effect": skill_1.SkillEffect.ReviveWithFullHPCuredUserDies,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.ReviveWithFullHPCuredUserDies,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 20,
-        "target": skill_1.SkillTarget.AllAllies,
+        "target": skill_effect_1.SkillTarget.AllAllies,
     },
     {
         "name": "Rending Claws",
         "cost": 15,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Repel Dark", 
@@ -2226,23 +2226,23 @@ var SKILLS = [
     {
         "name": "Riot Gun",
         "cost": 30,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 30,
         "remark": "Smirk: Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Ruinous Brand",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Sabbatma", 
@@ -2262,31 +2262,31 @@ var SKILLS = [
     {
         "name": "Samarecarm",
         "cost": 40,
-        "effect": skill_1.SkillEffect.ReviveWithFullHP,
-        "element": skill_1.SkillElement.Recovery,
+        "effect": skill_effect_1.SkillEffect.ReviveWithFullHP,
+        "element": skill_effect_1.SkillElement.Recovery,
         "rank": 23,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Scratch Dance",
         "cost": 7,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 9,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Sea of Chaos",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 20,
         "remark": "Strong vs Law",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     // {
     //     "name": "Self-Righteous Vow", 
@@ -2297,29 +2297,29 @@ var SKILLS = [
     {
         "name": "Severe Judgment",
         "cost": 50,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: Increased power",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Sexy Dance",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Charm,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Charm,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 10,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Shibaboo",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Bind,
-        "element": skill_1.SkillElement.Ailment,
+        "effect": skill_effect_1.SkillEffect.Bind,
+        "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Shivering Taboo", 
@@ -2332,20 +2332,20 @@ var SKILLS = [
     {
         "name": "Shock",
         "cost": 21,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1To4,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1To4,
         "rank": 9,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Silent Prayer",
         "cost": 25,
-        "effect": skill_1.SkillEffect.RemoveAllBuffsAndDebuffs,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.RemoveAllBuffsAndDebuffs,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 17,
-        "target": skill_1.SkillTarget.All
+        "target": skill_effect_1.SkillTarget.All
     },
     // {
     //     "name": "Smile Charge", 
@@ -2358,46 +2358,46 @@ var SKILLS = [
     {
         "name": "Snake's Fangs",
         "cost": 24,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Bind,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X2To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Bind,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X2To3,
         "rank": 0,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Soul Divide",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Mute,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Mute,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Soul Drain",
         "cost": 7,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Absorbs HP/MP, Smirk: Increased power",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Spirit Drain",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Almighty,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Almighty,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 13,
         "remark": "Absorbs MP",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Spring of Life", 
@@ -2408,48 +2408,48 @@ var SKILLS = [
     {
         "name": "Stun Needle",
         "cost": 10,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Bind,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Bind,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Stun Needles",
         "cost": 22,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Bind,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1To3,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Bind,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 13,
-        "target": skill_1.SkillTarget.Multi
+        "target": skill_effect_1.SkillTarget.Multi
     },
     {
         "name": "Sukukaja",
         "cost": 20,
-        "effect": skill_1.SkillEffect.BuffHitEvade,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.BuffHitEvade,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 8,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Sukunda",
         "cost": 25,
-        "effect": skill_1.SkillEffect.DebuffHitEvade,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.DebuffHitEvade,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 12,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Tarukaja",
         "cost": 20,
-        "effect": skill_1.SkillEffect.BuffPhysAttack,
-        "element": skill_1.SkillElement.Support,
+        "effect": skill_effect_1.SkillEffect.BuffPhysAttack,
+        "element": skill_effect_1.SkillElement.Support,
         "rank": 8,
-        "target": skill_1.SkillTarget.AllAllies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     // {
     //     "name": "Tarunda", 
@@ -2462,12 +2462,12 @@ var SKILLS = [
     {
         "name": "Tathlum Shot",
         "cost": 7,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Taunt", 
@@ -2480,13 +2480,13 @@ var SKILLS = [
     {
         "name": "Tetanus Cut",
         "cost": 11,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Sick,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Sick,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Tetrabreak", 
@@ -2515,45 +2515,45 @@ var SKILLS = [
     {
         "name": "Thunder Gods",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Thunder Reign",
         "cost": 70,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 28,
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Titanomachia",
         "cost": 35,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Phys,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Phys,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 21,
         "remark": "High crit/low hit",
-        "target": skill_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllEnemies
     },
     {
         "name": "Toxic Sting",
         "cost": 9,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Poison,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Gun,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Poison,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Gun,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Trafuri", 
@@ -2565,44 +2565,44 @@ var SKILLS = [
     {
         "name": "Trisagion",
         "cost": 40,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Fire,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Fire,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "True Zandyne",
         "cost": 32,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "True Ziodyne",
         "cost": 32,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Severe,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Severe,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Vengeful Thunder",
         "cost": 25,
-        "effect": skill_1.SkillEffect.Damage,
-        "secondary_effect": skill_1.SkillEffect.Bind,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "secondary_effect": skill_effect_1.SkillEffect.Bind,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     // {
     //     "name": "Venomous Raga", 
@@ -2686,62 +2686,62 @@ var SKILLS = [
     {
         "name": "Zan",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Zandyne",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Zanma",
         "cost": 10,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Force,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Force,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Zio",
         "cost": 5,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Weak,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Weak,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Ziodyne",
         "cost": 20,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Heavy,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Heavy,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     },
     {
         "name": "Zionga",
         "cost": 10,
-        "effect": skill_1.SkillEffect.Damage,
-        "power": skill_1.SkillPower.Medium,
-        "element": skill_1.SkillElement.Elec,
-        "hits": skill_1.SkillHits.X1,
+        "effect": skill_effect_1.SkillEffect.Damage,
+        "power": skill_effect_1.SkillPower.Medium,
+        "element": skill_effect_1.SkillElement.Elec,
+        "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.Single
     }
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));

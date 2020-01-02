@@ -1,4 +1,5 @@
-import { Skill, SkillPower, SkillEffect, SkillElement, SkillTarget, SkillHits } from "../skill";
+import { Skill, } from "../skill";
+import { SkillEffect, SkillPower, SkillElement, SkillTarget, SkillHits } from "../skill_effect";
 
 const SKILLS: Skill[] = [
     {
@@ -1495,7 +1496,7 @@ const SKILLS: Skill[] = [
     {
         "name": "Makakaja", 
         "cost": 20, 
-        "effect": SkillEffect.BuffMagic, 
+        "effect": SkillEffect.BuffMagicAttack, 
         "element": SkillElement.Support, 
         "rank": 8, 
         "target": SkillTarget.AllAllies

@@ -1,6 +1,7 @@
 import { random_array_element } from "./jlib";
 import { BattleSide, BattleFighter, BattleIndex, other_side } from "./battle_data";
-import { Skill, SkillTarget, SkillEffect, SkillElement } from "./data/skill";
+import { Skill, } from "./data/skill";
+import { SkillTarget, resolve_skill_effect } from "./data/skill_effect";
 
 const EMPTY_ENTRY: string = "<td></td><td></td><td></td>";
 
@@ -138,28 +139,7 @@ export class Battle {
     } else {
       fighter.data.mod_stats.mp -= skill.cost;
       this.info_div.innerHTML = "" + fighter.name + " used " + skill.name + "!";
-      if (skill.effect == SkillEffect.Damage) {
-        let damage = 1;
-        if (skill.element == SkillElement.Phys) {
-          damage = Math.floor(fighter.data.modded_base_stats().st * skill.power!);
-        } else if (skill.element == SkillElement.Gun) {
-          damage = Math.floor(fighter.data.modded_base_stats().dx * skill.power!);
-        } else if (skill.element == SkillElement.Light || skill.element == SkillElement.Dark) {
-          damage = Math.floor(fighter.data.modded_base_stats().lu * skill.power!);
-        } else {
-          damage = Math.floor(fighter.data.modded_base_stats().ma * skill.power!);
-        }
-        for (let t = 0; t < targets.length; t++) {
-          targets[t].data.mod_stats.hp -= damage;
-          this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage";
-        }
-      } else if (skill.effect == SkillEffect.Heal) {
-        let power = Math.floor(fighter.data.modded_base_stats().ma) * skill.power!;
-        for (let t = 0; t < targets.length; t++) {
-          targets[t].data.mod_stats.hp += power;
-          this.info_div.innerHTML += "<br/>" + targets[t].name + " healed for " + power + "";
-        }
-      }
+      this.info_div.innerHTML += resolve_skill_effect(fighter, skill, targets);
     }
   }
 }
