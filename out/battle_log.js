@@ -1,5 +1,6 @@
 "use strict";
 // oneof
+Object.defineProperty(exports, "__esModule", { value: true });
 var tag = "/battle/ ";
 var BattleLog = /** @class */ (function () {
     function BattleLog() {
@@ -7,7 +8,7 @@ var BattleLog = /** @class */ (function () {
     BattleLog.add = function (s, new_line) {
         if (new_line === void 0) { new_line = true; }
         if (new_line) {
-            this.log_lines.push("");
+            this.log_lines.push(tag);
         }
         var latest = this.log_lines.length - 1;
         this.log_lines[latest] += s;
@@ -28,3 +29,4 @@ var BattleLog = /** @class */ (function () {
     BattleLog.log_lines = [""];
     return BattleLog;
 }());
+exports.BattleLog = BattleLog;

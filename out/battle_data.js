@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
+var battle_log_1 = require("./battle_log");
 var BattleSide;
 (function (BattleSide) {
     BattleSide[BattleSide["Our"] = 0] = "Our";
@@ -31,7 +32,7 @@ var BattleData = /** @class */ (function () {
             amount *= -this.buffs.defense.get();
         }
         this.mod_stats.hp -= amount;
-        BattleLog.add("took " + amount + " damage", false);
+        battle_log_1.BattleLog.add("took " + amount + " damage", false);
     };
     BattleData.prototype.heal_for = function (amount) {
         if (amount < 0) {

@@ -1,4 +1,5 @@
-import { BattleFighter, BattleData } from "../battle_data";
+import { BattleFighter } from "../battle_data";
+import { BattleLog } from "../battle_log";
 import { Skill } from "./skill";
 import { Buffs, Buffable } from "./buffs";
 

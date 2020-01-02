@@ -2,6 +2,7 @@ import { random_array_element } from "./jlib";
 import { BattleSide, BattleFighter, BattleIndex, other_side } from "./battle_data";
 import { Skill, } from "./data/skill";
 import { SkillTarget, resolve_skill_effect } from "./data/skill_effect";
+import { BattleLog } from "./battle_log";
 
 const EMPTY_ENTRY: string = "<td></td><td></td><td></td>";
 
@@ -105,6 +106,7 @@ export class Battle {
     }
     // attack target.
     this.take_battle_action(fighter, chosen_skill, targets);
+    this.info_div.innerHTML = BattleLog.flush();
   }
 
   private choose_skill(attacker: BattleFighter): Skill | null {

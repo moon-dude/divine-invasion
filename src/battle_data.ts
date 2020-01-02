@@ -2,6 +2,7 @@ import { Stats, apply_stats_mod } from "./stats";
 import { Skill } from "./data/skill";
 import { Buffs } from "./data/buffs";
 import { SkillEffect } from "./data/skill_effect";
+import { BattleLog } from "./battle_log";
 
 export enum BattleSide {
   Our,
