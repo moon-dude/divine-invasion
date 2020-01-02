@@ -13,6 +13,12 @@ var Buffable = /** @class */ (function () {
             }
         }
     };
+    Buffable.prototype.get_raised_by = function (amount) {
+        var copy = new Buffable();
+        copy.raise(this.get());
+        copy.raise(amount);
+        return copy.get();
+    };
     Buffable.prototype.get = function () {
         return this.value;
     };

@@ -112,10 +112,8 @@ function buff_power(power?: SkillPower) {
 }
 
 
-// Returns info div innerHTML.
 export function resolve_skill_effect(fighter: BattleFighter, skill: Skill, 
-                                     targets: BattleFighter[]): string {
-  let result_str = "";
+                                     target: BattleFighter) {
   switch (skill.effect) {
     case SkillEffect.Damage:
       let damage = 1;
@@ -128,47 +126,51 @@ export function resolve_skill_effect(fighter: BattleFighter, skill: Skill,
       } else {
         damage = Math.floor(fighter.data.modded_base_stats().ma * damage_power(skill.power));
       }
-      for (let t = 0; t < targets.length; t++) {
-        targets[t].data.take_damage(damage);
-        result_str += "<br/>" + targets[t].name + " took " + damage + " damage";
+      const success: boolean = target.data.will_take_hit(
+        fighter.data.modded_base_stats().dx, 
+        fighter.data.buffs.defense.get(),
+        1.0) // TODO: Pipe in hit/miss chance for skills here.
+      if (success) {
+        BattleLog.add(target.name + ": "); 
+        target.data.take_damage(damage);
+      } else {
+        BattleLog.add(target.name + ": dodged");
       }
       break;
     case SkillEffect.Heal:
       const power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
-      for (let t = 0; t < targets.length; t++) {
-        targets[t].data.heal_for(power);
-        result_str += "<br/>" + targets[t].name + " healed for " + power + "";
-      }
+      console.log(target.name + ": " +
+      target.data.heal_for(power));
       break;
     case SkillEffect.BuffDefense:
-      result_str += handy_buff_handler((b) => b.defense, targets, true, skill.power);
+      handy_buff_handler((b) => b.defense, target, true, skill.power);
       break;
     case SkillEffect.DebuffDefense:
-      result_str += handy_buff_handler((b) => b.defense, targets, false, skill.power);
+      handy_buff_handler((b) => b.defense, target, false, skill.power);
       break;
     case SkillEffect.BuffHitEvade:
-      result_str += handy_buff_handler((b) => b.hit_evade, targets, true, skill.power);
+      handy_buff_handler((b) => b.hit_evade, target, true, skill.power);
       break;
     case SkillEffect.DebuffHitEvade:
-      result_str += handy_buff_handler((b) => b.hit_evade, targets, false, skill.power);
+      handy_buff_handler((b) => b.hit_evade, target, false, skill.power);
       break;
     case SkillEffect.BuffMagicAttack:
-      result_str += handy_buff_handler((b) => b.magic_attack, targets, true, skill.power);
+      handy_buff_handler((b) => b.magic_attack, target, true, skill.power);
       break;
     case SkillEffect.BuffPhysAttack:
-      result_str += handy_buff_handler((b) => b.physical_attack, targets, true, skill.power);
+      handy_buff_handler((b) => b.physical_attack, target, true, skill.power);
       break;
     case SkillEffect.BuffAllStats:
-      result_str += handy_buff_handler((b) => b.defense, targets, true, skill.power);
-      result_str += handy_buff_handler((b) => b.hit_evade, targets, true, skill.power);
-      result_str += handy_buff_handler((b) => b.magic_attack, targets, true, skill.power);
-      result_str += handy_buff_handler((b) => b.physical_attack, targets, true, skill.power);
+      handy_buff_handler((b) => b.defense, target, true, skill.power);
+      handy_buff_handler((b) => b.hit_evade, target, true, skill.power);
+      handy_buff_handler((b) => b.magic_attack, target, true, skill.power);
+      handy_buff_handler((b) => b.physical_attack, target, true, skill.power);
       break;
     case SkillEffect.DebuffAllStats:
-      result_str += handy_buff_handler((b) => b.defense, targets, false, skill.power);
-      result_str += handy_buff_handler((b) => b.hit_evade, targets, false, skill.power);
-      result_str += handy_buff_handler((b) => b.magic_attack, targets, false, skill.power);
-      result_str += handy_buff_handler((b) => b.physical_attack, targets, false, skill.power);
+      handy_buff_handler((b) => b.defense, target, false, skill.power);
+      handy_buff_handler((b) => b.hit_evade, target, false, skill.power);
+      handy_buff_handler((b) => b.magic_attack, target, false, skill.power);
+      handy_buff_handler((b) => b.physical_attack, target, false, skill.power);
       break;
     case SkillEffect.Charm:
     case SkillEffect.Bind:
@@ -177,30 +179,27 @@ export function resolve_skill_effect(fighter: BattleFighter, skill: Skill,
     case SkillEffect.Panic:
     case SkillEffect.Mute:
     case SkillEffect.Poison:
-      result_str += handy_ailment_handler(targets, skill.effect);
+      handy_ailment_handler(target, skill.effect, true);
       break;
     
   }
-  return result_str;
 }
 
-function handy_buff_handler(buffer: (b: Buffs) => Buffable, targets: BattleFighter[], 
+function handy_buff_handler(buffer: (b: Buffs) => Buffable, target: BattleFighter, 
                             positive: boolean, skill_power?: SkillPower) {
-  let result_str = "";
-  for (let t = 0; t < targets.length; t++) {
-    const power = buff_power(skill_power) * (positive ? 1 : -1);
-    buffer(targets[t].data.buffs).raise(power);
-    result_str += "<br/>" + targets[t].name + " had its " + buffer(targets[t].data.buffs) + 
-      " lowered " + power + " times";
-  }
-  return result_str;
+  const power = buff_power(skill_power) * (positive ? 1 : -1);
+  buffer(target.data.buffs).raise(power);
+  BattleLog.add(target.name + ": " + buffer(target.data.buffs) + 
+    (positive ? " raised" : " lowered"));
 }
 
-function handy_ailment_handler(targets: BattleFighter[], effect: SkillEffect) {
-  let result_str = "";
-  for (let t = 0; t < targets.length; t++) {
-    targets[t].data.ailments.add(effect);
-    result_str += "<br/>" + targets[t].name + " is " + effect;
+function handy_ailment_handler(target: BattleFighter, effect: SkillEffect, positive: boolean) {
+  // positive in the medical way.
+  if (positive) {
+    BattleLog.add(target.name + ": is now " + effect);
+    target.data.ailments.add(effect);
+  } else if (target.data.ailments.has(effect)) {
+    BattleLog.add(target.name + ": is no longer " + effect);
+    target.data.ailments.delete(effect);
   }
-  return result_str;
 }

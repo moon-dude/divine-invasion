@@ -2211,7 +2211,7 @@ const DEMONS: Demon[] = [{
         "st": 66
     }
 }, 
-{
+/*{
     "name": "Chi You",
     "affinities": [
         [SkillElement.Elec, -2], 
@@ -14155,7 +14155,7 @@ const DEMONS: Demon[] = [{
         "mp": 336, 
         "st": 78
     }
-}];
+}*/];
 
 export const DEMON_MAP: Map<string, Demon> = 
     new Map(DEMONS.map(x => [x.name, x]));

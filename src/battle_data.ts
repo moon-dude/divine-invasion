@@ -33,7 +33,7 @@ export class BattleData {
 
   public take_damage(amount: number) {
     if (amount <= 0) {
-      return;
+      return "took no damage";
     }
     if (this.buffs.defense.get() > 1) {
       amount /= this.buffs.defense.get();
@@ -41,17 +41,30 @@ export class BattleData {
       amount *= -this.buffs.defense.get();
     }
     this.mod_stats.hp -= amount;
+    BattleLog.add("took " + amount + " damage", false);
   }
 
-  public heal_for(amount: number) {
-    if (amount <= 0) {
-      return;
+  public heal_for(amount: number): string {
+    if (amount < 0) {
+      return "could not be healed";
     }
-    this.mod_stats.hp = Math.min(this.mod_stats.hp + amount, 0);
+    if (this.mod_stats.hp == 0) {
+      return "is already fully healed";
+    }
+    const diff = Math.min(this.mod_stats.hp + amount, 0);
+    this.mod_stats.hp = diff;
+    return "healed for " + diff;
   }
 
   public modded_base_stats(): Stats {
     return apply_stats_mod(this.base_stats, this.mod_stats);
+  }
+
+  public will_take_hit(attacker_dx: number, attacker_hit_evade: number, 
+                       skill_percent: number = 1): boolean {
+    skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
+    skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
+    return Math.random() < skill_percent;
   }
 }
 

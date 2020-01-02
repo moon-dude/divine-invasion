@@ -22,7 +22,7 @@ var BattleData = /** @class */ (function () {
     }
     BattleData.prototype.take_damage = function (amount) {
         if (amount <= 0) {
-            return;
+            return "took no damage";
         }
         if (this.buffs.defense.get() > 1) {
             amount /= this.buffs.defense.get();
@@ -31,15 +31,27 @@ var BattleData = /** @class */ (function () {
             amount *= -this.buffs.defense.get();
         }
         this.mod_stats.hp -= amount;
+        BattleLog.add("took " + amount + " damage", false);
     };
     BattleData.prototype.heal_for = function (amount) {
-        if (amount <= 0) {
-            return;
+        if (amount < 0) {
+            return "could not be healed";
         }
-        this.mod_stats.hp = Math.min(this.mod_stats.hp + amount, 0);
+        if (this.mod_stats.hp == 0) {
+            return "is already fully healed";
+        }
+        var diff = Math.min(this.mod_stats.hp + amount, 0);
+        this.mod_stats.hp = diff;
+        return "healed for " + diff;
     };
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
+    };
+    BattleData.prototype.will_take_hit = function (attacker_dx, attacker_hit_evade, skill_percent) {
+        if (skill_percent === void 0) { skill_percent = 1; }
+        skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
+        skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
+        return Math.random() < skill_percent;
     };
     BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), []);
     return BattleData;

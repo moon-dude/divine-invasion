@@ -107,9 +107,7 @@ function buff_power(power) {
             return 1;
     }
 }
-// Returns info div innerHTML.
-function resolve_skill_effect(fighter, skill, targets) {
-    var result_str = "";
+function resolve_skill_effect(fighter, skill, target) {
     switch (skill.effect) {
         case SkillEffect.Damage:
             var damage = 1;
@@ -125,47 +123,49 @@ function resolve_skill_effect(fighter, skill, targets) {
             else {
                 damage = Math.floor(fighter.data.modded_base_stats().ma * damage_power(skill.power));
             }
-            for (var t = 0; t < targets.length; t++) {
-                targets[t].data.take_damage(damage);
-                result_str += "<br/>" + targets[t].name + " took " + damage + " damage";
+            var success = target.data.will_take_hit(fighter.data.modded_base_stats().dx, fighter.data.buffs.defense.get(), 1.0); // TODO: Pipe in hit/miss chance for skills here.
+            if (success) {
+                BattleLog.add(target.name + ": ");
+                target.data.take_damage(damage);
+            }
+            else {
+                BattleLog.add(target.name + ": dodged");
             }
             break;
         case SkillEffect.Heal:
             var power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
-            for (var t = 0; t < targets.length; t++) {
-                targets[t].data.heal_for(power);
-                result_str += "<br/>" + targets[t].name + " healed for " + power + "";
-            }
+            console.log(target.name + ": " +
+                target.data.heal_for(power));
             break;
         case SkillEffect.BuffDefense:
-            result_str += handy_buff_handler(function (b) { return b.defense; }, targets, true, skill.power);
+            handy_buff_handler(function (b) { return b.defense; }, target, true, skill.power);
             break;
         case SkillEffect.DebuffDefense:
-            result_str += handy_buff_handler(function (b) { return b.defense; }, targets, false, skill.power);
+            handy_buff_handler(function (b) { return b.defense; }, target, false, skill.power);
             break;
         case SkillEffect.BuffHitEvade:
-            result_str += handy_buff_handler(function (b) { return b.hit_evade; }, targets, true, skill.power);
+            handy_buff_handler(function (b) { return b.hit_evade; }, target, true, skill.power);
             break;
         case SkillEffect.DebuffHitEvade:
-            result_str += handy_buff_handler(function (b) { return b.hit_evade; }, targets, false, skill.power);
+            handy_buff_handler(function (b) { return b.hit_evade; }, target, false, skill.power);
             break;
         case SkillEffect.BuffMagicAttack:
-            result_str += handy_buff_handler(function (b) { return b.magic_attack; }, targets, true, skill.power);
+            handy_buff_handler(function (b) { return b.magic_attack; }, target, true, skill.power);
             break;
         case SkillEffect.BuffPhysAttack:
-            result_str += handy_buff_handler(function (b) { return b.physical_attack; }, targets, true, skill.power);
+            handy_buff_handler(function (b) { return b.physical_attack; }, target, true, skill.power);
             break;
         case SkillEffect.BuffAllStats:
-            result_str += handy_buff_handler(function (b) { return b.defense; }, targets, true, skill.power);
-            result_str += handy_buff_handler(function (b) { return b.hit_evade; }, targets, true, skill.power);
-            result_str += handy_buff_handler(function (b) { return b.magic_attack; }, targets, true, skill.power);
-            result_str += handy_buff_handler(function (b) { return b.physical_attack; }, targets, true, skill.power);
+            handy_buff_handler(function (b) { return b.defense; }, target, true, skill.power);
+            handy_buff_handler(function (b) { return b.hit_evade; }, target, true, skill.power);
+            handy_buff_handler(function (b) { return b.magic_attack; }, target, true, skill.power);
+            handy_buff_handler(function (b) { return b.physical_attack; }, target, true, skill.power);
             break;
         case SkillEffect.DebuffAllStats:
-            result_str += handy_buff_handler(function (b) { return b.defense; }, targets, false, skill.power);
-            result_str += handy_buff_handler(function (b) { return b.hit_evade; }, targets, false, skill.power);
-            result_str += handy_buff_handler(function (b) { return b.magic_attack; }, targets, false, skill.power);
-            result_str += handy_buff_handler(function (b) { return b.physical_attack; }, targets, false, skill.power);
+            handy_buff_handler(function (b) { return b.defense; }, target, false, skill.power);
+            handy_buff_handler(function (b) { return b.hit_evade; }, target, false, skill.power);
+            handy_buff_handler(function (b) { return b.magic_attack; }, target, false, skill.power);
+            handy_buff_handler(function (b) { return b.physical_attack; }, target, false, skill.power);
             break;
         case SkillEffect.Charm:
         case SkillEffect.Bind:
@@ -174,27 +174,25 @@ function resolve_skill_effect(fighter, skill, targets) {
         case SkillEffect.Panic:
         case SkillEffect.Mute:
         case SkillEffect.Poison:
-            result_str += handy_ailment_handler(targets, skill.effect);
+            handy_ailment_handler(target, skill.effect, true);
             break;
     }
-    return result_str;
 }
 exports.resolve_skill_effect = resolve_skill_effect;
-function handy_buff_handler(buffer, targets, positive, skill_power) {
-    var result_str = "";
-    for (var t = 0; t < targets.length; t++) {
-        var power = buff_power(skill_power) * (positive ? 1 : -1);
-        buffer(targets[t].data.buffs).raise(power);
-        result_str += "<br/>" + targets[t].name + " had its " + buffer(targets[t].data.buffs) +
-            " lowered " + power + " times";
-    }
-    return result_str;
+function handy_buff_handler(buffer, target, positive, skill_power) {
+    var power = buff_power(skill_power) * (positive ? 1 : -1);
+    buffer(target.data.buffs).raise(power);
+    BattleLog.add(target.name + ": " + buffer(target.data.buffs) +
+        (positive ? " raised" : " lowered"));
 }
-function handy_ailment_handler(targets, effect) {
-    var result_str = "";
-    for (var t = 0; t < targets.length; t++) {
-        targets[t].data.ailments.add(effect);
-        result_str += "<br/>" + targets[t].name + " is " + effect;
+function handy_ailment_handler(target, effect, positive) {
+    // positive in the medical way.
+    if (positive) {
+        BattleLog.add(target.name + ": is now " + effect);
+        target.data.ailments.add(effect);
     }
-    return result_str;
+    else if (target.data.ailments.has(effect)) {
+        BattleLog.add(target.name + ": is no longer " + effect);
+        target.data.ailments.delete(effect);
+    }
 }

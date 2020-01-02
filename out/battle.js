@@ -77,7 +77,7 @@ var Battle = /** @class */ (function () {
         var turn_index = this.turn_order[this.battle_idx];
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
         if (fighter.data.modded_base_stats().hp <= 0) {
-            this.info_div.innerHTML = "" + fighter.name + " is dead and can't attack!";
+            BattleLog.add(fighter.name + " is dead and can't attack!");
             return;
         }
         // Choose whether to attack or use skill.
@@ -87,7 +87,7 @@ var Battle = /** @class */ (function () {
             // Choose a random target.
             var target = this.get_attack_target(fighter);
             if (target == null) {
-                this.info_div.innerHTML = "" + fighter.name + " has no one to attack!";
+                BattleLog.add(fighter.name + " has no one to attack!");
                 return;
             }
             else {
@@ -119,17 +119,19 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
         if (skill == null) {
-            this.info_div.innerHTML = "" + fighter.name + " attacked!";
+            BattleLog.add(fighter.name + ": attacked");
             var damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
             for (var t = 0; t < targets.length; t++) {
-                targets[t].data.mod_stats.hp -= damage;
-                this.info_div.innerHTML += "<br/>" + targets[t].name + " took " + damage + " damage!";
+                BattleLog.add(targets[t].name + ": ", false);
+                targets[t].data.take_damage(damage);
             }
         }
         else {
             fighter.data.mod_stats.mp -= skill.cost;
-            this.info_div.innerHTML = "" + fighter.name + " used " + skill.name + "!";
-            this.info_div.innerHTML += skill_effect_1.resolve_skill_effect(fighter, skill, targets);
+            BattleLog.add(fighter.name + ": used `" + skill.name + "`");
+            for (var t = 0; t < targets.length; t++) {
+                skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
+            }
         }
     };
     return Battle;

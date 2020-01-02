@@ -12,6 +12,13 @@ export class Buffable {
     }
   }
 
+  public get_raised_by(amount: number): number {
+    let copy = new Buffable();
+    copy.raise(this.get());
+    copy.raise(amount);
+    return copy.get();
+  }
+
   public get(): number {
     return this.value;
   }
