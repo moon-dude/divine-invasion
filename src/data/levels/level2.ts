@@ -4,12 +4,9 @@ import { LevelData } from "./level_data";
 import { EncounterType } from "../encounter_type";
 
 
-const ENCOUNTER_1: EncounterType = new EncounterType(["Sudama", "Sudama"]);
-const ENCOUNTER_2: EncounterType = new EncounterType(["Sudama", "Sudama", "Sudama"]);
-
 var map_walkable: string = 
   "/////////,////////" +
-  "/-/--------/--/--/" +
+  "/+/--------/--/--/" +
   "/-/-/-///-///-//-/" +
   "/-----/-/---/----/" +
   "///////---/-////-/" +
@@ -26,10 +23,13 @@ export let level2_data: LevelData = new LevelData(
   level2_map, 
   [], 
   [
-    new EncounterType(["Goblin"]),
     new EncounterType(["Goblin", "Goblin"]),
+    new EncounterType(["Goblin", "Goblin", "Goblin"]),
+    new EncounterType(["Goblin", "Mandrake"]),
     new EncounterType(["Legion"]),
-    new EncounterType(["Mandrake", "Mandrake"]),
+    new EncounterType(["Legion", "Onmoraki"]),
     new EncounterType(["Onmoraki"]),
+    new EncounterType(["Onmoraki", "Onmoraki"]),
+    new EncounterType(["Strigoii"]),
   ], 
   10);

@@ -51715,10 +51715,8 @@ var map_1 = require("../../map");
 var jlib_1 = require("../../jlib");
 var level_data_1 = require("./level_data");
 var encounter_type_1 = require("../encounter_type");
-var ENCOUNTER_1 = new encounter_type_1.EncounterType(["Sudama", "Sudama"]);
-var ENCOUNTER_2 = new encounter_type_1.EncounterType(["Sudama", "Sudama", "Sudama"]);
 var map_walkable = "/////////,////////" +
-    "/-/--------/--/--/" +
+    "/+/--------/--/--/" +
     "/-/-/-///-///-//-/" +
     "/-----/-/---/----/" +
     "///////---/-////-/" +
@@ -51730,11 +51728,14 @@ var map_walkable = "/////////,////////" +
     "////////////////`/";
 var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 18));
 exports.level2_data = new level_data_1.LevelData(level2_map, [], [
-    new encounter_type_1.EncounterType(["Goblin"]),
     new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
+    new encounter_type_1.EncounterType(["Goblin", "Goblin", "Goblin"]),
+    new encounter_type_1.EncounterType(["Goblin", "Mandrake"]),
     new encounter_type_1.EncounterType(["Legion"]),
-    new encounter_type_1.EncounterType(["Mandrake", "Mandrake"]),
+    new encounter_type_1.EncounterType(["Legion", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki"]),
+    new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
+    new encounter_type_1.EncounterType(["Strigoii"]),
 ], 10);
 
 },{"../../jlib":19,"../../map":21,"../encounter_type":10,"./level_data":12}],12:[function(require,module,exports){
@@ -68919,7 +68920,6 @@ var Game = /** @class */ (function () {
                         this.player.body.remove(this.battle_actors[i].mesh);
                     }
                     this.battle_actors = [];
-                    this.battle_div.style.visibility = "hidden";
                 }
                 else {
                     this.battle_div.innerHTML = "YOU DIED";
@@ -69277,6 +69277,14 @@ var Player = /** @class */ (function () {
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
         if (map.walkable.get(move_coor.x, move_coor.z) == "/") {
             return false;
+        }
+        if (map.walkable.get(move_coor.x, move_coor.z) == "+") {
+            this.battle_data.mod_stats.hp = 0;
+            this.battle_data.mod_stats.mp = 0;
+            for (var i = 0; i < this.supports.length; i++) {
+                this.supports[i].battle_data.mod_stats.hp = 0;
+                this.supports[i].battle_data.mod_stats.mp = 0;
+            }
         }
         // Reorient towards npcs if going backwards.
         if (steps < 0) {
