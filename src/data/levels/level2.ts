@@ -5,7 +5,7 @@ import { EncounterType } from "../encounter_type";
 
 
 const ENCOUNTER_1: EncounterType = new EncounterType(() => {
-  return ["Pixie", "Poltergeist", "Pixie"];
+  return ["Basilisk", "Basilisk", "Pixie"];
 });
 
 const ENCOUNTER_2: EncounterType = new EncounterType(() => {
@@ -34,5 +34,5 @@ var level2_map = new TileMap(Grid.from_string(map_walkable, 7));
 export let level2_data: LevelData = new LevelData(
   level2_map, 
   [], 
-  [ENCOUNTER_1, ENCOUNTER_2, ENCOUNTER_3], 
+  [ENCOUNTER_1], 
   10);

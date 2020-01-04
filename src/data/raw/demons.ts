@@ -170,7 +170,7 @@ const DEMONS: Demon[] = [{
     }
 }, 
 {
-            "name": "Alciel",
+    "name": "Alciel",
     "affinities": [
         [SkillElement.Ailment, 3], 
         [SkillElement.Dark, 2], 

@@ -87,25 +87,34 @@ export class Battle {
     let fighter = this.fighters.get(turn_index.side)![turn_index.index]!;
     if (fighter.data.modded_base_stats().hp <= 0) {
       BattleLog.add(fighter.name + " is dead and can't attack!");
+      this.info_div.innerHTML = BattleLog.flush();
       return;
     }
     // Choose whether to attack or use skill.
     let chosen_skill = this.choose_skill(fighter);
-    let targets = [];
+    let targets: BattleFighter[] = [];
     if (chosen_skill == null || chosen_skill.target == SkillTarget.Single) {
       // Choose a random target.
       let target = this.get_attack_target(fighter);
       if (target == null) {
         BattleLog.add(fighter.name + " has no one to attack!");
+        fighter.data.before_end_of_turn();
+        this.info_div.innerHTML = BattleLog.flush();
         return;
       } else {
         targets.push(target);
       }
     } else if (chosen_skill.target == SkillTarget.AllEnemies) {
       // TODO: select all enemies.
+      const enemy_fighters = (this.fighters.get(other_side(fighter.data.side))!
+        .filter(x => x.data.modded_base_stats().hp > 0));
+      for (let i = 0; i < enemy_fighters.length; i++) {
+        targets.push(enemy_fighters[i]);
+      }
     }
     // attack target.
     this.take_battle_action(fighter, chosen_skill, targets);
+    fighter.data.before_end_of_turn();
     this.info_div.innerHTML = BattleLog.flush();
   }
 

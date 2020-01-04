@@ -79,6 +79,7 @@ var Battle = /** @class */ (function () {
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
         if (fighter.data.modded_base_stats().hp <= 0) {
             battle_log_1.BattleLog.add(fighter.name + " is dead and can't attack!");
+            this.info_div.innerHTML = battle_log_1.BattleLog.flush();
             return;
         }
         // Choose whether to attack or use skill.
@@ -89,6 +90,8 @@ var Battle = /** @class */ (function () {
             var target = this.get_attack_target(fighter);
             if (target == null) {
                 battle_log_1.BattleLog.add(fighter.name + " has no one to attack!");
+                fighter.data.before_end_of_turn();
+                this.info_div.innerHTML = battle_log_1.BattleLog.flush();
                 return;
             }
             else {
@@ -97,9 +100,15 @@ var Battle = /** @class */ (function () {
         }
         else if (chosen_skill.target == skill_effect_1.SkillTarget.AllEnemies) {
             // TODO: select all enemies.
+            var enemy_fighters = (this.fighters.get(battle_data_1.other_side(fighter.data.side))
+                .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
+            for (var i = 0; i < enemy_fighters.length; i++) {
+                targets.push(enemy_fighters[i]);
+            }
         }
         // attack target.
         this.take_battle_action(fighter, chosen_skill, targets);
+        fighter.data.before_end_of_turn();
         this.info_div.innerHTML = battle_log_1.BattleLog.flush();
     };
     Battle.prototype.choose_skill = function (attacker) {

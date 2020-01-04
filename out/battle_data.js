@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
+var skill_effect_1 = require("./data/skill_effect");
 var battle_log_1 = require("./battle_log");
 var BattleSide;
 (function (BattleSide) {
@@ -31,6 +32,7 @@ var BattleData = /** @class */ (function () {
         else if (this.buffs.defense.get() < -1) {
             amount *= -this.buffs.defense.get();
         }
+        amount = Math.floor(amount);
         this.mod_stats.hp -= amount;
         battle_log_1.BattleLog.add("took " + amount + " damage", false);
     };
@@ -41,6 +43,7 @@ var BattleData = /** @class */ (function () {
         if (this.mod_stats.hp == 0) {
             return "is already fully healed";
         }
+        amount = Math.floor(amount);
         var diff = Math.min(this.mod_stats.hp + amount, 0);
         this.mod_stats.hp = diff;
         return "healed for " + diff;
@@ -53,6 +56,13 @@ var BattleData = /** @class */ (function () {
         skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
         skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
         return Math.random() < skill_percent;
+    };
+    BattleData.prototype.before_end_of_turn = function () {
+        if (this.ailments.has(skill_effect_1.SkillEffect.Poison)) {
+            var damage = this.base_stats.hp * 0.075;
+            this.take_damage(damage);
+            battle_log_1.BattleLog.add("took " + damage + "damage from poison");
+        }
     };
     BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), []);
     return BattleData;

@@ -51439,6 +51439,7 @@ var Battle = /** @class */ (function () {
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
         if (fighter.data.modded_base_stats().hp <= 0) {
             battle_log_1.BattleLog.add(fighter.name + " is dead and can't attack!");
+            this.info_div.innerHTML = battle_log_1.BattleLog.flush();
             return;
         }
         // Choose whether to attack or use skill.
@@ -51449,6 +51450,8 @@ var Battle = /** @class */ (function () {
             var target = this.get_attack_target(fighter);
             if (target == null) {
                 battle_log_1.BattleLog.add(fighter.name + " has no one to attack!");
+                fighter.data.before_end_of_turn();
+                this.info_div.innerHTML = battle_log_1.BattleLog.flush();
                 return;
             }
             else {
@@ -51457,9 +51460,15 @@ var Battle = /** @class */ (function () {
         }
         else if (chosen_skill.target == skill_effect_1.SkillTarget.AllEnemies) {
             // TODO: select all enemies.
+            var enemy_fighters = (this.fighters.get(battle_data_1.other_side(fighter.data.side))
+                .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
+            for (var i = 0; i < enemy_fighters.length; i++) {
+                targets.push(enemy_fighters[i]);
+            }
         }
         // attack target.
         this.take_battle_action(fighter, chosen_skill, targets);
+        fighter.data.before_end_of_turn();
         this.info_div.innerHTML = battle_log_1.BattleLog.flush();
     };
     Battle.prototype.choose_skill = function (attacker) {
@@ -51505,6 +51514,7 @@ exports.Battle = Battle;
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
+var skill_effect_1 = require("./data/skill_effect");
 var battle_log_1 = require("./battle_log");
 var BattleSide;
 (function (BattleSide) {
@@ -51534,6 +51544,7 @@ var BattleData = /** @class */ (function () {
         else if (this.buffs.defense.get() < -1) {
             amount *= -this.buffs.defense.get();
         }
+        amount = Math.floor(amount);
         this.mod_stats.hp -= amount;
         battle_log_1.BattleLog.add("took " + amount + " damage", false);
     };
@@ -51544,6 +51555,7 @@ var BattleData = /** @class */ (function () {
         if (this.mod_stats.hp == 0) {
             return "is already fully healed";
         }
+        amount = Math.floor(amount);
         var diff = Math.min(this.mod_stats.hp + amount, 0);
         this.mod_stats.hp = diff;
         return "healed for " + diff;
@@ -51556,6 +51568,13 @@ var BattleData = /** @class */ (function () {
         skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
         skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
         return Math.random() < skill_percent;
+    };
+    BattleData.prototype.before_end_of_turn = function () {
+        if (this.ailments.has(skill_effect_1.SkillEffect.Poison)) {
+            var damage = this.base_stats.hp * 0.075;
+            this.take_damage(damage);
+            battle_log_1.BattleLog.add("took " + damage + "damage from poison");
+        }
     };
     BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), []);
     return BattleData;
@@ -51578,7 +51597,7 @@ var BattleFighter = /** @class */ (function () {
 }());
 exports.BattleFighter = BattleFighter;
 
-},{"./battle_log":7,"./data/buffs":9,"./stats":23}],7:[function(require,module,exports){
+},{"./battle_log":7,"./data/buffs":9,"./data/skill_effect":15,"./stats":23}],7:[function(require,module,exports){
 "use strict";
 // oneof
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -51675,7 +51694,7 @@ var jlib_1 = require("../../jlib");
 var level_data_1 = require("./level_data");
 var encounter_type_1 = require("../encounter_type");
 var ENCOUNTER_1 = new encounter_type_1.EncounterType(function () {
-    return ["Pixie", "Poltergeist", "Pixie"];
+    return ["Basilisk", "Basilisk", "Pixie"];
 });
 var ENCOUNTER_2 = new encounter_type_1.EncounterType(function () {
     return ["Pixie", "Pixie"];
@@ -51695,7 +51714,7 @@ var map_walkable = "//////////" +
     "/-/-//-/-/" +
     "////////-/";
 var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 7));
-exports.level2_data = new level_data_1.LevelData(level2_map, [], [ENCOUNTER_1, ENCOUNTER_2, ENCOUNTER_3], 10);
+exports.level2_data = new level_data_1.LevelData(level2_map, [], [ENCOUNTER_1], 10);
 
 },{"../../jlib":19,"../../map":21,"../encounter_type":10,"./level_data":12}],12:[function(require,module,exports){
 "use strict";
@@ -66257,7 +66276,7 @@ var SKILLS = [
     {
         "name": "Critical Eye",
         "cost": 11,
-        "effect": skill_effect_1.SkillEffect.NextPhysGunAttackGuaranteedCrit,
+        "effect": skill_effect_1.SkillEffect.NextPhysGunAttackCrit,
         "element": skill_effect_1.SkillElement.Support,
         "rank": 17,
         "target": skill_effect_1.SkillTarget.Self
@@ -68627,33 +68646,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var battle_log_1 = require("../battle_log");
 var SkillEffect;
 (function (SkillEffect) {
-    SkillEffect[SkillEffect["Damage"] = 0] = "Damage";
-    SkillEffect[SkillEffect["Heal"] = 1] = "Heal";
-    SkillEffect[SkillEffect["BuffDefense"] = 2] = "BuffDefense";
-    SkillEffect[SkillEffect["DebuffDefense"] = 3] = "DebuffDefense";
-    SkillEffect[SkillEffect["BuffHitEvade"] = 4] = "BuffHitEvade";
-    SkillEffect[SkillEffect["DebuffHitEvade"] = 5] = "DebuffHitEvade";
-    SkillEffect[SkillEffect["BuffAllStats"] = 6] = "BuffAllStats";
-    SkillEffect[SkillEffect["DebuffAllStats"] = 7] = "DebuffAllStats";
-    SkillEffect[SkillEffect["BuffMagicAttack"] = 8] = "BuffMagicAttack";
-    SkillEffect[SkillEffect["BuffPhysAttack"] = 9] = "BuffPhysAttack";
-    SkillEffect[SkillEffect["Charm"] = 10] = "Charm";
-    SkillEffect[SkillEffect["Bind"] = 11] = "Bind";
-    SkillEffect[SkillEffect["Sick"] = 12] = "Sick";
-    SkillEffect[SkillEffect["Sleep"] = 13] = "Sleep";
-    SkillEffect[SkillEffect["Panic"] = 14] = "Panic";
-    SkillEffect[SkillEffect["Mute"] = 15] = "Mute";
-    SkillEffect[SkillEffect["Poison"] = 16] = "Poison";
-    SkillEffect[SkillEffect["CurePoisonSick"] = 17] = "CurePoisonSick";
-    SkillEffect[SkillEffect["CuresAllAilments"] = 18] = "CuresAllAilments";
-    SkillEffect[SkillEffect["NextMagicAttackX2AndHalfDamage"] = 19] = "NextMagicAttackX2AndHalfDamage";
-    SkillEffect[SkillEffect["NextPhysGunAttackGuaranteedCrit"] = 20] = "NextPhysGunAttackGuaranteedCrit";
-    SkillEffect[SkillEffect["RemoveAllBuffs"] = 21] = "RemoveAllBuffs";
-    SkillEffect[SkillEffect["RemoveAllDebuffs"] = 22] = "RemoveAllDebuffs";
-    SkillEffect[SkillEffect["RemoveAllBuffsAndDebuffs"] = 23] = "RemoveAllBuffsAndDebuffs";
-    SkillEffect[SkillEffect["ReviveWithHalfHP"] = 24] = "ReviveWithHalfHP";
-    SkillEffect[SkillEffect["ReviveWithFullHP"] = 25] = "ReviveWithFullHP";
-    SkillEffect[SkillEffect["ReviveWithFullHPCuredUserDies"] = 26] = "ReviveWithFullHPCuredUserDies";
+    SkillEffect["Damage"] = "Damage";
+    SkillEffect["Heal"] = "Heal";
+    SkillEffect["BuffDefense"] = "BuffDefense";
+    SkillEffect["DebuffDefense"] = "DebuffDefense";
+    SkillEffect["BuffHitEvade"] = "BuffHitEvade";
+    SkillEffect["DebuffHitEvade"] = "DebuffHitEvade";
+    SkillEffect["BuffAllStats"] = "BuffAllStats";
+    SkillEffect["DebuffAllStats"] = "DebuffAllStats";
+    SkillEffect["BuffMagicAttack"] = "BuffMagicAttack";
+    SkillEffect["BuffPhysAttack"] = "BuffPhysAttack";
+    SkillEffect["Charm"] = "Charm";
+    SkillEffect["Bind"] = "Bind";
+    SkillEffect["Sick"] = "Sick";
+    SkillEffect["Sleep"] = "Sleep";
+    SkillEffect["Panic"] = "Panic";
+    SkillEffect["Mute"] = "Mute";
+    SkillEffect["Poison"] = "Poison";
+    SkillEffect["CurePoisonSick"] = "CurePoisonSick";
+    SkillEffect["CuresAllAilments"] = "CuresAllAilments";
+    SkillEffect["NextMagicAttackX2AndHalfDamage"] = "NextMagicAttackX2AndHalfDamage";
+    SkillEffect["NextPhysGunAttackCrit"] = "NextPhysGunAttackCrit";
+    SkillEffect["RemoveAllBuffs"] = "RemoveAllBuffs";
+    SkillEffect["RemoveAllDebuffs"] = "RemoveAllDebuffs";
+    SkillEffect["RemoveAllBuffsAndDebuffs"] = "RemoveAllBuffsAndDebuffs";
+    SkillEffect["ReviveWithHalfHP"] = "ReviveWithHalfHP";
+    SkillEffect["ReviveWithFullHP"] = "ReviveWithFullHP";
+    SkillEffect["ReviveWithFullHPCuredUserDies"] = "ReviveWithFullHPCuredUserDies";
 })(SkillEffect = exports.SkillEffect || (exports.SkillEffect = {}));
 var SkillElement;
 (function (SkillElement) {

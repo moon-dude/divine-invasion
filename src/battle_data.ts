@@ -41,6 +41,7 @@ export class BattleData {
     } else if (this.buffs.defense.get() < -1) {
       amount *= -this.buffs.defense.get();
     }
+    amount = Math.floor(amount);
     this.mod_stats.hp -= amount;
     BattleLog.add("took " + amount + " damage", false);
   }
@@ -52,6 +53,7 @@ export class BattleData {
     if (this.mod_stats.hp == 0) {
       return "is already fully healed";
     }
+    amount = Math.floor(amount);
     const diff = Math.min(this.mod_stats.hp + amount, 0);
     this.mod_stats.hp = diff;
     return "healed for " + diff;
@@ -66,6 +68,14 @@ export class BattleData {
     skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
     skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
     return Math.random() < skill_percent;
+  }
+
+  public before_end_of_turn() {
+    if (this.ailments.has(SkillEffect.Poison)) {
+      const damage = this.base_stats.hp * 0.075
+      this.take_damage(damage);
+      BattleLog.add("took " + damage + "damage from poison");
+    }
   }
 }
 

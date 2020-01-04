@@ -382,7 +382,7 @@ const SKILLS: Skill[] = [
     {
         "name": "Critical Eye", 
         "cost": 11, 
-        "effect": SkillEffect.NextPhysGunAttackGuaranteedCrit, 
+        "effect": SkillEffect.NextPhysGunAttackCrit, 
         "element": SkillElement.Support, 
         "rank": 17, 
         "target": SkillTarget.Self

@@ -382,7 +382,7 @@ var SKILLS = [
     {
         "name": "Critical Eye",
         "cost": 11,
-        "effect": skill_effect_1.SkillEffect.NextPhysGunAttackGuaranteedCrit,
+        "effect": skill_effect_1.SkillEffect.NextPhysGunAttackCrit,
         "element": skill_effect_1.SkillElement.Support,
         "rank": 17,
         "target": skill_effect_1.SkillTarget.Self
