@@ -3,7 +3,7 @@ import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
 import { TILE_SIZE } from './constants';
 import { TileMap } from './map';
 import { Actor } from './actor';
-import { BattleData, BattleSide } from './battle_data';
+import { BattleData, BattleSide, BattleFighter } from './battle_data';
 import { Stats } from './stats';
 
 export class Player {
@@ -15,18 +15,20 @@ export class Player {
   private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, .5);
   movement_locked: boolean = false;
   battle_data: BattleData;
+  supports: Actor[];
 
   constructor() {
     this.body.add(this.camera);
     this.body.add(this.light);
     this.light.position.x = 5;
-    let stats = new Stats(1024, 100);
-    stats.ag = 40;
-    stats.dx = 40;
-    stats.lu = 40;
-    stats.ma = 40;
-    stats.st = 50;
+    let stats = new Stats(275, 0);
+    stats.ag = 25;
+    stats.dx = 30;
+    stats.lu = 35;
+    stats.ma = 0;
+    stats.st = 20;
     this.battle_data = new BattleData(BattleSide.Our, stats, Stats.new_mod(), []);
+    this.supports = [Actor.from_demon("Pixie", BattleSide.Our)];
   }
 
   public update() {

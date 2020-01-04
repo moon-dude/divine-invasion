@@ -1,6 +1,6 @@
 export class EncounterType {
-  enemies: () => string[];
-  constructor(enemies: () => string[]) {
+  enemies: string[];
+  constructor(enemies: string[]) {
     this.enemies = enemies;
   }
 }

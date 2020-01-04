@@ -41,7 +41,7 @@ export class Actor {
     this.battle_data = battle_data;
   }
 
-  public static from_demon(name: string, coor: Coor | null = null) {
+  public static from_demon(name: string, side: BattleSide, coor: Coor | null = null) {
     let demon: Demon = DEMON_MAP.get(name)!;
     let skills: Skill[] = [];
     if (demon.level) {
@@ -53,7 +53,7 @@ export class Actor {
     }
     let actor = new Actor(name, [], DEMON_MAT, 
       new BattleData(
-        BattleSide.Their, 
+        side, 
         demon.stats, 
         Stats.new_mod(), 
         skills)

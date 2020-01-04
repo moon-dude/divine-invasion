@@ -33,7 +33,7 @@ var Actor = /** @class */ (function () {
         this.dialogue = dialogue;
         this.battle_data = battle_data;
     }
-    Actor.from_demon = function (name, coor) {
+    Actor.from_demon = function (name, side, coor) {
         if (coor === void 0) { coor = null; }
         var demon = demons_1.DEMON_MAP.get(name);
         var skills = [];
@@ -44,7 +44,7 @@ var Actor = /** @class */ (function () {
                 }
             }
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, demon.stats, stats_1.Stats.new_mod(), skills));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(side, demon.stats, stats_1.Stats.new_mod(), skills));
         actor.coor = coor;
         return actor;
     };

@@ -80,8 +80,8 @@ var Game = /** @class */ (function () {
                 if (encounter_type != null) {
                     // spawn encounter enemies and start a battle.
                     // create enemy actors.
-                    var enemies = encounter_type.enemies();
-                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
+                    var enemies = encounter_type.enemies;
+                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, coor_1); });
                     var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.add(this.battle_actors[i].mesh);
@@ -89,6 +89,9 @@ var Game = /** @class */ (function () {
                         this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
+                    for (var i = 0; i < this.player.supports.length; i++) {
+                        battle_fighters.push(new battle_data_1.BattleFighter(this.player.supports[i].name, this.player.supports[i].battle_data));
+                    }
                     this.battle = new battle_1.Battle(battle_fighters);
                     this.player.movement_locked = true;
                     this.battle_div.style.visibility = "";

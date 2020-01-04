@@ -79,8 +79,8 @@ export class Game {
         if (encounter_type != null) {
           // spawn encounter enemies and start a battle.
           // create enemy actors.
-          const enemies = encounter_type.enemies();
-          this.battle_actors = enemies.map(id => Actor.from_demon(id, coor));
+          const enemies = encounter_type.enemies;
+          this.battle_actors = enemies.map(id => Actor.from_demon(id, BattleSide.Their, coor));
           let battle_fighters: BattleFighter[] = this.battle_actors.map(
             actor => new BattleFighter(actor.name, actor.battle_data));
           for (let i = 0; i < this.battle_actors.length; i++) {
@@ -89,6 +89,11 @@ export class Game {
             this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
           }
           battle_fighters.push(new BattleFighter("Player", this.player.battle_data));
+          for (let i = 0; i < this.player.supports.length; i++) {
+            battle_fighters.push(new BattleFighter(
+              this.player.supports[i].name, 
+              this.player.supports[i].battle_data));
+          }
           this.battle = new Battle(battle_fighters);
           this.player.movement_locked = true;
           this.battle_div.style.visibility = "";

@@ -51280,7 +51280,7 @@ var Actor = /** @class */ (function () {
         this.dialogue = dialogue;
         this.battle_data = battle_data;
     }
-    Actor.from_demon = function (name, coor) {
+    Actor.from_demon = function (name, side, coor) {
         if (coor === void 0) { coor = null; }
         var demon = demons_1.DEMON_MAP.get(name);
         var skills = [];
@@ -51291,7 +51291,7 @@ var Actor = /** @class */ (function () {
                 }
             }
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(battle_data_1.BattleSide.Their, demon.stats, stats_1.Stats.new_mod(), skills));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(side, demon.stats, stats_1.Stats.new_mod(), skills));
         actor.coor = coor;
         return actor;
     };
@@ -51693,28 +51693,27 @@ var map_1 = require("../../map");
 var jlib_1 = require("../../jlib");
 var level_data_1 = require("./level_data");
 var encounter_type_1 = require("../encounter_type");
-var ENCOUNTER_1 = new encounter_type_1.EncounterType(function () {
-    return ["Basilisk", "Basilisk", "Pixie"];
-});
-var ENCOUNTER_2 = new encounter_type_1.EncounterType(function () {
-    return ["Pixie", "Pixie"];
-});
-var ENCOUNTER_3 = new encounter_type_1.EncounterType(function () {
-    return ["Poltergeist", "Poltergeist"];
-});
-var map_walkable = "//////////" +
-    "/--/--/--/" +
-    "/-///-/--/" +
-    "/--------/" +
-    "////////-/" +
-    "/--------/" +
-    "/--/-///-/" +
-    "////-///-/" +
-    "/------/-/" +
-    "/-/-//-/-/" +
-    "////////-/";
-var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 7));
-exports.level2_data = new level_data_1.LevelData(level2_map, [], [ENCOUNTER_1], 10);
+var ENCOUNTER_1 = new encounter_type_1.EncounterType(["Sudama", "Sudama"]);
+var ENCOUNTER_2 = new encounter_type_1.EncounterType(["Sudama", "Sudama", "Sudama"]);
+var map_walkable = "/////////,////////" +
+    "/-/--------/--/--/" +
+    "/-/-/-///-///-//-/" +
+    "/-----/-/---/----/" +
+    "///////---/-////-/" +
+    "///////////---/--/" +
+    "/////////--/-///-/" +
+    "////////////-///-/" +
+    "/////////-//-/-/-/" +
+    "/////////--------/" +
+    "////////////////`/";
+var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 18));
+exports.level2_data = new level_data_1.LevelData(level2_map, [], [
+    new encounter_type_1.EncounterType(["Goblin"]),
+    new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
+    new encounter_type_1.EncounterType(["Legion"]),
+    new encounter_type_1.EncounterType(["Mandrake", "Mandrake"]),
+    new encounter_type_1.EncounterType(["Onmoraki"]),
+], 10);
 
 },{"../../jlib":19,"../../map":21,"../encounter_type":10,"./level_data":12}],12:[function(require,module,exports){
 "use strict";
@@ -68924,8 +68923,8 @@ var Game = /** @class */ (function () {
                 if (encounter_type != null) {
                     // spawn encounter enemies and start a battle.
                     // create enemy actors.
-                    var enemies = encounter_type.enemies();
-                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, coor_1); });
+                    var enemies = encounter_type.enemies;
+                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, coor_1); });
                     var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.add(this.battle_actors[i].mesh);
@@ -68933,6 +68932,9 @@ var Game = /** @class */ (function () {
                         this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
+                    for (var i = 0; i < this.player.supports.length; i++) {
+                        battle_fighters.push(new battle_data_1.BattleFighter(this.player.supports[i].name, this.player.supports[i].battle_data));
+                    }
                     this.battle = new battle_1.Battle(battle_fighters);
                     this.player.movement_locked = true;
                     this.battle_div.style.visibility = "";
@@ -69207,6 +69209,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
+var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
 var Player = /** @class */ (function () {
@@ -69220,13 +69223,14 @@ var Player = /** @class */ (function () {
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
-        var stats = new stats_1.Stats(1024, 100);
-        stats.ag = 40;
-        stats.dx = 40;
-        stats.lu = 40;
-        stats.ma = 40;
-        stats.st = 50;
+        var stats = new stats_1.Stats(275, 0);
+        stats.ag = 25;
+        stats.dx = 30;
+        stats.lu = 35;
+        stats.ma = 0;
+        stats.st = 20;
         this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), []);
+        this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -69280,7 +69284,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./battle_data":6,"./constants":8,"./jlib":19,"./stats":23,"three":3}],23:[function(require,module,exports){
+},{"./actor":4,"./battle_data":6,"./constants":8,"./jlib":19,"./stats":23,"three":3}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {

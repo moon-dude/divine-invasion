@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
+var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
 var Player = /** @class */ (function () {
@@ -23,13 +24,14 @@ var Player = /** @class */ (function () {
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
-        var stats = new stats_1.Stats(1024, 100);
-        stats.ag = 40;
-        stats.dx = 40;
-        stats.lu = 40;
-        stats.ma = 40;
-        stats.st = 50;
+        var stats = new stats_1.Stats(275, 0);
+        stats.ag = 25;
+        stats.dx = 30;
+        stats.lu = 35;
+        stats.ma = 0;
+        stats.st = 20;
         this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), []);
+        this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
