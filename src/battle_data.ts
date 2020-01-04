@@ -46,17 +46,17 @@ export class BattleData {
     BattleLog.add("took " + amount + " damage", false);
   }
 
-  public heal_for(amount: number): string {
+  public heal_for(amount: number) {
     if (amount < 0) {
-      return "could not be healed";
+      BattleLog.add("could not be healed");
     }
     if (this.mod_stats.hp == 0) {
-      return "is already fully healed";
+      BattleLog.add("is already fully healed");
     }
     amount = Math.floor(amount);
-    const diff = Math.min(this.mod_stats.hp + amount, 0);
-    this.mod_stats.hp = diff;
-    return "healed for " + diff;
+    amount = Math.min(amount, -this.mod_stats.hp);
+    this.mod_stats.hp += amount;
+    BattleLog.add("healed for " + amount, false);
   }
 
   public modded_base_stats(): Stats {

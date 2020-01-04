@@ -85,7 +85,7 @@ var Battle = /** @class */ (function () {
         // Choose whether to attack or use skill.
         var chosen_skill = this.choose_skill(fighter);
         var targets = [];
-        if (chosen_skill == null || chosen_skill.target == skill_effect_1.SkillTarget.Single) {
+        if (chosen_skill == null || chosen_skill.target == skill_effect_1.SkillTarget.SingleEnemy) {
             // Choose a random target.
             var target = this.get_attack_target(fighter);
             if (target == null) {
@@ -96,6 +96,27 @@ var Battle = /** @class */ (function () {
             }
             else {
                 targets.push(target);
+            }
+        }
+        else if (chosen_skill.target == skill_effect_1.SkillTarget.SingleAlly) {
+            // TODO: Manually choose the best target for the skill.
+            // For now just choose weakest health.
+            var weakest_ally = null;
+            var allies = this.fighters.get(fighter.data.side);
+            for (var i = 0; i < allies.length; i++) {
+                if (allies[i].data.mod_stats.hp == 0) {
+                    continue;
+                }
+                if (weakest_ally == null ||
+                    allies[i].data.modded_base_stats().hp < weakest_ally.data.modded_base_stats().hp) {
+                    weakest_ally = allies[i];
+                }
+            }
+            if (weakest_ally == null) {
+                battle_log_1.BattleLog.add(fighter.name + " could not find a valid target!");
+            }
+            else {
+                targets.push(weakest_ally);
             }
         }
         else if (chosen_skill.target == skill_effect_1.SkillTarget.AllEnemies) {
@@ -130,8 +151,9 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
         if (skill == null) {
-            battle_log_1.BattleLog.add(fighter.name + ": attacked");
+            battle_log_1.BattleLog.add(fighter.name + ": attacked ");
             var damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
+            battle_log_1.BattleLog.add("", true);
             for (var t = 0; t < targets.length; t++) {
                 battle_log_1.BattleLog.add(targets[t].name + ": ", false);
                 targets[t].data.take_damage(damage);
@@ -139,7 +161,7 @@ var Battle = /** @class */ (function () {
         }
         else {
             fighter.data.mod_stats.mp -= skill.cost;
-            battle_log_1.BattleLog.add(fighter.name + ": used `" + skill.name + "`");
+            battle_log_1.BattleLog.add(fighter.name + ": used `" + skill.name + "` ");
             for (var t = 0; t < targets.length; t++) {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }

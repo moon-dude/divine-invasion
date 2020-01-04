@@ -93,7 +93,7 @@ export class Battle {
     // Choose whether to attack or use skill.
     let chosen_skill = this.choose_skill(fighter);
     let targets: BattleFighter[] = [];
-    if (chosen_skill == null || chosen_skill.target == SkillTarget.Single) {
+    if (chosen_skill == null || chosen_skill.target == SkillTarget.SingleEnemy) {
       // Choose a random target.
       let target = this.get_attack_target(fighter);
       if (target == null) {
@@ -103,6 +103,25 @@ export class Battle {
         return;
       } else {
         targets.push(target);
+      }
+    } else if (chosen_skill.target == SkillTarget.SingleAlly) {
+      // TODO: Manually choose the best target for the skill.
+      // For now just choose weakest health.
+      let weakest_ally: BattleFighter | null = null;
+      const allies = this.fighters.get(fighter.data.side)!;
+      for (let i = 0; i < allies.length; i++) {
+        if (allies[i].data.mod_stats.hp == 0) {
+          continue;
+        }
+        if (weakest_ally == null || 
+            allies[i].data.modded_base_stats().hp < weakest_ally.data.modded_base_stats().hp) {
+          weakest_ally = allies[i];
+        }
+      }
+      if (weakest_ally == null) {
+        BattleLog.add(fighter.name + " could not find a valid target!");
+      } else {
+        targets.push(weakest_ally);
       }
     } else if (chosen_skill.target == SkillTarget.AllEnemies) {
       // TODO: select all enemies.
@@ -141,15 +160,16 @@ export class Battle {
 
   private take_battle_action(fighter: BattleFighter, skill: Skill | null, targets: BattleFighter[]) {
     if (skill == null) {
-      BattleLog.add(fighter.name + ": attacked");
+      BattleLog.add(fighter.name + ": attacked ");
       let damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
+      BattleLog.add("", true);  
       for (let t = 0; t < targets.length; t++) {
         BattleLog.add(targets[t].name + ": ", false);  
         targets[t].data.take_damage(damage);
       }
     } else {
       fighter.data.mod_stats.mp -= skill.cost;
-      BattleLog.add(fighter.name + ": used `" + skill.name + "`");
+      BattleLog.add(fighter.name + ": used `" + skill.name + "` ");
       for (let t = 0; t < targets.length; t++) {
         resolve_skill_effect(fighter, skill, targets[t]);
       }

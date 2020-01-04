@@ -37,7 +37,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Fire,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Agidyne",
@@ -47,7 +47,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Fire,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Agilao",
@@ -57,7 +57,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Fire,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Akasha Arts",
@@ -68,7 +68,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 31,
         "remark": "Smirk: Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Alluring Banter",
@@ -77,7 +77,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 0,
         "remark": "Minimize defense",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Ally Counter", 
@@ -103,7 +103,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.CuresAllAilments,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 23,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Andalusia",
@@ -174,7 +174,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 21,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Bind Voice",
@@ -193,7 +193,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Blade of Terror",
@@ -247,7 +247,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Rakunda, Smirk: 100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Blood Ritual", 
@@ -271,7 +271,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Breath",
@@ -291,7 +291,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Ice,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Bufudyne",
@@ -301,7 +301,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Ice,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Bufula",
@@ -311,7 +311,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Ice,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Chakra Walk", 
@@ -371,7 +371,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Sick,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Counter", 
@@ -406,7 +406,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Dance of Mara",
@@ -425,7 +425,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Dark Pierce", 
@@ -448,7 +448,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X2,
         "rank": 21,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Dazzle Ray",
@@ -459,7 +459,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Deadly Wind",
@@ -470,7 +470,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Death Lust",
@@ -535,7 +535,7 @@ var SKILLS = [
         "power": skill_effect_1.SkillPower.Weak,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Diarahan",
@@ -544,7 +544,7 @@ var SKILLS = [
         "power": skill_effect_1.SkillPower.Severe,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 20,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Diarama",
@@ -553,7 +553,7 @@ var SKILLS = [
         "power": skill_effect_1.SkillPower.Heavy,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 8,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Die for Me!",
@@ -580,7 +580,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Sleep,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Draconic Reaction", 
@@ -646,7 +646,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Dream Needle",
@@ -657,7 +657,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Dream Raga",
@@ -733,7 +733,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 23,
         "remark": "Absorbs HP/MP",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Enlightenment", 
@@ -770,7 +770,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Evil Shine",
@@ -792,7 +792,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "Tarunda",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Fatal Sword",
@@ -802,7 +802,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Fear Darkness",
@@ -813,7 +813,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Fire Breath",
@@ -846,7 +846,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Rakunda + Sukunda",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Fire of Sinai",
@@ -897,7 +897,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "Poison/Bind/Charm",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Glacial Blast",
@@ -918,7 +918,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Gram Slice",
@@ -928,7 +928,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Grand Tack",
@@ -938,7 +938,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Great Logos",
@@ -982,7 +982,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Hades Blast",
@@ -1003,7 +1003,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
         "remark": "Smirk: 30% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Hamaon",
@@ -1014,7 +1014,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 13,
         "remark": "Smirk: 55% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Hard Worker", 
@@ -1040,7 +1040,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
         "remark": "Daze",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Heal Pleroma", 
@@ -1083,7 +1083,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X2To4,
         "rank": 29,
         "remark": "Smirk: Rakunda",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Hellish Brand",
@@ -1094,7 +1094,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Dekaja",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Hellish Mask", 
@@ -1176,7 +1176,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Ice Breath",
@@ -1233,7 +1233,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Javelin Rain",
@@ -1299,7 +1299,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
         "remark": "Absorbs HP",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Life Gain", 
@@ -1357,7 +1357,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Smirk: 100% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Lullaby",
@@ -1376,7 +1376,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
         "remark": "High crit/low hit",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Luster Candy",
@@ -1435,7 +1435,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Magaon", 
@@ -1483,7 +1483,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Mute,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 15,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Makajamaon",
@@ -1599,7 +1599,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Charm,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Mazan",
@@ -1667,7 +1667,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.CuresAllAilments,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 15,
-        "target": skill_effect_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Media",
@@ -1676,7 +1676,7 @@ var SKILLS = [
         "power": skill_effect_1.SkillPower.Weak,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 12,
-        "target": skill_effect_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Mediarahan",
@@ -1685,7 +1685,7 @@ var SKILLS = [
         "power": skill_effect_1.SkillPower.Severe,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 27,
-        "target": skill_effect_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Mediarama",
@@ -1694,7 +1694,7 @@ var SKILLS = [
         "power": skill_effect_1.SkillPower.Heavy,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 23,
-        "target": skill_effect_1.SkillTarget.AllEnemies
+        "target": skill_effect_1.SkillTarget.AllAllies
     },
     {
         "name": "Megaton Press",
@@ -1715,7 +1715,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Almighty,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Megido",
@@ -1767,7 +1767,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 21,
         "remark": "High crit/low hit",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Mudo",
@@ -1778,7 +1778,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
         "remark": "Smirk: 30% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Mudoon",
@@ -1789,7 +1789,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 13,
         "remark": "Smirk: 55% kill",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Myriad Arrows",
@@ -1809,7 +1809,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Needlestorm",
@@ -1830,7 +1830,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 19,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Null Dark", 
@@ -1901,7 +1901,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "High crit/low hit",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Pandemic Bomb",
@@ -1925,7 +1925,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.CuresAllAilments,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Pestilence",
@@ -1956,7 +1956,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Poison,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Poison Breath",
@@ -1975,7 +1975,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Posumudi",
@@ -1983,7 +1983,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.CurePoisonSick,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Power Punch",
@@ -1994,7 +1994,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
         "remark": "Smirk: Daze",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Pulinpa",
@@ -2002,7 +2002,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Panic,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Purple Smoke",
@@ -2024,7 +2024,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Fire weakness",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Raging Hellfire",
@@ -2035,7 +2035,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Ice weakness",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Raging Lightning",
@@ -2046,7 +2046,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Force weakness",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Raging Tempest",
@@ -2057,7 +2057,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Elec weakness",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Ragnarok",
@@ -2101,7 +2101,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.ReviveWithHalfHP,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 12,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Recarmdra",
@@ -2119,7 +2119,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1To3,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Repel Dark", 
@@ -2232,7 +2232,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 30,
         "remark": "Smirk: Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Ruinous Brand",
@@ -2242,7 +2242,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Sabbatma", 
@@ -2265,7 +2265,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.ReviveWithFullHP,
         "element": skill_effect_1.SkillElement.Recovery,
         "rank": 23,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleAlly
     },
     {
         "name": "Scratch Dance",
@@ -2319,7 +2319,7 @@ var SKILLS = [
         "effect": skill_effect_1.SkillEffect.Bind,
         "element": skill_effect_1.SkillElement.Ailment,
         "rank": 2,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Shivering Taboo", 
@@ -2386,7 +2386,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
         "remark": "Absorbs HP/MP, Smirk: Increased power",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Spirit Drain",
@@ -2397,7 +2397,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 13,
         "remark": "Absorbs MP",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Spring of Life", 
@@ -2414,7 +2414,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Stun Needles",
@@ -2467,7 +2467,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Taunt", 
@@ -2486,7 +2486,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Phys,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Tetrabreak", 
@@ -2521,7 +2521,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Thunder Reign",
@@ -2553,7 +2553,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Gun,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 3,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Trafuri", 
@@ -2571,7 +2571,7 @@ var SKILLS = [
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 29,
         "remark": "Smirk: Pierce",
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "True Zandyne",
@@ -2581,7 +2581,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Force,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "True Ziodyne",
@@ -2591,7 +2591,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Elec,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Vengeful Thunder",
@@ -2602,7 +2602,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Elec,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 0,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     // {
     //     "name": "Venomous Raga", 
@@ -2691,7 +2691,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Force,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Zandyne",
@@ -2701,7 +2701,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Force,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Zanma",
@@ -2711,7 +2711,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Force,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Zio",
@@ -2721,7 +2721,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Elec,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 1,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Ziodyne",
@@ -2731,7 +2731,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Elec,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 19,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     },
     {
         "name": "Zionga",
@@ -2741,7 +2741,7 @@ var SKILLS = [
         "element": skill_effect_1.SkillElement.Elec,
         "hits": skill_effect_1.SkillHits.X1,
         "rank": 7,
-        "target": skill_effect_1.SkillTarget.Single
+        "target": skill_effect_1.SkillTarget.SingleEnemy
     }
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));

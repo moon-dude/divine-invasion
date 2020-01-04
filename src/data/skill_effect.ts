@@ -63,7 +63,8 @@ export enum SkillPower {
 }
 
 export enum SkillTarget {
-  Single,
+  SingleAlly,
+  SingleEnemy,
   All,
   AllEnemies,
   AllAllies,
@@ -140,8 +141,8 @@ export function resolve_skill_effect(fighter: BattleFighter, skill: Skill,
       break;
     case SkillEffect.Heal:
       const power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
-      console.log(target.name + ": " +
-      target.data.heal_for(power));
+      BattleLog.add(target.name + ": ");
+      target.data.heal_for(power);
       break;
     case SkillEffect.BuffDefense:
       handy_buff_handler((b) => b.defense, target, true, skill.power);

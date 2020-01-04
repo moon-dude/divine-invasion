@@ -38,15 +38,15 @@ var BattleData = /** @class */ (function () {
     };
     BattleData.prototype.heal_for = function (amount) {
         if (amount < 0) {
-            return "could not be healed";
+            battle_log_1.BattleLog.add("could not be healed");
         }
         if (this.mod_stats.hp == 0) {
-            return "is already fully healed";
+            battle_log_1.BattleLog.add("is already fully healed");
         }
         amount = Math.floor(amount);
-        var diff = Math.min(this.mod_stats.hp + amount, 0);
-        this.mod_stats.hp = diff;
-        return "healed for " + diff;
+        amount = Math.min(amount, -this.mod_stats.hp);
+        this.mod_stats.hp += amount;
+        battle_log_1.BattleLog.add("healed for " + amount, false);
     };
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);

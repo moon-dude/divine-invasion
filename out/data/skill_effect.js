@@ -62,12 +62,13 @@ var SkillPower;
 })(SkillPower = exports.SkillPower || (exports.SkillPower = {}));
 var SkillTarget;
 (function (SkillTarget) {
-    SkillTarget[SkillTarget["Single"] = 0] = "Single";
-    SkillTarget[SkillTarget["All"] = 1] = "All";
-    SkillTarget[SkillTarget["AllEnemies"] = 2] = "AllEnemies";
-    SkillTarget[SkillTarget["AllAllies"] = 3] = "AllAllies";
-    SkillTarget[SkillTarget["Multi"] = 4] = "Multi";
-    SkillTarget[SkillTarget["Self"] = 5] = "Self";
+    SkillTarget[SkillTarget["SingleAlly"] = 0] = "SingleAlly";
+    SkillTarget[SkillTarget["SingleEnemy"] = 1] = "SingleEnemy";
+    SkillTarget[SkillTarget["All"] = 2] = "All";
+    SkillTarget[SkillTarget["AllEnemies"] = 3] = "AllEnemies";
+    SkillTarget[SkillTarget["AllAllies"] = 4] = "AllAllies";
+    SkillTarget[SkillTarget["Multi"] = 5] = "Multi";
+    SkillTarget[SkillTarget["Self"] = 6] = "Self";
 })(SkillTarget = exports.SkillTarget || (exports.SkillTarget = {}));
 var SkillHits;
 (function (SkillHits) {
@@ -135,8 +136,8 @@ function resolve_skill_effect(fighter, skill, target) {
             break;
         case SkillEffect.Heal:
             var power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
-            console.log(target.name + ": " +
-                target.data.heal_for(power));
+            battle_log_1.BattleLog.add(target.name + ": ");
+            target.data.heal_for(power);
             break;
         case SkillEffect.BuffDefense:
             handy_buff_handler(function (b) { return b.defense; }, target, true, skill.power);
