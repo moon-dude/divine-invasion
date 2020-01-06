@@ -53,6 +53,7 @@ export class Game {
             this.player.body.remove(this.battle_actors[i].mesh);
           }
           this.battle_actors = [];
+          this.battle_div.style.visibility = "hidden";
         } else {
           this.battle_div.innerHTML = "YOU DIED";
         }

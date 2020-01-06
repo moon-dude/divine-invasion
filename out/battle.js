@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_log_1 = require("./battle_log");
+var battle_info_1 = require("./battle_info");
+var emotion_1 = require("./emotion");
+var SmartHTMLElement_1 = require("./SmartHTMLElement");
 var EMPTY_ENTRY = "<td></td><td></td><td></td>";
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -11,7 +13,11 @@ var Battle = /** @class */ (function () {
         var _a, _b;
         this.battle_idx = -1;
         this.battle_tbody = document.getElementById("battle_tbody");
-        this.info_div = document.getElementById("battle_info");
+        this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
+        this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
+        this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
+        this.battle_action_span = document.getElementById("battle_action_span");
+        this.battle_action_span.style.display = "none";
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
@@ -23,7 +29,7 @@ var Battle = /** @class */ (function () {
         }
     }
     Battle.prototype.render = function () {
-        this.battle_tbody.innerHTML = "";
+        var new_battle_tbody = "";
         var theirs = this.fighters.get(battle_data_1.BattleSide.Their);
         var ours = this.fighters.get(battle_data_1.BattleSide.Our);
         for (var i = 0; i < ours.length || i < theirs.length; i++) {
@@ -41,11 +47,18 @@ var Battle = /** @class */ (function () {
             else {
                 row_html += EMPTY_ENTRY;
             }
-            this.battle_tbody.innerHTML += row_html;
+            new_battle_tbody += row_html;
+        }
+        if (new_battle_tbody != this.battle_tbody.innerHTML) {
+            this.battle_tbody.innerHTML = new_battle_tbody;
         }
     };
     Battle.prototype.entry_html = function (fighter) {
-        return "<td>" + fighter.name + "</td><td>" +
+        var mood = "";
+        if (fighter.data.mood != null) {
+            mood = emotion_1.mood_string(fighter.data.mood);
+        }
+        return "<td>" + fighter.name + " " + mood + "</td><td>" +
             fighter.data.modded_base_stats().hp + "/" + fighter.data.base_stats.hp + "</td><td>" +
             fighter.data.modded_base_stats().mp + "/" + fighter.data.base_stats.mp;
     };
@@ -72,14 +85,15 @@ var Battle = /** @class */ (function () {
     Battle.prototype.next_turn = function () {
         this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
         this.take_turn();
+        this.render_turn();
     };
     Battle.prototype.take_turn = function () {
         // get who's turn it is.
         var turn_index = this.turn_order[this.battle_idx];
         var fighter = this.fighters.get(turn_index.side)[turn_index.index];
+        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
-            battle_log_1.BattleLog.add(fighter.name + " is dead and can't attack!");
-            this.info_div.innerHTML = battle_log_1.BattleLog.flush();
+            battle_info_1.BattleInfo.description = " is dead and can't attack! ";
             return;
         }
         // Choose whether to attack or use skill.
@@ -89,9 +103,8 @@ var Battle = /** @class */ (function () {
             // Choose a random target.
             var target = this.get_attack_target(fighter);
             if (target == null) {
-                battle_log_1.BattleLog.add(fighter.name + " has no one to attack!");
+                battle_info_1.BattleInfo.description = "has no one to attack! ";
                 fighter.data.before_end_of_turn();
-                this.info_div.innerHTML = battle_log_1.BattleLog.flush();
                 return;
             }
             else {
@@ -113,7 +126,7 @@ var Battle = /** @class */ (function () {
                 }
             }
             if (weakest_ally == null) {
-                battle_log_1.BattleLog.add(fighter.name + " could not find a valid target!");
+                battle_info_1.BattleInfo.description = "could not find a valid target!";
             }
             else {
                 targets.push(weakest_ally);
@@ -130,7 +143,12 @@ var Battle = /** @class */ (function () {
         // attack target.
         this.take_battle_action(fighter, chosen_skill, targets);
         fighter.data.before_end_of_turn();
-        this.info_div.innerHTML = battle_log_1.BattleLog.flush();
+    };
+    Battle.prototype.render_turn = function () {
+        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name);
+        this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
+        this.more_info.set_inner_html(battle_info_1.BattleInfo.result);
+        battle_info_1.BattleInfo.clear();
     };
     Battle.prototype.choose_skill = function (attacker) {
         var choice_idx = Math.floor(Math.random() * (attacker.data.skills.length + 1));
@@ -150,18 +168,18 @@ var Battle = /** @class */ (function () {
             .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
+        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (skill == null) {
-            battle_log_1.BattleLog.add(fighter.name + ": attacked ");
+            battle_info_1.BattleInfo.description = "attacked. ";
             var damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
-            battle_log_1.BattleLog.add("", true);
             for (var t = 0; t < targets.length; t++) {
-                battle_log_1.BattleLog.add(targets[t].name + ": ", false);
+                battle_info_1.BattleInfo.result += targets[t].name + " ";
                 targets[t].data.take_damage(damage);
             }
         }
         else {
             fighter.data.mod_stats.mp -= skill.cost;
-            battle_log_1.BattleLog.add(fighter.name + ": used `" + skill.name + "` ");
+            battle_info_1.BattleInfo.description = "used `" + skill.name + "`. ";
             for (var t = 0; t < targets.length; t++) {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }

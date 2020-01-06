@@ -1,5 +1,5 @@
 import { BattleFighter } from "../battle_data";
-import { BattleLog } from "../battle_log";
+import { BattleInfo } from "../battle_info";
 import { Skill } from "./skill";
 import { Buffs, Buffable } from "./buffs";
 
@@ -133,15 +133,13 @@ export function resolve_skill_effect(fighter: BattleFighter, skill: Skill,
         fighter.data.buffs.defense.get(),
         1.0) // TODO: Pipe in hit/miss chance for skills here.
       if (success) {
-        BattleLog.add(target.name + ": "); 
         target.data.take_damage(damage);
       } else {
-        BattleLog.add(target.name + ": dodged");
+        BattleInfo.result += target.name + " dodged! ";
       }
       break;
     case SkillEffect.Heal:
       const power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
-      BattleLog.add(target.name + ": ");
       target.data.heal_for(power);
       break;
     case SkillEffect.BuffDefense:
@@ -191,17 +189,16 @@ function handy_buff_handler(buffer: (b: Buffs) => Buffable, target: BattleFighte
                             positive: boolean, skill_power?: SkillPower) {
   const power = buff_power(skill_power) * (positive ? 1 : -1);
   buffer(target.data.buffs).raise(power);
-  BattleLog.add(target.name + ": " + buffer(target.data.buffs) + 
-    (positive ? " raised" : " lowered"));
+  BattleInfo.result += buffer(target.data.buffs) + (positive ? " raised" : " lowered");
 }
 
 function handy_ailment_handler(target: BattleFighter, effect: SkillEffect, positive: boolean) {
   // positive in the medical way.
   if (positive) {
-    BattleLog.add(target.name + ": is now " + effect);
+    BattleInfo.result += target.name + " is now " + effect;
     target.data.ailments.add(effect);
   } else if (target.data.ailments.has(effect)) {
-    BattleLog.add(target.name + ": is no longer " + effect);
+    BattleInfo.result += target.name + " is no longer " + effect;
     target.data.ailments.delete(effect);
   }
 }

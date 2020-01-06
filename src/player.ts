@@ -27,7 +27,7 @@ export class Player {
     stats.lu = 35;
     stats.ma = 0;
     stats.st = 20;
-    this.battle_data = new BattleData(BattleSide.Our, stats, Stats.new_mod(), []);
+    this.battle_data = new BattleData(BattleSide.Our, stats, Stats.new_mod(), [], null);
     this.supports = [Actor.from_demon("Pixie", BattleSide.Our)];
   }
 

@@ -14,6 +14,7 @@ var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
 var demons_1 = require("./data/raw/demons");
 var skills_1 = require("./data/raw/skills");
+var emotion_1 = require("./emotion");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
@@ -44,7 +45,11 @@ var Actor = /** @class */ (function () {
                 }
             }
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(side, demon.stats, stats_1.Stats.new_mod(), skills));
+        var mood = null;
+        if (side == battle_data_1.BattleSide.Their) {
+            mood = emotion_1.Mood.Aggressive;
+        }
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
         return actor;
     };

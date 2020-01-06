@@ -9,6 +9,7 @@ import { DEMON_MAP } from './data/raw/demons';
 import { SKILL_MAP } from './data/raw/skills';
 import { Demon } from './data/demon';
 import { Skill } from './data/skill';
+import { Mood } from './emotion';
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
@@ -51,12 +52,17 @@ export class Actor {
         }
       }
     }
+    let mood: Mood | null = null;
+    if (side == BattleSide.Their) {
+      mood = Mood.Aggressive;
+    }
     let actor = new Actor(name, [], DEMON_MAT, 
       new BattleData(
         side, 
         demon.stats, 
         Stats.new_mod(), 
-        skills)
+        skills,
+        mood)
     );
     actor.coor = coor;
     return actor;

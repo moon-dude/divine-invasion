@@ -2,7 +2,9 @@ import { random_array_element } from "./jlib";
 import { BattleSide, BattleFighter, BattleIndex, other_side } from "./battle_data";
 import { Skill, } from "./data/skill";
 import { SkillTarget, resolve_skill_effect } from "./data/skill_effect";
-import { BattleLog } from "./battle_log";
+import { BattleInfo } from "./battle_info";
+import { mood_string as get_mood_string } from "./emotion";
+import { SmartHTMLElement } from "./SmartHTMLElement";
 
 const EMPTY_ENTRY: string = "<td></td><td></td><td></td>";
 
@@ -12,11 +14,18 @@ export class Battle {
   private turn_order: BattleIndex[];
   private battle_idx = -1;
   private battle_tbody: HTMLElement;
-  private info_div: HTMLElement;
+  private info_title: SmartHTMLElement;
+  private info_description: SmartHTMLElement;
+  private more_info: SmartHTMLElement;
+  private battle_action_span: HTMLElement;
 
   constructor(fighters: BattleFighter[]) {
     this.battle_tbody = document.getElementById("battle_tbody")!;
-    this.info_div = document.getElementById("battle_info")!;
+    this.info_title = new SmartHTMLElement("info_title");
+    this.info_description = new SmartHTMLElement("info_description");
+    this.more_info = new SmartHTMLElement("more_info_div");
+    this.battle_action_span = document.getElementById("battle_action_span")!;
+    this.battle_action_span.style.display = "none";
     this.fighters = new Map();
     this.fighters.set(BattleSide.Our, []);
     this.fighters.set(BattleSide.Their, []);
@@ -29,7 +38,7 @@ export class Battle {
   }
 
   public render() {
-    this.battle_tbody.innerHTML = "";
+    let new_battle_tbody = "";
     const theirs = this.fighters.get(BattleSide.Their)!;
     const ours = this.fighters.get(BattleSide.Our)!;
     for (let i = 0; i < ours.length || i < theirs.length; i++) {
@@ -45,12 +54,19 @@ export class Battle {
       } else {
         row_html += EMPTY_ENTRY;
       }
-      this.battle_tbody.innerHTML += row_html;
+      new_battle_tbody += row_html;
+    }
+    if (new_battle_tbody != this.battle_tbody.innerHTML) {
+      this.battle_tbody.innerHTML = new_battle_tbody;
     }
   }
 
   private entry_html(fighter: BattleFighter): string {
-    return "<td>" + fighter.name + "</td><td>" + 
+    let mood = "";
+    if (fighter.data.mood != null) {
+      mood =  get_mood_string(fighter.data.mood);
+    }
+    return "<td>" + fighter.name + " " + mood + "</td><td>" + 
       fighter.data.modded_base_stats().hp + "/" + fighter.data.base_stats.hp+ "</td><td>" + 
       fighter.data.modded_base_stats().mp + "/" + fighter.data.base_stats.mp;
   }
@@ -79,15 +95,16 @@ export class Battle {
   public next_turn() {
     this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
     this.take_turn();
+    this.render_turn();
   }
 
   public take_turn() {
     // get who's turn it is.
     let turn_index = this.turn_order[this.battle_idx]!;
     let fighter = this.fighters.get(turn_index.side)![turn_index.index]!;
+    BattleInfo.actor_name = fighter.name;
     if (fighter.data.modded_base_stats().hp <= 0) {
-      BattleLog.add(fighter.name + " is dead and can't attack!");
-      this.info_div.innerHTML = BattleLog.flush();
+      BattleInfo.description = " is dead and can't attack! ";
       return;
     }
     // Choose whether to attack or use skill.
@@ -97,9 +114,8 @@ export class Battle {
       // Choose a random target.
       let target = this.get_attack_target(fighter);
       if (target == null) {
-        BattleLog.add(fighter.name + " has no one to attack!");
+        BattleInfo.description = "has no one to attack! ";
         fighter.data.before_end_of_turn();
-        this.info_div.innerHTML = BattleLog.flush();
         return;
       } else {
         targets.push(target);
@@ -119,7 +135,7 @@ export class Battle {
         }
       }
       if (weakest_ally == null) {
-        BattleLog.add(fighter.name + " could not find a valid target!");
+        BattleInfo.description = "could not find a valid target!";
       } else {
         targets.push(weakest_ally);
       }
@@ -134,7 +150,13 @@ export class Battle {
     // attack target.
     this.take_battle_action(fighter, chosen_skill, targets);
     fighter.data.before_end_of_turn();
-    this.info_div.innerHTML = BattleLog.flush();
+  }
+
+  private render_turn() {
+    this.info_title.set_inner_html(BattleInfo.actor_name);
+    this.info_description.set_inner_html(BattleInfo.description);
+    this.more_info.set_inner_html(BattleInfo.result);
+    BattleInfo.clear();
   }
 
   private choose_skill(attacker: BattleFighter): Skill | null {
@@ -159,17 +181,17 @@ export class Battle {
   }
 
   private take_battle_action(fighter: BattleFighter, skill: Skill | null, targets: BattleFighter[]) {
+    BattleInfo.actor_name = fighter.name;
     if (skill == null) {
-      BattleLog.add(fighter.name + ": attacked ");
+      BattleInfo.description = "attacked. ";
       let damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
-      BattleLog.add("", true);  
       for (let t = 0; t < targets.length; t++) {
-        BattleLog.add(targets[t].name + ": ", false);  
+        BattleInfo.result += targets[t].name + " ";  
         targets[t].data.take_damage(damage);
       }
     } else {
       fighter.data.mod_stats.mp -= skill.cost;
-      BattleLog.add(fighter.name + ": used `" + skill.name + "` ");
+      BattleInfo.description = "used `" + skill.name + "`. ";
       for (let t = 0; t < targets.length; t++) {
         resolve_skill_effect(fighter, skill, targets[t]);
       }
