@@ -26,7 +26,7 @@ export class Game {
   constructor() {
     this.scene.add(this.player.body);
     this.world = new World(this.scene, level2_data);
-    this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
+    this.renderer.setSize(window.innerWidth - 50, window.innerHeight - 250);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
   }

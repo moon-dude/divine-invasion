@@ -29,7 +29,7 @@ var Game = /** @class */ (function () {
         this.renderer = new THREE.WebGLRenderer();
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
-        this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
+        this.renderer.setSize(window.innerWidth - 50, window.innerHeight - 250);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
     }

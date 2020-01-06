@@ -68921,7 +68921,7 @@ var Game = /** @class */ (function () {
         this.renderer = new THREE.WebGLRenderer();
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
-        this.renderer.setSize(window.innerWidth, window.innerHeight - 150);
+        this.renderer.setSize(window.innerWidth - 50, window.innerHeight - 250);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
     }
@@ -69338,14 +69338,14 @@ var Player = /** @class */ (function () {
         return true;
     };
     Player.prototype.party_gain_exp = function (from_actors) {
-        var total_exp = 0;
-        for (var i = 0; i < from_actors.length; i++) {
-            total_exp += from_actors[i].battle_data.get_level();
-        }
-        var level_delta = this.battle_data.exp.add(total_exp);
-        for (var i = 0; i < this.supports.length; i++) {
-            var level_delta_1 = this.supports[i].battle_data.exp.add(total_exp);
-        }
+        // let total_exp = 0;
+        // for (let i = 0; i < from_actors.length; i++) {
+        //   total_exp += from_actors[i].battle_data.get_level();
+        // }
+        // const level_delta = this.battle_data.exp.add(total_exp);
+        // for (let i = 0; i < this.supports.length; i++) {
+        //   const level_delta = this.supports[i].battle_data.exp.add(total_exp);
+        // }
     };
     return Player;
 }());

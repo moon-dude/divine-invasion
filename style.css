@@ -1,11 +1,12 @@
 body {
   background-color: black;
   color: white;
+  text-align: center;
 }
 
 #dialogue_div {
   width: 100%;
-  padding: .2em;
+  padding: 1em;
   text-align: center;
   font-size: 1.05em;
 }
@@ -21,7 +22,7 @@ body {
 }
 
 #battle_div {
-  padding: .2em;
+  padding: 1em;
 }
 
 #battle_div th {
