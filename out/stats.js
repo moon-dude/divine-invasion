@@ -14,6 +14,15 @@ var Stats = /** @class */ (function () {
     ;
     Stats.new_mod = function () { return new Stats(0, 0); };
     ;
+    Stats.new_exp = function () {
+        var exp_stats = new Stats(0, 0);
+        exp_stats.ag = 0;
+        exp_stats.dx = 0;
+        exp_stats.lu = 0;
+        exp_stats.ma = 0;
+        exp_stats.st = 0;
+        return exp_stats;
+    };
     return Stats;
 }());
 exports.Stats = Stats;

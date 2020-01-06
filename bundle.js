@@ -51357,7 +51357,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./battle_data":6,"./constants":8,"./data/raw/demons":13,"./data/raw/skills":14,"./jlib":19,"./stats":23,"three":3}],5:[function(require,module,exports){
+},{"./battle_data":6,"./constants":8,"./data/raw/demons":13,"./data/raw/skills":14,"./jlib":20,"./stats":24,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
@@ -51531,13 +51531,14 @@ var Battle = /** @class */ (function () {
 }());
 exports.Battle = Battle;
 
-},{"./battle_data":6,"./battle_log":7,"./data/skill_effect":15,"./jlib":19}],6:[function(require,module,exports){
+},{"./battle_data":6,"./battle_log":7,"./data/skill_effect":15,"./jlib":20}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
 var skill_effect_1 = require("./data/skill_effect");
 var battle_log_1 = require("./battle_log");
+var exp_1 = require("./exp");
 var BattleSide;
 (function (BattleSide) {
     BattleSide[BattleSide["Our"] = 0] = "Our";
@@ -51551,6 +51552,7 @@ var BattleData = /** @class */ (function () {
     function BattleData(side, base_stats, mod_stats, skills) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
+        this.exp = new exp_1.Exp();
         this.side = side;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
@@ -51619,7 +51621,7 @@ var BattleFighter = /** @class */ (function () {
 }());
 exports.BattleFighter = BattleFighter;
 
-},{"./battle_log":7,"./data/buffs":9,"./data/skill_effect":15,"./stats":23}],7:[function(require,module,exports){
+},{"./battle_log":7,"./data/buffs":9,"./data/skill_effect":15,"./exp":16,"./stats":24}],7:[function(require,module,exports){
 "use strict";
 // oneof
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -51715,7 +51717,7 @@ var map_1 = require("../../map");
 var jlib_1 = require("../../jlib");
 var level_data_1 = require("./level_data");
 var encounter_type_1 = require("../encounter_type");
-var map_walkable = "/////////,////////" +
+var map_walkable = "//////////////////" +
     "/+/--------/--/--/" +
     "/-/-/-///-///-//-/" +
     "/-----/-/---/----/" +
@@ -51724,7 +51726,7 @@ var map_walkable = "/////////,////////" +
     "/////////--/-///-/" +
     "////////////-///-/" +
     "/////////-//-/-/-/" +
-    "/////////--------/" +
+    "/----------------/" +
     "////////////////`/";
 var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 18));
 exports.level2_data = new level_data_1.LevelData(level2_map, [], [
@@ -51736,9 +51738,9 @@ exports.level2_data = new level_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Strigoii"]),
-], 10);
+], 20);
 
-},{"../../jlib":19,"../../map":21,"../encounter_type":10,"./level_data":12}],12:[function(require,module,exports){
+},{"../../jlib":20,"../../map":22,"../encounter_type":10,"./level_data":12}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -68866,6 +68868,29 @@ function handy_ailment_handler(target, effect, positive) {
 
 },{"../battle_log":7}],16:[function(require,module,exports){
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var stats_1 = require("./stats");
+// 10+2^(x*.3+3)
+var Exp = /** @class */ (function () {
+    function Exp() {
+        this.count = 0;
+        this.levels_gained = 0;
+        this.stat_bonus = stats_1.Stats.new_exp();
+    }
+    /// Returns the delta levels gained.
+    Exp.prototype.add = function (value) {
+        this.count += value;
+        var new_levels_gained = Math.floor(Math.sqrt(this.count) - 1);
+        var delta = new_levels_gained - this.levels_gained;
+        this.levels_gained = new_levels_gained;
+        return delta;
+    };
+    return Exp;
+}());
+exports.Exp = Exp;
+
+},{"./stats":24}],17:[function(require,module,exports){
+"use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -68916,6 +68941,7 @@ var Game = /** @class */ (function () {
                 this.battle = null;
                 if (winner == battle_data_1.BattleSide.Our) {
                     this.player.movement_locked = false;
+                    this.player.party_gain_exp(this.battle_actors);
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.remove(this.battle_actors[i].mesh);
                     }
@@ -68975,12 +69001,12 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actor":4,"./battle":5,"./battle_data":6,"./data/levels/level2":11,"./input":18,"./jlib":19,"./player":22,"./world":24,"three":3}],17:[function(require,module,exports){
+},{"./actor":4,"./battle":5,"./battle_data":6,"./data/levels/level2":11,"./input":19,"./jlib":20,"./player":23,"./world":25,"three":3}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69021,7 +69047,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -69160,7 +69186,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69176,7 +69202,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":16}],21:[function(require,module,exports){
+},{"./game":17}],22:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69219,7 +69245,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":8,"./jlib":19,"three":3}],22:[function(require,module,exports){
+},{"./constants":8,"./jlib":20,"three":3}],23:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69311,11 +69337,21 @@ var Player = /** @class */ (function () {
         }
         return true;
     };
+    Player.prototype.party_gain_exp = function (from_actors) {
+        var total_exp = 0;
+        for (var i = 0; i < from_actors.length; i++) {
+            total_exp += from_actors[i].battle_data.get_level();
+        }
+        var level_delta = this.battle_data.exp.add(total_exp);
+        for (var i = 0; i < this.supports.length; i++) {
+            var level_delta_1 = this.supports[i].battle_data.exp.add(total_exp);
+        }
+    };
     return Player;
 }());
 exports.Player = Player;
 
-},{"./actor":4,"./battle_data":6,"./constants":8,"./jlib":19,"./stats":23,"three":3}],23:[function(require,module,exports){
+},{"./actor":4,"./battle_data":6,"./constants":8,"./jlib":20,"./stats":24,"three":3}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -69332,6 +69368,15 @@ var Stats = /** @class */ (function () {
     ;
     Stats.new_mod = function () { return new Stats(0, 0); };
     ;
+    Stats.new_exp = function () {
+        var exp_stats = new Stats(0, 0);
+        exp_stats.ag = 0;
+        exp_stats.dx = 0;
+        exp_stats.lu = 0;
+        exp_stats.ma = 0;
+        exp_stats.st = 0;
+        return exp_stats;
+    };
     return Stats;
 }());
 exports.Stats = Stats;
@@ -69348,7 +69393,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69445,4 +69490,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./constants":8,"./globals":17,"./jlib":19,"three":3}]},{},[20,1,2]);
+},{"./constants":8,"./globals":18,"./jlib":20,"three":3}]},{},[21,1,2]);

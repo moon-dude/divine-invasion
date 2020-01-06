@@ -3,6 +3,7 @@ import { Skill } from "./data/skill";
 import { Buffs } from "./data/buffs";
 import { SkillEffect } from "./data/skill_effect";
 import { BattleLog } from "./battle_log";
+import { Exp } from "./exp";
 
 export enum BattleSide {
   Our,
@@ -24,6 +25,7 @@ export class BattleData {
   public mod_stats: Stats;
   public buffs: Buffs = new Buffs();
   public ailments: Set<SkillEffect> = new Set();
+  public exp: Exp = new Exp();
 
   constructor(side: BattleSide, base_stats: Stats, mod_stats: Stats, skills: Skill[]) {
     this.side = side;

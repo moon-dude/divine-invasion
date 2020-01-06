@@ -46,8 +46,9 @@ export class Game {
       const winner = this.battle.battle_winner();
       if (winner != null) {
         this.battle = null;
-          if (winner == BattleSide.Our) {
+        if (winner == BattleSide.Our) {
           this.player.movement_locked = false;
+          this.player.party_gain_exp(this.battle_actors);
           for (let i = 0; i < this.battle_actors.length; i++) {
             this.player.body.remove(this.battle_actors[i].mesh);
           }

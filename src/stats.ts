@@ -14,6 +14,15 @@ export class Stats {
 
   public static new_base(): Stats { return new Stats(1, 1); };
   public static new_mod(): Stats { return new Stats(0, 0); };
+  public static new_exp(): Stats { 
+    let exp_stats = new Stats(0, 0);
+    exp_stats.ag = 0;
+    exp_stats.dx = 0;
+    exp_stats.lu = 0;
+    exp_stats.ma = 0;
+    exp_stats.st = 0;
+    return exp_stats;
+  }
 }
 
 export function apply_stats_mod(base: Stats, mod: Stats): Stats {

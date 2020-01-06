@@ -88,4 +88,15 @@ export class Player {
     }
     return true;
   }
+
+  party_gain_exp(from_actors: Actor[]) {
+    // let total_exp = 0;
+    // for (let i = 0; i < from_actors.length; i++) {
+    //   total_exp += from_actors[i].battle_data.get_level();
+    // }
+    // const level_delta = this.battle_data.exp.add(total_exp);
+    // for (let i = 0; i < this.supports.length; i++) {
+    //   const level_delta = this.supports[i].battle_data.exp.add(total_exp);
+    // }
+  }
 }

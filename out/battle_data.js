@@ -4,6 +4,7 @@ var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
 var skill_effect_1 = require("./data/skill_effect");
 var battle_log_1 = require("./battle_log");
+var exp_1 = require("./exp");
 var BattleSide;
 (function (BattleSide) {
     BattleSide[BattleSide["Our"] = 0] = "Our";
@@ -17,6 +18,7 @@ var BattleData = /** @class */ (function () {
     function BattleData(side, base_stats, mod_stats, skills) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
+        this.exp = new exp_1.Exp();
         this.side = side;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
