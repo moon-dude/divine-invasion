@@ -10,4 +10,10 @@ export class SmartHTMLElement {
       this.value.innerHTML = s;
     }
   }
+
+  set_display(s: string): void {
+    if (this.value.style.display != s) {
+      this.value.style.display = s;
+    }
+  }
 }

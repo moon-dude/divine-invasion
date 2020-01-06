@@ -12,16 +12,21 @@ var Battle = /** @class */ (function () {
     function Battle(fighters) {
         var _a, _b;
         this.battle_idx = -1;
+        this.battle_action_btns = [];
         this.battle_tbody = document.getElementById("battle_tbody");
         this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
         this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
         this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
         this.battle_action_span = document.getElementById("battle_action_span");
-        this.battle_action_span.style.display = "none";
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
         this.turn_order = [];
+        for (var i = 0; i < 10; i++) {
+            var new_button = document.createElement("button");
+            this.battle_action_span.appendChild(new_button);
+            this.battle_action_btns.push(new_button);
+        }
         for (var i = 0; i < fighters.length; i++) {
             var side = fighters[i].data.side;
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
@@ -96,6 +101,35 @@ var Battle = /** @class */ (function () {
             battle_info_1.BattleInfo.description = " is dead and can't attack! ";
             return;
         }
+        if (fighter.data.side == battle_data_1.BattleSide.Our) {
+            this.me_take_turn(fighter);
+        }
+        else {
+            this.ai_take_turn(fighter);
+        }
+    };
+    Battle.prototype.me_take_turn = function (fighter) {
+        this.battle_action_span.style.display = "";
+        var button_index = 0;
+        this.battle_action_btns[button_index++].innerHTML = "Attack";
+        for (var i = 0; i < fighter.data.skills.length; i++) {
+            this.set_button(button_index++, fighter.data.skills[i].name);
+        }
+        while (button_index < this.battle_action_btns.length) {
+            this.set_button(button_index++, null);
+        }
+    };
+    Battle.prototype.set_button = function (idx, value) {
+        if (value == null) {
+            this.battle_action_btns[idx].style.display = "none";
+        }
+        else {
+            this.battle_action_btns[idx].style.display = "";
+            this.battle_action_btns[idx].innerHTML = value;
+        }
+    };
+    Battle.prototype.ai_take_turn = function (fighter) {
+        this.battle_action_span.style.display = "none";
         // Choose whether to attack or use skill.
         var chosen_skill = this.choose_skill(fighter);
         var targets = [];
@@ -145,7 +179,7 @@ var Battle = /** @class */ (function () {
         fighter.data.before_end_of_turn();
     };
     Battle.prototype.render_turn = function () {
-        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name);
+        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name) + ": ";
         this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
         this.more_info.set_inner_html(battle_info_1.BattleInfo.result);
         battle_info_1.BattleInfo.clear();
