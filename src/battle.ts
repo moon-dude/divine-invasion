@@ -8,6 +8,8 @@ import { BattleTable } from "./battle_table";
 
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 export class Battle {
+  public static Instance: Battle;
+
   private fighters: Map<BattleSide, BattleFighter[]>;
   private turn_order: BattleIndex[];
   private battle_idx = -1;
@@ -20,6 +22,7 @@ export class Battle {
   private current_action: Skill | "Attack" | null = null;
 
   constructor(fighters: BattleFighter[]) {
+    Battle.Instance = this;
     this.info_title = new SmartHTMLElement("info_title");
     this.info_description = new SmartHTMLElement("info_description");
     this.more_info = new SmartHTMLElement("more_info_div");
@@ -30,6 +33,14 @@ export class Battle {
     this.turn_order = [];
     for (let i = 0; i < 10; i++) {
       const new_button = document.createElement("button");
+      if (i == 0) {
+        new_button.innerHTML = "Start Battle"
+        new_button.onclick = () => {
+          Battle.Instance.next_turn();
+        }
+      } else {
+        new_button.style.display = "none";
+      }
       this.battle_action_span.appendChild(new_button);
       this.battle_action_btns.push(new_button);
     }
@@ -49,6 +60,7 @@ export class Battle {
       } else {
         this.take_battle_action(this.current_fighter(), this.current_action, [last_battle_table_click]);
       }
+      this.current_action = null;
       this.render_turn();
     }
     this.battle_table.update();
@@ -113,6 +125,12 @@ export class Battle {
     }
   }
 
+  private clear_buttons() {
+    for (let i = 0; i < this.battle_action_btns.length; i++) {
+      this.clear_button(i);
+    }
+  }
+
   private clear_button(idx: number) {
     this.battle_action_btns[idx].style.display = "none";
   }
@@ -132,6 +150,15 @@ export class Battle {
         // TODO: show targets based on skill.
         this.battle_table.set_all_btns_enabled(true);
       };
+    }
+  }
+
+  private set_button_continue() {
+    this.clear_buttons();
+    this.battle_action_btns[0].innerHTML = "Next";
+    this.battle_action_btns[0].style.display = "";
+    this.battle_action_btns[0].onclick = () => {
+      Battle.Instance.next_turn();
     }
   }
 
@@ -215,6 +242,7 @@ export class Battle {
     if (skill == null) {
       BattleInfo.description = "attacked. ";
       let damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
+      BattleInfo.result = "";
       for (let t = 0; t < targets.length; t++) {
         BattleInfo.result += targets[t].name + " ";  
         targets[t].data.take_damage(damage);
@@ -222,9 +250,12 @@ export class Battle {
     } else {
       fighter.data.mod_stats.mp -= skill.cost;
       BattleInfo.description = "used `" + skill.name + "`. ";
+      BattleInfo.result = "";
       for (let t = 0; t < targets.length; t++) {
+        BattleInfo.result += targets[t].name + " ";  
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }
+    this.set_button_continue();
   }
 }

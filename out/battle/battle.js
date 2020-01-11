@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var jlib_1 = require("./jlib");
+var jlib_1 = require("../jlib");
 var battle_data_1 = require("./battle_data");
-var skill_effect_1 = require("./data/skill_effect");
+var skill_effect_1 = require("../data/skill_effect");
 var battle_info_1 = require("./battle_info");
-var SmartHTMLElement_1 = require("./SmartHTMLElement");
+var SmartHTMLElement_1 = require("../SmartHTMLElement");
 var battle_table_1 = require("./battle_table");
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -13,7 +13,6 @@ var Battle = /** @class */ (function () {
         this.battle_idx = -1;
         this.battle_action_btns = [];
         this.current_action = null;
-        Battle.Instance = this;
         this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
         this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
         this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
@@ -24,15 +23,6 @@ var Battle = /** @class */ (function () {
         this.turn_order = [];
         for (var i = 0; i < 10; i++) {
             var new_button = document.createElement("button");
-            if (i == 0) {
-                new_button.innerHTML = "Start Battle";
-                new_button.onclick = function () {
-                    Battle.Instance.next_turn();
-                };
-            }
-            else {
-                new_button.style.display = "none";
-            }
             this.battle_action_span.appendChild(new_button);
             this.battle_action_btns.push(new_button);
         }
@@ -52,7 +42,6 @@ var Battle = /** @class */ (function () {
             else {
                 this.take_battle_action(this.current_fighter(), this.current_action, [last_battle_table_click]);
             }
-            this.current_action = null;
             this.render_turn();
         }
         this.battle_table.update();
@@ -112,11 +101,6 @@ var Battle = /** @class */ (function () {
             this.clear_button(button_index++);
         }
     };
-    Battle.prototype.clear_buttons = function () {
-        for (var i = 0; i < this.battle_action_btns.length; i++) {
-            this.clear_button(i);
-        }
-    };
     Battle.prototype.clear_button = function (idx) {
         this.battle_action_btns[idx].style.display = "none";
     };
@@ -138,14 +122,6 @@ var Battle = /** @class */ (function () {
                 _this.battle_table.set_all_btns_enabled(true);
             };
         }
-    };
-    Battle.prototype.set_button_continue = function () {
-        this.clear_buttons();
-        this.battle_action_btns[0].innerHTML = "Next";
-        this.battle_action_btns[0].style.display = "";
-        this.battle_action_btns[0].onclick = function () {
-            Battle.Instance.next_turn();
-        };
     };
     Battle.prototype.ai_take_turn = function (fighter) {
         this.battle_action_span.style.display = "none";
@@ -225,7 +201,6 @@ var Battle = /** @class */ (function () {
         if (skill == null) {
             battle_info_1.BattleInfo.description = "attacked. ";
             var damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
-            battle_info_1.BattleInfo.result = "";
             for (var t = 0; t < targets.length; t++) {
                 battle_info_1.BattleInfo.result += targets[t].name + " ";
                 targets[t].data.take_damage(damage);
@@ -234,13 +209,10 @@ var Battle = /** @class */ (function () {
         else {
             fighter.data.mod_stats.mp -= skill.cost;
             battle_info_1.BattleInfo.description = "used `" + skill.name + "`. ";
-            battle_info_1.BattleInfo.result = "";
             for (var t = 0; t < targets.length; t++) {
-                battle_info_1.BattleInfo.result += targets[t].name + " ";
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.set_button_continue();
     };
     return Battle;
 }());
