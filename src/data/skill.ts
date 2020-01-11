@@ -1,7 +1,9 @@
 import { SkillEffect, SkillElement, SkillPower, SkillHits, SkillTarget } from "./skill_effect";
 
+export type SkillId = string;
+
 export class Skill {
-  name: string;
+  name: SkillId;
   cost: number;
   effect?: SkillEffect;
   secondary_effect?: SkillEffect;

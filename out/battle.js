@@ -4,16 +4,15 @@ var jlib_1 = require("./jlib");
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
 var battle_info_1 = require("./battle_info");
-var emotion_1 = require("./emotion");
 var SmartHTMLElement_1 = require("./SmartHTMLElement");
-var EMPTY_ENTRY = "<td></td><td></td><td></td>";
+var battle_table_1 = require("./battle_table");
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
     function Battle(fighters) {
         var _a, _b;
         this.battle_idx = -1;
         this.battle_action_btns = [];
-        this.battle_tbody = document.getElementById("battle_tbody");
+        this.current_action = null;
         this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
         this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
         this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
@@ -32,40 +31,20 @@ var Battle = /** @class */ (function () {
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
+        this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
     }
-    Battle.prototype.render = function () {
-        var new_battle_tbody = "";
-        var theirs = this.fighters.get(battle_data_1.BattleSide.Their);
-        var ours = this.fighters.get(battle_data_1.BattleSide.Our);
-        for (var i = 0; i < ours.length || i < theirs.length; i++) {
-            var row_html = "<tr>";
-            if (i < ours.length) {
-                row_html += this.entry_html(ours[i]);
+    Battle.prototype.update = function () {
+        var last_battle_table_click = this.battle_table.get_last_click();
+        if (last_battle_table_click != null && this.current_action != null) {
+            if (this.current_action == "Attack") {
+                this.take_battle_action(this.current_fighter(), null, [last_battle_table_click]);
             }
             else {
-                row_html += EMPTY_ENTRY;
+                this.take_battle_action(this.current_fighter(), this.current_action, [last_battle_table_click]);
             }
-            row_html += "<td></td>";
-            if (i < theirs.length) {
-                row_html += this.entry_html(theirs[i]);
-            }
-            else {
-                row_html += EMPTY_ENTRY;
-            }
-            new_battle_tbody += row_html;
+            this.render_turn();
         }
-        if (new_battle_tbody != this.battle_tbody.innerHTML) {
-            this.battle_tbody.innerHTML = new_battle_tbody;
-        }
-    };
-    Battle.prototype.entry_html = function (fighter) {
-        var mood = "";
-        if (fighter.data.mood != null) {
-            mood = emotion_1.mood_string(fighter.data.mood);
-        }
-        return "<td>" + fighter.name + " " + mood + "</td><td>" +
-            fighter.data.modded_base_stats().hp + "/" + fighter.data.base_stats.hp + "</td><td>" +
-            fighter.data.modded_base_stats().mp + "/" + fighter.data.base_stats.mp;
+        this.battle_table.update();
     };
     // returns null if battle is not over.
     Battle.prototype.battle_winner = function () {
@@ -92,10 +71,13 @@ var Battle = /** @class */ (function () {
         this.take_turn();
         this.render_turn();
     };
-    Battle.prototype.take_turn = function () {
-        // get who's turn it is.
+    Battle.prototype.current_fighter = function () {
         var turn_index = this.turn_order[this.battle_idx];
-        var fighter = this.fighters.get(turn_index.side)[turn_index.index];
+        return this.fighters.get(turn_index.side)[turn_index.index];
+    };
+    Battle.prototype.take_turn = function () {
+        var fighter = this.current_fighter();
+        // get who's turn it is.
         battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
             battle_info_1.BattleInfo.description = " is dead and can't attack! ";
@@ -111,21 +93,34 @@ var Battle = /** @class */ (function () {
     Battle.prototype.me_take_turn = function (fighter) {
         this.battle_action_span.style.display = "";
         var button_index = 0;
-        this.battle_action_btns[button_index++].innerHTML = "Attack";
+        this.set_button_skill(button_index++, "Attack");
         for (var i = 0; i < fighter.data.skills.length; i++) {
-            this.set_button(button_index++, fighter.data.skills[i].name);
+            this.set_button_skill(button_index++, fighter.data.skills[i]);
         }
         while (button_index < this.battle_action_btns.length) {
-            this.set_button(button_index++, null);
+            this.clear_button(button_index++);
         }
     };
-    Battle.prototype.set_button = function (idx, value) {
-        if (value == null) {
-            this.battle_action_btns[idx].style.display = "none";
+    Battle.prototype.clear_button = function (idx) {
+        this.battle_action_btns[idx].style.display = "none";
+    };
+    Battle.prototype.set_button_skill = function (idx, value) {
+        var _this = this;
+        this.battle_action_btns[idx].style.display = "";
+        this.current_action = value;
+        if (value == "Attack") {
+            this.battle_action_btns[idx].innerHTML = value;
+            this.battle_action_btns[idx].onclick = function () {
+                // show enemy targets
+                _this.battle_table.set_their_btns_enabled(true);
+            };
         }
         else {
-            this.battle_action_btns[idx].style.display = "";
-            this.battle_action_btns[idx].innerHTML = value;
+            this.battle_action_btns[idx].innerHTML = value.name;
+            this.battle_action_btns[idx].onclick = function () {
+                // TODO: show targets based on skill.
+                _this.battle_table.set_all_btns_enabled(true);
+            };
         }
     };
     Battle.prototype.ai_take_turn = function (fighter) {

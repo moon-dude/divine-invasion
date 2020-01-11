@@ -1,5 +1,8 @@
 import { Stats } from "../stats";
 import { SkillElement } from "./skill_effect";
+import { SkillId } from "./skill";
+
+export type Race = string;
 
 export class Demon {
   name: string = ""
@@ -8,9 +11,9 @@ export class Demon {
   evolves?: string;
   attack?: string = "";
   level?: number = 0;
-  race: string = ""; 
+  race: Race = ""; 
   resists: [SkillElement, string][] = [];
-  skills: [string, number][] = []
+  skills: [SkillId, number][] = []
   stats: Stats = Stats.new_base();
 }
 

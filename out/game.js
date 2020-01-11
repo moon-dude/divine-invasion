@@ -35,15 +35,13 @@ var Game = /** @class */ (function () {
     }
     Game.prototype.render = function () {
         this.renderer.render(this.scene, this.player.camera);
-        if (this.battle != null) {
-            this.battle.render();
-        }
     };
     Game.prototype.update = function () {
         this.player.update();
         this.world.update(this.player);
         this.render();
         if (this.battle != null) {
+            this.battle.update();
             var winner = this.battle.battle_winner();
             if (winner != null) {
                 this.battle = null;

@@ -51383,23 +51383,22 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./battle_data":7,"./constants":9,"./data/raw/demons":14,"./data/raw/skills":15,"./emotion":17,"./jlib":22,"./stats":26,"three":3}],6:[function(require,module,exports){
+},{"./battle_data":7,"./constants":10,"./data/raw/demons":15,"./data/raw/skills":16,"./emotion":18,"./jlib":23,"./stats":27,"three":3}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("./jlib");
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
 var battle_info_1 = require("./battle_info");
-var emotion_1 = require("./emotion");
 var SmartHTMLElement_1 = require("./SmartHTMLElement");
-var EMPTY_ENTRY = "<td></td><td></td><td></td>";
+var battle_table_1 = require("./battle_table");
 // This class should be instantiated and destroyed without any move happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
     function Battle(fighters) {
         var _a, _b;
         this.battle_idx = -1;
         this.battle_action_btns = [];
-        this.battle_tbody = document.getElementById("battle_tbody");
+        this.current_action = null;
         this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
         this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
         this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
@@ -51418,40 +51417,20 @@ var Battle = /** @class */ (function () {
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
+        this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
     }
-    Battle.prototype.render = function () {
-        var new_battle_tbody = "";
-        var theirs = this.fighters.get(battle_data_1.BattleSide.Their);
-        var ours = this.fighters.get(battle_data_1.BattleSide.Our);
-        for (var i = 0; i < ours.length || i < theirs.length; i++) {
-            var row_html = "<tr>";
-            if (i < ours.length) {
-                row_html += this.entry_html(ours[i]);
+    Battle.prototype.update = function () {
+        var last_battle_table_click = this.battle_table.get_last_click();
+        if (last_battle_table_click != null && this.current_action != null) {
+            if (this.current_action == "Attack") {
+                this.take_battle_action(this.current_fighter(), null, [last_battle_table_click]);
             }
             else {
-                row_html += EMPTY_ENTRY;
+                this.take_battle_action(this.current_fighter(), this.current_action, [last_battle_table_click]);
             }
-            row_html += "<td></td>";
-            if (i < theirs.length) {
-                row_html += this.entry_html(theirs[i]);
-            }
-            else {
-                row_html += EMPTY_ENTRY;
-            }
-            new_battle_tbody += row_html;
+            this.render_turn();
         }
-        if (new_battle_tbody != this.battle_tbody.innerHTML) {
-            this.battle_tbody.innerHTML = new_battle_tbody;
-        }
-    };
-    Battle.prototype.entry_html = function (fighter) {
-        var mood = "";
-        if (fighter.data.mood != null) {
-            mood = emotion_1.mood_string(fighter.data.mood);
-        }
-        return "<td>" + fighter.name + " " + mood + "</td><td>" +
-            fighter.data.modded_base_stats().hp + "/" + fighter.data.base_stats.hp + "</td><td>" +
-            fighter.data.modded_base_stats().mp + "/" + fighter.data.base_stats.mp;
+        this.battle_table.update();
     };
     // returns null if battle is not over.
     Battle.prototype.battle_winner = function () {
@@ -51478,10 +51457,13 @@ var Battle = /** @class */ (function () {
         this.take_turn();
         this.render_turn();
     };
-    Battle.prototype.take_turn = function () {
-        // get who's turn it is.
+    Battle.prototype.current_fighter = function () {
         var turn_index = this.turn_order[this.battle_idx];
-        var fighter = this.fighters.get(turn_index.side)[turn_index.index];
+        return this.fighters.get(turn_index.side)[turn_index.index];
+    };
+    Battle.prototype.take_turn = function () {
+        var fighter = this.current_fighter();
+        // get who's turn it is.
         battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
             battle_info_1.BattleInfo.description = " is dead and can't attack! ";
@@ -51497,21 +51479,34 @@ var Battle = /** @class */ (function () {
     Battle.prototype.me_take_turn = function (fighter) {
         this.battle_action_span.style.display = "";
         var button_index = 0;
-        this.battle_action_btns[button_index++].innerHTML = "Attack";
+        this.set_button_skill(button_index++, "Attack");
         for (var i = 0; i < fighter.data.skills.length; i++) {
-            this.set_button(button_index++, fighter.data.skills[i].name);
+            this.set_button_skill(button_index++, fighter.data.skills[i]);
         }
         while (button_index < this.battle_action_btns.length) {
-            this.set_button(button_index++, null);
+            this.clear_button(button_index++);
         }
     };
-    Battle.prototype.set_button = function (idx, value) {
-        if (value == null) {
-            this.battle_action_btns[idx].style.display = "none";
+    Battle.prototype.clear_button = function (idx) {
+        this.battle_action_btns[idx].style.display = "none";
+    };
+    Battle.prototype.set_button_skill = function (idx, value) {
+        var _this = this;
+        this.battle_action_btns[idx].style.display = "";
+        this.current_action = value;
+        if (value == "Attack") {
+            this.battle_action_btns[idx].innerHTML = value;
+            this.battle_action_btns[idx].onclick = function () {
+                // show enemy targets
+                _this.battle_table.set_their_btns_enabled(true);
+            };
         }
         else {
-            this.battle_action_btns[idx].style.display = "";
-            this.battle_action_btns[idx].innerHTML = value;
+            this.battle_action_btns[idx].innerHTML = value.name;
+            this.battle_action_btns[idx].onclick = function () {
+                // TODO: show targets based on skill.
+                _this.battle_table.set_all_btns_enabled(true);
+            };
         }
     };
     Battle.prototype.ai_take_turn = function (fighter) {
@@ -51609,7 +51604,7 @@ var Battle = /** @class */ (function () {
 }());
 exports.Battle = Battle;
 
-},{"./SmartHTMLElement":4,"./battle_data":7,"./battle_info":8,"./data/skill_effect":16,"./emotion":17,"./jlib":22}],7:[function(require,module,exports){
+},{"./SmartHTMLElement":4,"./battle_data":7,"./battle_info":8,"./battle_table":9,"./data/skill_effect":17,"./jlib":23}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -51701,7 +51696,7 @@ var BattleFighter = /** @class */ (function () {
 }());
 exports.BattleFighter = BattleFighter;
 
-},{"./battle_info":8,"./data/buffs":10,"./data/skill_effect":16,"./emotion":17,"./exp":18,"./stats":26}],8:[function(require,module,exports){
+},{"./battle_info":8,"./data/buffs":11,"./data/skill_effect":17,"./emotion":18,"./exp":19,"./stats":27}],8:[function(require,module,exports){
 "use strict";
 // oneof
 Object.defineProperty(exports, "__esModule", { value: true });
@@ -51726,9 +51721,128 @@ exports.BattleInfo = BattleInfo;
 },{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var emotion_1 = require("./emotion");
+/// An HTML entity manager for the battle table.
+function append_empty_entry(parent) {
+    parent.appendChild(document.createElement("td"));
+    parent.appendChild(document.createElement("td"));
+    parent.appendChild(document.createElement("td"));
+}
+var BattleEntry = /** @class */ (function () {
+    function BattleEntry(parent_row, fighter, on_click) {
+        this.fighter = fighter;
+        this.name_btn = document.createElement("button");
+        this.name_btn.innerHTML = fighter.name;
+        this.name_btn.disabled = true;
+        this.name_btn.onclick = on_click;
+        this.name_cell = document.createElement("td");
+        this.mood_span = document.createElement("span");
+        if (fighter.data.mood != null) {
+            this.mood_span.innerHTML = emotion_1.mood_string(fighter.data.mood);
+        }
+        this.name_cell.appendChild(this.name_btn);
+        this.name_cell.appendChild(this.mood_span);
+        parent_row.appendChild(this.name_cell);
+        this.health = document.createElement("td");
+        parent_row.appendChild(this.health);
+        this.mana = document.createElement("td");
+        parent_row.appendChild(this.mana);
+        this.update();
+    }
+    BattleEntry.prototype.set_name_btn_enabled = function (value) {
+        this.name_btn.disabled = !value;
+    };
+    BattleEntry.prototype.update = function () {
+        if (this.fighter.data.mood == null) {
+            this.mood_span.innerHTML = "";
+        }
+        else {
+            this.mood_span.innerHTML = emotion_1.mood_string(this.fighter.data.mood);
+        }
+        this.health.innerHTML =
+            this.fighter.data.modded_base_stats().hp + " / " + this.fighter.data.base_stats.hp;
+        this.health.innerHTML =
+            this.fighter.data.modded_base_stats().mp + " / " + this.fighter.data.base_stats.mp;
+    };
+    return BattleEntry;
+}());
+var BattleTable = /** @class */ (function () {
+    function BattleTable(our_fighters, their_fighters) {
+        var _this = this;
+        this.last_click_result = null;
+        this.table_body = document.getElementById("battle_tbody");
+        this.table_body.innerHTML = "";
+        this.our_fighters = [];
+        this.their_fighters = [];
+        var _loop_1 = function (i) {
+            var row = document.createElement("tr");
+            this_1.table_body.appendChild(row);
+            if (i < our_fighters.length) {
+                var our_1 = our_fighters[i];
+                this_1.our_fighters.push(new BattleEntry(row, our_1, function () {
+                    _this.last_click_result = our_1;
+                }));
+            }
+            else {
+                append_empty_entry(row);
+            }
+            row.appendChild(document.createElement("td"));
+            if (i < their_fighters.length) {
+                var their_1 = their_fighters[i];
+                this_1.their_fighters.push(new BattleEntry(row, their_1, function () {
+                    _this.last_click_result = their_1;
+                }));
+            }
+            else {
+                append_empty_entry(row);
+            }
+        };
+        var this_1 = this;
+        for (var i = 0; i < our_fighters.length || i < their_fighters.length; i++) {
+            _loop_1(i);
+        }
+    }
+    BattleTable.prototype.update = function () {
+        for (var i = 0; i < this.our_fighters.length; i++) {
+            this.our_fighters[i].update();
+        }
+        for (var i = 0; i < this.their_fighters.length; i++) {
+            this.their_fighters[i].update();
+        }
+    };
+    BattleTable.prototype.set_our_btns_enabled = function (value) {
+        for (var i = 0; i < this.our_fighters.length; i++) {
+            this.our_fighters[i].set_name_btn_enabled(value);
+        }
+    };
+    BattleTable.prototype.set_their_btns_enabled = function (value) {
+        for (var i = 0; i < this.their_fighters.length; i++) {
+            this.their_fighters[i].set_name_btn_enabled(value);
+        }
+    };
+    BattleTable.prototype.set_all_btns_enabled = function (value) {
+        for (var i = 0; i < this.our_fighters.length; i++) {
+            this.our_fighters[i].set_name_btn_enabled(value);
+        }
+        for (var i = 0; i < this.their_fighters.length; i++) {
+            this.their_fighters[i].set_name_btn_enabled(value);
+        }
+    };
+    BattleTable.prototype.get_last_click = function () {
+        var result = this.last_click_result;
+        this.last_click_result = null;
+        return result;
+    };
+    return BattleTable;
+}());
+exports.BattleTable = BattleTable;
+
+},{"./emotion":18}],10:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -51767,7 +51881,7 @@ var Buffs = /** @class */ (function () {
 }());
 exports.Buffs = Buffs;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
@@ -51778,7 +51892,7 @@ var EncounterType = /** @class */ (function () {
 }());
 exports.EncounterType = EncounterType;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var map_1 = require("../../map");
@@ -51808,7 +51922,7 @@ exports.level2_data = new level_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 20);
 
-},{"../../jlib":22,"../../map":24,"../encounter_type":11,"./level_data":13}],13:[function(require,module,exports){
+},{"../../jlib":23,"../../map":25,"../encounter_type":12,"./level_data":14}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -51822,7 +51936,7 @@ var LevelData = /** @class */ (function () {
 }());
 exports.LevelData = LevelData;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -65983,7 +66097,7 @@ var DEMONS = [{
     }];
 exports.DEMON_MAP = new Map(DEMONS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":16}],15:[function(require,module,exports){
+},{"../skill_effect":17}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -68732,7 +68846,7 @@ var SKILLS = [
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":16}],16:[function(require,module,exports){
+},{"../skill_effect":17}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_info_1 = require("../battle_info");
@@ -68931,7 +69045,7 @@ function handy_ailment_handler(target, effect, positive) {
     }
 }
 
-},{"../battle_info":8}],17:[function(require,module,exports){
+},{"../battle_info":8}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mood;
@@ -68966,7 +69080,7 @@ exports.mood_string = mood_string;
 // - threaten
 // - peace offer
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -68989,7 +69103,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":26}],19:[function(require,module,exports){
+},{"./stats":27}],20:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69027,15 +69141,13 @@ var Game = /** @class */ (function () {
     }
     Game.prototype.render = function () {
         this.renderer.render(this.scene, this.player.camera);
-        if (this.battle != null) {
-            this.battle.render();
-        }
     };
     Game.prototype.update = function () {
         this.player.update();
         this.world.update(this.player);
         this.render();
         if (this.battle != null) {
+            this.battle.update();
             var winner = this.battle.battle_winner();
             if (winner != null) {
                 this.battle = null;
@@ -69102,12 +69214,12 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actor":5,"./battle":6,"./battle_data":7,"./data/levels/level2":12,"./input":21,"./jlib":22,"./player":25,"./world":27,"three":3}],20:[function(require,module,exports){
+},{"./actor":5,"./battle":6,"./battle_data":7,"./data/levels/level2":13,"./input":22,"./jlib":23,"./player":26,"./world":28,"three":3}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69148,7 +69260,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -69287,7 +69399,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],23:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69303,7 +69415,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":19}],24:[function(require,module,exports){
+},{"./game":20}],25:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69346,7 +69458,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":9,"./jlib":22,"three":3}],25:[function(require,module,exports){
+},{"./constants":10,"./jlib":23,"three":3}],26:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69452,7 +69564,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":5,"./battle_data":7,"./constants":9,"./jlib":22,"./stats":26,"three":3}],26:[function(require,module,exports){
+},{"./actor":5,"./battle_data":7,"./constants":10,"./jlib":23,"./stats":27,"three":3}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -69494,7 +69606,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69591,4 +69703,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./constants":9,"./globals":20,"./jlib":22,"three":3}]},{},[23,1,2]);
+},{"./constants":10,"./globals":21,"./jlib":23,"three":3}]},{},[24,1,2]);

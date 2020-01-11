@@ -33,9 +33,6 @@ export class Game {
   
   private render() {
     this.renderer.render(this.scene, this.player.camera);
-    if (this.battle != null) {
-      this.battle.render();
-    }
   }
 
   public update(): void {
@@ -43,6 +40,7 @@ export class Game {
     this.world.update(this.player);
     this.render();
     if (this.battle != null) {
+      this.battle.update();
       const winner = this.battle.battle_winner();
       if (winner != null) {
         this.battle = null;
