@@ -1,13 +1,13 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 import { Input } from "./input";
-import { Player } from './player';
-import { World } from './world';
-import { level1_data } from './data/levels/level1';
-import { level2_data } from './data/levels/level2';
-import { random_array_element } from './jlib';
-import { Actor } from './actor';
-import { Battle } from './battle';
-import { BattleFighter, BattleSide } from './battle_data';
+import { Player } from "./player";
+import { World } from "./world";
+import { level1_data } from "./data/levels/level1";
+import { level2_data } from "./data/levels/level2";
+import { random_array_element } from "./jlib";
+import { Actor } from "./actor";
+import { Battle } from "./battle";
+import { BattleFighter, BattleSide } from "./battle_data";
 
 export class Game {
   private world: World;
@@ -19,7 +19,7 @@ export class Game {
   private battle_actors: Actor[] = [];
 
   // Rendering.
-  private scene: THREE.Scene = new THREE.Scene;
+  private scene: THREE.Scene = new THREE.Scene();
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
   private battle_div: HTMLElement;
 
@@ -30,7 +30,7 @@ export class Game {
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
   }
-  
+
   private render() {
     this.renderer.render(this.scene, this.player.camera);
   }
@@ -60,7 +60,12 @@ export class Game {
   }
 
   public key_down(event: any) {
-    const result = this.input.check(event, this.player, this.world.map, this.world.actors);
+    const result = this.input.check(
+      event,
+      this.player,
+      this.world.map,
+      this.world.actors
+    );
     if (result.moved) {
       this.world.dialogue_idx = 0;
       // check for encounter.
@@ -79,19 +84,28 @@ export class Game {
           // spawn encounter enemies and start a battle.
           // create enemy actors.
           const enemies = encounter_type.enemies;
-          this.battle_actors = enemies.map(id => Actor.from_demon(id, BattleSide.Their, coor));
+          this.battle_actors = enemies.map(id =>
+            Actor.from_demon(id, BattleSide.Their, coor)
+          );
           let battle_fighters: BattleFighter[] = this.battle_actors.map(
-            actor => new BattleFighter(actor.name, actor.battle_data));
+            actor => new BattleFighter(actor.name, actor.battle_data)
+          );
           for (let i = 0; i < this.battle_actors.length; i++) {
             this.player.body.add(this.battle_actors[i].mesh);
-            this.battle_actors[i].mesh.position.z = -2 + i * .0001;
-            this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
+            this.battle_actors[i].mesh.position.z = -2 + i * 0.0001;
+            this.battle_actors[i].mesh.position.x =
+              1 * (i - this.battle_actors.length / 2);
           }
-          battle_fighters.push(new BattleFighter("Player", this.player.battle_data));
+          battle_fighters.push(
+            new BattleFighter("Player", this.player.battle_data)
+          );
           for (let i = 0; i < this.player.supports.length; i++) {
-            battle_fighters.push(new BattleFighter(
-              this.player.supports[i].name, 
-              this.player.supports[i].battle_data));
+            battle_fighters.push(
+              new BattleFighter(
+                this.player.supports[i].name,
+                this.player.supports[i].battle_data
+              )
+            );
           }
           this.battle = new Battle(battle_fighters);
           this.player.movement_locked = true;

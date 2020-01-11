@@ -8,16 +8,21 @@ import { Mood } from "./emotion";
 
 export enum BattleSide {
   Our,
-  Their,
+  Their
 }
 
 export function other_side(side: BattleSide): BattleSide {
-  return (side == BattleSide.Our ? BattleSide.Their : BattleSide.Our);
+  return side == BattleSide.Our ? BattleSide.Their : BattleSide.Our;
 }
 
 export class BattleData {
-  public static IDENTITY: BattleData = 
-    new BattleData(BattleSide.Their, Stats.new_base(), Stats.new_mod(), [], Mood.Aggressive);
+  public static IDENTITY: BattleData = new BattleData(
+    BattleSide.Their,
+    Stats.new_base(),
+    Stats.new_mod(),
+    [],
+    Mood.Aggressive
+  );
 
   public readonly side: BattleSide;
   public readonly base_stats: Stats;
@@ -29,8 +34,13 @@ export class BattleData {
   public exp: Exp = new Exp();
   public mood: Mood | null;
 
-  constructor(side: BattleSide, base_stats: Stats, mod_stats: Stats, 
-              skills: Skill[], mood: Mood | null) {
+  constructor(
+    side: BattleSide,
+    base_stats: Stats,
+    mod_stats: Stats,
+    skills: Skill[],
+    mood: Mood | null
+  ) {
     this.side = side;
     this.base_stats = base_stats;
     this.mod_stats = mod_stats;
@@ -69,22 +79,25 @@ export class BattleData {
     return apply_stats_mod(this.base_stats, this.mod_stats);
   }
 
-  public will_take_hit(attacker_dx: number, attacker_hit_evade: number, 
-                       skill_percent: number = 1): boolean {
-    skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
-    skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
+  public will_take_hit(
+    attacker_dx: number,
+    attacker_hit_evade: number,
+    skill_percent: number = 1
+  ): boolean {
+    skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * 0.1;
+    skill_percent *=
+      1 + this.buffs.hit_evade.get_raised_by(-attacker_hit_evade) * 0.2;
     return Math.random() < skill_percent;
   }
 
   public before_end_of_turn() {
     if (this.ailments.has(SkillEffect.Poison)) {
-      const damage = this.base_stats.hp * 0.075
+      const damage = this.base_stats.hp * 0.075;
       this.take_damage(damage);
       BattleInfo.result += "took " + damage + "damage from poison. ";
     }
   }
 }
-
 
 export class BattleIndex {
   side: BattleSide;

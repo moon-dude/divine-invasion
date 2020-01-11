@@ -1,9 +1,12 @@
-import * as THREE from 'three';
-import { Grid } from './jlib';
-import { TILE_SIZE } from './constants';
+import * as THREE from "three";
+import { Grid } from "./jlib";
+import { TILE_SIZE } from "./constants";
 
-const geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE,  TILE_SIZE);
-const material = new THREE.MeshStandardMaterial({ color: 0x221111, roughness: 0.8 });
+const geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE);
+const material = new THREE.MeshStandardMaterial({
+  color: 0x221111,
+  roughness: 0.8
+});
 
 function buildMeshes(walkable: Grid<string>): THREE.Mesh[] {
   var meshes: THREE.Mesh[] = [];
@@ -35,5 +38,4 @@ export class TileMap {
     this.visited = new Grid<boolean>(visited, this.walkable.width);
     this.meshes = buildMeshes(this.walkable);
   }
-
 }

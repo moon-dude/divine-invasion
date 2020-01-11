@@ -17,10 +17,18 @@ var skills_1 = require("./data/raw/skills");
 var emotion_1 = require("./emotion");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
-var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
-exports.CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true, roughness: .3 });
-var demon_texture = new THREE.TextureLoader().load('assets/demon.png');
-exports.DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true, roughness: .3 });
+var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
+exports.CULTIST_MAT = new THREE.MeshStandardMaterial({
+    map: cultist_texture,
+    transparent: true,
+    roughness: 0.3
+});
+var demon_texture = new THREE.TextureLoader().load("assets/demon.png");
+exports.DEMON_MAT = new THREE.MeshStandardMaterial({
+    map: demon_texture,
+    transparent: true,
+    roughness: 0.3
+});
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {
     function Actor(name, dialogue, material, battle_data) {
@@ -61,7 +69,8 @@ var Actor = /** @class */ (function () {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
-        if (!jlib_1.num_eq(player.coor.x, this.coor.x) && !jlib_1.num_eq(player.coor.z, this.coor.z)) {
+        if (!jlib_1.num_eq(player.coor.x, this.coor.x) &&
+            !jlib_1.num_eq(player.coor.z, this.coor.z)) {
             return false;
         }
         if (jlib_1.num_lt(player.coor.x, this.coor.x)) {

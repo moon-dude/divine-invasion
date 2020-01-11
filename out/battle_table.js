@@ -39,9 +39,13 @@ var BattleEntry = /** @class */ (function () {
             this.mood_span.innerHTML = emotion_1.mood_string(this.fighter.data.mood);
         }
         this.health.innerHTML =
-            this.fighter.data.modded_base_stats().hp + " / " + this.fighter.data.base_stats.hp;
+            this.fighter.data.modded_base_stats().hp +
+                " / " +
+                this.fighter.data.base_stats.hp;
         this.health.innerHTML =
-            this.fighter.data.modded_base_stats().mp + " / " + this.fighter.data.base_stats.mp;
+            this.fighter.data.modded_base_stats().mp +
+                " / " +
+                this.fighter.data.base_stats.mp;
     };
     return BattleEntry;
 }());

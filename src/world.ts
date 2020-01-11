@@ -1,13 +1,13 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 import { TileMap } from "./map";
 import { Actor } from "./actor";
-import { Player } from './player';
-import { flags } from './globals';
-import { LevelData } from './data/levels/level_data';
-import { Coor, shuffle_array } from './jlib';
-import { EncounterType } from './data/encounter_type';
-import { TILE_SIZE } from './constants';
+import { Player } from "./player";
+import { flags } from "./globals";
+import { LevelData } from "./data/levels/level_data";
+import { Coor, shuffle_array } from "./jlib";
+import { EncounterType } from "./data/encounter_type";
+import { TILE_SIZE } from "./constants";
 
 export class World {
   // data.
@@ -16,7 +16,7 @@ export class World {
   dialogue_idx: number = 0;
   encounter_types: EncounterType[];
   encounters: Coor[];
-  
+
   // Three objects.
   private ambient_light: THREE.AmbientLight;
   private lights: THREE.PointLight[];
@@ -30,16 +30,19 @@ export class World {
     this.map = level_data.map;
     this.actors = level_data.actors;
     this.encounter_types = level_data.encounter_types;
-    this.encounters = this.make_encounters(this.map, level_data.encounter_count);
+    this.encounters = this.make_encounters(
+      this.map,
+      level_data.encounter_count
+    );
 
-    this.ambient_light = new THREE.AmbientLight("#000099", .8);
+    this.ambient_light = new THREE.AmbientLight("#000099", 0.8);
 
     this.speaker_div = document.getElementById("dialogue_speaker")!;
     this.speech_div = document.getElementById("dialogue_speech")!;
     this.info_div = document.getElementById("dialogue_info")!;
 
     scene.add(this.ambient_light);
-    
+
     for (let i = 0; i < this.actors.length; i++) {
       scene.add(this.actors[i].mesh);
     }
@@ -102,12 +105,15 @@ export class World {
       } else {
         player.movement_locked = false;
       }
-      actor.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : actor.is_blocking;
+      actor.is_blocking =
+        dialogue.actor_block != undefined
+          ? dialogue.actor_block
+          : actor.is_blocking;
 
       for (let f = 0; f < dialogue.flags.length; f++) {
         flags.add(dialogue.flags[f]);
       }
-      
+
       this.speaker_div.innerHTML = actor.name;
       this.speech_div.innerHTML = dialogue.speech;
       this.info_div.innerHTML = dialogue.info;

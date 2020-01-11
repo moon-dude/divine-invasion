@@ -119,7 +119,8 @@ function resolve_skill_effect(fighter, skill, target) {
             else if (skill.element == SkillElement.Gun) {
                 damage = Math.floor(fighter.data.modded_base_stats().dx * damage_power(skill.power));
             }
-            else if (skill.element == SkillElement.Light || skill.element == SkillElement.Dark) {
+            else if (skill.element == SkillElement.Light ||
+                skill.element == SkillElement.Dark) {
                 damage = Math.floor(fighter.data.modded_base_stats().lu * damage_power(skill.power));
             }
             else {
@@ -134,7 +135,8 @@ function resolve_skill_effect(fighter, skill, target) {
             }
             break;
         case SkillEffect.Heal:
-            var power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
+            var power = Math.floor(fighter.data.modded_base_stats().ma) *
+                damage_power(skill.power);
             target.data.heal_for(power);
             break;
         case SkillEffect.BuffDefense:
@@ -182,7 +184,8 @@ exports.resolve_skill_effect = resolve_skill_effect;
 function handy_buff_handler(buffer, target, positive, skill_power) {
     var power = buff_power(skill_power) * (positive ? 1 : -1);
     buffer(target.data.buffs).raise(power);
-    battle_info_1.BattleInfo.result += buffer(target.data.buffs) + (positive ? " raised" : " lowered");
+    battle_info_1.BattleInfo.result +=
+        buffer(target.data.buffs) + (positive ? " raised" : " lowered");
 }
 function handy_ailment_handler(target, effect, positive) {
     // positive in the medical way.

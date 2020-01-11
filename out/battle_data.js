@@ -12,7 +12,7 @@ var BattleSide;
     BattleSide[BattleSide["Their"] = 1] = "Their";
 })(BattleSide = exports.BattleSide || (exports.BattleSide = {}));
 function other_side(side) {
-    return (side == BattleSide.Our ? BattleSide.Their : BattleSide.Our);
+    return side == BattleSide.Our ? BattleSide.Their : BattleSide.Our;
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
@@ -57,8 +57,9 @@ var BattleData = /** @class */ (function () {
     };
     BattleData.prototype.will_take_hit = function (attacker_dx, attacker_hit_evade, skill_percent) {
         if (skill_percent === void 0) { skill_percent = 1; }
-        skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
-        skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
+        skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * 0.1;
+        skill_percent *=
+            1 + this.buffs.hit_evade.get_raised_by(-attacker_hit_evade) * 0.2;
         return Math.random() < skill_percent;
     };
     BattleData.prototype.before_end_of_turn = function () {

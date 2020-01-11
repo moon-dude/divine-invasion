@@ -17,7 +17,11 @@ class BattleEntry {
   private health: HTMLTableCellElement;
   private mana: HTMLTableCellElement;
 
-  constructor(parent_row: HTMLTableRowElement, fighter: BattleFighter, on_click: () => void) {
+  constructor(
+    parent_row: HTMLTableRowElement,
+    fighter: BattleFighter,
+    on_click: () => void
+  ) {
     this.fighter = fighter;
     this.name_btn = document.createElement("button");
     this.name_btn.innerHTML = fighter.name;
@@ -26,7 +30,7 @@ class BattleEntry {
     this.name_cell = document.createElement("td");
     this.mood_span = document.createElement("span");
     if (fighter.data.mood != null) {
-      this.mood_span.innerHTML =  get_mood_string(fighter.data.mood);
+      this.mood_span.innerHTML = get_mood_string(fighter.data.mood);
     }
     this.name_cell.appendChild(this.name_btn);
     this.name_cell.appendChild(this.mood_span);
@@ -48,10 +52,14 @@ class BattleEntry {
     } else {
       this.mood_span.innerHTML = get_mood_string(this.fighter.data.mood);
     }
-    this.health.innerHTML = 
-      this.fighter.data.modded_base_stats().hp + " / " + this.fighter.data.base_stats.hp;
-    this.health.innerHTML = 
-      this.fighter.data.modded_base_stats().mp + " / " + this.fighter.data.base_stats.mp;
+    this.health.innerHTML =
+      this.fighter.data.modded_base_stats().hp +
+      " / " +
+      this.fighter.data.base_stats.hp;
+    this.health.innerHTML =
+      this.fighter.data.modded_base_stats().mp +
+      " / " +
+      this.fighter.data.base_stats.mp;
   }
 }
 
@@ -72,18 +80,22 @@ export class BattleTable {
       this.table_body.appendChild(row);
       if (i < our_fighters.length) {
         let our = our_fighters[i];
-        this.our_fighters.push(new BattleEntry(row, our, () => {
-          this.last_click_result = our;
-        }));
+        this.our_fighters.push(
+          new BattleEntry(row, our, () => {
+            this.last_click_result = our;
+          })
+        );
       } else {
         append_empty_entry(row);
       }
       row.appendChild(document.createElement("td"));
       if (i < their_fighters.length) {
         let their = their_fighters[i];
-        this.their_fighters.push(new BattleEntry(row, their, () => {
-          this.last_click_result = their; 
-        }));
+        this.their_fighters.push(
+          new BattleEntry(row, their, () => {
+            this.last_click_result = their;
+          })
+        );
       } else {
         append_empty_entry(row);
       }
@@ -104,7 +116,7 @@ export class BattleTable {
       this.our_fighters[i].set_name_btn_enabled(value);
     }
   }
-  
+
   public set_their_btns_enabled(value: boolean) {
     for (let i = 0; i < this.their_fighters.length; i++) {
       this.their_fighters[i].set_name_btn_enabled(value);

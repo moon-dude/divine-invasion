@@ -1,7 +1,6 @@
 "use strict";
-// oneof
 Object.defineProperty(exports, "__esModule", { value: true });
-var tag = "(battle) ";
+// oneof
 var BattleInfo = /** @class */ (function () {
     function BattleInfo() {
     }

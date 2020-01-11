@@ -1,10 +1,10 @@
 export enum Mood {
-  Aggressive,  // 🤬
-  Devilish,  // 😈
-  Passive,  // 😐
-  Charmed,  // 😍
-  Scared,  // 🥶
-  Dead,  // 💀
+  Aggressive, // 🤬
+  Devilish, // 😈
+  Passive, // 😐
+  Charmed, // 😍
+  Scared, // 🥶
+  Dead // 💀
 }
 
 export function mood_string(mood: Mood) {
@@ -26,6 +26,6 @@ export function mood_string(mood: Mood) {
 
 // Player wants to move from one emotion to another.
 // Player should have base actions and demon has bonus actions or maybe AI triggered ones.
-// Player: 
+// Player:
 // - threaten
 // - peace offer

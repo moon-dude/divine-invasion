@@ -1,24 +1,32 @@
-import { Coor, Dir, num_eq, num_lt, num_gt } from './jlib';
-import { Dialogue } from './dialogue';
-import * as THREE from 'three';
-import { Player } from './player';
-import { TILE_SIZE } from './constants';
-import { Stats } from './stats';
-import { BattleData, BattleSide } from './battle_data';
-import { DEMON_MAP } from './data/raw/demons';
-import { SKILL_MAP } from './data/raw/skills';
-import { Demon } from './data/demon';
-import { Skill } from './data/skill';
-import { Mood } from './emotion';
+import { Coor, Dir, num_eq, num_lt, num_gt } from "./jlib";
+import { Dialogue } from "./dialogue";
+import * as THREE from "three";
+import { Player } from "./player";
+import { TILE_SIZE } from "./constants";
+import { Stats } from "./stats";
+import { BattleData, BattleSide } from "./battle_data";
+import { DEMON_MAP } from "./data/raw/demons";
+import { SKILL_MAP } from "./data/raw/skills";
+import { Demon } from "./data/demon";
+import { Skill } from "./data/skill";
+import { Mood } from "./emotion";
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
 
-const cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
-export const CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true, roughness: .3 });
+const cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
+export const CULTIST_MAT = new THREE.MeshStandardMaterial({
+  map: cultist_texture,
+  transparent: true,
+  roughness: 0.3
+});
 
-const demon_texture = new THREE.TextureLoader().load('assets/demon.png');
-export const DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true, roughness: .3 });
+const demon_texture = new THREE.TextureLoader().load("assets/demon.png");
+export const DEMON_MAT = new THREE.MeshStandardMaterial({
+  map: demon_texture,
+  transparent: true,
+  roughness: 0.3
+});
 
 const geometry = new THREE.PlaneGeometry(2.5, 3.5);
 
@@ -32,9 +40,12 @@ export class Actor {
 
   private placed: boolean = false;
 
-  constructor(name: string, dialogue: Dialogue[], 
-              material: THREE.MeshStandardMaterial = CULTIST_MAT, 
-              battle_data: BattleData = BattleData.IDENTITY) {
+  constructor(
+    name: string,
+    dialogue: Dialogue[],
+    material: THREE.MeshStandardMaterial = CULTIST_MAT,
+    battle_data: BattleData = BattleData.IDENTITY
+  ) {
     this.name = name;
     this.coor = null;
     this.mesh = new THREE.Mesh(geometry, material);
@@ -42,7 +53,11 @@ export class Actor {
     this.battle_data = battle_data;
   }
 
-  public static from_demon(name: string, side: BattleSide, coor: Coor | null = null) {
+  public static from_demon(
+    name: string,
+    side: BattleSide,
+    coor: Coor | null = null
+  ) {
     let demon: Demon = DEMON_MAP.get(name)!;
     let skills: Skill[] = [];
     if (demon.level) {
@@ -56,13 +71,11 @@ export class Actor {
     if (side == BattleSide.Their) {
       mood = Mood.Aggressive;
     }
-    let actor = new Actor(name, [], DEMON_MAT, 
-      new BattleData(
-        side, 
-        demon.stats, 
-        Stats.new_mod(), 
-        skills,
-        mood)
+    let actor = new Actor(
+      name,
+      [],
+      DEMON_MAT,
+      new BattleData(side, demon.stats, Stats.new_mod(), skills, mood)
     );
     actor.coor = coor;
     return actor;
@@ -76,7 +89,10 @@ export class Actor {
       return true;
     }
     // player is on the same line (x or z) and facing towards me.
-    if (!num_eq(player.coor.x, this.coor.x) && !num_eq(player.coor.z, this.coor.z)) {
+    if (
+      !num_eq(player.coor.x, this.coor.x) &&
+      !num_eq(player.coor.z, this.coor.z)
+    ) {
       return false;
     }
     if (num_lt(player.coor.x, this.coor.x)) {
@@ -94,7 +110,7 @@ export class Actor {
     return false;
   }
 
-  public update(/*const */player: Player) {
+  public update(/*const */ player: Player) {
     this.mesh.rotation.y = player.body.rotation.y;
 
     if (this.coor == null) {
@@ -125,9 +141,8 @@ export class Actor {
       }
       this.mesh.position.x = (this.coor.x + offset_x) * TILE_SIZE;
       this.mesh.position.z = (this.coor.z + offset_z) * TILE_SIZE;
-      this.mesh.position.y = -0.7;  
+      this.mesh.position.y = -0.7;
       this.placed = true;
     }
   }
 }
-

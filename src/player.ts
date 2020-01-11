@@ -1,18 +1,22 @@
-import * as THREE from 'three';
-import { Coor, Dir, DirRotation, ApplyDir, DirCW } from './jlib';
-import { TILE_SIZE } from './constants';
-import { TileMap } from './map';
-import { Actor } from './actor';
-import { BattleData, BattleSide, BattleFighter } from './battle_data';
-import { Stats } from './stats';
+import * as THREE from "three";
+import { Coor, Dir, DirRotation, ApplyDir, DirCW } from "./jlib";
+import { TILE_SIZE } from "./constants";
+import { TileMap } from "./map";
+import { Actor } from "./actor";
+import { BattleData, BattleSide, BattleFighter } from "./battle_data";
+import { Stats } from "./stats";
 
 export class Player {
   coor: Coor = new Coor(1, 1);
   dir: Dir = Dir.S;
   body: THREE.Object3D = new THREE.Object3D();
-  camera: THREE.PerspectiveCamera = 
-    new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-  private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, .5);
+  camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
+    90,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    1000
+  );
+  private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, 0.5);
   movement_locked: boolean = false;
   battle_data: BattleData;
   supports: Actor[];
@@ -27,7 +31,13 @@ export class Player {
     stats.lu = 35;
     stats.ma = 0;
     stats.st = 20;
-    this.battle_data = new BattleData(BattleSide.Our, stats, Stats.new_mod(), [], null);
+    this.battle_data = new BattleData(
+      BattleSide.Our,
+      stats,
+      Stats.new_mod(),
+      [],
+      null
+    );
     this.supports = [Actor.from_demon("Pixie", BattleSide.Our)];
   }
 
@@ -75,7 +85,7 @@ export class Player {
     this.coor = move_coor;
     return true;
   }
-  
+
   /// Returns true on a successful turn.
   turn(cw: boolean) {
     if (this.movement_locked) {

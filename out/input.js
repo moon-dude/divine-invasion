@@ -17,19 +17,24 @@ var Input = /** @class */ (function () {
         var moved = false;
         var turned = false;
         var actioned = false;
-        if (keyCode == 87) { // W.
+        if (keyCode == 87) {
+            // W.
             moved = player.move(1, map, npcs);
         }
-        else if (keyCode == 65) { // A.
+        else if (keyCode == 65) {
+            // A.
             turned = player.turn(false);
         }
-        else if (keyCode == 68) { // D.
+        else if (keyCode == 68) {
+            // D.
             turned = player.turn(true);
         }
-        else if (keyCode == 83) { // S.
+        else if (keyCode == 83) {
+            // S.
             moved = player.move(-1, map, npcs);
         }
-        else if (keyCode == 32) { // Space.
+        else if (keyCode == 32) {
+            // Space.
             actioned = true;
         }
         return new InputResult(moved, turned, actioned);

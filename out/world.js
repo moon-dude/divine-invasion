@@ -18,7 +18,7 @@ var World = /** @class */ (function () {
         this.actors = level_data.actors;
         this.encounter_types = level_data.encounter_types;
         this.encounters = this.make_encounters(this.map, level_data.encounter_count);
-        this.ambient_light = new THREE.AmbientLight("#000099", .8);
+        this.ambient_light = new THREE.AmbientLight("#000099", 0.8);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
@@ -81,7 +81,10 @@ var World = /** @class */ (function () {
             else {
                 player.movement_locked = false;
             }
-            actor.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : actor.is_blocking;
+            actor.is_blocking =
+                dialogue.actor_block != undefined
+                    ? dialogue.actor_block
+                    : actor.is_blocking;
             for (var f = 0; f < dialogue.flags.length; f++) {
                 globals_1.flags.add(dialogue.flags[f]);
             }

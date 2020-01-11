@@ -5,24 +5,24 @@ import { SkillId } from "./skill";
 export type Race = string;
 
 export class Demon {
-  name: string = ""
+  name: string = "";
   affinities: [SkillElement, number][] = [];
   ailments?: [string, string][] = [];
   evolves?: string;
   attack?: string = "";
   level?: number = 0;
-  race: Race = ""; 
+  race: Race = "";
   resists: [SkillElement, string][] = [];
-  skills: [SkillId, number][] = []
+  skills: [SkillId, number][] = [];
   stats: Stats = Stats.new_base();
 }
 
 export class RawDemon {
   affinities: [string, number][] = [];
   ailments?: [string, string][];
-  lvl: number = 0; 
-  race: string = ""; 
+  lvl: number = 0;
+  race: string = "";
   resists: [string, string][] = [];
   skills: [string, number][] = [];
-  stats: Stats = Stats.new_base(); 
+  stats: Stats = Stats.new_base();
 }

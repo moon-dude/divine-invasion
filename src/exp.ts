@@ -5,7 +5,7 @@ import { Stats } from "./stats";
 export class Exp {
   count: number = 0;
   levels_gained: number = 0;
-  stat_bonus: Stats = Stats.new_exp(); 
+  stat_bonus: Stats = Stats.new_exp();
 
   /// Returns the delta levels gained.
   add(value: number): number {
@@ -16,4 +16,3 @@ export class Exp {
     return delta;
   }
 }
-

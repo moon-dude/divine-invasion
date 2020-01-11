@@ -1,4 +1,3 @@
-
 export class Buffable {
   private value: number = 1;
 

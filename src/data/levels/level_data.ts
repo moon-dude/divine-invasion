@@ -8,7 +8,12 @@ export class LevelData {
   encounter_types: EncounterType[];
   encounter_count: number;
 
-  constructor(map: TileMap, actors: Actor[], encounter_types: EncounterType[], encounter_count: number) {
+  constructor(
+    map: TileMap,
+    actors: Actor[],
+    encounter_types: EncounterType[],
+    encounter_count: number
+  ) {
     this.map = map;
     this.actors = actors;
     this.encounter_types = encounter_types;

@@ -51285,10 +51285,18 @@ var skills_1 = require("./data/raw/skills");
 var emotion_1 = require("./emotion");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
-var cultist_texture = new THREE.TextureLoader().load('assets/cultist.png');
-exports.CULTIST_MAT = new THREE.MeshStandardMaterial({ map: cultist_texture, transparent: true, roughness: .3 });
-var demon_texture = new THREE.TextureLoader().load('assets/demon.png');
-exports.DEMON_MAT = new THREE.MeshStandardMaterial({ map: demon_texture, transparent: true, roughness: .3 });
+var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
+exports.CULTIST_MAT = new THREE.MeshStandardMaterial({
+    map: cultist_texture,
+    transparent: true,
+    roughness: 0.3
+});
+var demon_texture = new THREE.TextureLoader().load("assets/demon.png");
+exports.DEMON_MAT = new THREE.MeshStandardMaterial({
+    map: demon_texture,
+    transparent: true,
+    roughness: 0.3
+});
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {
     function Actor(name, dialogue, material, battle_data) {
@@ -51329,7 +51337,8 @@ var Actor = /** @class */ (function () {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
-        if (!jlib_1.num_eq(player.coor.x, this.coor.x) && !jlib_1.num_eq(player.coor.z, this.coor.z)) {
+        if (!jlib_1.num_eq(player.coor.x, this.coor.x) &&
+            !jlib_1.num_eq(player.coor.z, this.coor.z)) {
             return false;
         }
         if (jlib_1.num_lt(player.coor.x, this.coor.x)) {
@@ -51666,7 +51675,7 @@ var BattleSide;
     BattleSide[BattleSide["Their"] = 1] = "Their";
 })(BattleSide = exports.BattleSide || (exports.BattleSide = {}));
 function other_side(side) {
-    return (side == BattleSide.Our ? BattleSide.Their : BattleSide.Our);
+    return side == BattleSide.Our ? BattleSide.Their : BattleSide.Our;
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
@@ -51711,8 +51720,9 @@ var BattleData = /** @class */ (function () {
     };
     BattleData.prototype.will_take_hit = function (attacker_dx, attacker_hit_evade, skill_percent) {
         if (skill_percent === void 0) { skill_percent = 1; }
-        skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * .1;
-        skill_percent *= 1 + (this.buffs.hit_evade.get_raised_by(-attacker_hit_evade)) * .2;
+        skill_percent *= 1 + (this.modded_base_stats().dx - attacker_dx) * 0.1;
+        skill_percent *=
+            1 + this.buffs.hit_evade.get_raised_by(-attacker_hit_evade) * 0.2;
         return Math.random() < skill_percent;
     };
     BattleData.prototype.before_end_of_turn = function () {
@@ -51745,9 +51755,8 @@ exports.BattleFighter = BattleFighter;
 
 },{"./battle_info":9,"./data/buffs":12,"./data/skill_effect":18,"./emotion":19,"./exp":20,"./stats":28}],9:[function(require,module,exports){
 "use strict";
-// oneof
 Object.defineProperty(exports, "__esModule", { value: true });
-var tag = "(battle) ";
+// oneof
 var BattleInfo = /** @class */ (function () {
     function BattleInfo() {
     }
@@ -51807,9 +51816,13 @@ var BattleEntry = /** @class */ (function () {
             this.mood_span.innerHTML = emotion_1.mood_string(this.fighter.data.mood);
         }
         this.health.innerHTML =
-            this.fighter.data.modded_base_stats().hp + " / " + this.fighter.data.base_stats.hp;
+            this.fighter.data.modded_base_stats().hp +
+                " / " +
+                this.fighter.data.base_stats.hp;
         this.health.innerHTML =
-            this.fighter.data.modded_base_stats().mp + " / " + this.fighter.data.base_stats.mp;
+            this.fighter.data.modded_base_stats().mp +
+                " / " +
+                this.fighter.data.base_stats.mp;
     };
     return BattleEntry;
 }());
@@ -69015,7 +69028,8 @@ function resolve_skill_effect(fighter, skill, target) {
             else if (skill.element == SkillElement.Gun) {
                 damage = Math.floor(fighter.data.modded_base_stats().dx * damage_power(skill.power));
             }
-            else if (skill.element == SkillElement.Light || skill.element == SkillElement.Dark) {
+            else if (skill.element == SkillElement.Light ||
+                skill.element == SkillElement.Dark) {
                 damage = Math.floor(fighter.data.modded_base_stats().lu * damage_power(skill.power));
             }
             else {
@@ -69030,7 +69044,8 @@ function resolve_skill_effect(fighter, skill, target) {
             }
             break;
         case SkillEffect.Heal:
-            var power = Math.floor(fighter.data.modded_base_stats().ma) * damage_power(skill.power);
+            var power = Math.floor(fighter.data.modded_base_stats().ma) *
+                damage_power(skill.power);
             target.data.heal_for(power);
             break;
         case SkillEffect.BuffDefense:
@@ -69078,7 +69093,8 @@ exports.resolve_skill_effect = resolve_skill_effect;
 function handy_buff_handler(buffer, target, positive, skill_power) {
     var power = buff_power(skill_power) * (positive ? 1 : -1);
     buffer(target.data.buffs).raise(power);
-    battle_info_1.BattleInfo.result += buffer(target.data.buffs) + (positive ? " raised" : " lowered");
+    battle_info_1.BattleInfo.result +=
+        buffer(target.data.buffs) + (positive ? " raised" : " lowered");
 }
 function handy_ailment_handler(target, effect, positive) {
     // positive in the medical way.
@@ -69102,7 +69118,7 @@ var Mood;
     Mood[Mood["Passive"] = 2] = "Passive";
     Mood[Mood["Charmed"] = 3] = "Charmed";
     Mood[Mood["Scared"] = 4] = "Scared";
-    Mood[Mood["Dead"] = 5] = "Dead";
+    Mood[Mood["Dead"] = 5] = "Dead"; // 💀
 })(Mood = exports.Mood || (exports.Mood = {}));
 function mood_string(mood) {
     switch (mood) {
@@ -69123,7 +69139,7 @@ function mood_string(mood) {
 exports.mood_string = mood_string;
 // Player wants to move from one emotion to another.
 // Player should have base actions and demon has bonus actions or maybe AI triggered ones.
-// Player: 
+// Player:
 // - threaten
 // - peace offer
 
@@ -69178,7 +69194,7 @@ var Game = /** @class */ (function () {
         this.battle = null;
         this.battle_actors = [];
         // Rendering.
-        this.scene = new THREE.Scene;
+        this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
@@ -69233,12 +69249,15 @@ var Game = /** @class */ (function () {
                     // spawn encounter enemies and start a battle.
                     // create enemy actors.
                     var enemies = encounter_type.enemies;
-                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, coor_1); });
+                    this.battle_actors = enemies.map(function (id) {
+                        return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, coor_1);
+                    });
                     var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.add(this.battle_actors[i].mesh);
-                        this.battle_actors[i].mesh.position.z = -2 + i * .0001;
-                        this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
+                        this.battle_actors[i].mesh.position.z = -2 + i * 0.0001;
+                        this.battle_actors[i].mesh.position.x =
+                            1 * (i - this.battle_actors.length / 2);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
                     for (var i = 0; i < this.player.supports.length; i++) {
@@ -69286,19 +69305,24 @@ var Input = /** @class */ (function () {
         var moved = false;
         var turned = false;
         var actioned = false;
-        if (keyCode == 87) { // W.
+        if (keyCode == 87) {
+            // W.
             moved = player.move(1, map, npcs);
         }
-        else if (keyCode == 65) { // A.
+        else if (keyCode == 65) {
+            // A.
             turned = player.turn(false);
         }
-        else if (keyCode == 68) { // D.
+        else if (keyCode == 68) {
+            // D.
             turned = player.turn(true);
         }
-        else if (keyCode == 83) { // S.
+        else if (keyCode == 83) {
+            // S.
             moved = player.move(-1, map, npcs);
         }
-        else if (keyCode == 32) { // Space.
+        else if (keyCode == 32) {
+            // Space.
             actioned = true;
         }
         return new InputResult(moved, turned, actioned);
@@ -69476,7 +69500,10 @@ var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
-var material = new THREE.MeshStandardMaterial({ color: 0x221111, roughness: 0.8 });
+var material = new THREE.MeshStandardMaterial({
+    color: 0x221111,
+    roughness: 0.8
+});
 function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
@@ -69527,7 +69554,7 @@ var Player = /** @class */ (function () {
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.light = new THREE.PointLight("#ff9911", 1, 20, .5);
+        this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.body.add(this.camera);
         this.body.add(this.light);
@@ -69624,10 +69651,12 @@ var Stats = /** @class */ (function () {
         this.hp = hp;
         this.mp = mp;
     }
-    Stats.new_base = function () { return new Stats(1, 1); };
-    ;
-    Stats.new_mod = function () { return new Stats(0, 0); };
-    ;
+    Stats.new_base = function () {
+        return new Stats(1, 1);
+    };
+    Stats.new_mod = function () {
+        return new Stats(0, 0);
+    };
     Stats.new_exp = function () {
         var exp_stats = new Stats(0, 0);
         exp_stats.ag = 0;
@@ -69674,7 +69703,7 @@ var World = /** @class */ (function () {
         this.actors = level_data.actors;
         this.encounter_types = level_data.encounter_types;
         this.encounters = this.make_encounters(this.map, level_data.encounter_count);
-        this.ambient_light = new THREE.AmbientLight("#000099", .8);
+        this.ambient_light = new THREE.AmbientLight("#000099", 0.8);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
@@ -69737,7 +69766,10 @@ var World = /** @class */ (function () {
             else {
                 player.movement_locked = false;
             }
-            actor.is_blocking = dialogue.actor_block != undefined ? dialogue.actor_block : actor.is_blocking;
+            actor.is_blocking =
+                dialogue.actor_block != undefined
+                    ? dialogue.actor_block
+                    : actor.is_blocking;
             for (var f = 0; f < dialogue.flags.length; f++) {
                 globals_1.flags.add(dialogue.flags[f]);
             }

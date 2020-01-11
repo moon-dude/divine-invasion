@@ -10,10 +10,12 @@ var Stats = /** @class */ (function () {
         this.hp = hp;
         this.mp = mp;
     }
-    Stats.new_base = function () { return new Stats(1, 1); };
-    ;
-    Stats.new_mod = function () { return new Stats(0, 0); };
-    ;
+    Stats.new_base = function () {
+        return new Stats(1, 1);
+    };
+    Stats.new_mod = function () {
+        return new Stats(0, 0);
+    };
     Stats.new_exp = function () {
         var exp_stats = new Stats(0, 0);
         exp_stats.ag = 0;

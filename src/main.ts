@@ -1,17 +1,16 @@
-import * as THREE from 'three';
-import { Game } from './game';
+import { Game } from "./game";
 
 let game: Game = new Game();
 
 function onDocumentKeyDown(event: any) {
-  game.key_down(event); 
+  game.key_down(event);
 }
 
 document.addEventListener("keydown", onDocumentKeyDown, false);
 
 function update() {
   game.update();
-	requestAnimationFrame(update);
+  requestAnimationFrame(update);
 }
 
 // Kick off update loop.

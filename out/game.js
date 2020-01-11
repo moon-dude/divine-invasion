@@ -25,7 +25,7 @@ var Game = /** @class */ (function () {
         this.battle = null;
         this.battle_actors = [];
         // Rendering.
-        this.scene = new THREE.Scene;
+        this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
@@ -80,12 +80,15 @@ var Game = /** @class */ (function () {
                     // spawn encounter enemies and start a battle.
                     // create enemy actors.
                     var enemies = encounter_type.enemies;
-                    this.battle_actors = enemies.map(function (id) { return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, coor_1); });
+                    this.battle_actors = enemies.map(function (id) {
+                        return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, coor_1);
+                    });
                     var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.add(this.battle_actors[i].mesh);
-                        this.battle_actors[i].mesh.position.z = -2 + i * .0001;
-                        this.battle_actors[i].mesh.position.x = 1 * (i - this.battle_actors.length / 2);
+                        this.battle_actors[i].mesh.position.z = -2 + i * 0.0001;
+                        this.battle_actors[i].mesh.position.x =
+                            1 * (i - this.battle_actors.length / 2);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
                     for (var i = 0; i < this.player.supports.length; i++) {

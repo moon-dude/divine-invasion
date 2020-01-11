@@ -51,7 +51,10 @@ export class Coor {
 }
 
 export enum Dir {
-  E, W, N, S,
+  E,
+  W,
+  N,
+  S
 }
 
 export function ApplyDir(coor: Coor, dir: Dir, mult: number): Coor {
@@ -72,7 +75,7 @@ export function DirRotation(dir: Dir): number {
     case Dir.W:
       return Math.PI / 2;
     case Dir.E:
-      return -Math.PI / 2
+      return -Math.PI / 2;
     case Dir.N:
       return 0;
     case Dir.S:
@@ -83,7 +86,7 @@ export function DirRotation(dir: Dir): number {
 export function DirCW(dir: Dir): Dir {
   switch (dir) {
     case Dir.W:
-      return Dir.N
+      return Dir.N;
     case Dir.E:
       return Dir.S;
     case Dir.N:
