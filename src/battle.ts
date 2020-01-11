@@ -1,12 +1,17 @@
-import { random_array_element } from "./jlib";
-import { BattleSide, BattleFighter, BattleIndex, other_side } from "./battle_data";
-import { Skill, SkillId, } from "./data/skill";
-import { SkillTarget, resolve_skill_effect } from "./data/skill_effect";
+import {
+  BattleSide,
+  BattleFighter,
+  BattleIndex,
+} from "./battle_data";
+import { Skill } from "./data/skill";
+import { resolve_skill_effect } from "./data/skill_effect";
 import { BattleInfo } from "./battle_info";
 import { SmartHTMLElement } from "./SmartHTMLElement";
 import { BattleTable } from "./battle_table";
+import { ai_take_turn } from "./battle_ai";
 
-// This class should be instantiated and destroyed without any move happening or Actors being destroyed.
+// This class should be instantiated and destroyed without any move 
+// happening or Actors being destroyed.
 export class Battle {
   public static Instance: Battle;
 
@@ -34,10 +39,10 @@ export class Battle {
     for (let i = 0; i < 10; i++) {
       const new_button = document.createElement("button");
       if (i == 0) {
-        new_button.innerHTML = "Start Battle"
+        new_button.innerHTML = "Start Battle";
         new_button.onclick = () => {
           Battle.Instance.next_turn();
-        }
+        };
       } else {
         new_button.style.display = "none";
       }
@@ -47,18 +52,27 @@ export class Battle {
     for (let i = 0; i < fighters.length; i++) {
       const side: BattleSide = fighters[i].data.side;
       this.fighters.get(side)?.push(fighters[i]);
-      this.turn_order.push(new BattleIndex(side, (this.fighters.get(side)?.length || 0) - 1));
+      this.turn_order.push(
+        new BattleIndex(side, (this.fighters.get(side)?.length || 0) - 1)
+      );
     }
-    this.battle_table = new BattleTable(this.fighters.get(BattleSide.Our)!, this.fighters.get(BattleSide.Their)!);
+    this.battle_table = new BattleTable(
+      this.fighters.get(BattleSide.Our)!,
+      this.fighters.get(BattleSide.Their)!
+    );
   }
 
   public update() {
     let last_battle_table_click = this.battle_table.get_last_click();
     if (last_battle_table_click != null && this.current_action != null) {
       if (this.current_action == "Attack") {
-        this.take_battle_action(this.current_fighter(), null, [last_battle_table_click]);
+        this.take_battle_action(this.current_fighter(), null, [
+          last_battle_table_click
+        ]);
       } else {
-        this.take_battle_action(this.current_fighter(), this.current_action, [last_battle_table_click]);
+        this.take_battle_action(this.current_fighter(), this.current_action, [
+          last_battle_table_click
+        ]);
       }
       this.current_action = null;
       this.render_turn();
@@ -70,7 +84,9 @@ export class Battle {
   public battle_winner(): BattleSide | null {
     let winner: BattleSide | null = BattleSide.Their;
     for (let i = 0; i < this.fighters.get(BattleSide.Our)!.length; i++) {
-      if (this.fighters.get(BattleSide.Our)![i]!.data.modded_base_stats().hp > 0) {
+      if (
+        this.fighters.get(BattleSide.Our)![i]!.data.modded_base_stats().hp > 0
+      ) {
         winner = BattleSide.Our;
         break;
       }
@@ -79,7 +95,9 @@ export class Battle {
       return winner;
     }
     for (let i = 0; i < this.fighters.get(BattleSide.Their)!.length; i++) {
-      if (this.fighters.get(BattleSide.Their)![i]!.data.modded_base_stats().hp > 0) {
+      if (
+        this.fighters.get(BattleSide.Their)![i]!.data.modded_base_stats().hp > 0
+      ) {
         winner = null;
         break;
       }
@@ -106,17 +124,21 @@ export class Battle {
       BattleInfo.description = " is dead and can't attack! ";
       return;
     }
+    this.battle_action_span.style.display = "none";
     if (fighter.data.side == BattleSide.Our) {
       this.me_take_turn(fighter);
     } else {
-      this.ai_take_turn(fighter);
+      let result = ai_take_turn(fighter, this.fighters);
+      // attack target.
+      this.take_battle_action(fighter, result[0], result[1]);
+      fighter.data.before_end_of_turn();
     }
   }
 
   private me_take_turn(fighter: BattleFighter) {
     this.battle_action_span.style.display = "";
     let button_index = 0;
-    this.set_button_skill(button_index++, "Attack")
+    this.set_button_skill(button_index++, "Attack");
     for (let i = 0; i < fighter.data.skills.length; i++) {
       this.set_button_skill(button_index++, fighter.data.skills[i]);
     }
@@ -159,54 +181,7 @@ export class Battle {
     this.battle_action_btns[0].style.display = "";
     this.battle_action_btns[0].onclick = () => {
       Battle.Instance.next_turn();
-    }
-  }
-
-  private ai_take_turn(fighter: BattleFighter) {
-    this.battle_action_span.style.display = "none";
-    // Choose whether to attack or use skill.
-    let chosen_skill = this.choose_skill(fighter);
-    let targets: BattleFighter[] = [];
-    if (chosen_skill == null || chosen_skill.target == SkillTarget.SingleEnemy) {
-      // Choose a random target.
-      let target = this.get_attack_target(fighter);
-      if (target == null) {
-        BattleInfo.description = "has no one to attack! ";
-        fighter.data.before_end_of_turn();
-        return;
-      } else {
-        targets.push(target);
-      }
-    } else if (chosen_skill.target == SkillTarget.SingleAlly) {
-      // TODO: Manually choose the best target for the skill.
-      // For now just choose weakest health.
-      let weakest_ally: BattleFighter | null = null;
-      const allies = this.fighters.get(fighter.data.side)!;
-      for (let i = 0; i < allies.length; i++) {
-        if (allies[i].data.mod_stats.hp == 0) {
-          continue;
-        }
-        if (weakest_ally == null || 
-            allies[i].data.modded_base_stats().hp < weakest_ally.data.modded_base_stats().hp) {
-          weakest_ally = allies[i];
-        }
-      }
-      if (weakest_ally == null) {
-        BattleInfo.description = "could not find a valid target!";
-      } else {
-        targets.push(weakest_ally);
-      }
-    } else if (chosen_skill.target == SkillTarget.AllEnemies) {
-      // TODO: select all enemies.
-      const enemy_fighters = (this.fighters.get(other_side(fighter.data.side))!
-        .filter(x => x.data.modded_base_stats().hp > 0));
-      for (let i = 0; i < enemy_fighters.length; i++) {
-        targets.push(enemy_fighters[i]);
-      }
-    }
-    // attack target.
-    this.take_battle_action(fighter, chosen_skill, targets);
-    fighter.data.before_end_of_turn();
+    };
   }
 
   private render_turn() {
@@ -216,35 +191,21 @@ export class Battle {
     BattleInfo.clear();
   }
 
-  private choose_skill(attacker: BattleFighter): Skill | null {
-    let choice_idx = Math.floor(Math.random() * (attacker.data.skills.length + 1));
-    if (choice_idx >= attacker.data.skills.length) {
-      return null;
-    }
-    while (attacker.data.skills[choice_idx].cost > attacker.data.modded_base_stats().mp) {
-      choice_idx++;
-      if (choice_idx >= attacker.data.skills.length) {
-        return null;
-      }
-    }
-    return attacker.data.skills[choice_idx];
-  }
-
-  private get_attack_target(attacker: BattleFighter): BattleFighter | null {
-    return random_array_element(
-      this.fighters.get(other_side(attacker.data.side))!
-        .filter(x => x.data.modded_base_stats().hp > 0));
-
-  }
-
-  private take_battle_action(fighter: BattleFighter, skill: Skill | null, targets: BattleFighter[]) {
+  private take_battle_action(
+    fighter: BattleFighter,
+    skill: Skill | null,
+    targets: BattleFighter[]
+  ) {
     BattleInfo.actor_name = fighter.name;
     if (skill == null) {
       BattleInfo.description = "attacked. ";
-      let damage = Math.floor(fighter.data.modded_base_stats().st + fighter.data.modded_base_stats().dx);
+      let damage = Math.floor(
+        fighter.data.modded_base_stats().st +
+          fighter.data.modded_base_stats().dx
+      );
       BattleInfo.result = "";
       for (let t = 0; t < targets.length; t++) {
-        BattleInfo.result += targets[t].name + " ";  
+        BattleInfo.result += targets[t].name + " ";
         targets[t].data.take_damage(damage);
       }
     } else {
@@ -252,7 +213,7 @@ export class Battle {
       BattleInfo.description = "used `" + skill.name + "`. ";
       BattleInfo.result = "";
       for (let t = 0; t < targets.length; t++) {
-        BattleInfo.result += targets[t].name + " ";  
+        BattleInfo.result += targets[t].name + " ";
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }
