@@ -52,9 +52,15 @@ class BattleEntry {
       this.mood_span.innerHTML = get_mood_string(fighter_data.mood);
     }
     this.health.innerHTML =
-      fighter_data.modded_base_stats().hp + "<span class=\"sub\">/" + fighter_data.base_stats.hp + "</span>";
+      fighter_data.modded_base_stats().hp +
+      '<span class="sub">/' +
+      fighter_data.base_stats.hp +
+      "</span>";
     this.mana.innerHTML =
-      fighter_data.modded_base_stats().mp + "<span class=\"sub\">/" + fighter_data.base_stats.mp + "</span>";
+      fighter_data.modded_base_stats().mp +
+      '<span class="sub">/' +
+      fighter_data.base_stats.mp +
+      "</span>";
   }
 }
 
