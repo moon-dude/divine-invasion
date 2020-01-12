@@ -53,7 +53,7 @@ export class Battle {
       this.execute_player_turn(last_battle_table_click);
     }
     // Update table for new fighter values.
-    this.battle_table.update();
+    this.battle_table.update(this.fighters.get(BattleSide.Our)!, this.fighters.get(BattleSide.Their)!);
   }
 
   // Increment turn index, take turn, render changes.

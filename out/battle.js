@@ -37,7 +37,7 @@ var Battle = /** @class */ (function () {
             this.execute_player_turn(last_battle_table_click);
         }
         // Update table for new fighter values.
-        this.battle_table.update();
+        this.battle_table.update(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
     };
     // Increment turn index, take turn, render changes.
     Battle.prototype.next_turn = function () {

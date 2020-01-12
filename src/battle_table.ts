@@ -1,4 +1,4 @@
-import { BattleFighter } from "./battle_data";
+import { BattleFighter, BattleData } from "./battle_data";
 import { mood_string as get_mood_string } from "./emotion";
 
 /// An HTML entity manager for the battle table.
@@ -10,7 +10,6 @@ function append_empty_entry(parent: HTMLTableRowElement) {
 }
 
 class BattleEntry {
-  private fighter: BattleFighter;
   private name_cell: HTMLTableCellElement;
   private name_btn: HTMLButtonElement;
   private mood_span: HTMLSpanElement;
@@ -19,18 +18,18 @@ class BattleEntry {
 
   constructor(
     parent_row: HTMLTableRowElement,
-    fighter: BattleFighter,
+    name: string,
+    fighter_data: BattleData,
     on_click: () => void
   ) {
-    this.fighter = fighter;
     this.name_btn = document.createElement("button");
-    this.name_btn.innerHTML = fighter.name;
+    this.name_btn.innerHTML = name;
     this.name_btn.disabled = true;
     this.name_btn.onclick = on_click;
     this.name_cell = document.createElement("td");
     this.mood_span = document.createElement("span");
-    if (fighter.data.mood != null) {
-      this.mood_span.innerHTML = get_mood_string(fighter.data.mood);
+    if (fighter_data.mood != null) {
+      this.mood_span.innerHTML = get_mood_string(fighter_data.mood);
     }
     this.name_cell.appendChild(this.name_btn);
     this.name_cell.appendChild(this.mood_span);
@@ -39,27 +38,23 @@ class BattleEntry {
     parent_row.appendChild(this.health);
     this.mana = document.createElement("td");
     parent_row.appendChild(this.mana);
-    this.update();
+    this.update(fighter_data);
   }
 
   public set_name_btn_enabled(value: boolean) {
     this.name_btn.disabled = !value;
   }
 
-  public update() {
-    if (this.fighter.data.mood == null) {
+  public update(fighter_data: BattleData) {
+    if (fighter_data.mood == null) {
       this.mood_span.innerHTML = "";
     } else {
-      this.mood_span.innerHTML = get_mood_string(this.fighter.data.mood);
+      this.mood_span.innerHTML = get_mood_string(fighter_data.mood);
     }
     this.health.innerHTML =
-      this.fighter.data.modded_base_stats().hp +
-      " / " +
-      this.fighter.data.base_stats.hp;
-    this.health.innerHTML =
-      this.fighter.data.modded_base_stats().mp +
-      " / " +
-      this.fighter.data.base_stats.mp;
+      fighter_data.modded_base_stats().hp + "<span class=\"sub\">/" + fighter_data.base_stats.hp + "</span>";
+    this.mana.innerHTML =
+      fighter_data.modded_base_stats().mp + "<span class=\"sub\">/" + fighter_data.base_stats.mp + "</span>";
   }
 }
 
@@ -81,7 +76,7 @@ export class BattleTable {
       if (i < our_fighters.length) {
         let our = our_fighters[i];
         this.our_fighters.push(
-          new BattleEntry(row, our, () => {
+          new BattleEntry(row, our.name, our.data, () => {
             this.last_click_result = our;
           })
         );
@@ -92,7 +87,7 @@ export class BattleTable {
       if (i < their_fighters.length) {
         let their = their_fighters[i];
         this.their_fighters.push(
-          new BattleEntry(row, their, () => {
+          new BattleEntry(row, their.name, their.data, () => {
             this.last_click_result = their;
           })
         );
@@ -102,12 +97,15 @@ export class BattleTable {
     }
   }
 
-  public update() {
+  public update(
+    our_fighters: BattleFighter[],
+    their_fighters: BattleFighter[]
+  ) {
     for (let i = 0; i < this.our_fighters.length; i++) {
-      this.our_fighters[i].update();
+      this.our_fighters[i].update(our_fighters[i]!.data);
     }
     for (let i = 0; i < this.their_fighters.length; i++) {
-      this.their_fighters[i].update();
+      this.their_fighters[i].update(their_fighters[i]!.data);
     }
   }
 
