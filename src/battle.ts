@@ -19,6 +19,8 @@ export class Battle {
   private info_description: SmartHTMLElement;
   private more_info: SmartHTMLElement;
   private battle_action_btns: BattleActionBtns;
+  private continue_btn: HTMLButtonElement;
+  private back_btn: HTMLButtonElement;
 
   public battle_table: BattleTable;
   public current_action: Skill | "Attack" | null = null;
@@ -33,6 +35,8 @@ export class Battle {
     this.fighters.set(BattleSide.Their, []);
     this.turn_order = [];
     this.battle_action_btns = new BattleActionBtns();
+    this.continue_btn = document.getElementById("continue_btn")! as HTMLButtonElement;
+    this.back_btn = document.getElementById("back_btn")! as HTMLButtonElement;
     for (let i = 0; i < fighters.length; i++) {
       const side: BattleSide = fighters[i].data.side;
       this.fighters.get(side)?.push(fighters[i]);
@@ -44,6 +48,11 @@ export class Battle {
       this.fighters.get(BattleSide.Our)!,
       this.fighters.get(BattleSide.Their)!
     );
+    this.info_description.set_inner_html("You've been attacked by demons!");
+    this.continue_btn.style.display = "";
+    this.continue_btn.onclick = () => {
+      Battle.Instance.next_turn();
+    }
   }
 
   public update() {
@@ -98,6 +107,7 @@ export class Battle {
       );
     }
     this.battle_action_btns.clear_buttons(button_index);
+    this.continue_btn.style.display = "none";
     this.render();
   }
 
@@ -147,7 +157,9 @@ export class Battle {
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }
-    this.battle_action_btns.set_button_continue();
+    this.continue_btn.style.display = "";
+    this.battle_action_btns.clear_buttons();
+    this.battle_table.set_all_btns_enabled(false);
     this.render();
   }
 

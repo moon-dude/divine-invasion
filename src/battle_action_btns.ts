@@ -9,14 +9,7 @@ export class BattleActionBtns {
     this.battle_action_span = document.getElementById("battle_action_span")!;
     for (let i = 0; i < 10; i++) {
       const new_button = document.createElement("button");
-      if (i == 0) {
-        new_button.innerHTML = "Start Battle";
-        new_button.onclick = () => {
-          Battle.Instance.next_turn();
-        };
-      } else {
-        new_button.style.display = "none";
-      }
+      new_button.style.display = "none";
       this.battle_action_span.appendChild(new_button);
       this.battle_action_btns.push(new_button);
     }
@@ -56,14 +49,5 @@ export class BattleActionBtns {
         Battle.Instance.battle_table.set_all_btns_enabled(true);
       };
     }
-  }
-
-  public set_button_continue() {
-    this.clear_buttons();
-    this.battle_action_btns[0].innerHTML = "Next";
-    this.battle_action_btns[0].style.display = "";
-    this.battle_action_btns[0].onclick = () => {
-      Battle.Instance.next_turn();
-    };
   }
 }

@@ -23,12 +23,19 @@ var Battle = /** @class */ (function () {
         this.fighters.set(battle_data_1.BattleSide.Their, []);
         this.turn_order = [];
         this.battle_action_btns = new battle_action_btns_1.BattleActionBtns();
+        this.continue_btn = document.getElementById("continue_btn");
+        this.back_btn = document.getElementById("back_btn");
         for (var i = 0; i < fighters.length; i++) {
             var side = fighters[i].data.side;
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
         this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
+        this.info_description.set_inner_html("You've been attacked by demons!");
+        this.continue_btn.style.display = "";
+        this.continue_btn.onclick = function () {
+            Battle.Instance.next_turn();
+        };
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
@@ -76,6 +83,7 @@ var Battle = /** @class */ (function () {
             this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
         }
         this.battle_action_btns.clear_buttons(button_index);
+        this.continue_btn.style.display = "none";
         this.render();
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
@@ -118,7 +126,9 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.battle_action_btns.set_button_continue();
+        this.continue_btn.style.display = "";
+        this.battle_action_btns.clear_buttons();
+        this.battle_table.set_all_btns_enabled(false);
         this.render();
     };
     // returns null if battle is not over.
