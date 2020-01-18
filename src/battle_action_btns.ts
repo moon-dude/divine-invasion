@@ -36,21 +36,21 @@ export class BattleActionBtns {
 
   public set_button_skill(idx: number, value: Skill | "Attack") {
     this.battle_action_btns[idx].style.display = "";
-    Battle.Instance.current_action = value;
+    Battle.Instance!.current_action = value;
     if (value == "Attack") {
       this.battle_action_btns[idx].innerHTML = value;
       this.battle_action_btns[idx].onclick = () => {
         // show enemy targets
-        Battle.Instance.battle_table.set_their_btns_enabled(true);
-        Battle.Instance.battle_action_btns.clear_buttons();
-        Battle.Instance.set_back_btn(true);
+        Battle.Instance!.battle_table.set_their_btns_enabled(true);
+        Battle.Instance!.battle_action_btns.clear_buttons();
+        Battle.Instance!.set_back_btn(true);
         BattleInfo.description = "Attack (Choose Target)";
       };
     } else {
       this.battle_action_btns[idx].innerHTML = value.name;
       this.battle_action_btns[idx].onclick = () => {
         // TODO: show targets based on skill.
-        Battle.Instance.battle_table.set_all_btns_enabled(true);
+        Battle.Instance!.battle_table.set_all_btns_enabled(true);
       };
     }
   }

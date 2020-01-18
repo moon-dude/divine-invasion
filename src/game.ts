@@ -15,7 +15,6 @@ export class Game {
   // Meta.
   private input: Input = new Input();
   private player: Player = new Player();
-  private battle: Battle | null = null;
   private battle_actors: Actor[] = [];
 
   // Rendering.
@@ -39,25 +38,27 @@ export class Game {
   public update(): void {
     this.player.update();
     this.world.update(this.player);
-    if (this.battle != null) {
-      this.battle.update();
-      const winner = this.battle.battle_winner();
-      if (winner != null) {
-        this.battle = null;
-        if (winner == BattleSide.Our) {
-          this.player.movement_locked = false;
-          this.player.party_gain_exp(this.battle_actors);
-          for (let i = 0; i < this.battle_actors.length; i++) {
-            this.player.body.remove(this.battle_actors[i].mesh);
-          }
-          this.battle_actors = [];
-          this.battle_div.style.visibility = "hidden";
-        } else {
-          this.battle_div.innerHTML = "YOU DIED";
-        }
-      }
+    Battle.Instance?.update();
+    const winner = Battle.Instance?.battle_winner();
+    if (winner != null && winner != undefined) {
+      this.end_battle(winner);
     }
     this.render();
+  }
+
+  private end_battle(winner: BattleSide) {
+    Battle.Instance!.end();
+    if (winner == BattleSide.Our) {
+      this.player.movement_locked = false;
+      this.player.party_gain_exp(this.battle_actors);
+      for (let i = 0; i < this.battle_actors.length; i++) {
+        this.player.body.remove(this.battle_actors[i].mesh);
+      }
+      this.battle_actors = [];
+      this.battle_div.style.visibility = "hidden";
+    } else {
+      this.battle_div.innerHTML = "YOU DIED";
+    }
   }
 
   public key_down(event: any) {
@@ -108,7 +109,7 @@ export class Game {
               )
             );
           }
-          this.battle = new Battle(battle_fighters);
+          Battle.Instance = new Battle(battle_fighters);
           this.player.movement_locked = true;
           this.battle_div.style.visibility = "";
         }
@@ -117,8 +118,8 @@ export class Game {
 
     if (result.actioned) {
       this.world.dialogue_idx += 1;
-      if (this.battle != null) {
-        this.battle.next_turn();
+      if (Battle.Instance != null) {
+        Battle.Instance.next_turn();
       }
     }
   }

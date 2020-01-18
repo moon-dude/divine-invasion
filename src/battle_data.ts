@@ -60,14 +60,18 @@ export class BattleData {
     amount = Math.floor(amount);
     this.mod_stats.hp -= amount;
     BattleInfo.result += "took " + amount + " damage. ";
+    if (this.modded_base_stats().hp == 0) {
+      this.mood = Mood.Dead;
+    }
   }
 
   public heal_for(amount: number) {
-    if (amount < 0) {
-      BattleInfo.result += "could not be healed. ";
-    }
     if (this.mod_stats.hp == 0) {
       BattleInfo.result += "is already fully healed. ";
+    }
+    if (amount < 0 || this.modded_base_stats().hp == 0) {
+      BattleInfo.result += "could not be healed. ";
+      return;
     }
     amount = Math.floor(amount);
     amount = Math.min(amount, -this.mod_stats.hp);

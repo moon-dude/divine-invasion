@@ -51407,6 +51407,7 @@ var battle_action_btns_1 = require("./battle_action_btns");
 var Battle = /** @class */ (function () {
     function Battle(fighters) {
         var _a, _b;
+        this.turn_idx = 0;
         this.battle_idx = -1;
         this.current_action = null;
         Battle.Instance = this;
@@ -51443,6 +51444,7 @@ var Battle = /** @class */ (function () {
     };
     // Increment turn index, take turn, render changes.
     Battle.prototype.next_turn = function () {
+        this.turn_idx += 1;
         this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
         this.set_up_turn();
     };
@@ -51454,7 +51456,7 @@ var Battle = /** @class */ (function () {
             return;
         }
         this.battle_action_btns.set_visible(false);
-        if (fighter.data.side == battle_data_1.BattleSide.Our) {
+        if (fighter.data.side == battle_data_1.BattleSide.Our && fighter.name == "Player") {
             // For Player, let them choose what to do.
             this.set_up_player_turn(fighter);
         }
@@ -51464,7 +51466,15 @@ var Battle = /** @class */ (function () {
             // Take the resulting action.
             this.take_battle_action(fighter, result[0], result[1]);
             fighter.data.before_end_of_turn();
+            this.set_auto_next_interval();
         }
+    };
+    Battle.prototype.set_auto_next_interval = function () {
+        var SECONDS = 0.5;
+        window.setTimeout(auto_next_interval_callback, SECONDS * 1000, this.turn_idx);
+    };
+    Battle.prototype.is_auto_next_ready = function (interval_idx) {
+        return interval_idx == this.turn_idx;
     };
     Battle.prototype.current_fighter = function () {
         var turn_index = this.turn_order[this.battle_idx];
@@ -51497,6 +51507,7 @@ var Battle = /** @class */ (function () {
             ]);
         }
         this.current_action = null;
+        this.set_auto_next_interval();
     };
     Battle.prototype.render = function () {
         this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name) + ": ";
@@ -51560,9 +51571,23 @@ var Battle = /** @class */ (function () {
         this.back_btn.style.display = visible ? "" : "none";
         this.back_btn.onclick = on_click || this.back_btn.onclick;
     };
+    Battle.prototype.end = function () {
+        this.battle_action_btns.clear_buttons();
+        this.set_continue_btn(false);
+        this.set_back_btn(false);
+        battle_info_1.BattleInfo.clear();
+        Battle.Instance = null;
+    };
+    Battle.Instance = null;
     return Battle;
 }());
 exports.Battle = Battle;
+function auto_next_interval_callback(idx) {
+    var _a, _b;
+    if ((_a = Battle.Instance) === null || _a === void 0 ? void 0 : _a.is_auto_next_ready(idx)) {
+        (_b = Battle.Instance) === null || _b === void 0 ? void 0 : _b.next_turn();
+    }
+}
 
 },{"./SmartHTMLElement":4,"./battle_action_btns":7,"./battle_ai":8,"./battle_data":9,"./battle_info":10,"./battle_table":11,"./data/skill_effect":19}],7:[function(require,module,exports){
 "use strict";
@@ -51740,13 +51765,17 @@ var BattleData = /** @class */ (function () {
         amount = Math.floor(amount);
         this.mod_stats.hp -= amount;
         battle_info_1.BattleInfo.result += "took " + amount + " damage. ";
+        if (this.modded_base_stats().hp == 0) {
+            this.mood = emotion_1.Mood.Dead;
+        }
     };
     BattleData.prototype.heal_for = function (amount) {
-        if (amount < 0) {
-            battle_info_1.BattleInfo.result += "could not be healed. ";
-        }
         if (this.mod_stats.hp == 0) {
             battle_info_1.BattleInfo.result += "is already fully healed. ";
+        }
+        if (amount < 0 || this.modded_base_stats().hp == 0) {
+            battle_info_1.BattleInfo.result += "could not be healed. ";
+            return;
         }
         amount = Math.floor(amount);
         amount = Math.min(amount, -this.mod_stats.hp);
@@ -69230,7 +69259,6 @@ var Game = /** @class */ (function () {
         // Meta.
         this.input = new input_1.Input();
         this.player = new player_1.Player();
-        this.battle = null;
         this.battle_actors = [];
         // Rendering.
         this.scene = new THREE.Scene();
@@ -69246,28 +69274,30 @@ var Game = /** @class */ (function () {
         this.renderer.render(this.scene, this.player.camera);
     };
     Game.prototype.update = function () {
+        var _a, _b;
         this.player.update();
         this.world.update(this.player);
-        if (this.battle != null) {
-            this.battle.update();
-            var winner = this.battle.battle_winner();
-            if (winner != null) {
-                this.battle = null;
-                if (winner == battle_data_1.BattleSide.Our) {
-                    this.player.movement_locked = false;
-                    this.player.party_gain_exp(this.battle_actors);
-                    for (var i = 0; i < this.battle_actors.length; i++) {
-                        this.player.body.remove(this.battle_actors[i].mesh);
-                    }
-                    this.battle_actors = [];
-                    this.battle_div.style.visibility = "hidden";
-                }
-                else {
-                    this.battle_div.innerHTML = "YOU DIED";
-                }
-            }
+        (_a = battle_1.Battle.Instance) === null || _a === void 0 ? void 0 : _a.update();
+        var winner = (_b = battle_1.Battle.Instance) === null || _b === void 0 ? void 0 : _b.battle_winner();
+        if (winner != null && winner != undefined) {
+            this.end_battle(winner);
         }
         this.render();
+    };
+    Game.prototype.end_battle = function (winner) {
+        battle_1.Battle.Instance.end();
+        if (winner == battle_data_1.BattleSide.Our) {
+            this.player.movement_locked = false;
+            this.player.party_gain_exp(this.battle_actors);
+            for (var i = 0; i < this.battle_actors.length; i++) {
+                this.player.body.remove(this.battle_actors[i].mesh);
+            }
+            this.battle_actors = [];
+            this.battle_div.style.visibility = "hidden";
+        }
+        else {
+            this.battle_div.innerHTML = "YOU DIED";
+        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
@@ -69303,7 +69333,7 @@ var Game = /** @class */ (function () {
                     for (var i = 0; i < this.player.supports.length; i++) {
                         battle_fighters.push(new battle_data_1.BattleFighter(this.player.supports[i].name, this.player.supports[i].battle_data));
                     }
-                    this.battle = new battle_1.Battle(battle_fighters);
+                    battle_1.Battle.Instance = new battle_1.Battle(battle_fighters);
                     this.player.movement_locked = true;
                     this.battle_div.style.visibility = "";
                 }
@@ -69311,8 +69341,8 @@ var Game = /** @class */ (function () {
         }
         if (result.actioned) {
             this.world.dialogue_idx += 1;
-            if (this.battle != null) {
-                this.battle.next_turn();
+            if (battle_1.Battle.Instance != null) {
+                battle_1.Battle.Instance.next_turn();
             }
         }
     };

@@ -22,7 +22,6 @@ var Game = /** @class */ (function () {
         // Meta.
         this.input = new input_1.Input();
         this.player = new player_1.Player();
-        this.battle = null;
         this.battle_actors = [];
         // Rendering.
         this.scene = new THREE.Scene();
@@ -38,28 +37,30 @@ var Game = /** @class */ (function () {
         this.renderer.render(this.scene, this.player.camera);
     };
     Game.prototype.update = function () {
+        var _a, _b;
         this.player.update();
         this.world.update(this.player);
-        if (this.battle != null) {
-            this.battle.update();
-            var winner = this.battle.battle_winner();
-            if (winner != null) {
-                this.battle = null;
-                if (winner == battle_data_1.BattleSide.Our) {
-                    this.player.movement_locked = false;
-                    this.player.party_gain_exp(this.battle_actors);
-                    for (var i = 0; i < this.battle_actors.length; i++) {
-                        this.player.body.remove(this.battle_actors[i].mesh);
-                    }
-                    this.battle_actors = [];
-                    this.battle_div.style.visibility = "hidden";
-                }
-                else {
-                    this.battle_div.innerHTML = "YOU DIED";
-                }
-            }
+        (_a = battle_1.Battle.Instance) === null || _a === void 0 ? void 0 : _a.update();
+        var winner = (_b = battle_1.Battle.Instance) === null || _b === void 0 ? void 0 : _b.battle_winner();
+        if (winner != null && winner != undefined) {
+            this.end_battle(winner);
         }
         this.render();
+    };
+    Game.prototype.end_battle = function (winner) {
+        battle_1.Battle.Instance.end();
+        if (winner == battle_data_1.BattleSide.Our) {
+            this.player.movement_locked = false;
+            this.player.party_gain_exp(this.battle_actors);
+            for (var i = 0; i < this.battle_actors.length; i++) {
+                this.player.body.remove(this.battle_actors[i].mesh);
+            }
+            this.battle_actors = [];
+            this.battle_div.style.visibility = "hidden";
+        }
+        else {
+            this.battle_div.innerHTML = "YOU DIED";
+        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
@@ -95,7 +96,7 @@ var Game = /** @class */ (function () {
                     for (var i = 0; i < this.player.supports.length; i++) {
                         battle_fighters.push(new battle_data_1.BattleFighter(this.player.supports[i].name, this.player.supports[i].battle_data));
                     }
-                    this.battle = new battle_1.Battle(battle_fighters);
+                    battle_1.Battle.Instance = new battle_1.Battle(battle_fighters);
                     this.player.movement_locked = true;
                     this.battle_div.style.visibility = "";
                 }
@@ -103,8 +104,8 @@ var Game = /** @class */ (function () {
         }
         if (result.actioned) {
             this.world.dialogue_idx += 1;
-            if (this.battle != null) {
-                this.battle.next_turn();
+            if (battle_1.Battle.Instance != null) {
+                battle_1.Battle.Instance.next_turn();
             }
         }
     };

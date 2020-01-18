@@ -12,6 +12,7 @@ var battle_action_btns_1 = require("./battle_action_btns");
 var Battle = /** @class */ (function () {
     function Battle(fighters) {
         var _a, _b;
+        this.turn_idx = 0;
         this.battle_idx = -1;
         this.current_action = null;
         Battle.Instance = this;
@@ -48,6 +49,7 @@ var Battle = /** @class */ (function () {
     };
     // Increment turn index, take turn, render changes.
     Battle.prototype.next_turn = function () {
+        this.turn_idx += 1;
         this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
         this.set_up_turn();
     };
@@ -59,7 +61,7 @@ var Battle = /** @class */ (function () {
             return;
         }
         this.battle_action_btns.set_visible(false);
-        if (fighter.data.side == battle_data_1.BattleSide.Our) {
+        if (fighter.data.side == battle_data_1.BattleSide.Our && fighter.name == "Player") {
             // For Player, let them choose what to do.
             this.set_up_player_turn(fighter);
         }
@@ -69,7 +71,15 @@ var Battle = /** @class */ (function () {
             // Take the resulting action.
             this.take_battle_action(fighter, result[0], result[1]);
             fighter.data.before_end_of_turn();
+            this.set_auto_next_interval();
         }
+    };
+    Battle.prototype.set_auto_next_interval = function () {
+        var SECONDS = 0.5;
+        window.setTimeout(auto_next_interval_callback, SECONDS * 1000, this.turn_idx);
+    };
+    Battle.prototype.is_auto_next_ready = function (interval_idx) {
+        return interval_idx == this.turn_idx;
     };
     Battle.prototype.current_fighter = function () {
         var turn_index = this.turn_order[this.battle_idx];
@@ -102,6 +112,7 @@ var Battle = /** @class */ (function () {
             ]);
         }
         this.current_action = null;
+        this.set_auto_next_interval();
     };
     Battle.prototype.render = function () {
         this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name) + ": ";
@@ -165,6 +176,20 @@ var Battle = /** @class */ (function () {
         this.back_btn.style.display = visible ? "" : "none";
         this.back_btn.onclick = on_click || this.back_btn.onclick;
     };
+    Battle.prototype.end = function () {
+        this.battle_action_btns.clear_buttons();
+        this.set_continue_btn(false);
+        this.set_back_btn(false);
+        battle_info_1.BattleInfo.clear();
+        Battle.Instance = null;
+    };
+    Battle.Instance = null;
     return Battle;
 }());
 exports.Battle = Battle;
+function auto_next_interval_callback(idx) {
+    var _a, _b;
+    if ((_a = Battle.Instance) === null || _a === void 0 ? void 0 : _a.is_auto_next_ready(idx)) {
+        (_b = Battle.Instance) === null || _b === void 0 ? void 0 : _b.next_turn();
+    }
+}

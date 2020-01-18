@@ -10,11 +10,12 @@ import { BattleActionBtns } from "./battle_action_btns";
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 export class Battle {
-  public static Instance: Battle;
+  public static Instance: Battle | null = null;
 
   private fighters: Map<BattleSide, BattleFighter[]>;
   private turn_order: BattleIndex[];
-  private battle_idx = -1;
+  private turn_idx: number = 0;
+  private battle_idx: number = -1;
   private info_title: SmartHTMLElement;
   private more_info: SmartHTMLElement;
   private continue_btn: HTMLButtonElement;
@@ -50,7 +51,7 @@ export class Battle {
     );
     this.info_description.set_inner_html("You've been attacked by demons!");
     this.set_continue_btn(true, () => {
-      Battle.Instance.next_turn();
+      Battle.Instance!.next_turn();
     });
     this.set_back_btn(false);
   }
@@ -67,6 +68,7 @@ export class Battle {
 
   // Increment turn index, take turn, render changes.
   public next_turn() {
+    this.turn_idx += 1;
     this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
     this.set_up_turn();
   }
@@ -79,7 +81,7 @@ export class Battle {
       return;
     }
     this.battle_action_btns.set_visible(false);
-    if (fighter.data.side == BattleSide.Our) {
+    if (fighter.data.side == BattleSide.Our && fighter.name == "Player") {
       // For Player, let them choose what to do.
       this.set_up_player_turn(fighter);
     } else {
@@ -88,7 +90,17 @@ export class Battle {
       // Take the resulting action.
       this.take_battle_action(fighter, result[0], result[1]);
       fighter.data.before_end_of_turn();
+      this.set_auto_next_interval();
     }
+  }
+
+  private set_auto_next_interval() {
+    const SECONDS = 0.5;
+    window.setTimeout(auto_next_interval_callback, SECONDS * 1000, this.turn_idx);
+  }
+  
+  public is_auto_next_ready(interval_idx: number): boolean {
+    return interval_idx == this.turn_idx;
   }
   
   private current_fighter(): BattleFighter {
@@ -109,7 +121,7 @@ export class Battle {
     this.battle_action_btns.clear_buttons(button_index);
     this.set_continue_btn(false);
     this.set_back_btn(false, () => {
-      Battle.Instance.set_up_player_turn(fighter);
+      Battle.Instance!.set_up_player_turn(fighter);
     });
     this.render();
   }
@@ -126,6 +138,7 @@ export class Battle {
       ]);
     }
     this.current_action = null;
+    this.set_auto_next_interval();
   }
 
   private render(): void {
@@ -200,5 +213,19 @@ export class Battle {
   public set_back_btn(visible: boolean, on_click: (() => void) | null = null) {
     this.back_btn.style.display = visible ? "" : "none";
     this.back_btn.onclick = on_click || this.back_btn.onclick;
+  }
+
+  public end(): void {
+    this.battle_action_btns.clear_buttons();
+    this.set_continue_btn(false);
+    this.set_back_btn(false);
+    BattleInfo.clear();
+    Battle.Instance = null;
+  }
+}
+
+function auto_next_interval_callback(idx: number) {
+  if (Battle.Instance?.is_auto_next_ready(idx)) {
+    Battle.Instance?.next_turn();
   }
 }
