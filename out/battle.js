@@ -7,6 +7,13 @@ var SmartHTMLElement_1 = require("./SmartHTMLElement");
 var battle_table_1 = require("./battle_table");
 var battle_ai_1 = require("./battle_ai");
 var battle_action_btns_1 = require("./battle_action_btns");
+var log_1 = require("./log");
+var BattleAction;
+(function (BattleAction) {
+    BattleAction[BattleAction["Attack"] = 0] = "Attack";
+    // Inventory,
+    // Demand,
+})(BattleAction = exports.BattleAction || (exports.BattleAction = {}));
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -55,9 +62,7 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.set_up_turn = function () {
         var fighter = this.current_fighter();
-        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
-            battle_info_1.BattleInfo.description = " is dead and can't attack! ";
             return;
         }
         this.battle_action_btns.set_visible(false);
@@ -88,7 +93,7 @@ var Battle = /** @class */ (function () {
     Battle.prototype.set_up_player_turn = function (fighter) {
         this.battle_action_btns.set_visible(true);
         var button_index = 0;
-        this.battle_action_btns.set_button_skill(button_index++, "Attack");
+        this.battle_action_btns.set_button_skill(button_index++, BattleAction.Attack);
         for (var i = 0; i < fighter.data.skills.length; i++) {
             this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
         }
@@ -101,7 +106,7 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
         this.set_back_btn(false);
-        if (this.current_action == "Attack") {
+        if (this.current_action == BattleAction.Attack) {
             this.take_battle_action(this.current_fighter(), null, [
                 last_battle_table_click
             ]);
@@ -115,29 +120,20 @@ var Battle = /** @class */ (function () {
         this.set_auto_next_interval();
     };
     Battle.prototype.render = function () {
-        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name) + ": ";
-        this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
-        this.more_info.set_inner_html(battle_info_1.BattleInfo.result);
-        battle_info_1.BattleInfo.clear();
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
-        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (skill == null) {
-            battle_info_1.BattleInfo.description = "attacked. ";
+            log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.data.modded_base_stats().st +
                 fighter.data.modded_base_stats().dx);
-            battle_info_1.BattleInfo.result = "";
             for (var t = 0; t < targets.length; t++) {
-                battle_info_1.BattleInfo.result += targets[t].name + " ";
                 targets[t].data.take_damage(damage);
             }
         }
         else {
             fighter.data.mod_stats.mp -= skill.cost;
-            battle_info_1.BattleInfo.description = "used `" + skill.name + "`. ";
-            battle_info_1.BattleInfo.result = "";
+            log_1.Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
             for (var t = 0; t < targets.length; t++) {
-                battle_info_1.BattleInfo.result += targets[t].name + " ";
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }

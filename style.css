@@ -1,12 +1,13 @@
 body {
   background-color: black;
   color: white;
-  text-align: center;
+  text-align: left;
+  font-family: 'IBM Plex Mono', monospace;
 }
 
 #dialogue_div {
   width: 100%;
-  padding: 1em;
+  padding: .1em;
   text-align: center;
   font-size: 1.05em;
 }
@@ -22,17 +23,17 @@ body {
 }
 
 #battle_div {
-  padding: 1em;
+  padding: 0.1em;
 }
 
 #battle_div th {
   text-align: left;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 #battle_div td {
   text-align: left;
-  font-size: 0.9em;
+  font-size: 0.8em;
   padding-right: 0.2em;
   padding-left: 0.2em;
 }
@@ -56,7 +57,7 @@ button {
   color: #ffffff;
   font-family: Arial;
   font-size: 15px;
-  padding: 9px 23px;
+  padding: 9px 9px;
   text-decoration: none;
   text-shadow: 0px 1px 0px #263666;
 }
@@ -71,4 +72,24 @@ button:disabled {
   background-color: #000000;
   position: relative;
   top: 1px;
+}
+
+.half {
+  vertical-align: top;
+  width: 50%;
+}
+
+#log_div {
+  font-size: .7em;
+  text-align: right;
+  vertical-align: top;
+}
+
+#info_div {
+  font-size: .9em;
+}
+
+.log_result {
+  color: #bbb;
+  font-style: italic;
 }

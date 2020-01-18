@@ -6,6 +6,13 @@ import { SmartHTMLElement } from "./SmartHTMLElement";
 import { BattleTable } from "./battle_table";
 import { ai_take_turn } from "./battle_ai";
 import { BattleActionBtns } from "./battle_action_btns";
+import { Log } from "./log";
+
+export enum BattleAction {
+  Attack,
+  // Inventory,
+  // Demand,
+}
 
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
@@ -23,7 +30,7 @@ export class Battle {
 
   public battle_table: BattleTable;
   public battle_action_btns: BattleActionBtns;
-  public current_action: Skill | "Attack" | null = null;
+  public current_action: Skill | BattleAction | null = null;
   public info_description: SmartHTMLElement;
 
   constructor(fighters: BattleFighter[]) {
@@ -75,9 +82,7 @@ export class Battle {
 
   private set_up_turn() {
     let fighter = this.current_fighter();
-    BattleInfo.actor_name = fighter.name;
     if (fighter.data.modded_base_stats().hp <= 0) {
-      BattleInfo.description = " is dead and can't attack! ";
       return;
     }
     this.battle_action_btns.set_visible(false);
@@ -111,7 +116,7 @@ export class Battle {
   private set_up_player_turn(fighter: BattleFighter) {
     this.battle_action_btns.set_visible(true);
     let button_index = 0;
-    this.battle_action_btns.set_button_skill(button_index++, "Attack");
+    this.battle_action_btns.set_button_skill(button_index++, BattleAction.Attack);
     for (let i = 0; i < fighter.data.skills.length; i++) {
       this.battle_action_btns.set_button_skill(
         button_index++,
@@ -128,7 +133,7 @@ export class Battle {
 
   private execute_player_turn(last_battle_table_click: BattleFighter) {
     this.set_back_btn(false);
-    if (this.current_action == "Attack") {
+    if (this.current_action == BattleAction.Attack) {
       this.take_battle_action(this.current_fighter(), null, [
         last_battle_table_click
       ]);
@@ -142,10 +147,7 @@ export class Battle {
   }
 
   private render(): void {
-    this.info_title.set_inner_html(BattleInfo.actor_name) + ": ";
-    this.info_description.set_inner_html(BattleInfo.description);
-    this.more_info.set_inner_html(BattleInfo.result);
-    BattleInfo.clear();
+
   }
 
   private take_battle_action(
@@ -153,24 +155,19 @@ export class Battle {
     skill: Skill | null,
     targets: BattleFighter[]
   ): void {
-    BattleInfo.actor_name = fighter.name;
     if (skill == null) {
-      BattleInfo.description = "attacked. ";
+      Log.push(this.current_fighter().name + " attacked.");
       let damage = Math.floor(
         fighter.data.modded_base_stats().st +
           fighter.data.modded_base_stats().dx
       );
-      BattleInfo.result = "";
       for (let t = 0; t < targets.length; t++) {
-        BattleInfo.result += targets[t].name + " ";
         targets[t].data.take_damage(damage);
       }
     } else {
       fighter.data.mod_stats.mp -= skill.cost;
-      BattleInfo.description = "used `" + skill.name + "`. ";
-      BattleInfo.result = "";
+      Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
       for (let t = 0; t < targets.length; t++) {
-        BattleInfo.result += targets[t].name + " ";
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }

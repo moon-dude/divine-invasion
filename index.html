@@ -23,14 +23,22 @@
       <div id="dialogue_speech"></div>
       <div id="dialogue_info"></div>
     </div>
-    <div id="info_div">
-      <span id="info_title"></span>
-      <span id="info_description"></span>
-      <span id="battle_action_span"></span>
-      <div id="more_info_div"></div>
-      <button id="continue_btn" style="display: none">Continue</button>
-      <button id="back_btn" style="display: none">Back</button>
-    </div>
+    <table>
+      <tr>
+        <td class="half">
+          <div id="info_div">
+            <span id="info_title"></span>
+            <span id="info_description"></span>
+            <span id="battle_action_span"></span>
+            <div id="more_info_div"></div>
+            <button id="continue_btn" style="display: none">Continue</button>
+            <button id="back_btn" style="display: none">Back</button>
+          </div>
+        </td><td class="half">
+          <div id="log_div"></div>
+        </td>
+      </tr>
+    </table>
     <script src="bundle.js"></script>
 	</body>
 </html>

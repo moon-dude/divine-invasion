@@ -33,8 +33,8 @@ var BattleActionBtns = /** @class */ (function () {
     BattleActionBtns.prototype.set_button_skill = function (idx, value) {
         this.battle_action_btns[idx].style.display = "";
         battle_1.Battle.Instance.current_action = value;
-        if (value == "Attack") {
-            this.battle_action_btns[idx].innerHTML = value;
+        if (value == battle_1.BattleAction.Attack) {
+            this.battle_action_btns[idx].innerHTML = "Attack";
             this.battle_action_btns[idx].onclick = function () {
                 // show enemy targets
                 battle_1.Battle.Instance.battle_table.set_their_btns_enabled(true);

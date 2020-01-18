@@ -13,6 +13,7 @@ var constants_1 = require("./constants");
 var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
+exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
         this.coor = new jlib_1.Coor(1, 1);
@@ -30,7 +31,7 @@ var Player = /** @class */ (function () {
         stats.lu = 35;
         stats.ma = 0;
         stats.st = 20;
-        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
     }
     Player.prototype.update = function () {

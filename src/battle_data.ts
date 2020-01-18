@@ -5,6 +5,7 @@ import { SkillEffect } from "./data/skill_effect";
 import { BattleInfo } from "./battle_info";
 import { Exp } from "./exp";
 import { Mood } from "./emotion";
+import { Log, LOG_INDENT_CHAR } from "./log";
 
 export enum BattleSide {
   Our,
@@ -17,6 +18,7 @@ export function other_side(side: BattleSide): BattleSide {
 
 export class BattleData {
   public static IDENTITY: BattleData = new BattleData(
+    "",
     BattleSide.Their,
     Stats.new_base(),
     Stats.new_mod(),
@@ -24,6 +26,7 @@ export class BattleData {
     Mood.Aggressive
   );
 
+  public readonly name: string;
   public readonly side: BattleSide;
   public readonly base_stats: Stats;
   public readonly skills: Skill[];
@@ -35,12 +38,14 @@ export class BattleData {
   public mood: Mood | null;
 
   constructor(
+    name: string,
     side: BattleSide,
     base_stats: Stats,
     mod_stats: Stats,
     skills: Skill[],
     mood: Mood | null
   ) {
+    this.name = name;
     this.side = side;
     this.base_stats = base_stats;
     this.mod_stats = mod_stats;
@@ -48,9 +53,13 @@ export class BattleData {
     this.mood = mood;
   }
 
+  private log_result(s: string): void {
+    Log.push("<span class=\"log_result\">" + this.name + " " + s + " " + LOG_INDENT_CHAR + "</span>");
+  }
+
   public take_damage(amount: number) {
     if (amount <= 0) {
-      return "took no damage";
+      this.log_result("took no damage.");
     }
     if (this.buffs.defense.get() > 1) {
       amount /= this.buffs.defense.get();
@@ -59,7 +68,7 @@ export class BattleData {
     }
     amount = Math.floor(amount);
     this.mod_stats.hp -= amount;
-    BattleInfo.result += "took " + amount + " damage. ";
+    this.log_result("took " + amount + " damage.");
     if (this.modded_base_stats().hp == 0) {
       this.mood = Mood.Dead;
     }
@@ -67,16 +76,16 @@ export class BattleData {
 
   public heal_for(amount: number) {
     if (this.mod_stats.hp == 0) {
-      BattleInfo.result += "is already fully healed. ";
+      this.log_result("is already fully healed.");
     }
     if (amount < 0 || this.modded_base_stats().hp == 0) {
-      BattleInfo.result += "could not be healed. ";
+      this.log_result("could not be healed.");
       return;
     }
     amount = Math.floor(amount);
     amount = Math.min(amount, -this.mod_stats.hp);
     this.mod_stats.hp += amount;
-    BattleInfo.result += "healed for " + amount + ". ";
+    this.log_result("healed for " + amount + ". ");
   }
 
   public modded_base_stats(): Stats {

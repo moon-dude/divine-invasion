@@ -51325,7 +51325,7 @@ var Actor = /** @class */ (function () {
         if (side == battle_data_1.BattleSide.Their) {
             mood = emotion_1.Mood.Aggressive;
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
         return actor;
     };
@@ -51392,7 +51392,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./battle_data":9,"./constants":12,"./data/raw/demons":17,"./data/raw/skills":18,"./emotion":21,"./jlib":26,"./stats":30,"three":3}],6:[function(require,module,exports){
+},{"./battle_data":9,"./constants":12,"./data/raw/demons":17,"./data/raw/skills":18,"./emotion":21,"./jlib":26,"./stats":31,"three":3}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
@@ -51402,6 +51402,13 @@ var SmartHTMLElement_1 = require("./SmartHTMLElement");
 var battle_table_1 = require("./battle_table");
 var battle_ai_1 = require("./battle_ai");
 var battle_action_btns_1 = require("./battle_action_btns");
+var log_1 = require("./log");
+var BattleAction;
+(function (BattleAction) {
+    BattleAction[BattleAction["Attack"] = 0] = "Attack";
+    // Inventory,
+    // Demand,
+})(BattleAction = exports.BattleAction || (exports.BattleAction = {}));
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -51450,9 +51457,7 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.set_up_turn = function () {
         var fighter = this.current_fighter();
-        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
-            battle_info_1.BattleInfo.description = " is dead and can't attack! ";
             return;
         }
         this.battle_action_btns.set_visible(false);
@@ -51483,7 +51488,7 @@ var Battle = /** @class */ (function () {
     Battle.prototype.set_up_player_turn = function (fighter) {
         this.battle_action_btns.set_visible(true);
         var button_index = 0;
-        this.battle_action_btns.set_button_skill(button_index++, "Attack");
+        this.battle_action_btns.set_button_skill(button_index++, BattleAction.Attack);
         for (var i = 0; i < fighter.data.skills.length; i++) {
             this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
         }
@@ -51496,7 +51501,7 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
         this.set_back_btn(false);
-        if (this.current_action == "Attack") {
+        if (this.current_action == BattleAction.Attack) {
             this.take_battle_action(this.current_fighter(), null, [
                 last_battle_table_click
             ]);
@@ -51510,29 +51515,20 @@ var Battle = /** @class */ (function () {
         this.set_auto_next_interval();
     };
     Battle.prototype.render = function () {
-        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name) + ": ";
-        this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
-        this.more_info.set_inner_html(battle_info_1.BattleInfo.result);
-        battle_info_1.BattleInfo.clear();
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
-        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (skill == null) {
-            battle_info_1.BattleInfo.description = "attacked. ";
+            log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.data.modded_base_stats().st +
                 fighter.data.modded_base_stats().dx);
-            battle_info_1.BattleInfo.result = "";
             for (var t = 0; t < targets.length; t++) {
-                battle_info_1.BattleInfo.result += targets[t].name + " ";
                 targets[t].data.take_damage(damage);
             }
         }
         else {
             fighter.data.mod_stats.mp -= skill.cost;
-            battle_info_1.BattleInfo.description = "used `" + skill.name + "`. ";
-            battle_info_1.BattleInfo.result = "";
+            log_1.Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
             for (var t = 0; t < targets.length; t++) {
-                battle_info_1.BattleInfo.result += targets[t].name + " ";
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
@@ -51589,7 +51585,7 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./SmartHTMLElement":4,"./battle_action_btns":7,"./battle_ai":8,"./battle_data":9,"./battle_info":10,"./battle_table":11,"./data/skill_effect":19}],7:[function(require,module,exports){
+},{"./SmartHTMLElement":4,"./battle_action_btns":7,"./battle_ai":8,"./battle_data":9,"./battle_info":10,"./battle_table":11,"./data/skill_effect":19,"./log":27}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_1 = require("./battle");
@@ -51625,8 +51621,8 @@ var BattleActionBtns = /** @class */ (function () {
     BattleActionBtns.prototype.set_button_skill = function (idx, value) {
         this.battle_action_btns[idx].style.display = "";
         battle_1.Battle.Instance.current_action = value;
-        if (value == "Attack") {
-            this.battle_action_btns[idx].innerHTML = value;
+        if (value == battle_1.BattleAction.Attack) {
+            this.battle_action_btns[idx].innerHTML = "Attack";
             this.battle_action_btns[idx].onclick = function () {
                 // show enemy targets
                 battle_1.Battle.Instance.battle_table.set_their_btns_enabled(true);
@@ -51732,6 +51728,7 @@ var skill_effect_1 = require("./data/skill_effect");
 var battle_info_1 = require("./battle_info");
 var exp_1 = require("./exp");
 var emotion_1 = require("./emotion");
+var log_1 = require("./log");
 var BattleSide;
 (function (BattleSide) {
     BattleSide[BattleSide["Our"] = 0] = "Our";
@@ -51742,19 +51739,23 @@ function other_side(side) {
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
-    function BattleData(side, base_stats, mod_stats, skills, mood) {
+    function BattleData(name, side, base_stats, mod_stats, skills, mood) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
+        this.name = name;
         this.side = side;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
         this.skills = skills;
         this.mood = mood;
     }
+    BattleData.prototype.log_result = function (s) {
+        log_1.Log.push("<span class=\"log_result\">" + this.name + " " + s + " " + log_1.LOG_INDENT_CHAR + "</span>");
+    };
     BattleData.prototype.take_damage = function (amount) {
         if (amount <= 0) {
-            return "took no damage";
+            this.log_result("took no damage.");
         }
         if (this.buffs.defense.get() > 1) {
             amount /= this.buffs.defense.get();
@@ -51764,23 +51765,23 @@ var BattleData = /** @class */ (function () {
         }
         amount = Math.floor(amount);
         this.mod_stats.hp -= amount;
-        battle_info_1.BattleInfo.result += "took " + amount + " damage. ";
+        this.log_result("took " + amount + " damage.");
         if (this.modded_base_stats().hp == 0) {
             this.mood = emotion_1.Mood.Dead;
         }
     };
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
-            battle_info_1.BattleInfo.result += "is already fully healed. ";
+            this.log_result("is already fully healed.");
         }
         if (amount < 0 || this.modded_base_stats().hp == 0) {
-            battle_info_1.BattleInfo.result += "could not be healed. ";
+            this.log_result("could not be healed.");
             return;
         }
         amount = Math.floor(amount);
         amount = Math.min(amount, -this.mod_stats.hp);
         this.mod_stats.hp += amount;
-        battle_info_1.BattleInfo.result += "healed for " + amount + ". ";
+        this.log_result("healed for " + amount + ". ");
     };
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
@@ -51799,7 +51800,7 @@ var BattleData = /** @class */ (function () {
             battle_info_1.BattleInfo.result += "took " + damage + "damage from poison. ";
         }
     };
-    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
+    BattleData.IDENTITY = new BattleData("", BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
 exports.BattleData = BattleData;
@@ -51820,7 +51821,7 @@ var BattleFighter = /** @class */ (function () {
 }());
 exports.BattleFighter = BattleFighter;
 
-},{"./battle_info":10,"./data/buffs":13,"./data/skill_effect":19,"./emotion":21,"./exp":22,"./stats":30}],10:[function(require,module,exports){
+},{"./battle_info":10,"./data/buffs":13,"./data/skill_effect":19,"./emotion":21,"./exp":22,"./log":27,"./stats":31}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // oneof
@@ -51858,7 +51859,7 @@ var BattleEntry = /** @class */ (function () {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
         this.name_cell.appendChild(this.name_btn);
-        this.name_cell.appendChild(this.mood_span);
+        this.name_btn.appendChild(this.mood_span);
         parent_row.appendChild(this.name_cell);
         this.health = document.createElement("td");
         parent_row.appendChild(this.health);
@@ -52045,7 +52046,7 @@ exports.level2_data = new level_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 20);
 
-},{"../../jlib":26,"../../map":28,"../encounter_type":14,"./level_data":16}],16:[function(require,module,exports){
+},{"../../jlib":26,"../../map":29,"../encounter_type":14,"./level_data":16}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -69234,7 +69235,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":30}],23:[function(require,module,exports){
+},{"./stats":31}],23:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69253,6 +69254,7 @@ var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
 var battle_1 = require("./battle");
 var battle_data_1 = require("./battle_data");
+var log_1 = require("./log");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -69267,11 +69269,13 @@ var Game = /** @class */ (function () {
         this.world = new world_1.World(this.scene, level2_1.level2_data);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
+        this.log_div = document.getElementById("log_div");
     }
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
+        this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
     };
     Game.prototype.update = function () {
         var _a, _b;
@@ -69350,7 +69354,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actor":5,"./battle":6,"./battle_data":9,"./data/levels/level2":15,"./input":25,"./jlib":26,"./player":29,"./world":31,"three":3}],24:[function(require,module,exports){
+},{"./actor":5,"./battle":6,"./battle_data":9,"./data/levels/level2":15,"./input":25,"./jlib":26,"./log":27,"./player":30,"./world":32,"three":3}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
@@ -69543,6 +69547,24 @@ exports.Unsigned = Unsigned;
 },{}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LOG_INDENT_CHAR = "&#8619";
+var Log = /** @class */ (function () {
+    function Log() {
+    }
+    Log.push = function (entry) {
+        this.lines.unshift(entry);
+    };
+    Log.as_string = function () {
+        return this.lines.join("<br/>");
+    };
+    Log.lines = [];
+    return Log;
+}());
+exports.Log = Log;
+
+},{}],28:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
 var game = new game_1.Game();
 function onDocumentKeyDown(event) {
@@ -69556,7 +69578,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":23}],28:[function(require,module,exports){
+},{"./game":23}],29:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69602,7 +69624,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":12,"./jlib":26,"three":3}],29:[function(require,module,exports){
+},{"./constants":12,"./jlib":26,"three":3}],30:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69618,6 +69640,7 @@ var constants_1 = require("./constants");
 var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
+exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
         this.coor = new jlib_1.Coor(1, 1);
@@ -69635,7 +69658,7 @@ var Player = /** @class */ (function () {
         stats.lu = 35;
         stats.ma = 0;
         stats.st = 20;
-        this.battle_data = new battle_data_1.BattleData(battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
     }
     Player.prototype.update = function () {
@@ -69708,7 +69731,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":5,"./battle_data":9,"./constants":12,"./jlib":26,"./stats":30,"three":3}],30:[function(require,module,exports){
+},{"./actor":5,"./battle_data":9,"./constants":12,"./jlib":26,"./stats":31,"three":3}],31:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -69752,7 +69775,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69852,4 +69875,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./constants":12,"./globals":24,"./jlib":26,"three":3}]},{},[27,1,2]);
+},{"./constants":12,"./globals":24,"./jlib":26,"three":3}]},{},[28,1,2]);

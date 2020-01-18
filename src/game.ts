@@ -8,6 +8,7 @@ import { random_array_element } from "./jlib";
 import { Actor } from "./actor";
 import { Battle } from "./battle";
 import { BattleFighter, BattleSide } from "./battle_data";
+import { Log } from "./log";
 
 export class Game {
   private world: World;
@@ -21,18 +22,21 @@ export class Game {
   private scene: THREE.Scene = new THREE.Scene();
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
   private battle_div: HTMLElement;
+  private log_div: HTMLElement;
 
   constructor() {
     this.scene.add(this.player.body);
     this.world = new World(this.scene, level2_data);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
+    this.log_div = document.getElementById("log_div")!;
   }
 
   private render() {
     this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
     this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
     this.renderer.render(this.scene, this.player.camera);
+    this.log_div.innerHTML = "_____LOG<br/>" + Log.as_string();
   }
 
   public update(): void {

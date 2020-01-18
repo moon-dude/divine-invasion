@@ -57,7 +57,7 @@ var Actor = /** @class */ (function () {
         if (side == battle_data_1.BattleSide.Their) {
             mood = emotion_1.Mood.Aggressive;
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
         return actor;
     };

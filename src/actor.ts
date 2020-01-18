@@ -75,7 +75,7 @@ export class Actor {
       name,
       [],
       DEMON_MAT,
-      new BattleData(side, demon.stats, Stats.new_mod(), skills, mood)
+      new BattleData(name, side, demon.stats, Stats.new_mod(), skills, mood)
     );
     actor.coor = coor;
     return actor;

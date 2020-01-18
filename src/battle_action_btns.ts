@@ -1,4 +1,4 @@
-import { Battle } from "./battle";
+import { Battle, BattleAction } from "./battle";
 import { Skill } from "./data/skill";
 import { BattleInfo } from "./battle_info";
 
@@ -34,11 +34,11 @@ export class BattleActionBtns {
     }
   }
 
-  public set_button_skill(idx: number, value: Skill | "Attack") {
+  public set_button_skill(idx: number, value: Skill | BattleAction) {
     this.battle_action_btns[idx].style.display = "";
     Battle.Instance!.current_action = value;
-    if (value == "Attack") {
-      this.battle_action_btns[idx].innerHTML = value;
+    if (value == BattleAction.Attack) {
+      this.battle_action_btns[idx].innerHTML = "Attack";
       this.battle_action_btns[idx].onclick = () => {
         // show enemy targets
         Battle.Instance!.battle_table.set_their_btns_enabled(true);

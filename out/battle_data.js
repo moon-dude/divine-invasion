@@ -6,6 +6,7 @@ var skill_effect_1 = require("./data/skill_effect");
 var battle_info_1 = require("./battle_info");
 var exp_1 = require("./exp");
 var emotion_1 = require("./emotion");
+var log_1 = require("./log");
 var BattleSide;
 (function (BattleSide) {
     BattleSide[BattleSide["Our"] = 0] = "Our";
@@ -16,19 +17,23 @@ function other_side(side) {
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
-    function BattleData(side, base_stats, mod_stats, skills, mood) {
+    function BattleData(name, side, base_stats, mod_stats, skills, mood) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
+        this.name = name;
         this.side = side;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
         this.skills = skills;
         this.mood = mood;
     }
+    BattleData.prototype.log_result = function (s) {
+        log_1.Log.push("<span class=\"log_result\">" + this.name + " " + s + " " + log_1.LOG_INDENT_CHAR + "</span>");
+    };
     BattleData.prototype.take_damage = function (amount) {
         if (amount <= 0) {
-            return "took no damage";
+            this.log_result("took no damage.");
         }
         if (this.buffs.defense.get() > 1) {
             amount /= this.buffs.defense.get();
@@ -38,23 +43,23 @@ var BattleData = /** @class */ (function () {
         }
         amount = Math.floor(amount);
         this.mod_stats.hp -= amount;
-        battle_info_1.BattleInfo.result += "took " + amount + " damage. ";
+        this.log_result("took " + amount + " damage.");
         if (this.modded_base_stats().hp == 0) {
             this.mood = emotion_1.Mood.Dead;
         }
     };
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
-            battle_info_1.BattleInfo.result += "is already fully healed. ";
+            this.log_result("is already fully healed.");
         }
         if (amount < 0 || this.modded_base_stats().hp == 0) {
-            battle_info_1.BattleInfo.result += "could not be healed. ";
+            this.log_result("could not be healed.");
             return;
         }
         amount = Math.floor(amount);
         amount = Math.min(amount, -this.mod_stats.hp);
         this.mod_stats.hp += amount;
-        battle_info_1.BattleInfo.result += "healed for " + amount + ". ";
+        this.log_result("healed for " + amount + ". ");
     };
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
@@ -73,7 +78,7 @@ var BattleData = /** @class */ (function () {
             battle_info_1.BattleInfo.result += "took " + damage + "damage from poison. ";
         }
     };
-    BattleData.IDENTITY = new BattleData(BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
+    BattleData.IDENTITY = new BattleData("", BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
 exports.BattleData = BattleData;

@@ -19,7 +19,7 @@ var BattleEntry = /** @class */ (function () {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
         this.name_cell.appendChild(this.name_btn);
-        this.name_cell.appendChild(this.mood_span);
+        this.name_btn.appendChild(this.mood_span);
         parent_row.appendChild(this.name_cell);
         this.health = document.createElement("td");
         parent_row.appendChild(this.health);

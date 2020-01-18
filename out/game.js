@@ -16,6 +16,7 @@ var jlib_1 = require("./jlib");
 var actor_1 = require("./actor");
 var battle_1 = require("./battle");
 var battle_data_1 = require("./battle_data");
+var log_1 = require("./log");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -30,11 +31,13 @@ var Game = /** @class */ (function () {
         this.world = new world_1.World(this.scene, level2_1.level2_data);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
+        this.log_div = document.getElementById("log_div");
     }
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
+        this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
     };
     Game.prototype.update = function () {
         var _a, _b;

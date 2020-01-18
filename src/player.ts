@@ -6,6 +6,8 @@ import { Actor } from "./actor";
 import { BattleData, BattleSide, BattleFighter } from "./battle_data";
 import { Stats } from "./stats";
 
+export const PLAYER_NAME: string = "Player";
+
 export class Player {
   coor: Coor = new Coor(1, 1);
   dir: Dir = Dir.S;
@@ -32,6 +34,7 @@ export class Player {
     stats.ma = 0;
     stats.st = 20;
     this.battle_data = new BattleData(
+      PLAYER_NAME,
       BattleSide.Our,
       stats,
       Stats.new_mod(),
