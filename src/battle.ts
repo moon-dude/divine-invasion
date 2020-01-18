@@ -59,6 +59,7 @@ export class Battle {
     this.info_description.set_inner_html("You've been attacked by demons!");
     this.set_continue_btn(true, () => {
       Battle.Instance!.next_turn();
+      Battle.Instance!.set_continue_btn(false);
     });
     this.set_back_btn(false);
   }
@@ -82,9 +83,11 @@ export class Battle {
 
   private set_up_turn() {
     let fighter = this.current_fighter();
+    BattleInfo.actor_name = fighter.name;
     if (fighter.data.modded_base_stats().hp <= 0) {
-      return;
+      BattleInfo.actor_name = "";
     }
+    BattleInfo.description = "";
     this.battle_action_btns.set_visible(false);
     if (fighter.data.side == BattleSide.Our && fighter.name == "Player") {
       // For Player, let them choose what to do.
@@ -147,7 +150,8 @@ export class Battle {
   }
 
   private render(): void {
-
+    this.info_title.set_inner_html(BattleInfo.actor_name);
+    this.info_description.set_inner_html(BattleInfo.description);
   }
 
   private take_battle_action(
@@ -171,7 +175,6 @@ export class Battle {
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }
-    this.set_continue_btn(true);
     this.battle_action_btns.clear_buttons();
     this.battle_table.set_all_btns_enabled(false);
     this.render();
@@ -216,6 +219,8 @@ export class Battle {
     this.battle_action_btns.clear_buttons();
     this.set_continue_btn(false);
     this.set_back_btn(false);
+    this.info_title.set_inner_html("");
+    this.info_description.set_inner_html("");
     BattleInfo.clear();
     Battle.Instance = null;
   }

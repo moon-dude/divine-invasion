@@ -51437,6 +51437,7 @@ var Battle = /** @class */ (function () {
         this.info_description.set_inner_html("You've been attacked by demons!");
         this.set_continue_btn(true, function () {
             Battle.Instance.next_turn();
+            Battle.Instance.set_continue_btn(false);
         });
         this.set_back_btn(false);
     }
@@ -51457,9 +51458,11 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.set_up_turn = function () {
         var fighter = this.current_fighter();
+        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
-            return;
+            battle_info_1.BattleInfo.actor_name = "";
         }
+        battle_info_1.BattleInfo.description = "";
         this.battle_action_btns.set_visible(false);
         if (fighter.data.side == battle_data_1.BattleSide.Our && fighter.name == "Player") {
             // For Player, let them choose what to do.
@@ -51515,6 +51518,8 @@ var Battle = /** @class */ (function () {
         this.set_auto_next_interval();
     };
     Battle.prototype.render = function () {
+        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name);
+        this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
         if (skill == null) {
@@ -51532,7 +51537,6 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.set_continue_btn(true);
         this.battle_action_btns.clear_buttons();
         this.battle_table.set_all_btns_enabled(false);
         this.render();
@@ -51571,6 +51575,8 @@ var Battle = /** @class */ (function () {
         this.battle_action_btns.clear_buttons();
         this.set_continue_btn(false);
         this.set_back_btn(false);
+        this.info_title.set_inner_html("");
+        this.info_description.set_inner_html("");
         battle_info_1.BattleInfo.clear();
         Battle.Instance = null;
     };
