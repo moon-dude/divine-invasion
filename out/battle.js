@@ -32,10 +32,10 @@ var Battle = /** @class */ (function () {
         }
         this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
         this.info_description.set_inner_html("You've been attacked by demons!");
-        this.continue_btn.style.display = "";
-        this.continue_btn.onclick = function () {
+        this.set_continue_btn(true, function () {
             Battle.Instance.next_turn();
-        };
+        });
+        this.set_back_btn(false);
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
@@ -83,10 +83,14 @@ var Battle = /** @class */ (function () {
             this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
         }
         this.battle_action_btns.clear_buttons(button_index);
-        this.continue_btn.style.display = "none";
+        this.set_continue_btn(false);
+        this.set_back_btn(false, function () {
+            Battle.Instance.set_up_player_turn(fighter);
+        });
         this.render();
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
+        this.set_back_btn(false);
         if (this.current_action == "Attack") {
             this.take_battle_action(this.current_fighter(), null, [
                 last_battle_table_click
@@ -126,7 +130,7 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.continue_btn.style.display = "";
+        this.set_continue_btn(true);
         this.battle_action_btns.clear_buttons();
         this.battle_table.set_all_btns_enabled(false);
         this.render();
@@ -150,6 +154,16 @@ var Battle = /** @class */ (function () {
             }
         }
         return winner;
+    };
+    Battle.prototype.set_continue_btn = function (visible, on_click) {
+        if (on_click === void 0) { on_click = null; }
+        this.continue_btn.style.display = visible ? "" : "none";
+        this.continue_btn.onclick = on_click || this.continue_btn.onclick;
+    };
+    Battle.prototype.set_back_btn = function (visible, on_click) {
+        if (on_click === void 0) { on_click = null; }
+        this.back_btn.style.display = visible ? "" : "none";
+        this.back_btn.onclick = on_click || this.back_btn.onclick;
     };
     return Battle;
 }());

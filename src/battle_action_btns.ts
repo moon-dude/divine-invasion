@@ -1,5 +1,6 @@
 import { Battle } from "./battle";
 import { Skill } from "./data/skill";
+import { BattleInfo } from "./battle_info";
 
 export class BattleActionBtns {
   private battle_action_span: HTMLElement;
@@ -41,6 +42,9 @@ export class BattleActionBtns {
       this.battle_action_btns[idx].onclick = () => {
         // show enemy targets
         Battle.Instance.battle_table.set_their_btns_enabled(true);
+        Battle.Instance.battle_action_btns.clear_buttons();
+        Battle.Instance.set_back_btn(true);
+        BattleInfo.description = "Attack (Choose Target)";
       };
     } else {
       this.battle_action_btns[idx].innerHTML = value.name;

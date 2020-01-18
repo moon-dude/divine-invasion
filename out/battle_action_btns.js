@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_1 = require("./battle");
+var battle_info_1 = require("./battle_info");
 var BattleActionBtns = /** @class */ (function () {
     function BattleActionBtns() {
         this.battle_action_btns = [];
@@ -37,6 +38,9 @@ var BattleActionBtns = /** @class */ (function () {
             this.battle_action_btns[idx].onclick = function () {
                 // show enemy targets
                 battle_1.Battle.Instance.battle_table.set_their_btns_enabled(true);
+                battle_1.Battle.Instance.battle_action_btns.clear_buttons();
+                battle_1.Battle.Instance.set_back_btn(true);
+                battle_info_1.BattleInfo.description = "Attack (Choose Target)";
             };
         }
         else {

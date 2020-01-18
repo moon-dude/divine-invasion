@@ -51427,10 +51427,10 @@ var Battle = /** @class */ (function () {
         }
         this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
         this.info_description.set_inner_html("You've been attacked by demons!");
-        this.continue_btn.style.display = "";
-        this.continue_btn.onclick = function () {
+        this.set_continue_btn(true, function () {
             Battle.Instance.next_turn();
-        };
+        });
+        this.set_back_btn(false);
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
@@ -51478,10 +51478,14 @@ var Battle = /** @class */ (function () {
             this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
         }
         this.battle_action_btns.clear_buttons(button_index);
-        this.continue_btn.style.display = "none";
+        this.set_continue_btn(false);
+        this.set_back_btn(false, function () {
+            Battle.Instance.set_up_player_turn(fighter);
+        });
         this.render();
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
+        this.set_back_btn(false);
         if (this.current_action == "Attack") {
             this.take_battle_action(this.current_fighter(), null, [
                 last_battle_table_click
@@ -51521,7 +51525,7 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.continue_btn.style.display = "";
+        this.set_continue_btn(true);
         this.battle_action_btns.clear_buttons();
         this.battle_table.set_all_btns_enabled(false);
         this.render();
@@ -51546,6 +51550,16 @@ var Battle = /** @class */ (function () {
         }
         return winner;
     };
+    Battle.prototype.set_continue_btn = function (visible, on_click) {
+        if (on_click === void 0) { on_click = null; }
+        this.continue_btn.style.display = visible ? "" : "none";
+        this.continue_btn.onclick = on_click || this.continue_btn.onclick;
+    };
+    Battle.prototype.set_back_btn = function (visible, on_click) {
+        if (on_click === void 0) { on_click = null; }
+        this.back_btn.style.display = visible ? "" : "none";
+        this.back_btn.onclick = on_click || this.back_btn.onclick;
+    };
     return Battle;
 }());
 exports.Battle = Battle;
@@ -51554,6 +51568,7 @@ exports.Battle = Battle;
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_1 = require("./battle");
+var battle_info_1 = require("./battle_info");
 var BattleActionBtns = /** @class */ (function () {
     function BattleActionBtns() {
         this.battle_action_btns = [];
@@ -51590,6 +51605,9 @@ var BattleActionBtns = /** @class */ (function () {
             this.battle_action_btns[idx].onclick = function () {
                 // show enemy targets
                 battle_1.Battle.Instance.battle_table.set_their_btns_enabled(true);
+                battle_1.Battle.Instance.battle_action_btns.clear_buttons();
+                battle_1.Battle.Instance.set_back_btn(true);
+                battle_info_1.BattleInfo.description = "Attack (Choose Target)";
             };
         }
         else {
@@ -51604,7 +51622,7 @@ var BattleActionBtns = /** @class */ (function () {
 }());
 exports.BattleActionBtns = BattleActionBtns;
 
-},{"./battle":6}],8:[function(require,module,exports){
+},{"./battle":6,"./battle_info":10}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
@@ -51780,11 +51798,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var BattleInfo = /** @class */ (function () {
     function BattleInfo() {
     }
-    BattleInfo.set = function (name, description, result) {
-        this.actor_name = name;
-        this.description = description;
-        this.result = result;
-    };
     BattleInfo.clear = function () {
         this.actor_name = "";
         this.description = "";

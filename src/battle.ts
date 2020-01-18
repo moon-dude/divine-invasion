@@ -16,14 +16,14 @@ export class Battle {
   private turn_order: BattleIndex[];
   private battle_idx = -1;
   private info_title: SmartHTMLElement;
-  private info_description: SmartHTMLElement;
   private more_info: SmartHTMLElement;
-  private battle_action_btns: BattleActionBtns;
   private continue_btn: HTMLButtonElement;
   private back_btn: HTMLButtonElement;
 
   public battle_table: BattleTable;
+  public battle_action_btns: BattleActionBtns;
   public current_action: Skill | "Attack" | null = null;
+  public info_description: SmartHTMLElement;
 
   constructor(fighters: BattleFighter[]) {
     Battle.Instance = this;
@@ -49,10 +49,10 @@ export class Battle {
       this.fighters.get(BattleSide.Their)!
     );
     this.info_description.set_inner_html("You've been attacked by demons!");
-    this.continue_btn.style.display = "";
-    this.continue_btn.onclick = () => {
+    this.set_continue_btn(true, () => {
       Battle.Instance.next_turn();
-    }
+    });
+    this.set_back_btn(false);
   }
 
   public update() {
@@ -107,11 +107,15 @@ export class Battle {
       );
     }
     this.battle_action_btns.clear_buttons(button_index);
-    this.continue_btn.style.display = "none";
+    this.set_continue_btn(false);
+    this.set_back_btn(false, () => {
+      Battle.Instance.set_up_player_turn(fighter);
+    });
     this.render();
   }
 
   private execute_player_turn(last_battle_table_click: BattleFighter) {
+    this.set_back_btn(false);
     if (this.current_action == "Attack") {
       this.take_battle_action(this.current_fighter(), null, [
         last_battle_table_click
@@ -157,7 +161,7 @@ export class Battle {
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }
-    this.continue_btn.style.display = "";
+    this.set_continue_btn(true);
     this.battle_action_btns.clear_buttons();
     this.battle_table.set_all_btns_enabled(false);
     this.render();
@@ -186,5 +190,15 @@ export class Battle {
       }
     }
     return winner;
+  }
+
+  public set_continue_btn(visible: boolean, on_click: (() => void) | null = null) {
+    this.continue_btn.style.display = visible ? "" : "none";
+    this.continue_btn.onclick = on_click || this.continue_btn.onclick;
+  }
+
+  public set_back_btn(visible: boolean, on_click: (() => void) | null = null) {
+    this.back_btn.style.display = visible ? "" : "none";
+    this.back_btn.onclick = on_click || this.back_btn.onclick;
   }
 }
