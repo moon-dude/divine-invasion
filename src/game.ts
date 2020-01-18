@@ -26,19 +26,19 @@ export class Game {
   constructor() {
     this.scene.add(this.player.body);
     this.world = new World(this.scene, level2_data);
-    this.renderer.setSize(window.innerWidth - 50, window.innerHeight - 250);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
   }
 
   private render() {
+    this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
+    this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
     this.renderer.render(this.scene, this.player.camera);
   }
 
   public update(): void {
     this.player.update();
     this.world.update(this.player);
-    this.render();
     if (this.battle != null) {
       this.battle.update();
       const winner = this.battle.battle_winner();
@@ -57,6 +57,7 @@ export class Game {
         }
       }
     }
+    this.render();
   }
 
   public key_down(event: any) {

@@ -18,7 +18,7 @@ var Player = /** @class */ (function () {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
-        this.camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(90, 1.2, 0.1, 1300);
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.body.add(this.camera);

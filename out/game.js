@@ -29,17 +29,17 @@ var Game = /** @class */ (function () {
         this.renderer = new THREE.WebGLRenderer();
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
-        this.renderer.setSize(window.innerWidth - 50, window.innerHeight - 250);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
     }
     Game.prototype.render = function () {
+        this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
+        this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
     };
     Game.prototype.update = function () {
         this.player.update();
         this.world.update(this.player);
-        this.render();
         if (this.battle != null) {
             this.battle.update();
             var winner = this.battle.battle_winner();
@@ -59,6 +59,7 @@ var Game = /** @class */ (function () {
                 }
             }
         }
+        this.render();
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);

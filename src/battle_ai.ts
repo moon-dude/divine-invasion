@@ -1,4 +1,4 @@
-import { SkillTarget } from "./data/skill_effect";
+import { Target } from "./data/util";
 import { BattleFighter, BattleSide, other_side } from "./battle_data";
 import { random_array_element } from "./jlib";
 import { BattleInfo } from "./battle_info";
@@ -11,7 +11,7 @@ export function ai_take_turn(
   // Choose whether to attack or use skill.
   let chosen_skill = choose_skill(fighter);
   let targets: BattleFighter[] = [];
-  if (chosen_skill == null || chosen_skill.target == SkillTarget.SingleEnemy) {
+  if (chosen_skill == null || chosen_skill.target == Target.SingleEnemy) {
     // Choose a random target.
     let target = get_attack_target(fighter, fighters);
     if (target == null) {
@@ -21,7 +21,7 @@ export function ai_take_turn(
     } else {
       targets.push(target);
     }
-  } else if (chosen_skill.target == SkillTarget.SingleAlly) {
+  } else if (chosen_skill.target == Target.SingleAlly) {
     // TODO: Manually choose the best target for the skill.
     // For now just choose weakest health.
     let weakest_ally: BattleFighter | null = null;
@@ -43,7 +43,7 @@ export function ai_take_turn(
     } else {
       targets.push(weakest_ally);
     }
-  } else if (chosen_skill.target == SkillTarget.AllEnemies) {
+  } else if (chosen_skill.target == Target.AllEnemies) {
     // TODO: select all enemies.
     const enemy_fighters = fighters
       .get(other_side(fighter.data.side))!

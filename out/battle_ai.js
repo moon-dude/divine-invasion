@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var skill_effect_1 = require("./data/skill_effect");
+var util_1 = require("./data/util");
 var battle_data_1 = require("./battle_data");
 var jlib_1 = require("./jlib");
 var battle_info_1 = require("./battle_info");
@@ -8,7 +8,7 @@ function ai_take_turn(fighter, fighters) {
     // Choose whether to attack or use skill.
     var chosen_skill = choose_skill(fighter);
     var targets = [];
-    if (chosen_skill == null || chosen_skill.target == skill_effect_1.SkillTarget.SingleEnemy) {
+    if (chosen_skill == null || chosen_skill.target == util_1.Target.SingleEnemy) {
         // Choose a random target.
         var target = get_attack_target(fighter, fighters);
         if (target == null) {
@@ -20,7 +20,7 @@ function ai_take_turn(fighter, fighters) {
             targets.push(target);
         }
     }
-    else if (chosen_skill.target == skill_effect_1.SkillTarget.SingleAlly) {
+    else if (chosen_skill.target == util_1.Target.SingleAlly) {
         // TODO: Manually choose the best target for the skill.
         // For now just choose weakest health.
         var weakest_ally = null;
@@ -42,7 +42,7 @@ function ai_take_turn(fighter, fighters) {
             targets.push(weakest_ally);
         }
     }
-    else if (chosen_skill.target == skill_effect_1.SkillTarget.AllEnemies) {
+    else if (chosen_skill.target == util_1.Target.AllEnemies) {
         // TODO: select all enemies.
         var enemy_fighters = fighters
             .get(battle_data_1.other_side(fighter.data.side))

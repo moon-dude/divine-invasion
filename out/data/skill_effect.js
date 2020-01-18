@@ -60,16 +60,6 @@ var SkillPower;
     SkillPower[SkillPower["Heavy"] = 2] = "Heavy";
     SkillPower[SkillPower["Severe"] = 3] = "Severe";
 })(SkillPower = exports.SkillPower || (exports.SkillPower = {}));
-var SkillTarget;
-(function (SkillTarget) {
-    SkillTarget[SkillTarget["SingleAlly"] = 0] = "SingleAlly";
-    SkillTarget[SkillTarget["SingleEnemy"] = 1] = "SingleEnemy";
-    SkillTarget[SkillTarget["All"] = 2] = "All";
-    SkillTarget[SkillTarget["AllEnemies"] = 3] = "AllEnemies";
-    SkillTarget[SkillTarget["AllAllies"] = 4] = "AllAllies";
-    SkillTarget[SkillTarget["Multi"] = 5] = "Multi";
-    SkillTarget[SkillTarget["Self"] = 6] = "Self";
-})(SkillTarget = exports.SkillTarget || (exports.SkillTarget = {}));
 var SkillHits;
 (function (SkillHits) {
     SkillHits[SkillHits["X1"] = 0] = "X1";

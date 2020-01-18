@@ -12,9 +12,9 @@ export class Player {
   body: THREE.Object3D = new THREE.Object3D();
   camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
     90,
-    window.innerWidth / window.innerHeight,
+    1.2,
     0.1,
-    1000
+    1300
   );
   private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, 0.5);
   movement_locked: boolean = false;

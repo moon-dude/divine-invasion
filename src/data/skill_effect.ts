@@ -62,16 +62,6 @@ export enum SkillPower {
   Severe
 }
 
-export enum SkillTarget {
-  SingleAlly,
-  SingleEnemy,
-  All,
-  AllEnemies,
-  AllAllies,
-  Multi,
-  Self
-}
-
 export enum SkillHits {
   X1,
   X1To2,

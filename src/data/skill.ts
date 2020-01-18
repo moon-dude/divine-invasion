@@ -3,8 +3,8 @@ import {
   SkillElement,
   SkillPower,
   SkillHits,
-  SkillTarget
 } from "./skill_effect";
+import { Target } from "./util";
 
 export type SkillId = string;
 
@@ -18,7 +18,7 @@ export class Skill {
   element: SkillElement;
   hits?: SkillHits;
   rank: number;
-  target: SkillTarget;
+  target: Target;
   remark?: string = "";
   also_cast?: string[] = [];
 
@@ -30,7 +30,7 @@ export class Skill {
     element: SkillElement,
     hits: SkillHits,
     rank: number,
-    target: SkillTarget
+    target: Target
   ) {
     this.name = name;
     this.cost = cost;
