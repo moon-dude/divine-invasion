@@ -19,12 +19,28 @@ var log_1 = require("./log");
 var game_1 = require("./game");
 var player_1 = require("./player");
 var items_1 = require("./data/raw/items");
-var BattleAction;
-(function (BattleAction) {
-    BattleAction[BattleAction["Attack"] = 0] = "Attack";
-    BattleAction[BattleAction["Inventory"] = 1] = "Inventory";
-    // Demand,
-})(BattleAction = exports.BattleAction || (exports.BattleAction = {}));
+var skills_1 = require("./data/raw/skills");
+var AttackAction = /** @class */ (function () {
+    function AttackAction() {
+    }
+    return AttackAction;
+}());
+exports.AttackAction = AttackAction;
+;
+var InventoryAction = /** @class */ (function () {
+    function InventoryAction(value) {
+        this.item_name = value;
+    }
+    return InventoryAction;
+}());
+exports.InventoryAction = InventoryAction;
+var SkillAction = /** @class */ (function () {
+    function SkillAction(value) {
+        this.skill_name = value;
+    }
+    return SkillAction;
+}());
+exports.SkillAction = SkillAction;
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -33,7 +49,6 @@ var Battle = /** @class */ (function () {
         this.turn_idx = 0;
         this.battle_idx = -1;
         this.current_action = null;
-        this.current_item = null;
         Battle.Instance = this;
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
@@ -109,7 +124,7 @@ var Battle = /** @class */ (function () {
                 function () {
                     // Show enemy targets & back button.
                     Battle.Instance.battle_table.set_their_btns_enabled(true);
-                    Battle.Instance.current_action = BattleAction.Attack;
+                    Battle.Instance.current_action = new AttackAction();
                     game_1.Game.Menu.push("Attack (Choose Target)", [
                         [
                             "Back",
@@ -124,7 +139,7 @@ var Battle = /** @class */ (function () {
                 "Inventory",
                 function () {
                     var e_1, _a;
-                    Battle.Instance.current_action = BattleAction.Inventory;
+                    Battle.Instance.current_action = new InventoryAction(null);
                     var menu_entries = [[
                             "Back",
                             function () {
@@ -133,7 +148,7 @@ var Battle = /** @class */ (function () {
                         ]];
                     var _loop_2 = function (entry) {
                         menu_entries.push([entry[0] + "(x" + entry[1] + ")", function () {
-                                Battle.Instance.current_item = entry[0];
+                                Battle.Instance.current_action = new InventoryAction(entry[0]);
                                 _this.battle_table.set_all_btns_enabled(true);
                                 game_1.Game.Menu.push("Use item `" + entry[0] + "` (Select target)", [
                                     ["Back", function () { game_1.Game.Menu.pop(); }]
@@ -162,7 +177,7 @@ var Battle = /** @class */ (function () {
                 fighter.data.skills[i].name,
                 function () {
                     Battle.Instance.battle_table.set_all_btns_enabled(true);
-                    Battle.Instance.current_action = fighter.data.skills[i];
+                    Battle.Instance.current_action = new SkillAction(fighter.data.skills[i].name);
                     game_1.Game.Menu.push("Use `" + fighter.data.skills[i].name + "` (Choose Target)", [
                         [
                             "Back",
@@ -190,7 +205,7 @@ var Battle = /** @class */ (function () {
     Battle.prototype.take_battle_action = function (fighter, action, targets) {
         var _a;
         fighter.data.mark_just_acted();
-        if (action == BattleAction.Attack) {
+        if (action instanceof AttackAction) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.data.modded_base_stats().st +
                 fighter.data.modded_base_stats().dx);
@@ -198,18 +213,20 @@ var Battle = /** @class */ (function () {
                 targets[t].data.take_damage(damage);
             }
         }
-        else if (action == BattleAction.Inventory) {
-            var item = items_1.ITEM_MAP.get(this.current_item);
+        else if (action instanceof InventoryAction) {
+            log_1.Log.push(this.current_fighter().name + " used `" + action.item_name + "`.");
+            var item = items_1.ITEM_MAP.get(action.item_name);
             for (var t = 0; t < targets.length; t++) {
                 (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t].data);
             }
         }
-        else {
+        else if (action instanceof SkillAction) {
             // (Skill).
-            fighter.data.mod_stats.mp -= action.cost;
-            log_1.Log.push(this.current_fighter().name + " used `" + action.name + "`.");
+            var skill = skills_1.SKILL_MAP.get(action.skill_name);
+            fighter.data.mod_stats.mp -= skill.cost;
+            log_1.Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
             for (var t = 0; t < targets.length; t++) {
-                skill_effect_1.resolve_skill_effect(fighter, action, targets[t]);
+                skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
         game_1.Game.Menu.clear();

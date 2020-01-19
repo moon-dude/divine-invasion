@@ -48,7 +48,12 @@ function ai_take_turn(fighter, fighters) {
             targets.push(enemy_fighters[i]);
         }
     }
-    return [chosen_skill || battle_1.BattleAction.Attack, targets];
+    if (chosen_skill == null) {
+        return [new battle_1.AttackAction(), targets];
+    }
+    else {
+        return [new battle_1.SkillAction(chosen_skill.name), targets];
+    }
 }
 exports.ai_take_turn = ai_take_turn;
 function choose_skill(attacker) {
