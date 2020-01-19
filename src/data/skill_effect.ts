@@ -1,7 +1,7 @@
 import { BattleFighter } from "../battle_data";
-import { BattleInfo } from "../battle_info";
 import { Skill } from "./skill";
 import { Buffs, Buffable } from "./buffs";
+import { Log } from "../log";
 
 export enum SkillEffect {
   Damage = "Damage",
@@ -139,7 +139,7 @@ export function resolve_skill_effect(
       if (success) {
         target.data.take_damage(damage);
       } else {
-        BattleInfo.result += target.name + " dodged! ";
+        Log.push(target.name + " dodged! ");
       }
       break;
     case SkillEffect.Heal:
@@ -198,8 +198,8 @@ function handy_buff_handler(
 ) {
   const power = buff_power(skill_power) * (positive ? 1 : -1);
   buffer(target.data.buffs).raise(power);
-  BattleInfo.result +=
-    buffer(target.data.buffs) + (positive ? " raised" : " lowered");
+  Log.push(
+    buffer(target.data.buffs) + (positive ? " raised" : " lowered"));
 }
 
 function handy_ailment_handler(
@@ -209,10 +209,10 @@ function handy_ailment_handler(
 ) {
   // positive in the medical way.
   if (positive) {
-    BattleInfo.result += target.name + " is now " + effect;
+    Log.push(target.name + " is now " + effect);
     target.data.ailments.add(effect);
   } else if (target.data.ailments.has(effect)) {
-    BattleInfo.result += target.name + " is no longer " + effect;
+    Log.push(target.name + " is no longer " + effect);
     target.data.ailments.delete(effect);
   }
 }

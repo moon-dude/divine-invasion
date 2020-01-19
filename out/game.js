@@ -17,6 +17,7 @@ var actor_1 = require("./actor");
 var battle_1 = require("./battle");
 var battle_data_1 = require("./battle_data");
 var log_1 = require("./log");
+var menu_1 = require("./menu");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -113,6 +114,7 @@ var Game = /** @class */ (function () {
             }
         }
     };
+    Game.Menu = new menu_1.Menu("menu_div");
     return Game;
 }());
 exports.Game = Game;

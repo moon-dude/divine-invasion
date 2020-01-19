@@ -9,8 +9,11 @@ import { Actor } from "./actor";
 import { Battle } from "./battle";
 import { BattleFighter, BattleSide } from "./battle_data";
 import { Log } from "./log";
+import { Menu } from "./menu";
 
 export class Game {
+  public static Menu: Menu = new Menu("menu_div");
+
   private world: World;
 
   // Meta.

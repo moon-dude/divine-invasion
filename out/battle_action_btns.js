@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_1 = require("./battle");
-var battle_info_1 = require("./battle_info");
+var game_1 = require("./game");
 var BattleActionBtns = /** @class */ (function () {
     function BattleActionBtns() {
         this.battle_action_btns = [];
@@ -39,9 +39,16 @@ var BattleActionBtns = /** @class */ (function () {
                 // show enemy targets
                 battle_1.Battle.Instance.battle_table.set_their_btns_enabled(true);
                 battle_1.Battle.Instance.battle_action_btns.clear_buttons();
-                battle_1.Battle.Instance.set_back_btn(true);
-                battle_info_1.BattleInfo.description = "Attack (Choose Target)";
+                game_1.Game.Menu.push("Attack (Choose Target)", [
+                    ["Back", function () { game_1.Game.Menu.pop(); }]
+                ]);
             };
+        }
+        else if (value == battle_1.BattleAction.Inventory) {
+            this.battle_action_btns[idx].innerHTML = "Inventory";
+            game_1.Game.Menu.push("Inventory (Choose Item)", [
+                ["Back", function () { game_1.Game.Menu.pop(); }]
+            ]);
         }
         else {
             this.battle_action_btns[idx].innerHTML = value.name;

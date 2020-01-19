@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var battle_info_1 = require("../battle_info");
+var log_1 = require("../log");
 var SkillEffect;
 (function (SkillEffect) {
     SkillEffect["Damage"] = "Damage";
@@ -121,7 +121,7 @@ function resolve_skill_effect(fighter, skill, target) {
                 target.data.take_damage(damage);
             }
             else {
-                battle_info_1.BattleInfo.result += target.name + " dodged! ";
+                log_1.Log.push(target.name + " dodged! ");
             }
             break;
         case SkillEffect.Heal:
@@ -174,17 +174,16 @@ exports.resolve_skill_effect = resolve_skill_effect;
 function handy_buff_handler(buffer, target, positive, skill_power) {
     var power = buff_power(skill_power) * (positive ? 1 : -1);
     buffer(target.data.buffs).raise(power);
-    battle_info_1.BattleInfo.result +=
-        buffer(target.data.buffs) + (positive ? " raised" : " lowered");
+    log_1.Log.push(buffer(target.data.buffs) + (positive ? " raised" : " lowered"));
 }
 function handy_ailment_handler(target, effect, positive) {
     // positive in the medical way.
     if (positive) {
-        battle_info_1.BattleInfo.result += target.name + " is now " + effect;
+        log_1.Log.push(target.name + " is now " + effect);
         target.data.ailments.add(effect);
     }
     else if (target.data.ailments.has(effect)) {
-        battle_info_1.BattleInfo.result += target.name + " is no longer " + effect;
+        log_1.Log.push(target.name + " is no longer " + effect);
         target.data.ailments.delete(effect);
     }
 }

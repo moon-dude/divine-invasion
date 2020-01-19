@@ -5,6 +5,7 @@ import { TileMap } from "./map";
 import { Actor } from "./actor";
 import { BattleData, BattleSide, BattleFighter } from "./battle_data";
 import { Stats } from "./stats";
+import { Inventory } from "./inventory";
 
 export const PLAYER_NAME: string = "Player";
 
@@ -19,9 +20,11 @@ export class Player {
     1300
   );
   private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, 0.5);
-  movement_locked: boolean = false;
-  battle_data: BattleData;
-  supports: Actor[];
+  
+  public movement_locked: boolean = false;
+  public battle_data: BattleData;
+  public supports: Actor[];
+  public inventory: Inventory = new Inventory();
 
   constructor() {
     this.body.add(this.camera);
@@ -42,6 +45,7 @@ export class Player {
       null
     );
     this.supports = [Actor.from_demon("Pixie", BattleSide.Our)];
+    this.inventory.add_item("Life Stone", 5);
   }
 
   public update() {

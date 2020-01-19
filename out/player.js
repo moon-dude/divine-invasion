@@ -13,6 +13,7 @@ var constants_1 = require("./constants");
 var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
+var inventory_1 = require("./inventory");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
@@ -22,6 +23,7 @@ var Player = /** @class */ (function () {
         this.camera = new THREE.PerspectiveCamera(90, 1.2, 0.1, 1300);
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
+        this.inventory = new inventory_1.Inventory();
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
@@ -33,6 +35,7 @@ var Player = /** @class */ (function () {
         stats.st = 20;
         this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
+        this.inventory.add_item("Life Stone", 5);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
 var battle_data_1 = require("./battle_data");
 var jlib_1 = require("./jlib");
-var battle_info_1 = require("./battle_info");
 function ai_take_turn(fighter, fighters) {
     // Choose whether to attack or use skill.
     var chosen_skill = choose_skill(fighter);
@@ -12,7 +11,6 @@ function ai_take_turn(fighter, fighters) {
         // Choose a random target.
         var target = get_attack_target(fighter, fighters);
         if (target == null) {
-            battle_info_1.BattleInfo.description = "has no one to attack! ";
             fighter.data.before_end_of_turn();
             return [null, []];
         }
@@ -36,7 +34,6 @@ function ai_take_turn(fighter, fighters) {
             }
         }
         if (weakest_ally == null) {
-            battle_info_1.BattleInfo.description = "could not find a valid target!";
         }
         else {
             targets.push(weakest_ally);

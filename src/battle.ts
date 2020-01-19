@@ -1,16 +1,15 @@
 import { BattleSide, BattleFighter, BattleIndex } from "./battle_data";
 import { Skill } from "./data/skill";
 import { resolve_skill_effect } from "./data/skill_effect";
-import { BattleInfo } from "./battle_info";
-import { SmartHTMLElement } from "./SmartHTMLElement";
 import { BattleTable } from "./battle_table";
 import { ai_take_turn } from "./battle_ai";
-import { BattleActionBtns } from "./battle_action_btns";
 import { Log } from "./log";
+import { Game } from "./game";
+import { MenuEntry, Menu } from "./menu";
 
 export enum BattleAction {
   Attack,
-  // Inventory,
+  Inventory
   // Demand,
 }
 
@@ -23,28 +22,16 @@ export class Battle {
   private turn_order: BattleIndex[];
   private turn_idx: number = 0;
   private battle_idx: number = -1;
-  private info_title: SmartHTMLElement;
-  private more_info: SmartHTMLElement;
-  private continue_btn: HTMLButtonElement;
-  private back_btn: HTMLButtonElement;
 
   public battle_table: BattleTable;
-  public battle_action_btns: BattleActionBtns;
   public current_action: Skill | BattleAction | null = null;
-  public info_description: SmartHTMLElement;
 
   constructor(fighters: BattleFighter[]) {
     Battle.Instance = this;
-    this.info_title = new SmartHTMLElement("info_title");
-    this.info_description = new SmartHTMLElement("info_description");
-    this.more_info = new SmartHTMLElement("more_info_div");
     this.fighters = new Map();
     this.fighters.set(BattleSide.Our, []);
     this.fighters.set(BattleSide.Their, []);
     this.turn_order = [];
-    this.battle_action_btns = new BattleActionBtns();
-    this.continue_btn = document.getElementById("continue_btn")! as HTMLButtonElement;
-    this.back_btn = document.getElementById("back_btn")! as HTMLButtonElement;
     for (let i = 0; i < fighters.length; i++) {
       const side: BattleSide = fighters[i].data.side;
       this.fighters.get(side)?.push(fighters[i]);
@@ -56,12 +43,14 @@ export class Battle {
       this.fighters.get(BattleSide.Our)!,
       this.fighters.get(BattleSide.Their)!
     );
-    this.info_description.set_inner_html("You've been attacked by demons!");
-    this.set_continue_btn(true, () => {
-      Battle.Instance!.next_turn();
-      Battle.Instance!.set_continue_btn(false);
-    });
-    this.set_back_btn(false);
+    Game.Menu.push("You've been attacked by demons!", [
+      [
+        "Continue",
+        () => {
+          Battle.Instance!.next_turn();
+        }
+      ]
+    ]);
   }
 
   public update() {
@@ -71,7 +60,10 @@ export class Battle {
       this.execute_player_turn(last_battle_table_click);
     }
     // Update table for new fighter values.
-    this.battle_table.update(this.fighters.get(BattleSide.Our)!, this.fighters.get(BattleSide.Their)!);
+    this.battle_table.update(
+      this.fighters.get(BattleSide.Our)!,
+      this.fighters.get(BattleSide.Their)!
+    );
   }
 
   // Increment turn index, take turn, render changes.
@@ -83,14 +75,10 @@ export class Battle {
 
   private set_up_turn() {
     let fighter = this.current_fighter();
-    BattleInfo.actor_name = fighter.name;
     if (fighter.data.modded_base_stats().hp <= 0) {
-      BattleInfo.actor_name = "";
       this.set_auto_next_interval();
       return;
     }
-    BattleInfo.description = "";
-    this.battle_action_btns.set_visible(false);
     if (fighter.data.side == BattleSide.Our && fighter.name == "Player") {
       // For Player, let them choose what to do.
       this.set_up_player_turn(fighter);
@@ -106,42 +94,87 @@ export class Battle {
 
   private set_auto_next_interval() {
     const SECONDS = 0.5;
-    window.setTimeout(auto_next_interval_callback, SECONDS * 1000, this.turn_idx);
+    window.setTimeout(
+      auto_next_interval_callback,
+      SECONDS * 1000,
+      this.turn_idx
+    );
   }
-  
+
   public is_auto_next_ready(interval_idx: number): boolean {
     return interval_idx == this.turn_idx;
   }
-  
+
   private current_fighter(): BattleFighter {
     let turn_index = this.turn_order[this.battle_idx]!;
     return this.fighters.get(turn_index.side)![turn_index.index]!;
   }
 
   private set_up_player_turn(fighter: BattleFighter) {
-    this.battle_action_btns.set_visible(true);
-    let button_index = 0;
-    this.battle_action_btns.set_button_skill(button_index++, BattleAction.Attack);
+    let battle_action_entries: MenuEntry[] = [
+      [
+        "Attack",
+        () => {
+          // Show enemy targets & back button.
+          Battle.Instance!.battle_table.set_their_btns_enabled(true);
+          Battle.Instance!.current_action = BattleAction.Attack;
+          Game.Menu.push("Attack (Choose Target)", [
+            [
+              "Back",
+              () => {
+                Game.Menu.pop();
+              }
+            ]
+          ]);
+        }
+      ],
+      [
+        "Inventory",
+        () => {
+          Battle.Instance!.current_action = BattleAction.Inventory;
+          // TODO: Itemize inventory.
+          Game.Menu.push("Attack (Choose Target)", [
+            [
+              "Back",
+              () => {
+                Game.Menu.pop();
+              }
+            ]
+          ]);
+        }
+      ]
+    ];
     for (let i = 0; i < fighter.data.skills.length; i++) {
-      this.battle_action_btns.set_button_skill(
-        button_index++,
-        fighter.data.skills[i]
-      );
+      battle_action_entries.push([
+        fighter.data.skills[i].name,
+        () => {
+          Battle.Instance!.battle_table.set_all_btns_enabled(true);
+          Battle.Instance!.current_action = fighter.data.skills[i];
+          Game.Menu.push(
+            "Use `" + fighter.data.skills[i].name + "` (Choose Target)",
+            [
+              [
+                "Back",
+                () => {
+                  Game.Menu.pop();
+                }
+              ]
+            ]
+          );
+        }
+      ]);
     }
-    this.battle_action_btns.clear_buttons(button_index);
-    this.set_continue_btn(false);
-    this.set_back_btn(false, () => {
-      Battle.Instance!.set_up_player_turn(fighter);
-    });
-    this.render();
+    Game.Menu.push("Player turn", battle_action_entries);
   }
 
   private execute_player_turn(last_battle_table_click: BattleFighter) {
-    this.set_back_btn(false);
+    Game.Menu.clear();
     if (this.current_action == BattleAction.Attack) {
       this.take_battle_action(this.current_fighter(), null, [
         last_battle_table_click
       ]);
+    } else if (this.current_action == BattleAction.Inventory) {
+      // TODO:
     } else {
       this.take_battle_action(this.current_fighter(), this.current_action, [
         last_battle_table_click
@@ -149,11 +182,6 @@ export class Battle {
     }
     this.current_action = null;
     this.set_auto_next_interval();
-  }
-
-  private render(): void {
-    this.info_title.set_inner_html(BattleInfo.actor_name);
-    this.info_description.set_inner_html(BattleInfo.description);
   }
 
   private take_battle_action(
@@ -178,9 +206,8 @@ export class Battle {
         resolve_skill_effect(fighter, skill, targets[t]);
       }
     }
-    this.battle_action_btns.clear_buttons();
+    Game.Menu.clear();
     this.battle_table.set_all_btns_enabled(false);
-    this.render();
   }
 
   // returns null if battle is not over.
@@ -208,23 +235,8 @@ export class Battle {
     return winner;
   }
 
-  public set_continue_btn(visible: boolean, on_click: (() => void) | null = null) {
-    this.continue_btn.style.display = visible ? "" : "none";
-    this.continue_btn.onclick = on_click || this.continue_btn.onclick;
-  }
-
-  public set_back_btn(visible: boolean, on_click: (() => void) | null = null) {
-    this.back_btn.style.display = visible ? "" : "none";
-    this.back_btn.onclick = on_click || this.back_btn.onclick;
-  }
-
   public end(): void {
-    this.battle_action_btns.clear_buttons();
-    this.set_continue_btn(false);
-    this.set_back_btn(false);
-    this.info_title.set_inner_html("");
-    this.info_description.set_inner_html("");
-    BattleInfo.clear();
+    Game.Menu.clear();
     Battle.Instance = null;
   }
 }

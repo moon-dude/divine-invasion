@@ -2,16 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_info_1 = require("./battle_info");
-var SmartHTMLElement_1 = require("./SmartHTMLElement");
 var battle_table_1 = require("./battle_table");
 var battle_ai_1 = require("./battle_ai");
-var battle_action_btns_1 = require("./battle_action_btns");
 var log_1 = require("./log");
+var game_1 = require("./game");
 var BattleAction;
 (function (BattleAction) {
     BattleAction[BattleAction["Attack"] = 0] = "Attack";
-    // Inventory,
+    BattleAction[BattleAction["Inventory"] = 1] = "Inventory";
     // Demand,
 })(BattleAction = exports.BattleAction || (exports.BattleAction = {}));
 // This class should be instantiated and destroyed without any move
@@ -23,28 +21,24 @@ var Battle = /** @class */ (function () {
         this.battle_idx = -1;
         this.current_action = null;
         Battle.Instance = this;
-        this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
-        this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
-        this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
         this.turn_order = [];
-        this.battle_action_btns = new battle_action_btns_1.BattleActionBtns();
-        this.continue_btn = document.getElementById("continue_btn");
-        this.back_btn = document.getElementById("back_btn");
         for (var i = 0; i < fighters.length; i++) {
             var side = fighters[i].data.side;
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
         this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
-        this.info_description.set_inner_html("You've been attacked by demons!");
-        this.set_continue_btn(true, function () {
-            Battle.Instance.next_turn();
-            Battle.Instance.set_continue_btn(false);
-        });
-        this.set_back_btn(false);
+        game_1.Game.Menu.push("You've been attacked by demons!", [
+            [
+                "Continue",
+                function () {
+                    Battle.Instance.next_turn();
+                }
+            ]
+        ]);
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
@@ -63,14 +57,10 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.set_up_turn = function () {
         var fighter = this.current_fighter();
-        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
-            battle_info_1.BattleInfo.actor_name = "";
             this.set_auto_next_interval();
             return;
         }
-        battle_info_1.BattleInfo.description = "";
-        this.battle_action_btns.set_visible(false);
         if (fighter.data.side == battle_data_1.BattleSide.Our && fighter.name == "Player") {
             // For Player, let them choose what to do.
             this.set_up_player_turn(fighter);
@@ -96,25 +86,70 @@ var Battle = /** @class */ (function () {
         return this.fighters.get(turn_index.side)[turn_index.index];
     };
     Battle.prototype.set_up_player_turn = function (fighter) {
-        this.battle_action_btns.set_visible(true);
-        var button_index = 0;
-        this.battle_action_btns.set_button_skill(button_index++, BattleAction.Attack);
+        var battle_action_entries = [
+            [
+                "Attack",
+                function () {
+                    // Show enemy targets & back button.
+                    Battle.Instance.battle_table.set_their_btns_enabled(true);
+                    Battle.Instance.current_action = BattleAction.Attack;
+                    game_1.Game.Menu.push("Attack (Choose Target)", [
+                        [
+                            "Back",
+                            function () {
+                                game_1.Game.Menu.pop();
+                            }
+                        ]
+                    ]);
+                }
+            ],
+            [
+                "Inventory",
+                function () {
+                    Battle.Instance.current_action = BattleAction.Inventory;
+                    // TODO: Itemize inventory.
+                    game_1.Game.Menu.push("Attack (Choose Target)", [
+                        [
+                            "Back",
+                            function () {
+                                game_1.Game.Menu.pop();
+                            }
+                        ]
+                    ]);
+                }
+            ]
+        ];
+        var _loop_1 = function (i) {
+            battle_action_entries.push([
+                fighter.data.skills[i].name,
+                function () {
+                    Battle.Instance.battle_table.set_all_btns_enabled(true);
+                    Battle.Instance.current_action = fighter.data.skills[i];
+                    game_1.Game.Menu.push("Use `" + fighter.data.skills[i].name + "` (Choose Target)", [
+                        [
+                            "Back",
+                            function () {
+                                game_1.Game.Menu.pop();
+                            }
+                        ]
+                    ]);
+                }
+            ]);
+        };
         for (var i = 0; i < fighter.data.skills.length; i++) {
-            this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
+            _loop_1(i);
         }
-        this.battle_action_btns.clear_buttons(button_index);
-        this.set_continue_btn(false);
-        this.set_back_btn(false, function () {
-            Battle.Instance.set_up_player_turn(fighter);
-        });
-        this.render();
+        game_1.Game.Menu.push("Player turn", battle_action_entries);
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
-        this.set_back_btn(false);
+        game_1.Game.Menu.clear();
         if (this.current_action == BattleAction.Attack) {
             this.take_battle_action(this.current_fighter(), null, [
                 last_battle_table_click
             ]);
+        }
+        else if (this.current_action == BattleAction.Inventory) {
+            // TODO:
         }
         else {
             this.take_battle_action(this.current_fighter(), this.current_action, [
@@ -123,10 +158,6 @@ var Battle = /** @class */ (function () {
         }
         this.current_action = null;
         this.set_auto_next_interval();
-    };
-    Battle.prototype.render = function () {
-        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name);
-        this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
         fighter.data.mark_just_acted();
@@ -145,9 +176,8 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.battle_action_btns.clear_buttons();
+        game_1.Game.Menu.clear();
         this.battle_table.set_all_btns_enabled(false);
-        this.render();
     };
     // returns null if battle is not over.
     Battle.prototype.battle_winner = function () {
@@ -169,23 +199,8 @@ var Battle = /** @class */ (function () {
         }
         return winner;
     };
-    Battle.prototype.set_continue_btn = function (visible, on_click) {
-        if (on_click === void 0) { on_click = null; }
-        this.continue_btn.style.display = visible ? "" : "none";
-        this.continue_btn.onclick = on_click || this.continue_btn.onclick;
-    };
-    Battle.prototype.set_back_btn = function (visible, on_click) {
-        if (on_click === void 0) { on_click = null; }
-        this.back_btn.style.display = visible ? "" : "none";
-        this.back_btn.onclick = on_click || this.back_btn.onclick;
-    };
     Battle.prototype.end = function () {
-        this.battle_action_btns.clear_buttons();
-        this.set_continue_btn(false);
-        this.set_back_btn(false);
-        this.info_title.set_inner_html("");
-        this.info_description.set_inner_html("");
-        battle_info_1.BattleInfo.clear();
+        game_1.Game.Menu.clear();
         Battle.Instance = null;
     };
     Battle.Instance = null;

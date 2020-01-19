@@ -51246,27 +51246,6 @@ Bb;k.WebGLRenderer=pg;k.WebGLUtils=Oh;k.WireframeGeometry=Kc;k.WireframeHelper=f
 
 },{}],4:[function(require,module,exports){
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var SmartHTMLElement = /** @class */ (function () {
-    function SmartHTMLElement(id) {
-        this.value = document.getElementById(id);
-    }
-    SmartHTMLElement.prototype.set_inner_html = function (s) {
-        if (this.value.innerHTML != s) {
-            this.value.innerHTML = s;
-        }
-    };
-    SmartHTMLElement.prototype.set_display = function (s) {
-        if (this.value.style.display != s) {
-            this.value.style.display = s;
-        }
-    };
-    return SmartHTMLElement;
-}());
-exports.SmartHTMLElement = SmartHTMLElement;
-
-},{}],5:[function(require,module,exports){
-"use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -51399,7 +51378,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./actor_tween":6,"./battle_data":10,"./constants":13,"./data/raw/demons":18,"./data/raw/skills":19,"./emotion":22,"./jlib":27,"./stats":32,"three":3}],6:[function(require,module,exports){
+},{"./actor_tween":5,"./battle_data":8,"./constants":10,"./data/raw/demons":15,"./data/raw/skills":16,"./emotion":19,"./jlib":25,"./stats":31,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var BUMP_Z_MAX = 1.1;
@@ -51443,21 +51422,19 @@ var ActorTween = /** @class */ (function () {
 }());
 exports.ActorTween = ActorTween;
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_info_1 = require("./battle_info");
-var SmartHTMLElement_1 = require("./SmartHTMLElement");
 var battle_table_1 = require("./battle_table");
 var battle_ai_1 = require("./battle_ai");
-var battle_action_btns_1 = require("./battle_action_btns");
 var log_1 = require("./log");
+var game_1 = require("./game");
 var BattleAction;
 (function (BattleAction) {
     BattleAction[BattleAction["Attack"] = 0] = "Attack";
-    // Inventory,
+    BattleAction[BattleAction["Inventory"] = 1] = "Inventory";
     // Demand,
 })(BattleAction = exports.BattleAction || (exports.BattleAction = {}));
 // This class should be instantiated and destroyed without any move
@@ -51469,28 +51446,24 @@ var Battle = /** @class */ (function () {
         this.battle_idx = -1;
         this.current_action = null;
         Battle.Instance = this;
-        this.info_title = new SmartHTMLElement_1.SmartHTMLElement("info_title");
-        this.info_description = new SmartHTMLElement_1.SmartHTMLElement("info_description");
-        this.more_info = new SmartHTMLElement_1.SmartHTMLElement("more_info_div");
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
         this.turn_order = [];
-        this.battle_action_btns = new battle_action_btns_1.BattleActionBtns();
-        this.continue_btn = document.getElementById("continue_btn");
-        this.back_btn = document.getElementById("back_btn");
         for (var i = 0; i < fighters.length; i++) {
             var side = fighters[i].data.side;
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
         this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
-        this.info_description.set_inner_html("You've been attacked by demons!");
-        this.set_continue_btn(true, function () {
-            Battle.Instance.next_turn();
-            Battle.Instance.set_continue_btn(false);
-        });
-        this.set_back_btn(false);
+        game_1.Game.Menu.push("You've been attacked by demons!", [
+            [
+                "Continue",
+                function () {
+                    Battle.Instance.next_turn();
+                }
+            ]
+        ]);
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
@@ -51509,14 +51482,10 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.set_up_turn = function () {
         var fighter = this.current_fighter();
-        battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
-            battle_info_1.BattleInfo.actor_name = "";
             this.set_auto_next_interval();
             return;
         }
-        battle_info_1.BattleInfo.description = "";
-        this.battle_action_btns.set_visible(false);
         if (fighter.data.side == battle_data_1.BattleSide.Our && fighter.name == "Player") {
             // For Player, let them choose what to do.
             this.set_up_player_turn(fighter);
@@ -51542,25 +51511,70 @@ var Battle = /** @class */ (function () {
         return this.fighters.get(turn_index.side)[turn_index.index];
     };
     Battle.prototype.set_up_player_turn = function (fighter) {
-        this.battle_action_btns.set_visible(true);
-        var button_index = 0;
-        this.battle_action_btns.set_button_skill(button_index++, BattleAction.Attack);
+        var battle_action_entries = [
+            [
+                "Attack",
+                function () {
+                    // Show enemy targets & back button.
+                    Battle.Instance.battle_table.set_their_btns_enabled(true);
+                    Battle.Instance.current_action = BattleAction.Attack;
+                    game_1.Game.Menu.push("Attack (Choose Target)", [
+                        [
+                            "Back",
+                            function () {
+                                game_1.Game.Menu.pop();
+                            }
+                        ]
+                    ]);
+                }
+            ],
+            [
+                "Inventory",
+                function () {
+                    Battle.Instance.current_action = BattleAction.Inventory;
+                    // TODO: Itemize inventory.
+                    game_1.Game.Menu.push("Attack (Choose Target)", [
+                        [
+                            "Back",
+                            function () {
+                                game_1.Game.Menu.pop();
+                            }
+                        ]
+                    ]);
+                }
+            ]
+        ];
+        var _loop_1 = function (i) {
+            battle_action_entries.push([
+                fighter.data.skills[i].name,
+                function () {
+                    Battle.Instance.battle_table.set_all_btns_enabled(true);
+                    Battle.Instance.current_action = fighter.data.skills[i];
+                    game_1.Game.Menu.push("Use `" + fighter.data.skills[i].name + "` (Choose Target)", [
+                        [
+                            "Back",
+                            function () {
+                                game_1.Game.Menu.pop();
+                            }
+                        ]
+                    ]);
+                }
+            ]);
+        };
         for (var i = 0; i < fighter.data.skills.length; i++) {
-            this.battle_action_btns.set_button_skill(button_index++, fighter.data.skills[i]);
+            _loop_1(i);
         }
-        this.battle_action_btns.clear_buttons(button_index);
-        this.set_continue_btn(false);
-        this.set_back_btn(false, function () {
-            Battle.Instance.set_up_player_turn(fighter);
-        });
-        this.render();
+        game_1.Game.Menu.push("Player turn", battle_action_entries);
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
-        this.set_back_btn(false);
+        game_1.Game.Menu.clear();
         if (this.current_action == BattleAction.Attack) {
             this.take_battle_action(this.current_fighter(), null, [
                 last_battle_table_click
             ]);
+        }
+        else if (this.current_action == BattleAction.Inventory) {
+            // TODO:
         }
         else {
             this.take_battle_action(this.current_fighter(), this.current_action, [
@@ -51569,10 +51583,6 @@ var Battle = /** @class */ (function () {
         }
         this.current_action = null;
         this.set_auto_next_interval();
-    };
-    Battle.prototype.render = function () {
-        this.info_title.set_inner_html(battle_info_1.BattleInfo.actor_name);
-        this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
         fighter.data.mark_just_acted();
@@ -51591,9 +51601,8 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        this.battle_action_btns.clear_buttons();
+        game_1.Game.Menu.clear();
         this.battle_table.set_all_btns_enabled(false);
-        this.render();
     };
     // returns null if battle is not over.
     Battle.prototype.battle_winner = function () {
@@ -51615,23 +51624,8 @@ var Battle = /** @class */ (function () {
         }
         return winner;
     };
-    Battle.prototype.set_continue_btn = function (visible, on_click) {
-        if (on_click === void 0) { on_click = null; }
-        this.continue_btn.style.display = visible ? "" : "none";
-        this.continue_btn.onclick = on_click || this.continue_btn.onclick;
-    };
-    Battle.prototype.set_back_btn = function (visible, on_click) {
-        if (on_click === void 0) { on_click = null; }
-        this.back_btn.style.display = visible ? "" : "none";
-        this.back_btn.onclick = on_click || this.back_btn.onclick;
-    };
     Battle.prototype.end = function () {
-        this.battle_action_btns.clear_buttons();
-        this.set_continue_btn(false);
-        this.set_back_btn(false);
-        this.info_title.set_inner_html("");
-        this.info_description.set_inner_html("");
-        battle_info_1.BattleInfo.clear();
+        game_1.Game.Menu.clear();
         Battle.Instance = null;
     };
     Battle.Instance = null;
@@ -51645,71 +51639,12 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./SmartHTMLElement":4,"./battle_action_btns":8,"./battle_ai":9,"./battle_data":10,"./battle_info":11,"./battle_table":12,"./data/skill_effect":20,"./log":28}],8:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var battle_1 = require("./battle");
-var battle_info_1 = require("./battle_info");
-var BattleActionBtns = /** @class */ (function () {
-    function BattleActionBtns() {
-        this.battle_action_btns = [];
-        this.battle_action_span = document.getElementById("battle_action_span");
-        for (var i = 0; i < 10; i++) {
-            var new_button = document.createElement("button");
-            new_button.style.display = "none";
-            this.battle_action_span.appendChild(new_button);
-            this.battle_action_btns.push(new_button);
-        }
-    }
-    BattleActionBtns.prototype.set_visible = function (value) {
-        if (value) {
-            this.battle_action_span.style.display = "";
-        }
-        else {
-            this.battle_action_span.style.display = "none";
-        }
-    };
-    BattleActionBtns.prototype.clear_button = function (idx) {
-        this.battle_action_btns[idx].style.display = "none";
-    };
-    BattleActionBtns.prototype.clear_buttons = function (from) {
-        if (from === void 0) { from = 0; }
-        for (var i = from; i < this.battle_action_btns.length; i++) {
-            this.clear_button(i);
-        }
-    };
-    BattleActionBtns.prototype.set_button_skill = function (idx, value) {
-        this.battle_action_btns[idx].style.display = "";
-        battle_1.Battle.Instance.current_action = value;
-        if (value == battle_1.BattleAction.Attack) {
-            this.battle_action_btns[idx].innerHTML = "Attack";
-            this.battle_action_btns[idx].onclick = function () {
-                // show enemy targets
-                battle_1.Battle.Instance.battle_table.set_their_btns_enabled(true);
-                battle_1.Battle.Instance.battle_action_btns.clear_buttons();
-                battle_1.Battle.Instance.set_back_btn(true);
-                battle_info_1.BattleInfo.description = "Attack (Choose Target)";
-            };
-        }
-        else {
-            this.battle_action_btns[idx].innerHTML = value.name;
-            this.battle_action_btns[idx].onclick = function () {
-                // TODO: show targets based on skill.
-                battle_1.Battle.Instance.battle_table.set_all_btns_enabled(true);
-            };
-        }
-    };
-    return BattleActionBtns;
-}());
-exports.BattleActionBtns = BattleActionBtns;
-
-},{"./battle":7,"./battle_info":11}],9:[function(require,module,exports){
+},{"./battle_ai":7,"./battle_data":8,"./battle_table":9,"./data/skill_effect":17,"./game":21,"./log":26}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
 var battle_data_1 = require("./battle_data");
 var jlib_1 = require("./jlib");
-var battle_info_1 = require("./battle_info");
 function ai_take_turn(fighter, fighters) {
     // Choose whether to attack or use skill.
     var chosen_skill = choose_skill(fighter);
@@ -51718,7 +51653,6 @@ function ai_take_turn(fighter, fighters) {
         // Choose a random target.
         var target = get_attack_target(fighter, fighters);
         if (target == null) {
-            battle_info_1.BattleInfo.description = "has no one to attack! ";
             fighter.data.before_end_of_turn();
             return [null, []];
         }
@@ -51742,7 +51676,6 @@ function ai_take_turn(fighter, fighters) {
             }
         }
         if (weakest_ally == null) {
-            battle_info_1.BattleInfo.description = "could not find a valid target!";
         }
         else {
             targets.push(weakest_ally);
@@ -51779,13 +51712,12 @@ function get_attack_target(attacker, fighters) {
         .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
 }
 
-},{"./battle_data":10,"./battle_info":11,"./data/util":21,"./jlib":27}],10:[function(require,module,exports){
+},{"./battle_data":8,"./data/util":18,"./jlib":25}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_info_1 = require("./battle_info");
 var exp_1 = require("./exp");
 var emotion_1 = require("./emotion");
 var log_1 = require("./log");
@@ -51867,7 +51799,7 @@ var BattleData = /** @class */ (function () {
         if (this.ailments.has(skill_effect_1.SkillEffect.Poison)) {
             var damage = this.base_stats.hp * 0.075;
             this.take_damage(damage);
-            battle_info_1.BattleInfo.result += "took " + damage + "damage from poison. ";
+            log_1.Log.push(this.name + " took " + damage + " damage from poison. ");
         }
     };
     BattleData.prototype.mark_just_acted = function () {
@@ -51904,23 +51836,7 @@ var BattleFighter = /** @class */ (function () {
 }());
 exports.BattleFighter = BattleFighter;
 
-},{"./battle_info":11,"./data/buffs":14,"./data/skill_effect":20,"./emotion":22,"./exp":23,"./log":28,"./stats":32}],11:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-// oneof
-var BattleInfo = /** @class */ (function () {
-    function BattleInfo() {
-    }
-    BattleInfo.clear = function () {
-        this.actor_name = "";
-        this.description = "";
-        this.result = "";
-    };
-    return BattleInfo;
-}());
-exports.BattleInfo = BattleInfo;
-
-},{}],12:[function(require,module,exports){
+},{"./data/buffs":11,"./data/skill_effect":17,"./emotion":19,"./exp":20,"./log":26,"./stats":31}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var emotion_1 = require("./emotion");
@@ -52044,12 +51960,12 @@ var BattleTable = /** @class */ (function () {
 }());
 exports.BattleTable = BattleTable;
 
-},{"./emotion":22}],13:[function(require,module,exports){
+},{"./emotion":19}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
-},{}],14:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -52088,7 +52004,7 @@ var Buffs = /** @class */ (function () {
 }());
 exports.Buffs = Buffs;
 
-},{}],15:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
@@ -52099,7 +52015,7 @@ var EncounterType = /** @class */ (function () {
 }());
 exports.EncounterType = EncounterType;
 
-},{}],16:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var map_1 = require("../../map");
@@ -52129,7 +52045,7 @@ exports.level2_data = new level_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 20);
 
-},{"../../jlib":27,"../../map":30,"../encounter_type":15,"./level_data":17}],17:[function(require,module,exports){
+},{"../../jlib":25,"../../map":28,"../encounter_type":12,"./level_data":14}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -52143,7 +52059,7 @@ var LevelData = /** @class */ (function () {
 }());
 exports.LevelData = LevelData;
 
-},{}],18:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -66304,7 +66220,7 @@ var DEMONS = [{
     }];
 exports.DEMON_MAP = new Map(DEMONS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":20}],19:[function(require,module,exports){
+},{"../skill_effect":17}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -69054,10 +68970,10 @@ var SKILLS = [
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":20,"../util":21}],20:[function(require,module,exports){
+},{"../skill_effect":17,"../util":18}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var battle_info_1 = require("../battle_info");
+var log_1 = require("../log");
 var SkillEffect;
 (function (SkillEffect) {
     SkillEffect["Damage"] = "Damage";
@@ -69178,7 +69094,7 @@ function resolve_skill_effect(fighter, skill, target) {
                 target.data.take_damage(damage);
             }
             else {
-                battle_info_1.BattleInfo.result += target.name + " dodged! ";
+                log_1.Log.push(target.name + " dodged! ");
             }
             break;
         case SkillEffect.Heal:
@@ -69231,22 +69147,21 @@ exports.resolve_skill_effect = resolve_skill_effect;
 function handy_buff_handler(buffer, target, positive, skill_power) {
     var power = buff_power(skill_power) * (positive ? 1 : -1);
     buffer(target.data.buffs).raise(power);
-    battle_info_1.BattleInfo.result +=
-        buffer(target.data.buffs) + (positive ? " raised" : " lowered");
+    log_1.Log.push(buffer(target.data.buffs) + (positive ? " raised" : " lowered"));
 }
 function handy_ailment_handler(target, effect, positive) {
     // positive in the medical way.
     if (positive) {
-        battle_info_1.BattleInfo.result += target.name + " is now " + effect;
+        log_1.Log.push(target.name + " is now " + effect);
         target.data.ailments.add(effect);
     }
     else if (target.data.ailments.has(effect)) {
-        battle_info_1.BattleInfo.result += target.name + " is no longer " + effect;
+        log_1.Log.push(target.name + " is no longer " + effect);
         target.data.ailments.delete(effect);
     }
 }
 
-},{"../battle_info":11}],21:[function(require,module,exports){
+},{"../log":26}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Target;
@@ -69260,7 +69175,7 @@ var Target;
     Target[Target["Self"] = 6] = "Self";
 })(Target = exports.Target || (exports.Target = {}));
 
-},{}],22:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mood;
@@ -69295,7 +69210,7 @@ exports.mood_string = mood_string;
 // - threaten
 // - peace offer
 
-},{}],23:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -69318,7 +69233,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":32}],24:[function(require,module,exports){
+},{"./stats":31}],21:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69338,6 +69253,7 @@ var actor_1 = require("./actor");
 var battle_1 = require("./battle");
 var battle_data_1 = require("./battle_data");
 var log_1 = require("./log");
+var menu_1 = require("./menu");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -69434,16 +69350,17 @@ var Game = /** @class */ (function () {
             }
         }
     };
+    Game.Menu = new menu_1.Menu("menu_div");
     return Game;
 }());
 exports.Game = Game;
 
-},{"./actor":5,"./battle":7,"./battle_data":10,"./data/levels/level2":16,"./input":26,"./jlib":27,"./log":28,"./player":31,"./world":33,"three":3}],25:[function(require,module,exports){
+},{"./actor":4,"./battle":6,"./battle_data":8,"./data/levels/level2":13,"./input":23,"./jlib":25,"./log":26,"./menu":29,"./player":30,"./world":32,"three":3}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],26:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69489,7 +69406,39 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],27:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var Inventory = /** @class */ (function () {
+    function Inventory() {
+        this.items = new Map();
+    }
+    Inventory.prototype.add_item = function (item, count) {
+        if (count === void 0) { count = 1; }
+        if (count <= 0) {
+            return;
+        }
+        if (this.items.get(item) == undefined) {
+            this.items.set(item, 0);
+        }
+        this.items.set(item, this.items.get(item) + count);
+    };
+    Inventory.prototype.destroy_item = function (item, count) {
+        if (count === void 0) { count = 1; }
+        if (count <= 0) {
+            return true;
+        }
+        if (this.items.get(item) == undefined || this.items.get(item) < count) {
+            return false;
+        }
+        this.items.set(item, this.items.get(item) - count);
+        return true;
+    };
+    return Inventory;
+}());
+exports.Inventory = Inventory;
+
+},{}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -69628,7 +69577,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],28:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOG_INDENT_CHAR = "&#8619";
@@ -69646,7 +69595,7 @@ var Log = /** @class */ (function () {
 }());
 exports.Log = Log;
 
-},{}],29:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69662,7 +69611,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":24}],30:[function(require,module,exports){
+},{"./game":21}],28:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69708,7 +69657,69 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":13,"./jlib":27,"three":3}],31:[function(require,module,exports){
+},{"./constants":10,"./jlib":25,"three":3}],29:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var MenuFrame = /** @class */ (function () {
+    function MenuFrame() {
+        this.description = "";
+        this.entries = [];
+    }
+    return MenuFrame;
+}());
+exports.MenuFrame = MenuFrame;
+var Menu = /** @class */ (function () {
+    function Menu(parent) {
+        this.menu_stack = [];
+        this.buttons = [];
+        this.parent = document.getElementById(parent);
+        this.description = document.createElement("div");
+        this.parent.appendChild(this.description);
+    }
+    Menu.prototype.push = function (description, entries) {
+        this.menu_stack.push({ description: description, entries: entries });
+        this.set(description, entries);
+    };
+    Menu.prototype.pop = function () {
+        if (this.menu_stack.length > 0) {
+            this.menu_stack.pop();
+        }
+        if (this.menu_stack.length > 0) {
+            var current_frame = this.menu_stack[this.menu_stack.length - 1];
+            this.set(current_frame.description, current_frame.entries);
+        }
+        else {
+            this.set("", []);
+        }
+    };
+    Menu.prototype.set = function (description, entries) {
+        this.description.innerHTML = description;
+        for (var i = 0; i < entries.length; i++) {
+            if (i >= this.buttons.length) {
+                var new_button = document.createElement("button");
+                this.buttons.push(new_button);
+                this.parent.appendChild(new_button);
+            }
+            this.buttons[i].innerHTML = entries[i][0];
+            this.buttons[i].onclick = entries[i][1];
+            this.buttons[i].style.display = "";
+        }
+        for (var i = entries.length; i < this.buttons.length; i++) {
+            this.buttons[i].style.display = "none";
+        }
+    };
+    Menu.prototype.clear = function () {
+        this.description.innerHTML = "";
+        this.menu_stack = [];
+        for (var i = 0; i < this.buttons.length; i++) {
+            this.buttons[i].style.display = "none";
+        }
+    };
+    return Menu;
+}());
+exports.Menu = Menu;
+
+},{}],30:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69724,6 +69735,7 @@ var constants_1 = require("./constants");
 var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
+var inventory_1 = require("./inventory");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
@@ -69733,6 +69745,7 @@ var Player = /** @class */ (function () {
         this.camera = new THREE.PerspectiveCamera(90, 1.2, 0.1, 1300);
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
+        this.inventory = new inventory_1.Inventory();
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;
@@ -69744,6 +69757,7 @@ var Player = /** @class */ (function () {
         stats.st = 20;
         this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
+        this.inventory.add_item("Life Stone", 5);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -69815,7 +69829,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":5,"./battle_data":10,"./constants":13,"./jlib":27,"./stats":32,"three":3}],32:[function(require,module,exports){
+},{"./actor":4,"./battle_data":8,"./constants":10,"./inventory":24,"./jlib":25,"./stats":31,"three":3}],31:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -69859,7 +69873,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],33:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69959,4 +69973,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./constants":13,"./globals":25,"./jlib":27,"three":3}]},{},[29,1,2]);
+},{"./constants":10,"./globals":22,"./jlib":25,"three":3}]},{},[27,1,2]);

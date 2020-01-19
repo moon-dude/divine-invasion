@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 var buffs_1 = require("./data/buffs");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_info_1 = require("./battle_info");
 var exp_1 = require("./exp");
 var emotion_1 = require("./emotion");
 var log_1 = require("./log");
@@ -85,7 +84,7 @@ var BattleData = /** @class */ (function () {
         if (this.ailments.has(skill_effect_1.SkillEffect.Poison)) {
             var damage = this.base_stats.hp * 0.075;
             this.take_damage(damage);
-            battle_info_1.BattleInfo.result += "took " + damage + "damage from poison. ";
+            log_1.Log.push(this.name + " took " + damage + " damage from poison. ");
         }
     };
     BattleData.prototype.mark_just_acted = function () {

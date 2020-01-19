@@ -2,7 +2,6 @@ import { Stats, apply_stats_mod } from "./stats";
 import { Skill } from "./data/skill";
 import { Buffs } from "./data/buffs";
 import { SkillEffect } from "./data/skill_effect";
-import { BattleInfo } from "./battle_info";
 import { Exp } from "./exp";
 import { Mood } from "./emotion";
 import { Log, LOG_INDENT_CHAR } from "./log";
@@ -120,7 +119,7 @@ export class BattleData {
     if (this.ailments.has(SkillEffect.Poison)) {
       const damage = this.base_stats.hp * 0.075;
       this.take_damage(damage);
-      BattleInfo.result += "took " + damage + "damage from poison. ";
+      Log.push(this.name + " took " + damage + " damage from poison. ");
     }
   }
 

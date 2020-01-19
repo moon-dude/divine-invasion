@@ -1,7 +1,6 @@
 import { Target } from "./data/util";
 import { BattleFighter, BattleSide, other_side } from "./battle_data";
 import { random_array_element } from "./jlib";
-import { BattleInfo } from "./battle_info";
 import { Skill } from "./data/skill";
 
 export function ai_take_turn(
@@ -15,7 +14,6 @@ export function ai_take_turn(
     // Choose a random target.
     let target = get_attack_target(fighter, fighters);
     if (target == null) {
-      BattleInfo.description = "has no one to attack! ";
       fighter.data.before_end_of_turn();
       return [null, []];
     } else {
@@ -39,7 +37,7 @@ export function ai_take_turn(
       }
     }
     if (weakest_ally == null) {
-      BattleInfo.description = "could not find a valid target!";
+      
     } else {
       targets.push(weakest_ally);
     }
