@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
 var battle_data_1 = require("./battle_data");
 var jlib_1 = require("./jlib");
+var battle_1 = require("./battle");
 function ai_take_turn(fighter, fighters) {
     // Choose whether to attack or use skill.
     var chosen_skill = choose_skill(fighter);
@@ -11,7 +12,6 @@ function ai_take_turn(fighter, fighters) {
         // Choose a random target.
         var target = get_attack_target(fighter, fighters);
         if (target == null) {
-            fighter.data.before_end_of_turn();
             return [null, []];
         }
         else {
@@ -48,7 +48,7 @@ function ai_take_turn(fighter, fighters) {
             targets.push(enemy_fighters[i]);
         }
     }
-    return [chosen_skill, targets];
+    return [chosen_skill || battle_1.BattleAction.Attack, targets];
 }
 exports.ai_take_turn = ai_take_turn;
 function choose_skill(attacker) {

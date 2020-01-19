@@ -10,10 +10,12 @@ import { Inventory } from "./inventory";
 export const PLAYER_NAME: string = "Player";
 
 export class Player {
-  coor: Coor = new Coor(1, 1);
-  dir: Dir = Dir.S;
-  body: THREE.Object3D = new THREE.Object3D();
-  camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
+  public static Instance: Player;
+
+  public coor: Coor = new Coor(1, 1);
+  public dir: Dir = Dir.S;
+  public body: THREE.Object3D = new THREE.Object3D();
+  public camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
     90,
     1.2,
     0.1,
@@ -27,6 +29,7 @@ export class Player {
   public inventory: Inventory = new Inventory();
 
   constructor() {
+    Player.Instance = this;
     this.body.add(this.camera);
     this.body.add(this.light);
     this.light.position.x = 5;

@@ -1,13 +1,13 @@
 import { Item } from "../item";
 import { Target } from "../util";
-import { Actor } from "../../actor";
+import { BattleData } from "../../battle_data";
 
 const ITEMS: Item[] = [
   {
     name: "Life Stone",
     target: Target.SingleAlly,
-    effect: (actor: Actor) => {
-      actor.battle_data.heal_for(25);
+    effect: (target: BattleData) => {
+      target.heal_for(50);
     }
   }
 ];

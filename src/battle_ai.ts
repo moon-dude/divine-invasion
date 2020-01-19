@@ -2,11 +2,12 @@ import { Target } from "./data/util";
 import { BattleFighter, BattleSide, other_side } from "./battle_data";
 import { random_array_element } from "./jlib";
 import { Skill } from "./data/skill";
+import { BattleAction } from "./battle";
 
 export function ai_take_turn(
   fighter: BattleFighter,
   fighters: Map<BattleSide, BattleFighter[]>
-): [Skill | null, BattleFighter[]] {
+): [Skill | BattleAction | null, BattleFighter[]] {
   // Choose whether to attack or use skill.
   let chosen_skill = choose_skill(fighter);
   let targets: BattleFighter[] = [];
@@ -14,7 +15,6 @@ export function ai_take_turn(
     // Choose a random target.
     let target = get_attack_target(fighter, fighters);
     if (target == null) {
-      fighter.data.before_end_of_turn();
       return [null, []];
     } else {
       targets.push(target);
@@ -50,7 +50,7 @@ export function ai_take_turn(
       targets.push(enemy_fighters[i]);
     }
   }
-  return [chosen_skill, targets];
+  return [chosen_skill || BattleAction.Attack, targets];
 }
 
 function choose_skill(attacker: BattleFighter): Skill | null {

@@ -25,6 +25,9 @@ var Inventory = /** @class */ (function () {
         this.items.set(item, this.items.get(item) - count);
         return true;
     };
+    Inventory.prototype.entries = function () {
+        return this.items.entries();
+    };
     return Inventory;
 }());
 exports.Inventory = Inventory;

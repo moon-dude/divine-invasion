@@ -1,10 +1,10 @@
 import { Target } from "./util";
-import { Actor } from "../actor";
+import { BattleData } from "../battle_data";
 
 export type ItemName = string;
 
 export class Item {
   name: ItemName = "";
   target: Target = Target.All;
-  effect: (actor: Actor) => void = (a) => {};
+  effect: (target: BattleData) => void = (_) => {};
 }

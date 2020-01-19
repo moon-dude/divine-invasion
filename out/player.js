@@ -24,6 +24,7 @@ var Player = /** @class */ (function () {
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
+        Player.Instance = this;
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;

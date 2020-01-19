@@ -5,8 +5,8 @@ var ITEMS = [
     {
         name: "Life Stone",
         target: util_1.Target.SingleAlly,
-        effect: function (actor) {
-            actor.battle_data.heal_for(25);
+        effect: function (target) {
+            target.heal_for(50);
         }
     }
 ];

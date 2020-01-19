@@ -6,6 +6,8 @@ import { ai_take_turn } from "./battle_ai";
 import { Log } from "./log";
 import { Game } from "./game";
 import { MenuEntry, Menu } from "./menu";
+import { Player } from "./player";
+import { ITEM_MAP } from "./data/raw/items";
 
 export enum BattleAction {
   Attack,
@@ -25,6 +27,7 @@ export class Battle {
 
   public battle_table: BattleTable;
   public current_action: Skill | BattleAction | null = null;
+  public current_item: string | null = null;
 
   constructor(fighters: BattleFighter[]) {
     Battle.Instance = this;
@@ -85,8 +88,10 @@ export class Battle {
     } else {
       // Otherwise, let AI choose.
       let result = ai_take_turn(fighter, this.fighters);
+      if (result[0] != null) {
+        this.take_battle_action(fighter, result[0], result[1]);
+      }
       // Take the resulting action.
-      this.take_battle_action(fighter, result[0], result[1]);
       fighter.data.before_end_of_turn();
       this.set_auto_next_interval();
     }
@@ -132,15 +137,22 @@ export class Battle {
         "Inventory",
         () => {
           Battle.Instance!.current_action = BattleAction.Inventory;
-          // TODO: Itemize inventory.
-          Game.Menu.push("Attack (Choose Target)", [
-            [
-              "Back",
-              () => {
-                Game.Menu.pop();
-              }
-            ]
-          ]);
+          let menu_entries: MenuEntry[] = [[
+            "Back",
+            () => {
+              Game.Menu.pop();
+            }
+          ]];
+          for (const entry of Player.Instance.inventory.entries()) {
+            menu_entries.push([entry[0] + "(x" + entry[1] + ")", () => {
+              Battle.Instance!.current_item = entry[0];
+              this.battle_table.set_all_btns_enabled(true);
+              Game.Menu.push("Use item `" + entry[0] + "` (Select target)", [
+                ["Back", () => { Game.Menu.pop(); }] 
+              ]);
+            }]);
+          }
+          Game.Menu.push("Inventory (Choose Item)", menu_entries);
         }
       ]
     ];
@@ -169,28 +181,20 @@ export class Battle {
 
   private execute_player_turn(last_battle_table_click: BattleFighter) {
     Game.Menu.clear();
-    if (this.current_action == BattleAction.Attack) {
-      this.take_battle_action(this.current_fighter(), null, [
-        last_battle_table_click
-      ]);
-    } else if (this.current_action == BattleAction.Inventory) {
-      // TODO:
-    } else {
-      this.take_battle_action(this.current_fighter(), this.current_action, [
-        last_battle_table_click
-      ]);
-    }
+    this.take_battle_action(this.current_fighter(), this.current_action!, [
+      last_battle_table_click
+    ]);
     this.current_action = null;
     this.set_auto_next_interval();
   }
 
   private take_battle_action(
     fighter: BattleFighter,
-    skill: Skill | null,
+    action: Skill | BattleAction,
     targets: BattleFighter[]
   ): void {
     fighter.data.mark_just_acted();
-    if (skill == null) {
+    if (action == BattleAction.Attack) {
       Log.push(this.current_fighter().name + " attacked.");
       let damage = Math.floor(
         fighter.data.modded_base_stats().st +
@@ -199,11 +203,17 @@ export class Battle {
       for (let t = 0; t < targets.length; t++) {
         targets[t].data.take_damage(damage);
       }
-    } else {
-      fighter.data.mod_stats.mp -= skill.cost;
-      Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
+    } else if (action == BattleAction.Inventory) {
+      const item = ITEM_MAP.get(this.current_item!);
       for (let t = 0; t < targets.length; t++) {
-        resolve_skill_effect(fighter, skill, targets[t]);
+        item?.effect(targets[t].data);
+      }
+    } else {
+      // (Skill).
+      fighter.data.mod_stats.mp -= action.cost;
+      Log.push(this.current_fighter().name + " used `" + action.name + "`.");
+      for (let t = 0; t < targets.length; t++) {
+        resolve_skill_effect(fighter, action, targets[t]);
       }
     }
     Game.Menu.clear();

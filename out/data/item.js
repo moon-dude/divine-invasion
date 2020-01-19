@@ -5,7 +5,7 @@ var Item = /** @class */ (function () {
     function Item() {
         this.name = "";
         this.target = util_1.Target.All;
-        this.effect = function (a) { };
+        this.effect = function (_) { };
     }
     return Item;
 }());

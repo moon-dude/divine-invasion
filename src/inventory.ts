@@ -23,4 +23,8 @@ export class Inventory {
     this.items.set(item, this.items.get(item)! - count);
     return true;
   }
+
+  public entries() {
+    return this.items.entries();
+  }
 }
