@@ -37,6 +37,9 @@ export class BattleData {
   public exp: Exp = new Exp();
   public mood: Mood | null;
 
+  private did_just_act: boolean = false;
+  private did_just_get_damaged: boolean = false;
+
   constructor(
     name: string,
     side: BattleSide,
@@ -54,12 +57,21 @@ export class BattleData {
   }
 
   private log_result(s: string): void {
-    Log.push("<span class=\"log_result\">" + this.name + " " + s + " " + LOG_INDENT_CHAR + "</span>");
+    Log.push(
+      '<span class="log_result">' +
+        this.name +
+        " " +
+        s +
+        " " +
+        LOG_INDENT_CHAR +
+        "</span>"
+    );
   }
 
   public take_damage(amount: number) {
     if (amount <= 0) {
       this.log_result("took no damage.");
+      return;
     }
     if (this.buffs.defense.get() > 1) {
       amount /= this.buffs.defense.get();
@@ -72,6 +84,7 @@ export class BattleData {
     if (this.modded_base_stats().hp == 0) {
       this.mood = Mood.Dead;
     }
+    this.did_just_get_damaged = true;
   }
 
   public heal_for(amount: number) {
@@ -109,6 +122,22 @@ export class BattleData {
       this.take_damage(damage);
       BattleInfo.result += "took " + damage + "damage from poison. ";
     }
+  }
+
+  public mark_just_acted(): void {
+    this.did_just_act = true;
+  }
+
+  public just_acted(): boolean {
+    const value = this.did_just_act;
+    this.did_just_act = false;
+    return value;
+  }
+
+  public just_got_damaged(): boolean {
+    const value = this.did_just_get_damaged;
+    this.did_just_get_damaged = false;
+    return value;
   }
 }
 

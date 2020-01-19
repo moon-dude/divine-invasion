@@ -86,6 +86,8 @@ export class Battle {
     BattleInfo.actor_name = fighter.name;
     if (fighter.data.modded_base_stats().hp <= 0) {
       BattleInfo.actor_name = "";
+      this.set_auto_next_interval();
+      return;
     }
     BattleInfo.description = "";
     this.battle_action_btns.set_visible(false);
@@ -159,6 +161,7 @@ export class Battle {
     skill: Skill | null,
     targets: BattleFighter[]
   ): void {
+    fighter.data.mark_just_acted();
     if (skill == null) {
       Log.push(this.current_fighter().name + " attacked.");
       let damage = Math.floor(

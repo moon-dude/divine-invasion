@@ -43,6 +43,9 @@ export class Game {
     this.player.update();
     this.world.update(this.player);
     Battle.Instance?.update();
+    for (let i = 0; i < this.battle_actors.length; i++) {
+      this.battle_actors[i].update(null);
+    }
     const winner = Battle.Instance?.battle_winner();
     if (winner != null && winner != undefined) {
       this.end_battle(winner);
@@ -98,9 +101,10 @@ export class Game {
           );
           for (let i = 0; i < this.battle_actors.length; i++) {
             this.player.body.add(this.battle_actors[i].mesh);
-            this.battle_actors[i].mesh.position.z = -2 + i * 0.0001;
-            this.battle_actors[i].mesh.position.x =
-              1 * (i - this.battle_actors.length / 2);
+            this.battle_actors[i].position = new THREE.Vector3(
+              1 * (i - this.battle_actors.length / 2),
+              0,
+              -2 + i * 0.0001);
           }
           battle_fighters.push(
             new BattleFighter("Player", this.player.battle_data)

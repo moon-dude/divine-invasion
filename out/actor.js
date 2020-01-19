@@ -7,14 +7,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
+var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
 var demons_1 = require("./data/raw/demons");
 var skills_1 = require("./data/raw/skills");
 var emotion_1 = require("./emotion");
+var actor_tween_1 = require("./actor_tween");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
@@ -35,7 +36,8 @@ var Actor = /** @class */ (function () {
         if (material === void 0) { material = exports.CULTIST_MAT; }
         if (battle_data === void 0) { battle_data = battle_data_1.BattleData.IDENTITY; }
         this.is_blocking = false;
-        this.placed = false;
+        this.position = null;
+        this.tween = new actor_tween_1.ActorTween();
         this.name = name;
         this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
@@ -65,7 +67,7 @@ var Actor = /** @class */ (function () {
         if (this.coor == null) {
             return false;
         }
-        if (!this.placed) {
+        if (this.position == null) {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
@@ -88,36 +90,41 @@ var Actor = /** @class */ (function () {
         return false;
     };
     Actor.prototype.update = function (/*const */ player) {
-        this.mesh.rotation.y = player.body.rotation.y;
-        if (this.coor == null) {
-            return;
-        }
-        if (this.need_to_be_placed(player)) {
-            // Always to the left of the camera.
-            var offset_x = 0;
-            var offset_z = 0;
-            switch (player.dir) {
-                case jlib_1.Dir.W:
-                    offset_x = -ACTOR_OFFSET_FRONT;
-                    offset_z = ACTOR_OFFSET_SIDE;
-                    break;
-                case jlib_1.Dir.E:
-                    offset_x = ACTOR_OFFSET_FRONT;
-                    offset_z = -ACTOR_OFFSET_SIDE;
-                    break;
-                case jlib_1.Dir.N:
-                    offset_x = -ACTOR_OFFSET_SIDE;
-                    offset_z = -ACTOR_OFFSET_FRONT;
-                    break;
-                case jlib_1.Dir.S:
-                    offset_x = ACTOR_OFFSET_SIDE;
-                    offset_z = ACTOR_OFFSET_FRONT;
-                    break;
+        if (player != null) {
+            this.mesh.rotation.y = player.body.rotation.y;
+            if (this.coor != null && this.need_to_be_placed(player)) {
+                // Always to the left of the camera.
+                var offset_x = 0;
+                var offset_z = 0;
+                switch (player.dir) {
+                    case jlib_1.Dir.W:
+                        offset_x = -ACTOR_OFFSET_FRONT;
+                        offset_z = ACTOR_OFFSET_SIDE;
+                        break;
+                    case jlib_1.Dir.E:
+                        offset_x = ACTOR_OFFSET_FRONT;
+                        offset_z = -ACTOR_OFFSET_SIDE;
+                        break;
+                    case jlib_1.Dir.N:
+                        offset_x = -ACTOR_OFFSET_SIDE;
+                        offset_z = -ACTOR_OFFSET_FRONT;
+                        break;
+                    case jlib_1.Dir.S:
+                        offset_x = ACTOR_OFFSET_SIDE;
+                        offset_z = ACTOR_OFFSET_FRONT;
+                        break;
+                }
+                this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.7, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
             }
-            this.mesh.position.x = (this.coor.x + offset_x) * constants_1.TILE_SIZE;
-            this.mesh.position.z = (this.coor.z + offset_z) * constants_1.TILE_SIZE;
-            this.mesh.position.y = -0.7;
-            this.placed = true;
+        }
+        if (this.position != null) {
+            if (this.battle_data.just_acted()) {
+                this.tween.bump();
+            }
+            if (this.battle_data.just_got_damaged()) {
+                this.tween.set_shake(.5);
+            }
+            this.tween.update(this.mesh, this.position);
         }
     };
     return Actor;

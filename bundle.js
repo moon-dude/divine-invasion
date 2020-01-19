@@ -51275,14 +51275,15 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var jlib_1 = require("./jlib");
 var THREE = __importStar(require("three"));
+var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
 var demons_1 = require("./data/raw/demons");
 var skills_1 = require("./data/raw/skills");
 var emotion_1 = require("./emotion");
+var actor_tween_1 = require("./actor_tween");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
@@ -51303,7 +51304,8 @@ var Actor = /** @class */ (function () {
         if (material === void 0) { material = exports.CULTIST_MAT; }
         if (battle_data === void 0) { battle_data = battle_data_1.BattleData.IDENTITY; }
         this.is_blocking = false;
-        this.placed = false;
+        this.position = null;
+        this.tween = new actor_tween_1.ActorTween();
         this.name = name;
         this.coor = null;
         this.mesh = new THREE.Mesh(geometry, material);
@@ -51333,7 +51335,7 @@ var Actor = /** @class */ (function () {
         if (this.coor == null) {
             return false;
         }
-        if (!this.placed) {
+        if (this.position == null) {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
@@ -51356,43 +51358,92 @@ var Actor = /** @class */ (function () {
         return false;
     };
     Actor.prototype.update = function (/*const */ player) {
-        this.mesh.rotation.y = player.body.rotation.y;
-        if (this.coor == null) {
-            return;
-        }
-        if (this.need_to_be_placed(player)) {
-            // Always to the left of the camera.
-            var offset_x = 0;
-            var offset_z = 0;
-            switch (player.dir) {
-                case jlib_1.Dir.W:
-                    offset_x = -ACTOR_OFFSET_FRONT;
-                    offset_z = ACTOR_OFFSET_SIDE;
-                    break;
-                case jlib_1.Dir.E:
-                    offset_x = ACTOR_OFFSET_FRONT;
-                    offset_z = -ACTOR_OFFSET_SIDE;
-                    break;
-                case jlib_1.Dir.N:
-                    offset_x = -ACTOR_OFFSET_SIDE;
-                    offset_z = -ACTOR_OFFSET_FRONT;
-                    break;
-                case jlib_1.Dir.S:
-                    offset_x = ACTOR_OFFSET_SIDE;
-                    offset_z = ACTOR_OFFSET_FRONT;
-                    break;
+        if (player != null) {
+            this.mesh.rotation.y = player.body.rotation.y;
+            if (this.coor != null && this.need_to_be_placed(player)) {
+                // Always to the left of the camera.
+                var offset_x = 0;
+                var offset_z = 0;
+                switch (player.dir) {
+                    case jlib_1.Dir.W:
+                        offset_x = -ACTOR_OFFSET_FRONT;
+                        offset_z = ACTOR_OFFSET_SIDE;
+                        break;
+                    case jlib_1.Dir.E:
+                        offset_x = ACTOR_OFFSET_FRONT;
+                        offset_z = -ACTOR_OFFSET_SIDE;
+                        break;
+                    case jlib_1.Dir.N:
+                        offset_x = -ACTOR_OFFSET_SIDE;
+                        offset_z = -ACTOR_OFFSET_FRONT;
+                        break;
+                    case jlib_1.Dir.S:
+                        offset_x = ACTOR_OFFSET_SIDE;
+                        offset_z = ACTOR_OFFSET_FRONT;
+                        break;
+                }
+                this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.7, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
             }
-            this.mesh.position.x = (this.coor.x + offset_x) * constants_1.TILE_SIZE;
-            this.mesh.position.z = (this.coor.z + offset_z) * constants_1.TILE_SIZE;
-            this.mesh.position.y = -0.7;
-            this.placed = true;
+        }
+        if (this.position != null) {
+            if (this.battle_data.just_acted()) {
+                this.tween.bump();
+            }
+            if (this.battle_data.just_got_damaged()) {
+                this.tween.set_shake(.5);
+            }
+            this.tween.update(this.mesh, this.position);
         }
     };
     return Actor;
 }());
 exports.Actor = Actor;
 
-},{"./battle_data":9,"./constants":12,"./data/raw/demons":17,"./data/raw/skills":18,"./emotion":21,"./jlib":26,"./stats":31,"three":3}],6:[function(require,module,exports){
+},{"./actor_tween":6,"./battle_data":10,"./constants":13,"./data/raw/demons":18,"./data/raw/skills":19,"./emotion":22,"./jlib":27,"./stats":32,"three":3}],6:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var BUMP_Z_MAX = 1.1;
+var ActorTween = /** @class */ (function () {
+    function ActorTween() {
+        this.shake = 0;
+        this.bump_z = 0;
+        this.bump_return = true;
+    }
+    ActorTween.prototype.set_shake = function (amount) {
+        if (this.shake > amount) {
+            return;
+        }
+        this.shake = amount;
+    };
+    ActorTween.prototype.bump = function () {
+        this.bump_return = false;
+    };
+    ActorTween.prototype.update = function (mesh, base_pos) {
+        var shake_x = 0;
+        var shake_y = 0;
+        if (this.shake > 0) {
+            shake_x = (Math.random() * 2 - 1) * this.shake;
+            shake_y = (Math.random() * 2 - 1) * this.shake;
+            this.shake *= 0.9;
+        }
+        if (this.bump_return) {
+            this.bump_z += (0 - this.bump_z) * 0.2;
+        }
+        else {
+            this.bump_z += (BUMP_Z_MAX - this.bump_z) * 0.2;
+            if (Math.abs(this.bump_z - BUMP_Z_MAX) < 0.02) {
+                this.bump_return = true;
+            }
+        }
+        mesh.position.x = base_pos.x + shake_x;
+        mesh.position.y = base_pos.y + shake_y;
+        mesh.position.z = base_pos.z + this.bump_z;
+    };
+    return ActorTween;
+}());
+exports.ActorTween = ActorTween;
+
+},{}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
@@ -51461,6 +51512,8 @@ var Battle = /** @class */ (function () {
         battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
             battle_info_1.BattleInfo.actor_name = "";
+            this.set_auto_next_interval();
+            return;
         }
         battle_info_1.BattleInfo.description = "";
         this.battle_action_btns.set_visible(false);
@@ -51522,6 +51575,7 @@ var Battle = /** @class */ (function () {
         this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
+        fighter.data.mark_just_acted();
         if (skill == null) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.data.modded_base_stats().st +
@@ -51591,7 +51645,7 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./SmartHTMLElement":4,"./battle_action_btns":7,"./battle_ai":8,"./battle_data":9,"./battle_info":10,"./battle_table":11,"./data/skill_effect":19,"./log":27}],7:[function(require,module,exports){
+},{"./SmartHTMLElement":4,"./battle_action_btns":8,"./battle_ai":9,"./battle_data":10,"./battle_info":11,"./battle_table":12,"./data/skill_effect":20,"./log":28}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_1 = require("./battle");
@@ -51649,7 +51703,7 @@ var BattleActionBtns = /** @class */ (function () {
 }());
 exports.BattleActionBtns = BattleActionBtns;
 
-},{"./battle":6,"./battle_info":10}],8:[function(require,module,exports){
+},{"./battle":7,"./battle_info":11}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
@@ -51725,7 +51779,7 @@ function get_attack_target(attacker, fighters) {
         .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
 }
 
-},{"./battle_data":9,"./battle_info":10,"./data/util":20,"./jlib":26}],9:[function(require,module,exports){
+},{"./battle_data":10,"./battle_info":11,"./data/util":21,"./jlib":27}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -51749,6 +51803,8 @@ var BattleData = /** @class */ (function () {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
+        this.did_just_act = false;
+        this.did_just_get_damaged = false;
         this.name = name;
         this.side = side;
         this.base_stats = base_stats;
@@ -51757,11 +51813,18 @@ var BattleData = /** @class */ (function () {
         this.mood = mood;
     }
     BattleData.prototype.log_result = function (s) {
-        log_1.Log.push("<span class=\"log_result\">" + this.name + " " + s + " " + log_1.LOG_INDENT_CHAR + "</span>");
+        log_1.Log.push('<span class="log_result">' +
+            this.name +
+            " " +
+            s +
+            " " +
+            log_1.LOG_INDENT_CHAR +
+            "</span>");
     };
     BattleData.prototype.take_damage = function (amount) {
         if (amount <= 0) {
             this.log_result("took no damage.");
+            return;
         }
         if (this.buffs.defense.get() > 1) {
             amount /= this.buffs.defense.get();
@@ -51775,6 +51838,7 @@ var BattleData = /** @class */ (function () {
         if (this.modded_base_stats().hp == 0) {
             this.mood = emotion_1.Mood.Dead;
         }
+        this.did_just_get_damaged = true;
     };
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
@@ -51806,6 +51870,19 @@ var BattleData = /** @class */ (function () {
             battle_info_1.BattleInfo.result += "took " + damage + "damage from poison. ";
         }
     };
+    BattleData.prototype.mark_just_acted = function () {
+        this.did_just_act = true;
+    };
+    BattleData.prototype.just_acted = function () {
+        var value = this.did_just_act;
+        this.did_just_act = false;
+        return value;
+    };
+    BattleData.prototype.just_got_damaged = function () {
+        var value = this.did_just_get_damaged;
+        this.did_just_get_damaged = false;
+        return value;
+    };
     BattleData.IDENTITY = new BattleData("", BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
@@ -51827,7 +51904,7 @@ var BattleFighter = /** @class */ (function () {
 }());
 exports.BattleFighter = BattleFighter;
 
-},{"./battle_info":10,"./data/buffs":13,"./data/skill_effect":19,"./emotion":21,"./exp":22,"./log":27,"./stats":31}],10:[function(require,module,exports){
+},{"./battle_info":11,"./data/buffs":14,"./data/skill_effect":20,"./emotion":22,"./exp":23,"./log":28,"./stats":32}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 // oneof
@@ -51843,7 +51920,7 @@ var BattleInfo = /** @class */ (function () {
 }());
 exports.BattleInfo = BattleInfo;
 
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var emotion_1 = require("./emotion");
@@ -51967,12 +52044,12 @@ var BattleTable = /** @class */ (function () {
 }());
 exports.BattleTable = BattleTable;
 
-},{"./emotion":21}],12:[function(require,module,exports){
+},{"./emotion":22}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -52011,7 +52088,7 @@ var Buffs = /** @class */ (function () {
 }());
 exports.Buffs = Buffs;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
@@ -52022,7 +52099,7 @@ var EncounterType = /** @class */ (function () {
 }());
 exports.EncounterType = EncounterType;
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var map_1 = require("../../map");
@@ -52052,7 +52129,7 @@ exports.level2_data = new level_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 20);
 
-},{"../../jlib":26,"../../map":29,"../encounter_type":14,"./level_data":16}],16:[function(require,module,exports){
+},{"../../jlib":27,"../../map":30,"../encounter_type":15,"./level_data":17}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -52066,7 +52143,7 @@ var LevelData = /** @class */ (function () {
 }());
 exports.LevelData = LevelData;
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -66227,7 +66304,7 @@ var DEMONS = [{
     }];
 exports.DEMON_MAP = new Map(DEMONS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":19}],18:[function(require,module,exports){
+},{"../skill_effect":20}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -68977,7 +69054,7 @@ var SKILLS = [
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":19,"../util":20}],19:[function(require,module,exports){
+},{"../skill_effect":20,"../util":21}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_info_1 = require("../battle_info");
@@ -69169,7 +69246,7 @@ function handy_ailment_handler(target, effect, positive) {
     }
 }
 
-},{"../battle_info":10}],20:[function(require,module,exports){
+},{"../battle_info":11}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Target;
@@ -69183,7 +69260,7 @@ var Target;
     Target[Target["Self"] = 6] = "Self";
 })(Target = exports.Target || (exports.Target = {}));
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mood;
@@ -69218,7 +69295,7 @@ exports.mood_string = mood_string;
 // - threaten
 // - peace offer
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -69241,7 +69318,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":31}],23:[function(require,module,exports){
+},{"./stats":32}],24:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69288,6 +69365,9 @@ var Game = /** @class */ (function () {
         this.player.update();
         this.world.update(this.player);
         (_a = battle_1.Battle.Instance) === null || _a === void 0 ? void 0 : _a.update();
+        for (var i = 0; i < this.battle_actors.length; i++) {
+            this.battle_actors[i].update(null);
+        }
         var winner = (_b = battle_1.Battle.Instance) === null || _b === void 0 ? void 0 : _b.battle_winner();
         if (winner != null && winner != undefined) {
             this.end_battle(winner);
@@ -69335,9 +69415,7 @@ var Game = /** @class */ (function () {
                     var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.add(this.battle_actors[i].mesh);
-                        this.battle_actors[i].mesh.position.z = -2 + i * 0.0001;
-                        this.battle_actors[i].mesh.position.x =
-                            1 * (i - this.battle_actors.length / 2);
+                        this.battle_actors[i].position = new THREE.Vector3(1 * (i - this.battle_actors.length / 2), 0, -2 + i * 0.0001);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
                     for (var i = 0; i < this.player.supports.length; i++) {
@@ -69360,12 +69438,12 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actor":5,"./battle":6,"./battle_data":9,"./data/levels/level2":15,"./input":25,"./jlib":26,"./log":27,"./player":30,"./world":32,"three":3}],24:[function(require,module,exports){
+},{"./actor":5,"./battle":7,"./battle_data":10,"./data/levels/level2":16,"./input":26,"./jlib":27,"./log":28,"./player":31,"./world":33,"three":3}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69411,7 +69489,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -69550,7 +69628,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOG_INDENT_CHAR = "&#8619";
@@ -69568,7 +69646,7 @@ var Log = /** @class */ (function () {
 }());
 exports.Log = Log;
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69584,7 +69662,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":23}],29:[function(require,module,exports){
+},{"./game":24}],30:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69630,7 +69708,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":12,"./jlib":26,"three":3}],30:[function(require,module,exports){
+},{"./constants":13,"./jlib":27,"three":3}],31:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69737,7 +69815,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":5,"./battle_data":9,"./constants":12,"./jlib":26,"./stats":31,"three":3}],31:[function(require,module,exports){
+},{"./actor":5,"./battle_data":10,"./constants":13,"./jlib":27,"./stats":32,"three":3}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -69781,7 +69859,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69881,4 +69959,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./constants":12,"./globals":24,"./jlib":26,"three":3}]},{},[28,1,2]);
+},{"./constants":13,"./globals":25,"./jlib":27,"three":3}]},{},[29,1,2]);

@@ -1,6 +1,6 @@
+import * as THREE from "three";
 import { Coor, Dir, num_eq, num_lt, num_gt } from "./jlib";
 import { Dialogue } from "./dialogue";
-import * as THREE from "three";
 import { Player } from "./player";
 import { TILE_SIZE } from "./constants";
 import { Stats } from "./stats";
@@ -10,6 +10,7 @@ import { SKILL_MAP } from "./data/raw/skills";
 import { Demon } from "./data/demon";
 import { Skill } from "./data/skill";
 import { Mood } from "./emotion";
+import { ActorTween } from "./actor_tween";
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
@@ -37,8 +38,9 @@ export class Actor {
   public dialogue: Dialogue[];
   public is_blocking: boolean = false;
   public battle_data: BattleData;
+  public position: THREE.Vector3 | null = null;
 
-  private placed: boolean = false;
+  private tween: ActorTween = new ActorTween();
 
   constructor(
     name: string,
@@ -85,7 +87,7 @@ export class Actor {
     if (this.coor == null) {
       return false;
     }
-    if (!this.placed) {
+    if (this.position == null) {
       return true;
     }
     // player is on the same line (x or z) and facing towards me.
@@ -110,39 +112,48 @@ export class Actor {
     return false;
   }
 
-  public update(/*const */ player: Player) {
-    this.mesh.rotation.y = player.body.rotation.y;
+  public update(/*const */ player: Player | null) {
+    if (player != null) {
+      this.mesh.rotation.y = player.body.rotation.y;
 
-    if (this.coor == null) {
-      return;
+      if (this.coor != null && this.need_to_be_placed(player)) {
+        // Always to the left of the camera.
+        let offset_x = 0;
+        let offset_z = 0;
+        switch (player.dir) {
+          case Dir.W:
+            offset_x = -ACTOR_OFFSET_FRONT;
+            offset_z = ACTOR_OFFSET_SIDE;
+            break;
+          case Dir.E:
+            offset_x = ACTOR_OFFSET_FRONT;
+            offset_z = -ACTOR_OFFSET_SIDE;
+            break;
+          case Dir.N:
+            offset_x = -ACTOR_OFFSET_SIDE;
+            offset_z = -ACTOR_OFFSET_FRONT;
+            break;
+          case Dir.S:
+            offset_x = ACTOR_OFFSET_SIDE;
+            offset_z = ACTOR_OFFSET_FRONT;
+            break;
+        }
+        this.position = new THREE.Vector3(
+          (this.coor.x + offset_x) * TILE_SIZE,
+          -0.7,
+          (this.coor.z + offset_z) * TILE_SIZE
+        );
+      }
     }
 
-    if (this.need_to_be_placed(player)) {
-      // Always to the left of the camera.
-      let offset_x = 0;
-      let offset_z = 0;
-      switch (player.dir) {
-        case Dir.W:
-          offset_x = -ACTOR_OFFSET_FRONT;
-          offset_z = ACTOR_OFFSET_SIDE;
-          break;
-        case Dir.E:
-          offset_x = ACTOR_OFFSET_FRONT;
-          offset_z = -ACTOR_OFFSET_SIDE;
-          break;
-        case Dir.N:
-          offset_x = -ACTOR_OFFSET_SIDE;
-          offset_z = -ACTOR_OFFSET_FRONT;
-          break;
-        case Dir.S:
-          offset_x = ACTOR_OFFSET_SIDE;
-          offset_z = ACTOR_OFFSET_FRONT;
-          break;
+    if (this.position != null) {
+      if (this.battle_data.just_acted()) {
+        this.tween.bump();
       }
-      this.mesh.position.x = (this.coor.x + offset_x) * TILE_SIZE;
-      this.mesh.position.z = (this.coor.z + offset_z) * TILE_SIZE;
-      this.mesh.position.y = -0.7;
-      this.placed = true;
+      if (this.battle_data.just_got_damaged()) {
+        this.tween.set_shake(.5);
+      }
+      this.tween.update(this.mesh, this.position);
     }
   }
 }

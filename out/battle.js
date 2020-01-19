@@ -66,6 +66,8 @@ var Battle = /** @class */ (function () {
         battle_info_1.BattleInfo.actor_name = fighter.name;
         if (fighter.data.modded_base_stats().hp <= 0) {
             battle_info_1.BattleInfo.actor_name = "";
+            this.set_auto_next_interval();
+            return;
         }
         battle_info_1.BattleInfo.description = "";
         this.battle_action_btns.set_visible(false);
@@ -127,6 +129,7 @@ var Battle = /** @class */ (function () {
         this.info_description.set_inner_html(battle_info_1.BattleInfo.description);
     };
     Battle.prototype.take_battle_action = function (fighter, skill, targets) {
+        fighter.data.mark_just_acted();
         if (skill == null) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.data.modded_base_stats().st +

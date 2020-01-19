@@ -44,6 +44,9 @@ var Game = /** @class */ (function () {
         this.player.update();
         this.world.update(this.player);
         (_a = battle_1.Battle.Instance) === null || _a === void 0 ? void 0 : _a.update();
+        for (var i = 0; i < this.battle_actors.length; i++) {
+            this.battle_actors[i].update(null);
+        }
         var winner = (_b = battle_1.Battle.Instance) === null || _b === void 0 ? void 0 : _b.battle_winner();
         if (winner != null && winner != undefined) {
             this.end_battle(winner);
@@ -91,9 +94,7 @@ var Game = /** @class */ (function () {
                     var battle_fighters = this.battle_actors.map(function (actor) { return new battle_data_1.BattleFighter(actor.name, actor.battle_data); });
                     for (var i = 0; i < this.battle_actors.length; i++) {
                         this.player.body.add(this.battle_actors[i].mesh);
-                        this.battle_actors[i].mesh.position.z = -2 + i * 0.0001;
-                        this.battle_actors[i].mesh.position.x =
-                            1 * (i - this.battle_actors.length / 2);
+                        this.battle_actors[i].position = new THREE.Vector3(1 * (i - this.battle_actors.length / 2), 0, -2 + i * 0.0001);
                     }
                     battle_fighters.push(new battle_data_1.BattleFighter("Player", this.player.battle_data));
                     for (var i = 0; i < this.player.supports.length; i++) {

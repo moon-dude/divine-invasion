@@ -21,6 +21,8 @@ var BattleData = /** @class */ (function () {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
+        this.did_just_act = false;
+        this.did_just_get_damaged = false;
         this.name = name;
         this.side = side;
         this.base_stats = base_stats;
@@ -29,11 +31,18 @@ var BattleData = /** @class */ (function () {
         this.mood = mood;
     }
     BattleData.prototype.log_result = function (s) {
-        log_1.Log.push("<span class=\"log_result\">" + this.name + " " + s + " " + log_1.LOG_INDENT_CHAR + "</span>");
+        log_1.Log.push('<span class="log_result">' +
+            this.name +
+            " " +
+            s +
+            " " +
+            log_1.LOG_INDENT_CHAR +
+            "</span>");
     };
     BattleData.prototype.take_damage = function (amount) {
         if (amount <= 0) {
             this.log_result("took no damage.");
+            return;
         }
         if (this.buffs.defense.get() > 1) {
             amount /= this.buffs.defense.get();
@@ -47,6 +56,7 @@ var BattleData = /** @class */ (function () {
         if (this.modded_base_stats().hp == 0) {
             this.mood = emotion_1.Mood.Dead;
         }
+        this.did_just_get_damaged = true;
     };
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
@@ -77,6 +87,19 @@ var BattleData = /** @class */ (function () {
             this.take_damage(damage);
             battle_info_1.BattleInfo.result += "took " + damage + "damage from poison. ";
         }
+    };
+    BattleData.prototype.mark_just_acted = function () {
+        this.did_just_act = true;
+    };
+    BattleData.prototype.just_acted = function () {
+        var value = this.did_just_act;
+        this.did_just_act = false;
+        return value;
+    };
+    BattleData.prototype.just_got_damaged = function () {
+        var value = this.did_just_get_damaged;
+        this.did_just_get_damaged = false;
+        return value;
     };
     BattleData.IDENTITY = new BattleData("", BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
