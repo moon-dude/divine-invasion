@@ -104,30 +104,30 @@ function resolve_skill_effect(fighter, skill, target) {
         case SkillEffect.Damage:
             var damage = 1;
             if (skill.element == SkillElement.Phys) {
-                damage = Math.floor(fighter.data.modded_base_stats().st * damage_power(skill.power));
+                damage = Math.floor(fighter.modded_base_stats().st * damage_power(skill.power));
             }
             else if (skill.element == SkillElement.Gun) {
-                damage = Math.floor(fighter.data.modded_base_stats().dx * damage_power(skill.power));
+                damage = Math.floor(fighter.modded_base_stats().dx * damage_power(skill.power));
             }
             else if (skill.element == SkillElement.Light ||
                 skill.element == SkillElement.Dark) {
-                damage = Math.floor(fighter.data.modded_base_stats().lu * damage_power(skill.power));
+                damage = Math.floor(fighter.modded_base_stats().lu * damage_power(skill.power));
             }
             else {
-                damage = Math.floor(fighter.data.modded_base_stats().ma * damage_power(skill.power));
+                damage = Math.floor(fighter.modded_base_stats().ma * damage_power(skill.power));
             }
-            var success = target.data.will_take_hit(fighter.data.modded_base_stats().dx, fighter.data.buffs.defense.get(), 1.0); // TODO: Pipe in hit/miss chance for skills here.
+            var success = target.will_take_hit(fighter.modded_base_stats().dx, fighter.buffs.defense.get(), 1.0); // TODO: Pipe in hit/miss chance for skills here.
             if (success) {
-                target.data.take_damage(damage);
+                target.take_damage(damage);
             }
             else {
                 log_1.Log.push(target.name + " dodged! ");
             }
             break;
         case SkillEffect.Heal:
-            var power = Math.floor(fighter.data.modded_base_stats().ma) *
+            var power = Math.floor(fighter.modded_base_stats().ma) *
                 damage_power(skill.power);
-            target.data.heal_for(power);
+            target.heal_for(power);
             break;
         case SkillEffect.BuffDefense:
             handy_buff_handler(function (b) { return b.defense; }, target, true, skill.power);
@@ -173,17 +173,17 @@ function resolve_skill_effect(fighter, skill, target) {
 exports.resolve_skill_effect = resolve_skill_effect;
 function handy_buff_handler(buffer, target, positive, skill_power) {
     var power = buff_power(skill_power) * (positive ? 1 : -1);
-    buffer(target.data.buffs).raise(power);
-    log_1.Log.push(buffer(target.data.buffs) + (positive ? " raised" : " lowered"));
+    buffer(target.buffs).raise(power);
+    log_1.Log.push(buffer(target.buffs) + (positive ? " raised" : " lowered"));
 }
 function handy_ailment_handler(target, effect, positive) {
     // positive in the medical way.
     if (positive) {
         log_1.Log.push(target.name + " is now " + effect);
-        target.data.ailments.add(effect);
+        target.ailments.add(effect);
     }
-    else if (target.data.ailments.has(effect)) {
+    else if (target.ailments.has(effect)) {
         log_1.Log.push(target.name + " is no longer " + effect);
-        target.data.ailments.delete(effect);
+        target.ailments.delete(effect);
     }
 }

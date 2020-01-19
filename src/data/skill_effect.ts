@@ -1,4 +1,4 @@
-import { BattleFighter } from "../battle_data";
+import { BattleData } from "../battle_data";
 import { Skill } from "./skill";
 import { Buffs, Buffable } from "./buffs";
 import { Log } from "../log";
@@ -104,49 +104,49 @@ function buff_power(power?: SkillPower) {
 }
 
 export function resolve_skill_effect(
-  fighter: BattleFighter,
+  fighter: BattleData,
   skill: Skill,
-  target: BattleFighter
+  target: BattleData
 ) {
   switch (skill.effect) {
     case SkillEffect.Damage:
       let damage = 1;
       if (skill.element == SkillElement.Phys) {
         damage = Math.floor(
-          fighter.data.modded_base_stats().st * damage_power(skill.power)
+          fighter.modded_base_stats().st * damage_power(skill.power)
         );
       } else if (skill.element == SkillElement.Gun) {
         damage = Math.floor(
-          fighter.data.modded_base_stats().dx * damage_power(skill.power)
+          fighter.modded_base_stats().dx * damage_power(skill.power)
         );
       } else if (
         skill.element == SkillElement.Light ||
         skill.element == SkillElement.Dark
       ) {
         damage = Math.floor(
-          fighter.data.modded_base_stats().lu * damage_power(skill.power)
+          fighter.modded_base_stats().lu * damage_power(skill.power)
         );
       } else {
         damage = Math.floor(
-          fighter.data.modded_base_stats().ma * damage_power(skill.power)
+          fighter.modded_base_stats().ma * damage_power(skill.power)
         );
       }
-      const success: boolean = target.data.will_take_hit(
-        fighter.data.modded_base_stats().dx,
-        fighter.data.buffs.defense.get(),
+      const success: boolean = target.will_take_hit(
+        fighter.modded_base_stats().dx,
+        fighter.buffs.defense.get(),
         1.0
       ); // TODO: Pipe in hit/miss chance for skills here.
       if (success) {
-        target.data.take_damage(damage);
+        target.take_damage(damage);
       } else {
         Log.push(target.name + " dodged! ");
       }
       break;
     case SkillEffect.Heal:
       const power =
-        Math.floor(fighter.data.modded_base_stats().ma) *
+        Math.floor(fighter.modded_base_stats().ma) *
         damage_power(skill.power);
-      target.data.heal_for(power);
+      target.heal_for(power);
       break;
     case SkillEffect.BuffDefense:
       handy_buff_handler(b => b.defense, target, true, skill.power);
@@ -192,27 +192,27 @@ export function resolve_skill_effect(
 
 function handy_buff_handler(
   buffer: (b: Buffs) => Buffable,
-  target: BattleFighter,
+  target: BattleData,
   positive: boolean,
   skill_power?: SkillPower
 ) {
   const power = buff_power(skill_power) * (positive ? 1 : -1);
-  buffer(target.data.buffs).raise(power);
+  buffer(target.buffs).raise(power);
   Log.push(
-    buffer(target.data.buffs) + (positive ? " raised" : " lowered"));
+    buffer(target.buffs) + (positive ? " raised" : " lowered"));
 }
 
 function handy_ailment_handler(
-  target: BattleFighter,
+  target: BattleData,
   effect: SkillEffect,
   positive: boolean
 ) {
   // positive in the medical way.
   if (positive) {
     Log.push(target.name + " is now " + effect);
-    target.data.ailments.add(effect);
-  } else if (target.data.ailments.has(effect)) {
+    target.ailments.add(effect);
+  } else if (target.ailments.has(effect)) {
     Log.push(target.name + " is no longer " + effect);
-    target.data.ailments.delete(effect);
+    target.ailments.delete(effect);
   }
 }

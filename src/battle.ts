@@ -1,4 +1,4 @@
-import { BattleSide, BattleFighter, BattleIndex } from "./battle_data";
+import { BattleSide, BattleIndex, BattleData } from "./battle_data";
 import { resolve_skill_effect } from "./data/skill_effect";
 import { BattleTable } from "./battle_table";
 import { ai_take_turn } from "./battle_ai";
@@ -8,31 +8,41 @@ import { MenuEntry, Menu } from "./menu";
 import { Player } from "./player";
 import { ITEM_MAP } from "./data/raw/items";
 import { SKILL_MAP } from "./data/raw/skills";
+import { ItemName } from "./data/item";
+import { Request, try_ai_request, request_result } from "./requests";
+import { set_up_player_turn } from "./battle_player";
 
 export class AttackAction {};
 
 export class InventoryAction {
-  public item_name: string | null;
-  constructor(value: string | null) {
+  public item_name: ItemName | null;
+  constructor(value: ItemName | null) {
     this.item_name = value;
   }
 }
 
 export class SkillAction {
-  public skill_name: string | null;
-  constructor(value: string | null) {
+  public skill_name: string;
+  constructor(value: string) {
     this.skill_name = value;
   }
 }
 
-export type BattleAction = AttackAction | InventoryAction | SkillAction;
+export class RequestAction {
+  public request: Request;
+  constructor(value: Request) {
+    this.request = value;
+  }
+}
+
+export type BattleAction = AttackAction | InventoryAction | SkillAction | RequestAction;
 
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 export class Battle {
   public static Instance: Battle | null = null;
 
-  private fighters: Map<BattleSide, BattleFighter[]>;
+  private fighters: Map<BattleSide, BattleData[]>;
   private turn_order: BattleIndex[];
   private turn_idx: number = 0;
   private battle_idx: number = -1;
@@ -40,14 +50,14 @@ export class Battle {
   public battle_table: BattleTable;
   public current_action: BattleAction | null = null;
 
-  constructor(fighters: BattleFighter[]) {
+  constructor(fighters: BattleData[]) {
     Battle.Instance = this;
     this.fighters = new Map();
     this.fighters.set(BattleSide.Our, []);
     this.fighters.set(BattleSide.Their, []);
     this.turn_order = [];
     for (let i = 0; i < fighters.length; i++) {
-      const side: BattleSide = fighters[i].data.side;
+      const side: BattleSide = fighters[i].side;
       this.fighters.get(side)?.push(fighters[i]);
       this.turn_order.push(
         new BattleIndex(side, (this.fighters.get(side)?.length || 0) - 1)
@@ -89,13 +99,13 @@ export class Battle {
 
   private set_up_turn() {
     let fighter = this.current_fighter();
-    if (fighter.data.modded_base_stats().hp <= 0) {
+    if (fighter.modded_base_stats().hp <= 0) {
       this.set_auto_next_interval();
       return;
     }
-    if (fighter.data.side == BattleSide.Our && fighter.name == "Player") {
+    if (fighter.side == BattleSide.Our && fighter.name == "Player") {
       // For Player, let them choose what to do.
-      this.set_up_player_turn(fighter);
+      set_up_player_turn(fighter);
     } else {
       // Otherwise, let AI choose.
       let result = ai_take_turn(fighter, this.fighters);
@@ -103,7 +113,7 @@ export class Battle {
         this.take_battle_action(fighter, result[0], result[1]);
       }
       // Take the resulting action.
-      fighter.data.before_end_of_turn();
+      fighter.before_end_of_turn();
       this.set_auto_next_interval();
     }
   }
@@ -121,76 +131,12 @@ export class Battle {
     return interval_idx == this.turn_idx;
   }
 
-  private current_fighter(): BattleFighter {
+  private current_fighter(): BattleData {
     let turn_index = this.turn_order[this.battle_idx]!;
     return this.fighters.get(turn_index.side)![turn_index.index]!;
   }
 
-  private set_up_player_turn(fighter: BattleFighter) {
-    let battle_action_entries: MenuEntry[] = [
-      [
-        "Attack",
-        () => {
-          // Show enemy targets & back button.
-          Battle.Instance!.battle_table.set_their_btns_enabled(true);
-          Battle.Instance!.current_action = new AttackAction();
-          Game.Menu.push("Attack (Choose Target)", [
-            [
-              "Back",
-              () => {
-                Game.Menu.pop();
-              }
-            ]
-          ]);
-        }
-      ],
-      [
-        "Inventory",
-        () => {
-          Battle.Instance!.current_action = new InventoryAction(null);
-          let menu_entries: MenuEntry[] = [[
-            "Back",
-            () => {
-              Game.Menu.pop();
-            }
-          ]];
-          for (const entry of Player.Instance.inventory.entries()) {
-            menu_entries.push([entry[0] + "(x" + entry[1] + ")", () => {
-              Battle.Instance!.current_action = new InventoryAction(entry[0]);
-              this.battle_table.set_all_btns_enabled(true);
-              Game.Menu.push("Use item `" + entry[0] + "` (Select target)", [
-                ["Back", () => { Game.Menu.pop(); }] 
-              ]);
-            }]);
-          }
-          Game.Menu.push("Inventory (Choose Item)", menu_entries);
-        }
-      ]
-    ];
-    for (let i = 0; i < fighter.data.skills.length; i++) {
-      battle_action_entries.push([
-        fighter.data.skills[i].name,
-        () => {
-          Battle.Instance!.battle_table.set_all_btns_enabled(true);
-          Battle.Instance!.current_action = new SkillAction(fighter.data.skills[i].name);
-          Game.Menu.push(
-            "Use `" + fighter.data.skills[i].name + "` (Choose Target)",
-            [
-              [
-                "Back",
-                () => {
-                  Game.Menu.pop();
-                }
-              ]
-            ]
-          );
-        }
-      ]);
-    }
-    Game.Menu.push("Player turn", battle_action_entries);
-  }
-
-  private execute_player_turn(last_battle_table_click: BattleFighter) {
+  private execute_player_turn(last_battle_table_click: BattleData) {
     Game.Menu.clear();
     this.take_battle_action(this.current_fighter(), this.current_action!, [
       last_battle_table_click
@@ -200,33 +146,41 @@ export class Battle {
   }
 
   private take_battle_action(
-    fighter: BattleFighter,
+    fighter: BattleData,
     action: BattleAction,
-    targets: BattleFighter[]
+    targets: BattleData[]
   ): void {
-    fighter.data.mark_just_acted();
+    fighter.mark_just_acted();
     if (action instanceof AttackAction) {
       Log.push(this.current_fighter().name + " attacked.");
       let damage = Math.floor(
-        fighter.data.modded_base_stats().st +
-          fighter.data.modded_base_stats().dx
+        fighter.modded_base_stats().st +
+          fighter.modded_base_stats().dx
       );
       for (let t = 0; t < targets.length; t++) {
-        targets[t].data.take_damage(damage);
+        targets[t].take_damage(damage);
       }
     } else if (action instanceof InventoryAction) {
       Log.push(this.current_fighter().name + " used `" + action.item_name! + "`.");
       const item = ITEM_MAP.get(action.item_name!);
       for (let t = 0; t < targets.length; t++) {
-        item?.effect(targets[t].data);
+        item?.effect(targets[t]);
       }
     } else if (action instanceof SkillAction) {
-      // (Skill).
       const skill = SKILL_MAP.get(action.skill_name!)!;
-      fighter.data.mod_stats.mp -= skill.cost;
+      fighter.mod_stats.mp -= skill.cost;
       Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
       for (let t = 0; t < targets.length; t++) {
         resolve_skill_effect(fighter, skill, targets[t]);
+      }
+    } else if (action instanceof RequestAction) {
+      for (let t = 0; t < targets.length; t++) {
+        let request_worked = try_ai_request(fighter, targets[t], action.request);
+        if (request_worked) {
+          request_result(targets[t], action.request);
+        } else {
+          Log.push(targets[t].name + " was not convinced.");
+        }
       }
     }
     Game.Menu.clear();
@@ -238,7 +192,7 @@ export class Battle {
     let winner: BattleSide | null = BattleSide.Their;
     for (let i = 0; i < this.fighters.get(BattleSide.Our)!.length; i++) {
       if (
-        this.fighters.get(BattleSide.Our)![i]!.data.modded_base_stats().hp > 0
+        this.fighters.get(BattleSide.Our)![i]!.modded_base_stats().hp > 0
       ) {
         winner = BattleSide.Our;
         break;
@@ -249,7 +203,7 @@ export class Battle {
     }
     for (let i = 0; i < this.fighters.get(BattleSide.Their)!.length; i++) {
       if (
-        this.fighters.get(BattleSide.Their)![i]!.data.modded_base_stats().hp > 0
+        this.fighters.get(BattleSide.Their)![i]!.modded_base_stats().hp > 0
       ) {
         winner = null;
         break;

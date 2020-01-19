@@ -35,6 +35,7 @@ export class BattleData {
   public ailments: Set<SkillEffect> = new Set();
   public exp: Exp = new Exp();
   public mood: Mood | null;
+  public recruited: boolean = false;
 
   private did_just_act: boolean = false;
   private did_just_get_damaged: boolean = false;
@@ -147,15 +148,5 @@ export class BattleIndex {
   constructor(side: BattleSide, index: number) {
     this.side = side;
     this.index = index;
-  }
-}
-
-export class BattleFighter {
-  name: string;
-  data: BattleData;
-
-  constructor(name: string, data: BattleData) {
-    this.name = name;
-    this.data = data;
   }
 }

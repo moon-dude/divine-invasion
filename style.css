@@ -1,8 +1,14 @@
 body {
   background-color: black;
   color: white;
-  text-align: left;
+  text-align: center;
   font-family: 'IBM Plex Mono', monospace;
+}
+
+#html_div {
+  max-width: 800px;
+  text-align: left;
+  display: inline-block;
 }
 
 #dialogue_div {
@@ -23,6 +29,7 @@ body {
 }
 
 #battle_div {
+  width: 100%;
   padding: 0.1em;
 }
 
@@ -36,6 +43,10 @@ body {
   font-size: 0.8em;
   padding-right: 0.2em;
   padding-left: 0.2em;
+}
+
+#data_table {
+  width: 100%;
 }
 
 .sub {

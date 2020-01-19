@@ -20,6 +20,7 @@ var BattleData = /** @class */ (function () {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
+        this.recruited = false;
         this.did_just_act = false;
         this.did_just_get_damaged = false;
         this.name = name;
@@ -112,11 +113,3 @@ var BattleIndex = /** @class */ (function () {
     return BattleIndex;
 }());
 exports.BattleIndex = BattleIndex;
-var BattleFighter = /** @class */ (function () {
-    function BattleFighter(name, data) {
-        this.name = name;
-        this.data = data;
-    }
-    return BattleFighter;
-}());
-exports.BattleFighter = BattleFighter;

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-const BUMP_Z_MAX: number = 1.1;
+const BUMP_Z_MAX: number = 0.3;
 
 export class ActorTween {
   private shake: number = 0;
@@ -27,15 +27,18 @@ export class ActorTween {
       this.shake *= 0.9;
     }
     if (this.bump_return) {
-      this.bump_z += (0 - this.bump_z) * 0.2;
+      this.bump_z += (0 - this.bump_z) * 0.3;
     } else {
       this.bump_z += (BUMP_Z_MAX - this.bump_z) * 0.2;
-      if (Math.abs(this.bump_z - BUMP_Z_MAX) < 0.02) {
+      if (Math.abs(this.bump_z - BUMP_Z_MAX) < 0.1) {
         this.bump_return = true;
       }
     }
-    mesh.position.x = base_pos.x + shake_x;
-    mesh.position.y = base_pos.y + shake_y;
-    mesh.position.z = base_pos.z + this.bump_z;
+    let delta: THREE.Vector3 = new THREE.Vector3(shake_x, shake_y, this.bump_z);
+    var axis = new THREE.Vector3( 0, 1, 0 );
+    var angle = mesh.rotation.y;
+    delta.applyAxisAngle(axis, angle);
+    delta.add(base_pos);
+    Object.assign(mesh.position, delta);
   }
 }

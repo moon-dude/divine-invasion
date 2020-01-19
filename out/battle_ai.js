@@ -22,14 +22,14 @@ function ai_take_turn(fighter, fighters) {
         // TODO: Manually choose the best target for the skill.
         // For now just choose weakest health.
         var weakest_ally = null;
-        var allies = fighters.get(fighter.data.side);
+        var allies = fighters.get(fighter.side);
         for (var i = 0; i < allies.length; i++) {
-            if (allies[i].data.mod_stats.hp == 0) {
+            if (allies[i].mod_stats.hp == 0) {
                 continue;
             }
             if (weakest_ally == null ||
-                allies[i].data.modded_base_stats().hp <
-                    weakest_ally.data.modded_base_stats().hp) {
+                allies[i].modded_base_stats().hp <
+                    weakest_ally.modded_base_stats().hp) {
                 weakest_ally = allies[i];
             }
         }
@@ -42,8 +42,8 @@ function ai_take_turn(fighter, fighters) {
     else if (chosen_skill.target == util_1.Target.AllEnemies) {
         // TODO: select all enemies.
         var enemy_fighters = fighters
-            .get(battle_data_1.other_side(fighter.data.side))
-            .filter(function (x) { return x.data.modded_base_stats().hp > 0; });
+            .get(battle_data_1.other_side(fighter.side))
+            .filter(function (x) { return x.modded_base_stats().hp > 0; });
         for (var i = 0; i < enemy_fighters.length; i++) {
             targets.push(enemy_fighters[i]);
         }
@@ -57,20 +57,20 @@ function ai_take_turn(fighter, fighters) {
 }
 exports.ai_take_turn = ai_take_turn;
 function choose_skill(attacker) {
-    var choice_idx = Math.floor(Math.random() * (attacker.data.skills.length + 1));
-    if (choice_idx >= attacker.data.skills.length) {
+    var choice_idx = Math.floor(Math.random() * (attacker.skills.length + 1));
+    if (choice_idx >= attacker.skills.length) {
         return null;
     }
-    while (attacker.data.skills[choice_idx].cost > attacker.data.modded_base_stats().mp) {
+    while (attacker.skills[choice_idx].cost > attacker.modded_base_stats().mp) {
         choice_idx++;
-        if (choice_idx >= attacker.data.skills.length) {
+        if (choice_idx >= attacker.skills.length) {
             return null;
         }
     }
-    return attacker.data.skills[choice_idx];
+    return attacker.skills[choice_idx];
 }
 function get_attack_target(attacker, fighters) {
     return jlib_1.random_array_element(fighters
-        .get(battle_data_1.other_side(attacker.data.side))
-        .filter(function (x) { return x.data.modded_base_stats().hp > 0; }));
+        .get(battle_data_1.other_side(attacker.side))
+        .filter(function (x) { return x.modded_base_stats().hp > 0; }));
 }

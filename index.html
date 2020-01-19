@@ -12,26 +12,28 @@
   </head>
   <body>
     <div id="three_div"></div>
-    <div id="battle_div" style="visibility: hidden">
-      <table>
-        <thead><th>YOU</th><th>HP</th><th>MP</th><th>VS.</th><th>ENEMY</th><th>HP</th><th>MP</th></thead>
-        <tbody id="battle_tbody"></tbody>
+    <div id="html_div">
+      <div id="battle_div" style="visibility: hidden">
+        <table>
+          <thead><th>YOU</th><th>HP</th><th>MP</th><th>VS.</th><th>ENEMY</th><th>HP</th><th>MP</th></thead>
+          <tbody id="battle_tbody"></tbody>
+        </table>
+      </div>
+      <div id="dialogue_div">
+        <div id="dialogue_speaker"></div>
+        <div id="dialogue_speech"></div>
+        <div id="dialogue_info"></div>
+      </div>
+      <table id="data_table">
+        <tr>
+          <td class="half">
+            <div id="menu_div"></div>
+          </td><td class="half">
+            <div id="log_div"></div>
+          </td>
+        </tr>
       </table>
     </div>
-    <div id="dialogue_div">
-      <div id="dialogue_speaker"></div>
-      <div id="dialogue_speech"></div>
-      <div id="dialogue_info"></div>
-    </div>
-    <table>
-      <tr>
-        <td class="half">
-          <div id="menu_div"></div>
-        </td><td class="half">
-          <div id="log_div"></div>
-        </td>
-      </tr>
-    </table>
     <script src="bundle.js"></script>
 	</body>
 </html>

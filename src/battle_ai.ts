@@ -1,16 +1,16 @@
 import { Target } from "./data/util";
-import { BattleFighter, BattleSide, other_side } from "./battle_data";
+import { BattleSide, other_side, BattleData } from "./battle_data";
 import { random_array_element } from "./jlib";
 import { Skill } from "./data/skill";
 import { BattleAction, AttackAction, SkillAction } from "./battle";
 
 export function ai_take_turn(
-  fighter: BattleFighter,
-  fighters: Map<BattleSide, BattleFighter[]>
-): [BattleAction | null, BattleFighter[]] {
+  fighter: BattleData,
+  fighters: Map<BattleSide, BattleData[]>
+): [BattleAction | null, BattleData[]] {
   // Choose whether to attack or use skill.
   let chosen_skill = choose_skill(fighter);
-  let targets: BattleFighter[] = [];
+  let targets: BattleData[] = [];
   if (chosen_skill == null || chosen_skill.target == Target.SingleEnemy) {
     // Choose a random target.
     let target = get_attack_target(fighter, fighters);
@@ -22,16 +22,16 @@ export function ai_take_turn(
   } else if (chosen_skill.target == Target.SingleAlly) {
     // TODO: Manually choose the best target for the skill.
     // For now just choose weakest health.
-    let weakest_ally: BattleFighter | null = null;
-    const allies = fighters.get(fighter.data.side)!;
+    let weakest_ally: BattleData | null = null;
+    const allies = fighters.get(fighter.side)!;
     for (let i = 0; i < allies.length; i++) {
-      if (allies[i].data.mod_stats.hp == 0) {
+      if (allies[i].mod_stats.hp == 0) {
         continue;
       }
       if (
         weakest_ally == null ||
-        allies[i].data.modded_base_stats().hp <
-          weakest_ally.data.modded_base_stats().hp
+        allies[i].modded_base_stats().hp <
+          weakest_ally.modded_base_stats().hp
       ) {
         weakest_ally = allies[i];
       }
@@ -44,8 +44,8 @@ export function ai_take_turn(
   } else if (chosen_skill.target == Target.AllEnemies) {
     // TODO: select all enemies.
     const enemy_fighters = fighters
-      .get(other_side(fighter.data.side))!
-      .filter(x => x.data.modded_base_stats().hp > 0);
+      .get(other_side(fighter.side))!
+      .filter(x => x.modded_base_stats().hp > 0);
     for (let i = 0; i < enemy_fighters.length; i++) {
       targets.push(enemy_fighters[i]);
     }
@@ -57,31 +57,31 @@ export function ai_take_turn(
   }
 }
 
-function choose_skill(attacker: BattleFighter): Skill | null {
+function choose_skill(attacker: BattleData): Skill | null {
   let choice_idx = Math.floor(
-    Math.random() * (attacker.data.skills.length + 1)
+    Math.random() * (attacker.skills.length + 1)
   );
-  if (choice_idx >= attacker.data.skills.length) {
+  if (choice_idx >= attacker.skills.length) {
     return null;
   }
   while (
-    attacker.data.skills[choice_idx].cost > attacker.data.modded_base_stats().mp
+    attacker.skills[choice_idx].cost > attacker.modded_base_stats().mp
   ) {
     choice_idx++;
-    if (choice_idx >= attacker.data.skills.length) {
+    if (choice_idx >= attacker.skills.length) {
       return null;
     }
   }
-  return attacker.data.skills[choice_idx];
+  return attacker.skills[choice_idx];
 }
 
 function get_attack_target(
-  attacker: BattleFighter,
-  fighters: Map<BattleSide, BattleFighter[]>
-): BattleFighter | null {
+  attacker: BattleData,
+  fighters: Map<BattleSide, BattleData[]>
+): BattleData | null {
   return random_array_element(
     fighters
-      .get(other_side(attacker.data.side))!
-      .filter(x => x.data.modded_base_stats().hp > 0)
+      .get(other_side(attacker.side))!
+      .filter(x => x.modded_base_stats().hp > 0)
   );
 }

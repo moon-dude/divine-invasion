@@ -8,17 +8,35 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
+var actor_1 = require("./actor");
+var player_1 = require("./player");
 var globals_1 = require("./globals");
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
+var battle_data_1 = require("./battle_data");
 var World = /** @class */ (function () {
     function World(scene, level_data) {
         this.dialogue_idx = 0;
         this.map = level_data.map;
         this.actors = level_data.actors;
-        this.encounter_types = level_data.encounter_types;
-        this.encounters = this.make_encounters(this.map, level_data.encounter_count);
-        this.ambient_light = new THREE.AmbientLight("#000099", 0.8);
+        // this.encounter_types = level_data.encounter_types;
+        var encounter_coors = this.make_encounters(this.map, level_data.encounter_count);
+        var _loop_1 = function (i) {
+            var encounter_type = jlib_1.random_array_element(level_data.encounter_types);
+            var enemies = encounter_type.enemies;
+            var battle_actors = enemies.map(function (id) {
+                return actor_1.Actor.from_demon(id, battle_data_1.BattleSide.Their, encounter_coors[i]);
+            });
+            for (var j = 0; j < battle_actors.length; j++) {
+                battle_actors[j].pos_index = j;
+                this_1.actors.push(battle_actors[j]);
+            }
+        };
+        var this_1 = this;
+        for (var i = 0; i < encounter_coors.length; i++) {
+            _loop_1(i);
+        }
+        this.ambient_light = new THREE.AmbientLight("#222299", 0.8);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
@@ -51,14 +69,14 @@ var World = /** @class */ (function () {
         }
         return result;
     };
-    World.prototype.update = function (player) {
+    World.prototype.update = function () {
         this.speaker_div.innerHTML = "";
         this.speech_div.innerHTML = "";
         this.info_div.innerHTML = "";
         for (var i = 0; i < this.actors.length; i++) {
             var actor = this.actors[i];
-            actor.update(player);
-            if (!player.coor.equals(actor.coor)) {
+            actor.update();
+            if (!player_1.Player.Instance.coor.equals(actor.coor)) {
                 continue;
             }
             var dialogue = actor.dialogue[this.dialogue_idx];
@@ -70,16 +88,16 @@ var World = /** @class */ (function () {
             }
             if (!meets_criteria) {
                 if (actor.is_blocking) {
-                    player.movement_locked = false;
-                    player.move(-1, this.map, this.actors);
+                    player_1.Player.Instance.movement_locked = false;
+                    player_1.Player.Instance.move(-1, this.map, this.actors);
                 }
                 continue;
             }
             if (dialogue.lock_player) {
-                player.movement_locked = true;
+                player_1.Player.Instance.movement_locked = true;
             }
             else {
-                player.movement_locked = false;
+                player_1.Player.Instance.movement_locked = false;
             }
             actor.is_blocking =
                 dialogue.actor_block != undefined
@@ -92,6 +110,16 @@ var World = /** @class */ (function () {
             this.speech_div.innerHTML = dialogue.speech;
             this.info_div.innerHTML = dialogue.info;
         }
+    };
+    World.prototype.actors_at = function (coor) {
+        var _a;
+        var result = [];
+        for (var i = 0; i < this.actors.length; i++) {
+            if ((_a = this.actors[i].coor) === null || _a === void 0 ? void 0 : _a.equals(coor)) {
+                result.push(this.actors[i]);
+            }
+        }
+        return result;
     };
     return World;
 }());

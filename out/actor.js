@@ -9,6 +9,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
+var player_1 = require("./player");
 var constants_1 = require("./constants");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
@@ -35,6 +36,7 @@ var Actor = /** @class */ (function () {
     function Actor(name, dialogue, material, battle_data) {
         if (material === void 0) { material = exports.CULTIST_MAT; }
         if (battle_data === void 0) { battle_data = battle_data_1.BattleData.IDENTITY; }
+        this.pos_index = 0;
         this.is_blocking = false;
         this.position = null;
         this.tween = new actor_tween_1.ActorTween();
@@ -63,7 +65,7 @@ var Actor = /** @class */ (function () {
         actor.coor = coor;
         return actor;
     };
-    Actor.prototype.need_to_be_placed = function (player) {
+    Actor.prototype.need_to_be_placed = function () {
         if (this.coor == null) {
             return false;
         }
@@ -71,47 +73,46 @@ var Actor = /** @class */ (function () {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
-        if (!jlib_1.num_eq(player.coor.x, this.coor.x) &&
-            !jlib_1.num_eq(player.coor.z, this.coor.z)) {
+        if (!jlib_1.num_eq(player_1.Player.Instance.coor.x, this.coor.x) &&
+            !jlib_1.num_eq(player_1.Player.Instance.coor.z, this.coor.z)) {
             return false;
         }
-        if (jlib_1.num_lt(player.coor.x, this.coor.x)) {
-            return player.dir == jlib_1.Dir.E;
+        if (jlib_1.num_lt(player_1.Player.Instance.coor.x, this.coor.x)) {
+            return player_1.Player.Instance.dir == jlib_1.Dir.E;
         }
-        if (jlib_1.num_gt(player.coor.x, this.coor.x)) {
-            return player.dir == jlib_1.Dir.W;
+        if (jlib_1.num_gt(player_1.Player.Instance.coor.x, this.coor.x)) {
+            return player_1.Player.Instance.dir == jlib_1.Dir.W;
         }
-        if (jlib_1.num_lt(player.coor.z, this.coor.z)) {
-            return player.dir == jlib_1.Dir.S;
+        if (jlib_1.num_lt(player_1.Player.Instance.coor.z, this.coor.z)) {
+            return player_1.Player.Instance.dir == jlib_1.Dir.S;
         }
-        if (jlib_1.num_gt(player.coor.z, this.coor.z)) {
-            return player.dir == jlib_1.Dir.N;
+        if (jlib_1.num_gt(player_1.Player.Instance.coor.z, this.coor.z)) {
+            return player_1.Player.Instance.dir == jlib_1.Dir.N;
         }
         return false;
     };
-    Actor.prototype.update = function (/*const */ player) {
-        if (player != null) {
-            this.mesh.rotation.y = player.body.rotation.y;
-            if (this.coor != null && this.need_to_be_placed(player)) {
-                // Always to the left of the camera.
+    Actor.prototype.update = function () {
+        if (this.coor != null) {
+            this.mesh.rotation.y = player_1.Player.Instance.body.rotation.y;
+            if (this.need_to_be_placed()) {
                 var offset_x = 0;
                 var offset_z = 0;
-                switch (player.dir) {
+                switch (player_1.Player.Instance.dir) {
                     case jlib_1.Dir.W:
-                        offset_x = -ACTOR_OFFSET_FRONT;
-                        offset_z = ACTOR_OFFSET_SIDE;
+                        offset_x = -this.get_pos_front_offset();
+                        offset_z = this.get_pos_side_offset();
                         break;
                     case jlib_1.Dir.E:
-                        offset_x = ACTOR_OFFSET_FRONT;
-                        offset_z = -ACTOR_OFFSET_SIDE;
+                        offset_x = this.get_pos_front_offset();
+                        offset_z = -this.get_pos_side_offset();
                         break;
                     case jlib_1.Dir.N:
-                        offset_x = -ACTOR_OFFSET_SIDE;
-                        offset_z = -ACTOR_OFFSET_FRONT;
+                        offset_x = -this.get_pos_side_offset();
+                        offset_z = -this.get_pos_front_offset();
                         break;
                     case jlib_1.Dir.S:
-                        offset_x = ACTOR_OFFSET_SIDE;
-                        offset_z = ACTOR_OFFSET_FRONT;
+                        offset_x = this.get_pos_side_offset();
+                        offset_z = this.get_pos_front_offset();
                         break;
                 }
                 this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.7, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
@@ -122,10 +123,32 @@ var Actor = /** @class */ (function () {
                 this.tween.bump();
             }
             if (this.battle_data.just_got_damaged()) {
-                this.tween.set_shake(.5);
+                this.tween.set_shake(.1);
             }
             this.tween.update(this.mesh, this.position);
         }
+        this.mesh.visible = this.battle_data.modded_base_stats().hp > 0 && !this.battle_data.recruited;
+    };
+    Actor.prototype.get_pos_front_offset = function () {
+        if (this.pos_index < 3) {
+            return ACTOR_OFFSET_FRONT * 0.9;
+        }
+        return ACTOR_OFFSET_FRONT;
+    };
+    Actor.prototype.get_pos_side_offset = function () {
+        if (this.pos_index == 1) {
+            return -ACTOR_OFFSET_SIDE;
+        }
+        if (this.pos_index == 2) {
+            return ACTOR_OFFSET_SIDE;
+        }
+        if (this.pos_index == 3) {
+            return -ACTOR_OFFSET_SIDE / 2;
+        }
+        if (this.pos_index == 4) {
+            return ACTOR_OFFSET_SIDE / 2;
+        }
+        return 0;
     };
     return Actor;
 }());

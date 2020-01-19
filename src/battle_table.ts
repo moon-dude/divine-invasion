@@ -1,4 +1,4 @@
-import { BattleFighter, BattleData } from "./battle_data";
+import { BattleData } from "./battle_data";
 import { mood_string as get_mood_string } from "./emotion";
 
 /// An HTML entity manager for the battle table.
@@ -18,12 +18,11 @@ class BattleEntry {
 
   constructor(
     parent_row: HTMLTableRowElement,
-    name: string,
     fighter_data: BattleData,
     on_click: () => void
   ) {
     this.name_btn = document.createElement("button");
-    this.name_btn.innerHTML = name;
+    this.name_btn.innerHTML = fighter_data.name;
     this.name_btn.disabled = true;
     this.name_btn.onclick = on_click;
     this.name_cell = document.createElement("td");
@@ -68,9 +67,9 @@ export class BattleTable {
   private table_body: HTMLElement;
   private our_fighters: BattleEntry[];
   private their_fighters: BattleEntry[];
-  private last_click_result: BattleFighter | null = null;
+  private last_click_result: BattleData | null = null;
 
-  constructor(our_fighters: BattleFighter[], their_fighters: BattleFighter[]) {
+  constructor(our_fighters: BattleData[], their_fighters: BattleData[]) {
     this.table_body = document.getElementById("battle_tbody")!;
     this.table_body.innerHTML = "";
     this.our_fighters = [];
@@ -82,7 +81,7 @@ export class BattleTable {
       if (i < our_fighters.length) {
         let our = our_fighters[i];
         this.our_fighters.push(
-          new BattleEntry(row, our.name, our.data, () => {
+          new BattleEntry(row, our, () => {
             this.last_click_result = our;
           })
         );
@@ -93,7 +92,7 @@ export class BattleTable {
       if (i < their_fighters.length) {
         let their = their_fighters[i];
         this.their_fighters.push(
-          new BattleEntry(row, their.name, their.data, () => {
+          new BattleEntry(row, their, () => {
             this.last_click_result = their;
           })
         );
@@ -104,14 +103,14 @@ export class BattleTable {
   }
 
   public update(
-    our_fighters: BattleFighter[],
-    their_fighters: BattleFighter[]
+    our_fighters: BattleData[],
+    their_fighters: BattleData[]
   ) {
     for (let i = 0; i < this.our_fighters.length; i++) {
-      this.our_fighters[i].update(our_fighters[i]!.data);
+      this.our_fighters[i].update(our_fighters[i]!);
     }
     for (let i = 0; i < this.their_fighters.length; i++) {
-      this.their_fighters[i].update(their_fighters[i]!.data);
+      this.their_fighters[i].update(their_fighters[i]!);
     }
   }
 
@@ -136,7 +135,7 @@ export class BattleTable {
     }
   }
 
-  public get_last_click(): BattleFighter | null {
+  public get_last_click(): BattleData | null {
     let result = this.last_click_result;
     this.last_click_result = null;
     return result;

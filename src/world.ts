@@ -5,17 +5,16 @@ import { Actor } from "./actor";
 import { Player } from "./player";
 import { flags } from "./globals";
 import { LevelData } from "./data/levels/level_data";
-import { Coor, shuffle_array } from "./jlib";
+import { Coor, shuffle_array, random_array_element } from "./jlib";
 import { EncounterType } from "./data/encounter_type";
 import { TILE_SIZE } from "./constants";
+import { BattleSide } from "./battle_data";
 
 export class World {
   // data.
-  map: TileMap;
-  actors: Actor[];
-  dialogue_idx: number = 0;
-  encounter_types: EncounterType[];
-  encounters: Coor[];
+  public map: TileMap;
+  public actors: Actor[];
+  public dialogue_idx: number = 0;
 
   // Three objects.
   private ambient_light: THREE.AmbientLight;
@@ -29,13 +28,25 @@ export class World {
   constructor(scene: THREE.Scene, level_data: LevelData) {
     this.map = level_data.map;
     this.actors = level_data.actors;
-    this.encounter_types = level_data.encounter_types;
-    this.encounters = this.make_encounters(
+    
+    // this.encounter_types = level_data.encounter_types;
+    const encounter_coors: Coor[] = this.make_encounters(
       this.map,
       level_data.encounter_count
     );
+    for (let i = 0; i < encounter_coors.length; i++) {
+      const encounter_type = random_array_element(level_data.encounter_types)!;
+      const enemies = encounter_type.enemies;
+      let battle_actors = enemies.map(id =>
+        Actor.from_demon(id, BattleSide.Their, encounter_coors[i])
+      );
+      for (let j = 0; j < battle_actors.length; j++) {
+        battle_actors[j].pos_index = j;
+        this.actors.push(battle_actors[j]);
+      }
+    }
 
-    this.ambient_light = new THREE.AmbientLight("#000099", 0.8);
+    this.ambient_light = new THREE.AmbientLight("#222299", 0.8);
 
     this.speaker_div = document.getElementById("dialogue_speaker")!;
     this.speech_div = document.getElementById("dialogue_speech")!;
@@ -75,15 +86,15 @@ export class World {
     return result;
   }
 
-  public update(player: Player) {
+  public update() {
     this.speaker_div.innerHTML = "";
     this.speech_div.innerHTML = "";
     this.info_div.innerHTML = "";
     for (let i = 0; i < this.actors.length; i++) {
       let actor: Actor = this.actors[i];
-      actor.update(player);
+      actor.update();
 
-      if (!player.coor.equals(actor.coor)) {
+      if (!Player.Instance.coor.equals(actor.coor)) {
         continue;
       }
       let dialogue = actor.dialogue[this.dialogue_idx];
@@ -95,15 +106,15 @@ export class World {
       }
       if (!meets_criteria) {
         if (actor.is_blocking) {
-          player.movement_locked = false;
-          player.move(-1, this.map, this.actors);
+          Player.Instance.movement_locked = false;
+          Player.Instance.move(-1, this.map, this.actors);
         }
         continue;
       }
       if (dialogue.lock_player) {
-        player.movement_locked = true;
+        Player.Instance.movement_locked = true;
       } else {
-        player.movement_locked = false;
+        Player.Instance.movement_locked = false;
       }
       actor.is_blocking =
         dialogue.actor_block != undefined
@@ -118,5 +129,15 @@ export class World {
       this.speech_div.innerHTML = dialogue.speech;
       this.info_div.innerHTML = dialogue.info;
     }
+  }
+
+  public actors_at(coor: Coor): Actor[] {
+    let result: Actor[] = [];
+    for (let i = 0; i < this.actors.length; i++) {
+      if (this.actors[i].coor?.equals(coor)) {
+        result.push(this.actors[i]);
+      }
+    }
+    return result;
   }
 }

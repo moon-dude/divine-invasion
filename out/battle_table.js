@@ -8,9 +8,9 @@ function append_empty_entry(parent) {
     parent.appendChild(document.createElement("td"));
 }
 var BattleEntry = /** @class */ (function () {
-    function BattleEntry(parent_row, name, fighter_data, on_click) {
+    function BattleEntry(parent_row, fighter_data, on_click) {
         this.name_btn = document.createElement("button");
-        this.name_btn.innerHTML = name;
+        this.name_btn.innerHTML = fighter_data.name;
         this.name_btn.disabled = true;
         this.name_btn.onclick = on_click;
         this.name_cell = document.createElement("td");
@@ -63,7 +63,7 @@ var BattleTable = /** @class */ (function () {
             this_1.table_body.appendChild(row);
             if (i < our_fighters.length) {
                 var our_1 = our_fighters[i];
-                this_1.our_fighters.push(new BattleEntry(row, our_1.name, our_1.data, function () {
+                this_1.our_fighters.push(new BattleEntry(row, our_1, function () {
                     _this.last_click_result = our_1;
                 }));
             }
@@ -73,7 +73,7 @@ var BattleTable = /** @class */ (function () {
             row.appendChild(document.createElement("td"));
             if (i < their_fighters.length) {
                 var their_1 = their_fighters[i];
-                this_1.their_fighters.push(new BattleEntry(row, their_1.name, their_1.data, function () {
+                this_1.their_fighters.push(new BattleEntry(row, their_1, function () {
                     _this.last_click_result = their_1;
                 }));
             }
@@ -88,10 +88,10 @@ var BattleTable = /** @class */ (function () {
     }
     BattleTable.prototype.update = function (our_fighters, their_fighters) {
         for (var i = 0; i < this.our_fighters.length; i++) {
-            this.our_fighters[i].update(our_fighters[i].data);
+            this.our_fighters[i].update(our_fighters[i]);
         }
         for (var i = 0; i < this.their_fighters.length; i++) {
-            this.their_fighters[i].update(their_fighters[i].data);
+            this.their_fighters[i].update(their_fighters[i]);
         }
     };
     BattleTable.prototype.set_our_btns_enabled = function (value) {
