@@ -1,7 +1,6 @@
 body {
   background-color: black;
   color: white;
-  text-align: center;
   font-family: 'IBM Plex Mono', monospace;
 }
 
@@ -58,7 +57,7 @@ body {
 
 .sub {
   color: #ccc;
-  font-size: 0.7em;
+  font-size: 0.8em;
 }
 
 table {
@@ -113,7 +112,7 @@ button:disabled {
 }
 
 .actor_card {
-  background-color: #00000088;
+  background-color: #000000cc;
   padding: 12px 3px;
   font-size: .7em;
 }

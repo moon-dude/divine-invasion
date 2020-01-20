@@ -32,7 +32,7 @@ var Battle = /** @class */ (function () {
         this.enemy_actor_cards = [];
         var enemies = this.fighters.get(battle_data_1.BattleSide.Their);
         for (var i = 0; i < enemies.length; i++) {
-            this.enemy_actor_cards.push(new actor_card_1.ActorCard(this.enemy_info_div, enemies[i]));
+            this.enemy_actor_cards.push(new actor_card_1.ActorCard(this.enemy_info_div, enemies[i], false));
         }
         game_1.Game.Instance.menu.push("You've been attacked by demons!", [
             [
@@ -186,7 +186,8 @@ var Battle = /** @class */ (function () {
 }());
 exports.Battle = Battle;
 function auto_next_interval_callback(idx) {
-    if (game_1.Game.Instance.get_battle().is_auto_next_ready(idx)) {
-        game_1.Game.Instance.get_battle().next_turn();
+    var _a, _b;
+    if ((_a = game_1.Game.Instance.get_battle()) === null || _a === void 0 ? void 0 : _a.is_auto_next_ready(idx)) {
+        (_b = game_1.Game.Instance.get_battle()) === null || _b === void 0 ? void 0 : _b.next_turn();
     }
 }

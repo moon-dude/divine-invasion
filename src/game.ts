@@ -22,7 +22,6 @@ export class Game {
   // Rendering.
   private scene: THREE.Scene = new THREE.Scene();
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
-  private battle_div: HTMLElement;
   private log_div: HTMLElement;
   private header_div: HTMLElement;
 
@@ -31,7 +30,6 @@ export class Game {
     this.scene.add(this.player.body);
     this.world = new World(this.scene, level2_data);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
-    this.battle_div = document.getElementById("battle_div")!;
     this.log_div = document.getElementById("log_div")!;
     this.header_div = document.getElementById("header_div")!;
   }
@@ -89,7 +87,6 @@ export class Game {
         }
         this.battle = new Battle(battle_fighters);
         this.player.movement_locked = true;
-        this.battle_div.style.visibility = "";
       }
     }
     if (result.actioned) {
@@ -105,9 +102,8 @@ export class Game {
       let actors_at_player_coor = this.world.actors_at(this.player.coor);
       this.player.movement_locked = false;
       this.player.party_gain_loot(actors_at_player_coor);
-      this.battle_div.style.visibility = "hidden";
     } else {
-      this.battle_div.innerHTML = "YOU DIED";
+      Log.push("YOU DIED");
     }
   }
 

@@ -55,7 +55,8 @@ export class Player {
     this.recruits = [Actor.from_demon("Pixie", BattleSide.Our)];
     this.inventory.add_item("Life Stone", 5);
     this.player_info_div = document.getElementById("player_info_div")!;
-    this.actor_cards = [new ActorCard(this.player_info_div, this.battle_data)];
+    this.actor_cards = [new ActorCard(this.player_info_div, this.battle_data, true)];
+    this.add_recruit(this.recruits[0]);
   }
 
   public update() {
@@ -142,7 +143,7 @@ export class Player {
   public add_recruit(actor: Actor) {
     actor.battle_data.side = BattleSide.Our;
     this.recruits.push(actor);
-    this.actor_cards.push(new ActorCard(this.player_info_div, actor.battle_data));
+    this.actor_cards.push(new ActorCard(this.player_info_div, actor.battle_data, true));
   }
 
   public get_last_battle_data_clicked(): BattleData | null {

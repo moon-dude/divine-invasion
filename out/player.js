@@ -40,7 +40,8 @@ var Player = /** @class */ (function () {
         this.recruits = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
         this.player_info_div = document.getElementById("player_info_div");
-        this.actor_cards = [new actor_card_1.ActorCard(this.player_info_div, this.battle_data)];
+        this.actor_cards = [new actor_card_1.ActorCard(this.player_info_div, this.battle_data, true)];
+        this.add_recruit(this.recruits[0]);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -123,7 +124,7 @@ var Player = /** @class */ (function () {
     Player.prototype.add_recruit = function (actor) {
         actor.battle_data.side = battle_data_1.BattleSide.Our;
         this.recruits.push(actor);
-        this.actor_cards.push(new actor_card_1.ActorCard(this.player_info_div, actor.battle_data));
+        this.actor_cards.push(new actor_card_1.ActorCard(this.player_info_div, actor.battle_data, true));
     };
     Player.prototype.get_last_battle_data_clicked = function () {
         for (var i = 0; i < this.actor_cards.length; i++) {

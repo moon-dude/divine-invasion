@@ -30,7 +30,6 @@ var Game = /** @class */ (function () {
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
-        this.battle_div = document.getElementById("battle_div");
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
     }
@@ -77,7 +76,6 @@ var Game = /** @class */ (function () {
                 }
                 this.battle = new battle_1.Battle(battle_fighters);
                 this.player.movement_locked = true;
-                this.battle_div.style.visibility = "";
             }
         }
         if (result.actioned) {
@@ -92,10 +90,9 @@ var Game = /** @class */ (function () {
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
             this.player.movement_locked = false;
             this.player.party_gain_loot(actors_at_player_coor);
-            this.battle_div.style.visibility = "hidden";
         }
         else {
-            this.battle_div.innerHTML = "YOU DIED";
+            log_1.Log.push("YOU DIED");
         }
     };
     Game.prototype.set_actor_cards_enabled = function (enabled, filter) {

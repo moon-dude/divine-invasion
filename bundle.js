@@ -51408,7 +51408,7 @@ exports.Actor = Actor;
 Object.defineProperty(exports, "__esModule", { value: true });
 var emotion_1 = require("./emotion");
 var ActorCard = /** @class */ (function () {
-    function ActorCard(parent, fighter_data) {
+    function ActorCard(parent, fighter_data, show_stats) {
         var _this = this;
         this.name_btn_clicked = false;
         this.card_span = document.createElement("span");
@@ -51424,6 +51424,7 @@ var ActorCard = /** @class */ (function () {
         }
         this.card_span.appendChild(this.name_btn);
         this.name_btn.appendChild(this.mood_span);
+        this.show_stats = show_stats;
         this.health = document.createElement("span");
         this.card_span.appendChild(this.health);
         this.mana = document.createElement("span");
@@ -51440,16 +51441,18 @@ var ActorCard = /** @class */ (function () {
         else {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
-        this.health.innerHTML =
-            fighter_data.modded_base_stats().hp +
-                '<span class="sub">/' +
-                fighter_data.base_stats.hp +
-                "</span>";
-        this.mana.innerHTML =
-            fighter_data.modded_base_stats().mp +
-                '<span class="sub">/' +
-                fighter_data.base_stats.mp +
-                "</span>";
+        if (this.show_stats) {
+            this.health.innerHTML =
+                fighter_data.modded_base_stats().hp +
+                    '<span class="sub">/' +
+                    fighter_data.base_stats.hp +
+                    " HP</span> ";
+            this.mana.innerHTML =
+                fighter_data.modded_base_stats().mp +
+                    '<span class="sub">/' +
+                    fighter_data.base_stats.mp +
+                    " MP</span> ";
+        }
     };
     ActorCard.prototype.was_clicked = function () {
         var result = this.name_btn_clicked;
@@ -51550,7 +51553,7 @@ var Battle = /** @class */ (function () {
         this.enemy_actor_cards = [];
         var enemies = this.fighters.get(battle_data_1.BattleSide.Their);
         for (var i = 0; i < enemies.length; i++) {
-            this.enemy_actor_cards.push(new actor_card_1.ActorCard(this.enemy_info_div, enemies[i]));
+            this.enemy_actor_cards.push(new actor_card_1.ActorCard(this.enemy_info_div, enemies[i], false));
         }
         game_1.Game.Instance.menu.push("You've been attacked by demons!", [
             [
@@ -51704,8 +51707,9 @@ var Battle = /** @class */ (function () {
 }());
 exports.Battle = Battle;
 function auto_next_interval_callback(idx) {
-    if (game_1.Game.Instance.get_battle().is_auto_next_ready(idx)) {
-        game_1.Game.Instance.get_battle().next_turn();
+    var _a, _b;
+    if ((_a = game_1.Game.Instance.get_battle()) === null || _a === void 0 ? void 0 : _a.is_auto_next_ready(idx)) {
+        (_b = game_1.Game.Instance.get_battle()) === null || _b === void 0 ? void 0 : _b.next_turn();
     }
 }
 
@@ -69398,7 +69402,6 @@ var Game = /** @class */ (function () {
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
-        this.battle_div = document.getElementById("battle_div");
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
     }
@@ -69445,7 +69448,6 @@ var Game = /** @class */ (function () {
                 }
                 this.battle = new battle_1.Battle(battle_fighters);
                 this.player.movement_locked = true;
-                this.battle_div.style.visibility = "";
             }
         }
         if (result.actioned) {
@@ -69460,10 +69462,9 @@ var Game = /** @class */ (function () {
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
             this.player.movement_locked = false;
             this.player.party_gain_loot(actors_at_player_coor);
-            this.battle_div.style.visibility = "hidden";
         }
         else {
-            this.battle_div.innerHTML = "YOU DIED";
+            log_1.Log.push("YOU DIED");
         }
     };
     Game.prototype.set_actor_cards_enabled = function (enabled, filter) {
@@ -69893,7 +69894,8 @@ var Player = /** @class */ (function () {
         this.recruits = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
         this.player_info_div = document.getElementById("player_info_div");
-        this.actor_cards = [new actor_card_1.ActorCard(this.player_info_div, this.battle_data)];
+        this.actor_cards = [new actor_card_1.ActorCard(this.player_info_div, this.battle_data, true)];
+        this.add_recruit(this.recruits[0]);
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -69976,7 +69978,7 @@ var Player = /** @class */ (function () {
     Player.prototype.add_recruit = function (actor) {
         actor.battle_data.side = battle_data_1.BattleSide.Our;
         this.recruits.push(actor);
-        this.actor_cards.push(new actor_card_1.ActorCard(this.player_info_div, actor.battle_data));
+        this.actor_cards.push(new actor_card_1.ActorCard(this.player_info_div, actor.battle_data, true));
     };
     Player.prototype.get_last_battle_data_clicked = function () {
         for (var i = 0; i < this.actor_cards.length; i++) {

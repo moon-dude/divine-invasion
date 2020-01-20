@@ -3,16 +3,18 @@ import { BattleData } from "./battle_data";
 
 export class ActorCard {
   public card_span: HTMLSpanElement;
-  
+
   private name_btn: HTMLButtonElement;
   private mood_span: HTMLSpanElement;
   private health: HTMLSpanElement;
   private mana: HTMLSpanElement;
   private name_btn_clicked: boolean = false;
+  private show_stats: boolean;
 
   constructor(
     parent: HTMLElement,
     fighter_data: BattleData,
+    show_stats: boolean,
   ) {
     this.card_span = document.createElement("span");
     this.card_span.className = "actor_card";
@@ -27,6 +29,7 @@ export class ActorCard {
     }
     this.card_span.appendChild(this.name_btn);
     this.name_btn.appendChild(this.mood_span);
+    this.show_stats = show_stats;
     this.health = document.createElement("span");
     this.card_span.appendChild(this.health);
     this.mana = document.createElement("span");
@@ -44,16 +47,18 @@ export class ActorCard {
     } else {
       this.mood_span.innerHTML = get_mood_string(fighter_data.mood);
     }
-    this.health.innerHTML =
-      fighter_data.modded_base_stats().hp +
-      '<span class="sub">/' +
-      fighter_data.base_stats.hp +
-      "</span>";
-    this.mana.innerHTML =
-      fighter_data.modded_base_stats().mp +
-      '<span class="sub">/' +
-      fighter_data.base_stats.mp +
-      "</span>";
+    if (this.show_stats) {
+      this.health.innerHTML =
+        fighter_data.modded_base_stats().hp +
+        '<span class="sub">/' +
+        fighter_data.base_stats.hp +
+        " HP</span> ";
+      this.mana.innerHTML =
+        fighter_data.modded_base_stats().mp +
+        '<span class="sub">/' +
+        fighter_data.base_stats.mp +
+        " MP</span> ";
+    }
   }
 
   public was_clicked(): boolean {

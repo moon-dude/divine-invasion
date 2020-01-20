@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var emotion_1 = require("./emotion");
 var ActorCard = /** @class */ (function () {
-    function ActorCard(parent, fighter_data) {
+    function ActorCard(parent, fighter_data, show_stats) {
         var _this = this;
         this.name_btn_clicked = false;
         this.card_span = document.createElement("span");
@@ -18,6 +18,7 @@ var ActorCard = /** @class */ (function () {
         }
         this.card_span.appendChild(this.name_btn);
         this.name_btn.appendChild(this.mood_span);
+        this.show_stats = show_stats;
         this.health = document.createElement("span");
         this.card_span.appendChild(this.health);
         this.mana = document.createElement("span");
@@ -34,16 +35,18 @@ var ActorCard = /** @class */ (function () {
         else {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
-        this.health.innerHTML =
-            fighter_data.modded_base_stats().hp +
-                '<span class="sub">/' +
-                fighter_data.base_stats.hp +
-                "</span>";
-        this.mana.innerHTML =
-            fighter_data.modded_base_stats().mp +
-                '<span class="sub">/' +
-                fighter_data.base_stats.mp +
-                "</span>";
+        if (this.show_stats) {
+            this.health.innerHTML =
+                fighter_data.modded_base_stats().hp +
+                    '<span class="sub">/' +
+                    fighter_data.base_stats.hp +
+                    " HP</span> ";
+            this.mana.innerHTML =
+                fighter_data.modded_base_stats().mp +
+                    '<span class="sub">/' +
+                    fighter_data.base_stats.mp +
+                    " MP</span> ";
+        }
     };
     ActorCard.prototype.was_clicked = function () {
         var result = this.name_btn_clicked;
