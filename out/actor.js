@@ -9,7 +9,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
-var player_1 = require("./player");
 var constants_1 = require("./constants");
 var stats_1 = require("./stats");
 var battle_data_1 = require("./battle_data");
@@ -17,6 +16,7 @@ var demons_1 = require("./data/raw/demons");
 var skills_1 = require("./data/raw/skills");
 var emotion_1 = require("./emotion");
 var actor_tween_1 = require("./actor_tween");
+var game_1 = require("./game");
 var ACTOR_OFFSET_FRONT = 0.4;
 var ACTOR_OFFSET_SIDE = 0.3;
 var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
@@ -73,31 +73,31 @@ var Actor = /** @class */ (function () {
             return true;
         }
         // player is on the same line (x or z) and facing towards me.
-        if (!jlib_1.num_eq(player_1.Player.Instance.coor.x, this.coor.x) &&
-            !jlib_1.num_eq(player_1.Player.Instance.coor.z, this.coor.z)) {
+        if (!jlib_1.num_eq(game_1.Game.Instance.player.coor.x, this.coor.x) &&
+            !jlib_1.num_eq(game_1.Game.Instance.player.coor.z, this.coor.z)) {
             return false;
         }
-        if (jlib_1.num_lt(player_1.Player.Instance.coor.x, this.coor.x)) {
-            return player_1.Player.Instance.dir == jlib_1.Dir.E;
+        if (jlib_1.num_lt(game_1.Game.Instance.player.coor.x, this.coor.x)) {
+            return game_1.Game.Instance.player.dir == jlib_1.Dir.E;
         }
-        if (jlib_1.num_gt(player_1.Player.Instance.coor.x, this.coor.x)) {
-            return player_1.Player.Instance.dir == jlib_1.Dir.W;
+        if (jlib_1.num_gt(game_1.Game.Instance.player.coor.x, this.coor.x)) {
+            return game_1.Game.Instance.player.dir == jlib_1.Dir.W;
         }
-        if (jlib_1.num_lt(player_1.Player.Instance.coor.z, this.coor.z)) {
-            return player_1.Player.Instance.dir == jlib_1.Dir.S;
+        if (jlib_1.num_lt(game_1.Game.Instance.player.coor.z, this.coor.z)) {
+            return game_1.Game.Instance.player.dir == jlib_1.Dir.S;
         }
-        if (jlib_1.num_gt(player_1.Player.Instance.coor.z, this.coor.z)) {
-            return player_1.Player.Instance.dir == jlib_1.Dir.N;
+        if (jlib_1.num_gt(game_1.Game.Instance.player.coor.z, this.coor.z)) {
+            return game_1.Game.Instance.player.dir == jlib_1.Dir.N;
         }
         return false;
     };
     Actor.prototype.update = function () {
         if (this.coor != null) {
-            this.mesh.rotation.y = player_1.Player.Instance.body.rotation.y;
+            this.mesh.rotation.y = game_1.Game.Instance.player.body.rotation.y;
             if (this.need_to_be_placed()) {
                 var offset_x = 0;
                 var offset_z = 0;
-                switch (player_1.Player.Instance.dir) {
+                switch (game_1.Game.Instance.player.dir) {
                     case jlib_1.Dir.W:
                         offset_x = -this.get_pos_front_offset();
                         offset_z = this.get_pos_side_offset();

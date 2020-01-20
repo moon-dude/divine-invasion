@@ -6,14 +6,11 @@ import { Actor } from "./actor";
 import { BattleData, BattleSide } from "./battle_data";
 import { Stats } from "./stats";
 import { Inventory } from "./inventory";
-import { Game } from "./game";
 import { Log } from "./log";
 
 export const PLAYER_NAME: string = "Player";
 
 export class Player {
-  public static Instance: Player;
-
   public coor: Coor = new Coor(1, 1);
   public dir: Dir = Dir.S;
   public body: THREE.Object3D = new THREE.Object3D();
@@ -32,7 +29,6 @@ export class Player {
   public macca: number = 0;
 
   constructor() {
-    Player.Instance = this;
     this.body.add(this.camera);
     this.body.add(this.light);
     this.light.position.x = 5;

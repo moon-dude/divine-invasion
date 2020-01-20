@@ -1,6 +1,7 @@
 import { BattleData } from "./battle_data";
-import { PLAYER_NAME, Player } from "./player";
+import { PLAYER_NAME } from "./player";
 import { Log } from "./log";
+import { Game } from "./game";
 
 /// Requests 
 
@@ -24,11 +25,11 @@ export function request_result(target: BattleData, request: Request): void {
     case Request.Tribute:
       // TODO: Other items?
       if (target.name != PLAYER_NAME) {
-        Player.Instance.inventory.add_item("Life Stone");
+        Game.Instance.player.inventory.add_item("Life Stone");
         Log.push("Player recieved a Life Stone.");
       } else {
         // TODO: All of the edge cases.
-        Player.Instance.inventory.destroy_item("Life Stone");
+        Game.Instance.player.inventory.destroy_item("Life Stone");
         Log.push("Player gave away a Life Stone.");
       }
       break;

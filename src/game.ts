@@ -10,13 +10,14 @@ import { Log } from "./log";
 import { Menu } from "./menu";
 
 export class Game {
-  public static Menu: Menu = new Menu("menu_div");
+  public static Instance: Game;
 
-  private world: World;
+  public menu: Menu = new Menu("menu_div");
+  public player: Player = new Player();
+  public world: World;
 
-  // Meta.
+  private battle: Battle | null = null;
   private input: Input = new Input();
-  private player: Player = new Player();
 
   // Rendering.
   private scene: THREE.Scene = new THREE.Scene();
@@ -26,12 +27,17 @@ export class Game {
   private overlay_div: HTMLElement;
 
   constructor() {
+    Game.Instance = this;
     this.scene.add(this.player.body);
     this.world = new World(this.scene, level2_data);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
     this.log_div = document.getElementById("log_div")!;
     this.overlay_div = document.getElementById("overlay_div")!;
+  }
+
+  public get_battle(): Battle {
+    return this.battle!;
   }
 
   private render() {
@@ -45,8 +51,8 @@ export class Game {
   public update(): void {
     this.player.update();
     this.world.update();
-    Battle.Instance?.update();
-    const winner = Battle.Instance?.battle_winner();
+    this.battle?.update();
+    const winner = this.battle?.battle_winner();
     if (winner != null && winner != undefined) {
       this.end_battle(winner);
     }
@@ -80,21 +86,20 @@ export class Game {
             this.player.supports[i].battle_data
           );
         }
-        Battle.Instance = new Battle(battle_fighters);
+        this.battle = new Battle(battle_fighters);
         this.player.movement_locked = true;
         this.battle_div.style.visibility = "";
       }
     }
     if (result.actioned) {
       this.world.dialogue_idx += 1;
-      if (Battle.Instance != null) {
-        Battle.Instance.next_turn();
-      }
+      this.battle?.next_turn();
     }
   }
   
   private end_battle(winner: BattleSide) {
-    Battle.Instance!.end();
+    this.battle!.end();
+    this.battle = null;
     if (winner == BattleSide.Our) {
       let actors_at_player_coor = this.world.actors_at(this.player.coor);
       this.player.movement_locked = false;

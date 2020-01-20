@@ -2,13 +2,12 @@ import * as THREE from "three";
 
 import { TileMap } from "./map";
 import { Actor } from "./actor";
-import { Player } from "./player";
 import { flags } from "./globals";
 import { LevelData } from "./data/levels/level_data";
 import { Coor, shuffle_array, random_array_element } from "./jlib";
-import { EncounterType } from "./data/encounter_type";
 import { TILE_SIZE } from "./constants";
 import { BattleSide } from "./battle_data";
+import { Game } from "./game";
 
 export class World {
   // data.
@@ -28,7 +27,7 @@ export class World {
   constructor(scene: THREE.Scene, level_data: LevelData) {
     this.map = level_data.map;
     this.actors = level_data.actors;
-    
+
     // this.encounter_types = level_data.encounter_types;
     const encounter_coors: Coor[] = this.make_encounters(
       this.map,
@@ -94,7 +93,7 @@ export class World {
       let actor: Actor = this.actors[i];
       actor.update();
 
-      if (!Player.Instance.coor.equals(actor.coor)) {
+      if (!Game.Instance.player.coor.equals(actor.coor)) {
         continue;
       }
       let dialogue = actor.dialogue[this.dialogue_idx];
@@ -106,15 +105,15 @@ export class World {
       }
       if (!meets_criteria) {
         if (actor.is_blocking) {
-          Player.Instance.movement_locked = false;
-          Player.Instance.move(-1, this.map, this.actors);
+          Game.Instance.player.movement_locked = false;
+          Game.Instance.player.move(-1, this.map, this.actors);
         }
         continue;
       }
       if (dialogue.lock_player) {
-        Player.Instance.movement_locked = true;
+        Game.Instance.player.movement_locked = true;
       } else {
-        Player.Instance.movement_locked = false;
+        Game.Instance.player.movement_locked = false;
       }
       actor.is_blocking =
         dialogue.actor_block != undefined

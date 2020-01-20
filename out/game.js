@@ -19,12 +19,14 @@ var menu_1 = require("./menu");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
-        // Meta.
-        this.input = new input_1.Input();
+        this.menu = new menu_1.Menu("menu_div");
         this.player = new player_1.Player();
+        this.battle = null;
+        this.input = new input_1.Input();
         // Rendering.
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
+        Game.Instance = this;
         this.scene.add(this.player.body);
         this.world = new world_1.World(this.scene, level2_1.level2_data);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
@@ -32,6 +34,9 @@ var Game = /** @class */ (function () {
         this.log_div = document.getElementById("log_div");
         this.overlay_div = document.getElementById("overlay_div");
     }
+    Game.prototype.get_battle = function () {
+        return this.battle;
+    };
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
@@ -43,14 +48,15 @@ var Game = /** @class */ (function () {
         var _a, _b;
         this.player.update();
         this.world.update();
-        (_a = battle_1.Battle.Instance) === null || _a === void 0 ? void 0 : _a.update();
-        var winner = (_b = battle_1.Battle.Instance) === null || _b === void 0 ? void 0 : _b.battle_winner();
+        (_a = this.battle) === null || _a === void 0 ? void 0 : _a.update();
+        var winner = (_b = this.battle) === null || _b === void 0 ? void 0 : _b.battle_winner();
         if (winner != null && winner != undefined) {
             this.end_battle(winner);
         }
         this.render();
     };
     Game.prototype.key_down = function (event) {
+        var _a;
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
         if (result.moved) {
             this.world.dialogue_idx = 0;
@@ -68,20 +74,19 @@ var Game = /** @class */ (function () {
                 for (var i = 0; i < this.player.supports.length; i++) {
                     battle_fighters.push(this.player.supports[i].battle_data);
                 }
-                battle_1.Battle.Instance = new battle_1.Battle(battle_fighters);
+                this.battle = new battle_1.Battle(battle_fighters);
                 this.player.movement_locked = true;
                 this.battle_div.style.visibility = "";
             }
         }
         if (result.actioned) {
             this.world.dialogue_idx += 1;
-            if (battle_1.Battle.Instance != null) {
-                battle_1.Battle.Instance.next_turn();
-            }
+            (_a = this.battle) === null || _a === void 0 ? void 0 : _a.next_turn();
         }
     };
     Game.prototype.end_battle = function (winner) {
-        battle_1.Battle.Instance.end();
+        this.battle.end();
+        this.battle = null;
         if (winner == battle_data_1.BattleSide.Our) {
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
             this.player.movement_locked = false;
@@ -92,7 +97,6 @@ var Game = /** @class */ (function () {
             this.battle_div.innerHTML = "YOU DIED";
         }
     };
-    Game.Menu = new menu_1.Menu("menu_div");
     return Game;
 }());
 exports.Game = Game;

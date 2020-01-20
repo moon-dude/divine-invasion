@@ -9,11 +9,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var actor_1 = require("./actor");
-var player_1 = require("./player");
 var globals_1 = require("./globals");
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var battle_data_1 = require("./battle_data");
+var game_1 = require("./game");
 var World = /** @class */ (function () {
     function World(scene, level_data) {
         this.dialogue_idx = 0;
@@ -76,7 +76,7 @@ var World = /** @class */ (function () {
         for (var i = 0; i < this.actors.length; i++) {
             var actor = this.actors[i];
             actor.update();
-            if (!player_1.Player.Instance.coor.equals(actor.coor)) {
+            if (!game_1.Game.Instance.player.coor.equals(actor.coor)) {
                 continue;
             }
             var dialogue = actor.dialogue[this.dialogue_idx];
@@ -88,16 +88,16 @@ var World = /** @class */ (function () {
             }
             if (!meets_criteria) {
                 if (actor.is_blocking) {
-                    player_1.Player.Instance.movement_locked = false;
-                    player_1.Player.Instance.move(-1, this.map, this.actors);
+                    game_1.Game.Instance.player.movement_locked = false;
+                    game_1.Game.Instance.player.move(-1, this.map, this.actors);
                 }
                 continue;
             }
             if (dialogue.lock_player) {
-                player_1.Player.Instance.movement_locked = true;
+                game_1.Game.Instance.player.movement_locked = true;
             }
             else {
-                player_1.Player.Instance.movement_locked = false;
+                game_1.Game.Instance.player.movement_locked = false;
             }
             actor.is_blocking =
                 dialogue.actor_block != undefined

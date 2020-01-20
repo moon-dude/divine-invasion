@@ -40,8 +40,6 @@ export type BattleAction = AttackAction | InventoryAction | SkillAction | Reques
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 export class Battle {
-  public static Instance: Battle | null = null;
-
   private fighters: Map<BattleSide, BattleData[]>;
   private turn_order: BattleIndex[];
   private turn_idx: number = 0;
@@ -51,7 +49,6 @@ export class Battle {
   public current_action: BattleAction | null = null;
 
   constructor(fighters: BattleData[]) {
-    Battle.Instance = this;
     this.fighters = new Map();
     this.fighters.set(BattleSide.Our, []);
     this.fighters.set(BattleSide.Their, []);
@@ -67,11 +64,11 @@ export class Battle {
       this.fighters.get(BattleSide.Our)!,
       this.fighters.get(BattleSide.Their)!
     );
-    Game.Menu.push("You've been attacked by demons!", [
+    Game.Instance.menu.push("You've been attacked by demons!", [
       [
         "Continue",
         () => {
-          Battle.Instance!.next_turn();
+          Game.Instance.get_battle().next_turn();
         }
       ]
     ]);
@@ -137,7 +134,7 @@ export class Battle {
   }
 
   private execute_player_turn(last_battle_table_click: BattleData) {
-    Game.Menu.clear();
+    Game.Instance.menu.clear();
     this.take_battle_action(this.current_fighter(), this.current_action!, [
       last_battle_table_click
     ]);
@@ -183,7 +180,7 @@ export class Battle {
         }
       }
     }
-    Game.Menu.clear();
+    Game.Instance.menu.clear();
     this.battle_table.set_all_btns_enabled(false);
   }
 
@@ -213,13 +210,12 @@ export class Battle {
   }
 
   public end(): void {
-    Game.Menu.clear();
-    Battle.Instance = null;
+    Game.Instance.menu.clear();
   }
 }
 
 function auto_next_interval_callback(idx: number) {
-  if (Battle.Instance?.is_auto_next_ready(idx)) {
-    Battle.Instance?.next_turn();
+  if (Game.Instance.get_battle().is_auto_next_ready(idx)) {
+    Game.Instance.get_battle().next_turn();
   }
 }

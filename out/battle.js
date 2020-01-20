@@ -46,7 +46,6 @@ var Battle = /** @class */ (function () {
         this.turn_idx = 0;
         this.battle_idx = -1;
         this.current_action = null;
-        Battle.Instance = this;
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
@@ -57,11 +56,11 @@ var Battle = /** @class */ (function () {
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
         this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
-        game_1.Game.Menu.push("You've been attacked by demons!", [
+        game_1.Game.Instance.menu.push("You've been attacked by demons!", [
             [
                 "Continue",
                 function () {
-                    Battle.Instance.next_turn();
+                    game_1.Game.Instance.get_battle().next_turn();
                 }
             ]
         ]);
@@ -114,7 +113,7 @@ var Battle = /** @class */ (function () {
         return this.fighters.get(turn_index.side)[turn_index.index];
     };
     Battle.prototype.execute_player_turn = function (last_battle_table_click) {
-        game_1.Game.Menu.clear();
+        game_1.Game.Instance.menu.clear();
         this.take_battle_action(this.current_fighter(), this.current_action, [
             last_battle_table_click
         ]);
@@ -158,7 +157,7 @@ var Battle = /** @class */ (function () {
                 }
             }
         }
-        game_1.Game.Menu.clear();
+        game_1.Game.Instance.menu.clear();
         this.battle_table.set_all_btns_enabled(false);
     };
     // returns null if battle is not over.
@@ -182,16 +181,13 @@ var Battle = /** @class */ (function () {
         return winner;
     };
     Battle.prototype.end = function () {
-        game_1.Game.Menu.clear();
-        Battle.Instance = null;
+        game_1.Game.Instance.menu.clear();
     };
-    Battle.Instance = null;
     return Battle;
 }());
 exports.Battle = Battle;
 function auto_next_interval_callback(idx) {
-    var _a, _b;
-    if ((_a = Battle.Instance) === null || _a === void 0 ? void 0 : _a.is_auto_next_ready(idx)) {
-        (_b = Battle.Instance) === null || _b === void 0 ? void 0 : _b.next_turn();
+    if (game_1.Game.Instance.get_battle().is_auto_next_ready(idx)) {
+        game_1.Game.Instance.get_battle().next_turn();
     }
 }

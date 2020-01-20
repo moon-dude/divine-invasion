@@ -26,7 +26,6 @@ var Player = /** @class */ (function () {
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
-        Player.Instance = this;
         this.body.add(this.camera);
         this.body.add(this.light);
         this.light.position.x = 5;

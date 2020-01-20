@@ -11,13 +11,13 @@ export function set_up_player_turn(fighter: BattleData) {
       "Attack",
       () => {
         // Show enemy targets & back button.
-        Battle.Instance!.battle_table.set_their_btns_enabled(true);
-        Battle.Instance!.current_action = new AttackAction();
-        Game.Menu.push("Attack (Choose Target)", [
+        Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+        Game.Instance.get_battle().current_action = new AttackAction();
+        Game.Instance.menu.push("Attack (Choose Target)", [
           [
             "Back",
             () => {
-              Game.Menu.pop();
+              Game.Instance.menu.pop();
             }
           ]
         ]);
@@ -26,35 +26,35 @@ export function set_up_player_turn(fighter: BattleData) {
     [
       "Inventory",
       () => {
-        Battle.Instance!.current_action = new InventoryAction(null);
+        Game.Instance.get_battle().current_action = new InventoryAction(null);
         let menu_entries: MenuEntry[] = [[
           "Back",
           () => {
-            Game.Menu.pop();
+            Game.Instance.menu.pop();
           }
         ]];
-        for (const entry of Player.Instance.inventory.entries()) {
+        for (const entry of Game.Instance.player.inventory.entries()) {
           menu_entries.push([entry[0] + "(x" + entry[1] + ")", () => {
-            Battle.Instance!.current_action = new InventoryAction(entry[0]);
-            Battle.Instance!.battle_table.set_all_btns_enabled(true);
-            Game.Menu.push("Use item `" + entry[0] + "` (Select target)", [
-              ["Back", () => { Game.Menu.pop(); }] 
+            Game.Instance.get_battle().current_action = new InventoryAction(entry[0]);
+            Game.Instance.get_battle().battle_table.set_all_btns_enabled(true);
+            Game.Instance.menu.push("Use item `" + entry[0] + "` (Select target)", [
+              ["Back", () => { Game.Instance.menu.pop(); }] 
             ]);
           }]);
         }
-        Game.Menu.push("Inventory (Choose Item)", menu_entries);
+        Game.Instance.menu.push("Inventory (Choose Item)", menu_entries);
       }
     ],
     [
       "Demand Tribute",
       () => {
-        Battle.Instance!.current_action = new RequestAction(Request.Tribute);
-        Battle.Instance!.battle_table.set_their_btns_enabled(true);
-        Game.Menu.push("Demand Tribute (Choose Target)", [
+        Game.Instance.get_battle().current_action = new RequestAction(Request.Tribute);
+        Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+        Game.Instance.menu.push("Demand Tribute (Choose Target)", [
           [
             "Back",
             () => {
-              Game.Menu.pop();
+              Game.Instance.menu.pop();
             }
           ]
         ]);
@@ -63,13 +63,13 @@ export function set_up_player_turn(fighter: BattleData) {
     [
       "Demand Servitude",
       () => {
-        Battle.Instance!.current_action = new RequestAction(Request.Tribute);
-        Battle.Instance!.battle_table.set_their_btns_enabled(true);
-        Game.Menu.push("Demand Servitude (Choose Target)", [
+        Game.Instance.get_battle().current_action = new RequestAction(Request.Tribute);
+        Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+        Game.Instance.menu.push("Demand Servitude (Choose Target)", [
           [
             "Back",
             () => {
-              Game.Menu.pop();
+              Game.Instance.menu.pop();
             }
           ]
         ]);
@@ -80,15 +80,15 @@ export function set_up_player_turn(fighter: BattleData) {
     battle_action_entries.push([
       fighter.skills[i].name,
       () => {
-        Battle.Instance!.battle_table.set_all_btns_enabled(true);
-        Battle.Instance!.current_action = new SkillAction(fighter.skills[i].name);
-        Game.Menu.push(
+        Game.Instance.get_battle().battle_table.set_all_btns_enabled(true);
+        Game.Instance.get_battle().current_action = new SkillAction(fighter.skills[i].name);
+        Game.Instance.menu.push(
           "Use `" + fighter.skills[i].name + "` (Choose Target)",
           [
             [
               "Back",
               () => {
-                Game.Menu.pop();
+                Game.Instance.menu.pop();
               }
             ]
           ]
@@ -96,5 +96,5 @@ export function set_up_player_turn(fighter: BattleData) {
       }
     ]);
   }
-  Game.Menu.push("Player turn", battle_action_entries);
+  Game.Instance.menu.push("Player turn", battle_action_entries);
 }

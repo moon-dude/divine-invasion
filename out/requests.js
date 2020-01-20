@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
 var log_1 = require("./log");
+var game_1 = require("./game");
 /// Requests 
 var Request;
 (function (Request) {
@@ -23,12 +24,12 @@ function request_result(target, request) {
         case Request.Tribute:
             // TODO: Other items?
             if (target.name != player_1.PLAYER_NAME) {
-                player_1.Player.Instance.inventory.add_item("Life Stone");
+                game_1.Game.Instance.player.inventory.add_item("Life Stone");
                 log_1.Log.push("Player recieved a Life Stone.");
             }
             else {
                 // TODO: All of the edge cases.
-                player_1.Player.Instance.inventory.destroy_item("Life Stone");
+                game_1.Game.Instance.player.inventory.destroy_item("Life Stone");
                 log_1.Log.push("Player gave away a Life Stone.");
             }
             break;

@@ -1,7 +1,6 @@
 import * as THREE from "three";
 import { Coor, Dir, num_eq, num_lt, num_gt } from "./jlib";
 import { Dialogue } from "./dialogue";
-import { Player } from "./player";
 import { TILE_SIZE } from "./constants";
 import { Stats } from "./stats";
 import { BattleData, BattleSide } from "./battle_data";
@@ -11,6 +10,7 @@ import { Demon } from "./data/demon";
 import { Skill } from "./data/skill";
 import { Mood } from "./emotion";
 import { ActorTween } from "./actor_tween";
+import { Game } from "./game";
 
 const ACTOR_OFFSET_FRONT = 0.4;
 const ACTOR_OFFSET_SIDE = 0.3;
@@ -101,34 +101,34 @@ export class Actor {
     }
     // player is on the same line (x or z) and facing towards me.
     if (
-      !num_eq(Player.Instance.coor.x, this.coor.x) &&
-      !num_eq(Player.Instance.coor.z, this.coor.z)
+      !num_eq(Game.Instance.player.coor.x, this.coor.x) &&
+      !num_eq(Game.Instance.player.coor.z, this.coor.z)
     ) {
       return false;
     }
-    if (num_lt(Player.Instance.coor.x, this.coor.x)) {
-      return Player.Instance.dir == Dir.E;
+    if (num_lt(Game.Instance.player.coor.x, this.coor.x)) {
+      return Game.Instance.player.dir == Dir.E;
     }
-    if (num_gt(Player.Instance.coor.x, this.coor.x)) {
-      return Player.Instance.dir == Dir.W;
+    if (num_gt(Game.Instance.player.coor.x, this.coor.x)) {
+      return Game.Instance.player.dir == Dir.W;
     }
-    if (num_lt(Player.Instance.coor.z, this.coor.z)) {
-      return Player.Instance.dir == Dir.S;
+    if (num_lt(Game.Instance.player.coor.z, this.coor.z)) {
+      return Game.Instance.player.dir == Dir.S;
     }
-    if (num_gt(Player.Instance.coor.z, this.coor.z)) {
-      return Player.Instance.dir == Dir.N;
+    if (num_gt(Game.Instance.player.coor.z, this.coor.z)) {
+      return Game.Instance.player.dir == Dir.N;
     }
     return false;
   }
 
   public update() {
     if (this.coor != null) {
-      this.mesh.rotation.y = Player.Instance.body.rotation.y;
+      this.mesh.rotation.y = Game.Instance.player.body.rotation.y;
 
       if (this.need_to_be_placed()) {
         let offset_x = 0;
         let offset_z = 0;
-        switch (Player.Instance.dir) {
+        switch (Game.Instance.player.dir) {
           case Dir.W:
             offset_x = -this.get_pos_front_offset();
             offset_z = this.get_pos_side_offset();
