@@ -119,4 +119,3 @@ var BattleTable = /** @class */ (function () {
     };
     return BattleTable;
 }());
-exports.BattleTable = BattleTable;

@@ -2,7 +2,7 @@ import { Target } from "./data/util";
 import { BattleSide, other_side, BattleData } from "./battle_data";
 import { random_array_element } from "./jlib";
 import { Skill } from "./data/skill";
-import { BattleAction, AttackAction, SkillAction } from "./battle";
+import { BattleAction, AttackAction, SkillAction } from "./battle_actions";
 
 export function ai_take_turn(
   fighter: BattleData,

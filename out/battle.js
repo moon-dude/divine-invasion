@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_table_1 = require("./battle_table");
 var battle_ai_1 = require("./battle_ai");
 var log_1 = require("./log");
 var game_1 = require("./game");
@@ -10,34 +9,8 @@ var items_1 = require("./data/raw/items");
 var skills_1 = require("./data/raw/skills");
 var requests_1 = require("./requests");
 var battle_player_1 = require("./battle_player");
-var AttackAction = /** @class */ (function () {
-    function AttackAction() {
-    }
-    return AttackAction;
-}());
-exports.AttackAction = AttackAction;
-;
-var InventoryAction = /** @class */ (function () {
-    function InventoryAction(value) {
-        this.item_name = value;
-    }
-    return InventoryAction;
-}());
-exports.InventoryAction = InventoryAction;
-var SkillAction = /** @class */ (function () {
-    function SkillAction(value) {
-        this.skill_name = value;
-    }
-    return SkillAction;
-}());
-exports.SkillAction = SkillAction;
-var RequestAction = /** @class */ (function () {
-    function RequestAction(value) {
-        this.request = value;
-    }
-    return RequestAction;
-}());
-exports.RequestAction = RequestAction;
+var battle_actions_1 = require("./battle_actions");
+var actor_card_1 = require("./actor_card");
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -55,7 +28,12 @@ var Battle = /** @class */ (function () {
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
-        this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
+        this.enemy_info_div = document.getElementById("enemy_info_div");
+        this.enemy_actor_cards = [];
+        var enemies = this.fighters.get(battle_data_1.BattleSide.Their);
+        for (var i = 0; i < enemies.length; i++) {
+            this.enemy_actor_cards.push(new actor_card_1.ActorCard(this.enemy_info_div, enemies[i]));
+        }
         game_1.Game.Instance.menu.push("You've been attacked by demons!", [
             [
                 "Continue",
@@ -67,12 +45,30 @@ var Battle = /** @class */ (function () {
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
-        var last_battle_table_click = this.battle_table.get_last_click();
-        if (last_battle_table_click != null && this.current_action != null) {
-            this.execute_player_turn(last_battle_table_click);
+        var last_battle_data_clicked = game_1.Game.Instance.player.get_last_battle_data_clicked() ||
+            this.get_last_enemy_clicked();
+        if (last_battle_data_clicked != null && this.current_action != null) {
+            this.execute_player_turn(last_battle_data_clicked);
         }
-        // Update table for new fighter values.
-        this.battle_table.update(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            this.enemy_actor_cards[i].update(this.fighters.get(battle_data_1.BattleSide.Their)[i]);
+        }
+    };
+    Battle.prototype.get_last_enemy_clicked = function () {
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            if (this.enemy_actor_cards[i].was_clicked()) {
+                return this.fighters.get(battle_data_1.BattleSide.Their)[i];
+            }
+        }
+        return null;
+    };
+    Battle.prototype.set_actor_cards_enabled = function (enabled, filter) {
+        if (filter === void 0) { filter = function () { return true; }; }
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            if (filter(this.fighters.get(battle_data_1.BattleSide.Their)[i])) {
+                this.enemy_actor_cards[i].set_name_btn_enabled(enabled);
+            }
+        }
     };
     // Increment turn index, take turn, render changes.
     Battle.prototype.next_turn = function () {
@@ -123,22 +119,21 @@ var Battle = /** @class */ (function () {
     Battle.prototype.take_battle_action = function (fighter, action, targets) {
         var _a;
         fighter.mark_just_acted();
-        if (action instanceof AttackAction) {
+        if (action instanceof battle_actions_1.AttackAction) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
-            var damage = Math.floor(fighter.modded_base_stats().st +
-                fighter.modded_base_stats().dx);
+            var damage = Math.floor(fighter.modded_base_stats().st + fighter.modded_base_stats().dx);
             for (var t = 0; t < targets.length; t++) {
                 targets[t].take_damage(damage);
             }
         }
-        else if (action instanceof InventoryAction) {
+        else if (action instanceof battle_actions_1.InventoryAction) {
             log_1.Log.push(this.current_fighter().name + " used `" + action.item_name + "`.");
             var item = items_1.ITEM_MAP.get(action.item_name);
             for (var t = 0; t < targets.length; t++) {
                 (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
         }
-        else if (action instanceof SkillAction) {
+        else if (action instanceof battle_actions_1.SkillAction) {
             var skill = skills_1.SKILL_MAP.get(action.skill_name);
             fighter.mod_stats.mp -= skill.cost;
             log_1.Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
@@ -146,7 +141,7 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        else if (action instanceof RequestAction) {
+        else if (action instanceof battle_actions_1.RequestAction) {
             for (var t = 0; t < targets.length; t++) {
                 var request_worked = requests_1.try_ai_request(fighter, targets[t], action.request);
                 if (request_worked) {
@@ -158,7 +153,7 @@ var Battle = /** @class */ (function () {
             }
         }
         game_1.Game.Instance.menu.clear();
-        this.battle_table.set_all_btns_enabled(false);
+        game_1.Game.Instance.set_actor_cards_enabled(false);
     };
     // returns null if battle is not over.
     Battle.prototype.battle_winner = function () {
@@ -183,6 +178,9 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.end = function () {
         game_1.Game.Instance.menu.clear();
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            this.enemy_info_div.removeChild(this.enemy_actor_cards[i].card_span);
+        }
     };
     return Battle;
 }());

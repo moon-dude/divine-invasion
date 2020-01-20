@@ -32,17 +32,17 @@ var Game = /** @class */ (function () {
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
         this.log_div = document.getElementById("log_div");
-        this.overlay_div = document.getElementById("overlay_div");
+        this.header_div = document.getElementById("header_div");
     }
     Game.prototype.get_battle = function () {
         return this.battle;
     };
     Game.prototype.render = function () {
-        this.renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
+        this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
         this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
-        this.overlay_div.innerHTML = "♄" + this.player.macca;
+        this.header_div.innerHTML = "♄" + this.player.macca;
     };
     Game.prototype.update = function () {
         var _a, _b;
@@ -72,8 +72,8 @@ var Game = /** @class */ (function () {
             if (start_battle) {
                 var battle_fighters = actors_at_player_coor.map(function (actor) { return actor.battle_data; });
                 battle_fighters.push(this.player.battle_data);
-                for (var i = 0; i < this.player.supports.length; i++) {
-                    battle_fighters.push(this.player.supports[i].battle_data);
+                for (var i = 0; i < this.player.recruits.length; i++) {
+                    battle_fighters.push(this.player.recruits[i].battle_data);
                 }
                 this.battle = new battle_1.Battle(battle_fighters);
                 this.player.movement_locked = true;
@@ -97,6 +97,19 @@ var Game = /** @class */ (function () {
         else {
             this.battle_div.innerHTML = "YOU DIED";
         }
+    };
+    Game.prototype.set_actor_cards_enabled = function (enabled, filter) {
+        if (filter === void 0) { filter = function () { return true; }; }
+        var _a;
+        if (filter(this.player.battle_data)) {
+            this.player.actor_cards[0].set_name_btn_enabled(enabled);
+        }
+        for (var i = 1; i < this.player.actor_cards.length; i++) {
+            if (filter(this.player.recruits[i - 1].battle_data)) {
+                this.player.actor_cards[i].set_name_btn_enabled(enabled);
+            }
+        }
+        (_a = this.battle) === null || _a === void 0 ? void 0 : _a.set_actor_cards_enabled(enabled, filter);
     };
     return Game;
 }());

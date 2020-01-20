@@ -51403,7 +51403,64 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./actor_tween":5,"./battle_data":8,"./constants":11,"./data/raw/demons":16,"./data/raw/skills":18,"./emotion":21,"./game":23,"./jlib":27,"./stats":34,"three":3}],5:[function(require,module,exports){
+},{"./actor_tween":6,"./battle_data":10,"./constants":12,"./data/raw/demons":17,"./data/raw/skills":19,"./emotion":22,"./game":24,"./jlib":28,"./stats":35,"three":3}],5:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var emotion_1 = require("./emotion");
+var ActorCard = /** @class */ (function () {
+    function ActorCard(parent, fighter_data) {
+        var _this = this;
+        this.name_btn_clicked = false;
+        this.card_span = document.createElement("span");
+        this.card_span.className = "actor_card";
+        parent.appendChild(this.card_span);
+        this.name_btn = document.createElement("button");
+        this.name_btn.innerHTML = fighter_data.name;
+        this.name_btn.disabled = true;
+        this.name_btn.onclick = function () { _this.name_btn_clicked = true; };
+        this.mood_span = document.createElement("span");
+        if (fighter_data.mood != null) {
+            this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
+        }
+        this.card_span.appendChild(this.name_btn);
+        this.name_btn.appendChild(this.mood_span);
+        this.health = document.createElement("span");
+        this.card_span.appendChild(this.health);
+        this.mana = document.createElement("span");
+        this.card_span.appendChild(this.mana);
+        this.update(fighter_data);
+    }
+    ActorCard.prototype.set_name_btn_enabled = function (value) {
+        this.name_btn.disabled = !value;
+    };
+    ActorCard.prototype.update = function (fighter_data) {
+        if (fighter_data.mood == null) {
+            this.mood_span.innerHTML = "";
+        }
+        else {
+            this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
+        }
+        this.health.innerHTML =
+            fighter_data.modded_base_stats().hp +
+                '<span class="sub">/' +
+                fighter_data.base_stats.hp +
+                "</span>";
+        this.mana.innerHTML =
+            fighter_data.modded_base_stats().mp +
+                '<span class="sub">/' +
+                fighter_data.base_stats.mp +
+                "</span>";
+    };
+    ActorCard.prototype.was_clicked = function () {
+        var result = this.name_btn_clicked;
+        this.name_btn_clicked = false;
+        return result;
+    };
+    return ActorCard;
+}());
+exports.ActorCard = ActorCard;
+
+},{"./emotion":22}],6:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51458,12 +51515,11 @@ var ActorTween = /** @class */ (function () {
 }());
 exports.ActorTween = ActorTween;
 
-},{"three":3}],6:[function(require,module,exports){
+},{"three":3}],7:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
 var skill_effect_1 = require("./data/skill_effect");
-var battle_table_1 = require("./battle_table");
 var battle_ai_1 = require("./battle_ai");
 var log_1 = require("./log");
 var game_1 = require("./game");
@@ -51471,34 +51527,8 @@ var items_1 = require("./data/raw/items");
 var skills_1 = require("./data/raw/skills");
 var requests_1 = require("./requests");
 var battle_player_1 = require("./battle_player");
-var AttackAction = /** @class */ (function () {
-    function AttackAction() {
-    }
-    return AttackAction;
-}());
-exports.AttackAction = AttackAction;
-;
-var InventoryAction = /** @class */ (function () {
-    function InventoryAction(value) {
-        this.item_name = value;
-    }
-    return InventoryAction;
-}());
-exports.InventoryAction = InventoryAction;
-var SkillAction = /** @class */ (function () {
-    function SkillAction(value) {
-        this.skill_name = value;
-    }
-    return SkillAction;
-}());
-exports.SkillAction = SkillAction;
-var RequestAction = /** @class */ (function () {
-    function RequestAction(value) {
-        this.request = value;
-    }
-    return RequestAction;
-}());
-exports.RequestAction = RequestAction;
+var battle_actions_1 = require("./battle_actions");
+var actor_card_1 = require("./actor_card");
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
 var Battle = /** @class */ (function () {
@@ -51516,7 +51546,12 @@ var Battle = /** @class */ (function () {
             (_a = this.fighters.get(side)) === null || _a === void 0 ? void 0 : _a.push(fighters[i]);
             this.turn_order.push(new battle_data_1.BattleIndex(side, (((_b = this.fighters.get(side)) === null || _b === void 0 ? void 0 : _b.length) || 0) - 1));
         }
-        this.battle_table = new battle_table_1.BattleTable(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
+        this.enemy_info_div = document.getElementById("enemy_info_div");
+        this.enemy_actor_cards = [];
+        var enemies = this.fighters.get(battle_data_1.BattleSide.Their);
+        for (var i = 0; i < enemies.length; i++) {
+            this.enemy_actor_cards.push(new actor_card_1.ActorCard(this.enemy_info_div, enemies[i]));
+        }
         game_1.Game.Instance.menu.push("You've been attacked by demons!", [
             [
                 "Continue",
@@ -51528,12 +51563,30 @@ var Battle = /** @class */ (function () {
     }
     Battle.prototype.update = function () {
         // Check for actor btn click.
-        var last_battle_table_click = this.battle_table.get_last_click();
-        if (last_battle_table_click != null && this.current_action != null) {
-            this.execute_player_turn(last_battle_table_click);
+        var last_battle_data_clicked = game_1.Game.Instance.player.get_last_battle_data_clicked() ||
+            this.get_last_enemy_clicked();
+        if (last_battle_data_clicked != null && this.current_action != null) {
+            this.execute_player_turn(last_battle_data_clicked);
         }
-        // Update table for new fighter values.
-        this.battle_table.update(this.fighters.get(battle_data_1.BattleSide.Our), this.fighters.get(battle_data_1.BattleSide.Their));
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            this.enemy_actor_cards[i].update(this.fighters.get(battle_data_1.BattleSide.Their)[i]);
+        }
+    };
+    Battle.prototype.get_last_enemy_clicked = function () {
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            if (this.enemy_actor_cards[i].was_clicked()) {
+                return this.fighters.get(battle_data_1.BattleSide.Their)[i];
+            }
+        }
+        return null;
+    };
+    Battle.prototype.set_actor_cards_enabled = function (enabled, filter) {
+        if (filter === void 0) { filter = function () { return true; }; }
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            if (filter(this.fighters.get(battle_data_1.BattleSide.Their)[i])) {
+                this.enemy_actor_cards[i].set_name_btn_enabled(enabled);
+            }
+        }
     };
     // Increment turn index, take turn, render changes.
     Battle.prototype.next_turn = function () {
@@ -51584,22 +51637,21 @@ var Battle = /** @class */ (function () {
     Battle.prototype.take_battle_action = function (fighter, action, targets) {
         var _a;
         fighter.mark_just_acted();
-        if (action instanceof AttackAction) {
+        if (action instanceof battle_actions_1.AttackAction) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
-            var damage = Math.floor(fighter.modded_base_stats().st +
-                fighter.modded_base_stats().dx);
+            var damage = Math.floor(fighter.modded_base_stats().st + fighter.modded_base_stats().dx);
             for (var t = 0; t < targets.length; t++) {
                 targets[t].take_damage(damage);
             }
         }
-        else if (action instanceof InventoryAction) {
+        else if (action instanceof battle_actions_1.InventoryAction) {
             log_1.Log.push(this.current_fighter().name + " used `" + action.item_name + "`.");
             var item = items_1.ITEM_MAP.get(action.item_name);
             for (var t = 0; t < targets.length; t++) {
                 (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
         }
-        else if (action instanceof SkillAction) {
+        else if (action instanceof battle_actions_1.SkillAction) {
             var skill = skills_1.SKILL_MAP.get(action.skill_name);
             fighter.mod_stats.mp -= skill.cost;
             log_1.Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
@@ -51607,7 +51659,7 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        else if (action instanceof RequestAction) {
+        else if (action instanceof battle_actions_1.RequestAction) {
             for (var t = 0; t < targets.length; t++) {
                 var request_worked = requests_1.try_ai_request(fighter, targets[t], action.request);
                 if (request_worked) {
@@ -51619,7 +51671,7 @@ var Battle = /** @class */ (function () {
             }
         }
         game_1.Game.Instance.menu.clear();
-        this.battle_table.set_all_btns_enabled(false);
+        game_1.Game.Instance.set_actor_cards_enabled(false);
     };
     // returns null if battle is not over.
     Battle.prototype.battle_winner = function () {
@@ -51644,6 +51696,9 @@ var Battle = /** @class */ (function () {
     };
     Battle.prototype.end = function () {
         game_1.Game.Instance.menu.clear();
+        for (var i = 0; i < this.enemy_actor_cards.length; i++) {
+            this.enemy_info_div.removeChild(this.enemy_actor_cards[i].card_span);
+        }
     };
     return Battle;
 }());
@@ -51654,13 +51709,45 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./battle_ai":7,"./battle_data":8,"./battle_player":9,"./battle_table":10,"./data/raw/items":17,"./data/raw/skills":18,"./data/skill_effect":19,"./game":23,"./log":28,"./requests":33}],7:[function(require,module,exports){
+},{"./actor_card":5,"./battle_actions":8,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/items":18,"./data/raw/skills":19,"./data/skill_effect":20,"./game":24,"./log":29,"./requests":34}],8:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var AttackAction = /** @class */ (function () {
+    function AttackAction() {
+    }
+    return AttackAction;
+}());
+exports.AttackAction = AttackAction;
+;
+var InventoryAction = /** @class */ (function () {
+    function InventoryAction(value) {
+        this.item_name = value;
+    }
+    return InventoryAction;
+}());
+exports.InventoryAction = InventoryAction;
+var SkillAction = /** @class */ (function () {
+    function SkillAction(value) {
+        this.skill_name = value;
+    }
+    return SkillAction;
+}());
+exports.SkillAction = SkillAction;
+var RequestAction = /** @class */ (function () {
+    function RequestAction(value) {
+        this.request = value;
+    }
+    return RequestAction;
+}());
+exports.RequestAction = RequestAction;
+
+},{}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
 var battle_data_1 = require("./battle_data");
 var jlib_1 = require("./jlib");
-var battle_1 = require("./battle");
+var battle_actions_1 = require("./battle_actions");
 function ai_take_turn(fighter, fighters) {
     // Choose whether to attack or use skill.
     var chosen_skill = choose_skill(fighter);
@@ -51706,10 +51793,10 @@ function ai_take_turn(fighter, fighters) {
         }
     }
     if (chosen_skill == null) {
-        return [new battle_1.AttackAction(), targets];
+        return [new battle_actions_1.AttackAction(), targets];
     }
     else {
-        return [new battle_1.SkillAction(chosen_skill.name), targets];
+        return [new battle_actions_1.SkillAction(chosen_skill.name), targets];
     }
 }
 exports.ai_take_turn = ai_take_turn;
@@ -51732,7 +51819,7 @@ function get_attack_target(attacker, fighters) {
         .filter(function (x) { return x.modded_base_stats().hp > 0; }));
 }
 
-},{"./battle":6,"./battle_data":8,"./data/util":20,"./jlib":27}],8:[function(require,module,exports){
+},{"./battle_actions":8,"./battle_data":10,"./data/util":21,"./jlib":28}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -51853,7 +51940,7 @@ var BattleIndex = /** @class */ (function () {
 }());
 exports.BattleIndex = BattleIndex;
 
-},{"./data/buffs":12,"./data/skill_effect":19,"./emotion":21,"./exp":22,"./log":28,"./stats":34}],9:[function(require,module,exports){
+},{"./data/buffs":13,"./data/skill_effect":20,"./emotion":22,"./exp":23,"./log":29,"./stats":35}],11:[function(require,module,exports){
 "use strict";
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -51867,7 +51954,8 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var battle_1 = require("./battle");
+var battle_data_1 = require("./battle_data");
+var battle_actions_1 = require("./battle_actions");
 var game_1 = require("./game");
 var requests_1 = require("./requests");
 function set_up_player_turn(fighter) {
@@ -51876,8 +51964,8 @@ function set_up_player_turn(fighter) {
             "Attack",
             function () {
                 // Show enemy targets & back button.
-                game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
-                game_1.Game.Instance.get_battle().current_action = new battle_1.AttackAction();
+                game_1.Game.Instance.set_actor_cards_enabled(true, function (d) { return d.side == battle_data_1.BattleSide.Their; });
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.AttackAction();
                 game_1.Game.Instance.menu.push("Attack (Choose Target)", [
                     [
                         "Back",
@@ -51892,21 +51980,31 @@ function set_up_player_turn(fighter) {
             "Inventory",
             function () {
                 var e_1, _a;
-                game_1.Game.Instance.get_battle().current_action = new battle_1.InventoryAction(null);
-                var menu_entries = [[
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.InventoryAction(null);
+                var menu_entries = [
+                    [
                         "Back",
                         function () {
                             game_1.Game.Instance.menu.pop();
                         }
-                    ]];
+                    ]
+                ];
                 var _loop_2 = function (entry) {
-                    menu_entries.push([entry[0] + "(x" + entry[1] + ")", function () {
-                            game_1.Game.Instance.get_battle().current_action = new battle_1.InventoryAction(entry[0]);
-                            game_1.Game.Instance.get_battle().battle_table.set_all_btns_enabled(true);
+                    menu_entries.push([
+                        entry[0] + "(x" + entry[1] + ")",
+                        function () {
+                            game_1.Game.Instance.get_battle().current_action = new battle_actions_1.InventoryAction(entry[0]);
+                            game_1.Game.Instance.set_actor_cards_enabled(true);
                             game_1.Game.Instance.menu.push("Use item `" + entry[0] + "` (Select target)", [
-                                ["Back", function () { game_1.Game.Instance.menu.pop(); }]
+                                [
+                                    "Back",
+                                    function () {
+                                        game_1.Game.Instance.menu.pop();
+                                    }
+                                ]
                             ]);
-                        }]);
+                        }
+                    ]);
                 };
                 try {
                     for (var _b = __values(game_1.Game.Instance.player.inventory.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -51927,8 +52025,8 @@ function set_up_player_turn(fighter) {
         [
             "Demand Tribute",
             function () {
-                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Tribute);
-                game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.RequestAction(requests_1.Request.Tribute);
+                game_1.Game.Instance.set_actor_cards_enabled(true, function (d) { return d.side == battle_data_1.BattleSide.Their; });
                 game_1.Game.Instance.menu.push("Demand Tribute (Choose Target)", [
                     [
                         "Back",
@@ -51942,8 +52040,8 @@ function set_up_player_turn(fighter) {
         [
             "Demand Servitude",
             function () {
-                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Join);
-                game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.RequestAction(requests_1.Request.Join);
+                game_1.Game.Instance.set_actor_cards_enabled(true, function (d) { return d.side == battle_data_1.BattleSide.Their; });
                 game_1.Game.Instance.menu.push("Demand Servitude (Choose Target)", [
                     [
                         "Back",
@@ -51953,14 +52051,14 @@ function set_up_player_turn(fighter) {
                     ]
                 ]);
             }
-        ],
+        ]
     ];
     var _loop_1 = function (i) {
         battle_action_entries.push([
             fighter.skills[i].name,
             function () {
-                game_1.Game.Instance.get_battle().battle_table.set_all_btns_enabled(true);
-                game_1.Game.Instance.get_battle().current_action = new battle_1.SkillAction(fighter.skills[i].name);
+                game_1.Game.Instance.set_actor_cards_enabled(true);
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.SkillAction(fighter.skills[i].name);
                 game_1.Game.Instance.menu.push("Use `" + fighter.skills[i].name + "` (Choose Target)", [
                     [
                         "Back",
@@ -51979,136 +52077,12 @@ function set_up_player_turn(fighter) {
 }
 exports.set_up_player_turn = set_up_player_turn;
 
-},{"./battle":6,"./game":23,"./requests":33}],10:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var emotion_1 = require("./emotion");
-/// An HTML entity manager for the battle table.
-function append_empty_entry(parent) {
-    parent.appendChild(document.createElement("td"));
-    parent.appendChild(document.createElement("td"));
-    parent.appendChild(document.createElement("td"));
-}
-var BattleEntry = /** @class */ (function () {
-    function BattleEntry(parent_row, fighter_data, on_click) {
-        this.name_btn = document.createElement("button");
-        this.name_btn.innerHTML = fighter_data.name;
-        this.name_btn.disabled = true;
-        this.name_btn.onclick = on_click;
-        this.name_cell = document.createElement("td");
-        this.mood_span = document.createElement("span");
-        if (fighter_data.mood != null) {
-            this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
-        }
-        this.name_cell.appendChild(this.name_btn);
-        this.name_btn.appendChild(this.mood_span);
-        parent_row.appendChild(this.name_cell);
-        this.health = document.createElement("td");
-        parent_row.appendChild(this.health);
-        this.mana = document.createElement("td");
-        parent_row.appendChild(this.mana);
-        this.update(fighter_data);
-    }
-    BattleEntry.prototype.set_name_btn_enabled = function (value) {
-        this.name_btn.disabled = !value;
-    };
-    BattleEntry.prototype.update = function (fighter_data) {
-        if (fighter_data.mood == null) {
-            this.mood_span.innerHTML = "";
-        }
-        else {
-            this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
-        }
-        this.health.innerHTML =
-            fighter_data.modded_base_stats().hp +
-                '<span class="sub">/' +
-                fighter_data.base_stats.hp +
-                "</span>";
-        this.mana.innerHTML =
-            fighter_data.modded_base_stats().mp +
-                '<span class="sub">/' +
-                fighter_data.base_stats.mp +
-                "</span>";
-    };
-    return BattleEntry;
-}());
-var BattleTable = /** @class */ (function () {
-    function BattleTable(our_fighters, their_fighters) {
-        var _this = this;
-        this.last_click_result = null;
-        this.table_body = document.getElementById("battle_tbody");
-        this.table_body.innerHTML = "";
-        this.our_fighters = [];
-        this.their_fighters = [];
-        var _loop_1 = function (i) {
-            var row = document.createElement("tr");
-            this_1.table_body.appendChild(row);
-            if (i < our_fighters.length) {
-                var our_1 = our_fighters[i];
-                this_1.our_fighters.push(new BattleEntry(row, our_1, function () {
-                    _this.last_click_result = our_1;
-                }));
-            }
-            else {
-                append_empty_entry(row);
-            }
-            row.appendChild(document.createElement("td"));
-            if (i < their_fighters.length) {
-                var their_1 = their_fighters[i];
-                this_1.their_fighters.push(new BattleEntry(row, their_1, function () {
-                    _this.last_click_result = their_1;
-                }));
-            }
-            else {
-                append_empty_entry(row);
-            }
-        };
-        var this_1 = this;
-        for (var i = 0; i < our_fighters.length || i < their_fighters.length; i++) {
-            _loop_1(i);
-        }
-    }
-    BattleTable.prototype.update = function (our_fighters, their_fighters) {
-        for (var i = 0; i < this.our_fighters.length; i++) {
-            this.our_fighters[i].update(our_fighters[i]);
-        }
-        for (var i = 0; i < this.their_fighters.length; i++) {
-            this.their_fighters[i].update(their_fighters[i]);
-        }
-    };
-    BattleTable.prototype.set_our_btns_enabled = function (value) {
-        for (var i = 0; i < this.our_fighters.length; i++) {
-            this.our_fighters[i].set_name_btn_enabled(value);
-        }
-    };
-    BattleTable.prototype.set_their_btns_enabled = function (value) {
-        for (var i = 0; i < this.their_fighters.length; i++) {
-            this.their_fighters[i].set_name_btn_enabled(value);
-        }
-    };
-    BattleTable.prototype.set_all_btns_enabled = function (value) {
-        for (var i = 0; i < this.our_fighters.length; i++) {
-            this.our_fighters[i].set_name_btn_enabled(value);
-        }
-        for (var i = 0; i < this.their_fighters.length; i++) {
-            this.their_fighters[i].set_name_btn_enabled(value);
-        }
-    };
-    BattleTable.prototype.get_last_click = function () {
-        var result = this.last_click_result;
-        this.last_click_result = null;
-        return result;
-    };
-    return BattleTable;
-}());
-exports.BattleTable = BattleTable;
-
-},{"./emotion":21}],11:[function(require,module,exports){
+},{"./battle_actions":8,"./battle_data":10,"./game":24,"./requests":34}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -52147,7 +52121,7 @@ var Buffs = /** @class */ (function () {
 }());
 exports.Buffs = Buffs;
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
@@ -52158,7 +52132,7 @@ var EncounterType = /** @class */ (function () {
 }());
 exports.EncounterType = EncounterType;
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var map_1 = require("../../map");
@@ -52188,7 +52162,7 @@ exports.level2_data = new level_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 20);
 
-},{"../../jlib":27,"../../map":30,"../encounter_type":13,"./level_data":15}],15:[function(require,module,exports){
+},{"../../jlib":28,"../../map":31,"../encounter_type":14,"./level_data":16}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var LevelData = /** @class */ (function () {
@@ -52202,7 +52176,7 @@ var LevelData = /** @class */ (function () {
 }());
 exports.LevelData = LevelData;
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -66363,7 +66337,7 @@ var DEMONS = [{
     }];
 exports.DEMON_MAP = new Map(DEMONS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":19}],17:[function(require,module,exports){
+},{"../skill_effect":20}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../util");
@@ -66378,7 +66352,7 @@ var ITEMS = [
 ];
 exports.ITEM_MAP = new Map(ITEMS.map(function (i) { return [i.name, i]; }));
 
-},{"../util":20}],18:[function(require,module,exports){
+},{"../util":21}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -69128,7 +69102,7 @@ var SKILLS = [
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":19,"../util":20}],19:[function(require,module,exports){
+},{"../skill_effect":20,"../util":21}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var log_1 = require("../log");
@@ -69319,7 +69293,7 @@ function handy_ailment_handler(target, effect, positive) {
     }
 }
 
-},{"../log":28}],20:[function(require,module,exports){
+},{"../log":29}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Target;
@@ -69333,7 +69307,7 @@ var Target;
     Target[Target["Self"] = 6] = "Self";
 })(Target = exports.Target || (exports.Target = {}));
 
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mood;
@@ -69368,7 +69342,7 @@ exports.mood_string = mood_string;
 // - threaten
 // - peace offer
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -69391,7 +69365,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":34}],23:[function(require,module,exports){
+},{"./stats":35}],24:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69426,17 +69400,17 @@ var Game = /** @class */ (function () {
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
         this.log_div = document.getElementById("log_div");
-        this.overlay_div = document.getElementById("overlay_div");
+        this.header_div = document.getElementById("header_div");
     }
     Game.prototype.get_battle = function () {
         return this.battle;
     };
     Game.prototype.render = function () {
-        this.renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
+        this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
         this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
-        this.overlay_div.innerHTML = "♄" + this.player.macca;
+        this.header_div.innerHTML = "♄" + this.player.macca;
     };
     Game.prototype.update = function () {
         var _a, _b;
@@ -69466,8 +69440,8 @@ var Game = /** @class */ (function () {
             if (start_battle) {
                 var battle_fighters = actors_at_player_coor.map(function (actor) { return actor.battle_data; });
                 battle_fighters.push(this.player.battle_data);
-                for (var i = 0; i < this.player.supports.length; i++) {
-                    battle_fighters.push(this.player.supports[i].battle_data);
+                for (var i = 0; i < this.player.recruits.length; i++) {
+                    battle_fighters.push(this.player.recruits[i].battle_data);
                 }
                 this.battle = new battle_1.Battle(battle_fighters);
                 this.player.movement_locked = true;
@@ -69492,16 +69466,29 @@ var Game = /** @class */ (function () {
             this.battle_div.innerHTML = "YOU DIED";
         }
     };
+    Game.prototype.set_actor_cards_enabled = function (enabled, filter) {
+        if (filter === void 0) { filter = function () { return true; }; }
+        var _a;
+        if (filter(this.player.battle_data)) {
+            this.player.actor_cards[0].set_name_btn_enabled(enabled);
+        }
+        for (var i = 1; i < this.player.actor_cards.length; i++) {
+            if (filter(this.player.recruits[i - 1].battle_data)) {
+                this.player.actor_cards[i].set_name_btn_enabled(enabled);
+            }
+        }
+        (_a = this.battle) === null || _a === void 0 ? void 0 : _a.set_actor_cards_enabled(enabled, filter);
+    };
     return Game;
 }());
 exports.Game = Game;
 
-},{"./battle":6,"./battle_data":8,"./data/levels/level2":14,"./input":25,"./log":28,"./menu":31,"./player":32,"./world":35,"three":3}],24:[function(require,module,exports){
+},{"./battle":7,"./battle_data":10,"./data/levels/level2":15,"./input":26,"./log":29,"./menu":32,"./player":33,"./world":36,"three":3}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69547,7 +69534,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Inventory = /** @class */ (function () {
@@ -69582,7 +69569,7 @@ var Inventory = /** @class */ (function () {
 }());
 exports.Inventory = Inventory;
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -69721,7 +69708,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOG_INDENT_CHAR = "&#8619";
@@ -69739,7 +69726,7 @@ var Log = /** @class */ (function () {
 }());
 exports.Log = Log;
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69755,7 +69742,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":23}],30:[function(require,module,exports){
+},{"./game":24}],31:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69801,7 +69788,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":11,"./jlib":27,"three":3}],31:[function(require,module,exports){
+},{"./constants":12,"./jlib":28,"three":3}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MenuFrame = /** @class */ (function () {
@@ -69863,7 +69850,7 @@ var Menu = /** @class */ (function () {
 }());
 exports.Menu = Menu;
 
-},{}],32:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69881,13 +69868,14 @@ var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
 var log_1 = require("./log");
+var actor_card_1 = require("./actor_card");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
-        this.camera = new THREE.PerspectiveCamera(90, 1.2, 0.1, 1300);
+        this.camera = new THREE.PerspectiveCamera(120, 1.2, 0.1, 1300);
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
@@ -69902,8 +69890,10 @@ var Player = /** @class */ (function () {
         stats.ma = 0;
         stats.st = 22;
         this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 7, stats, stats_1.Stats.new_mod(), [], null);
-        this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
+        this.recruits = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
+        this.player_info_div = document.getElementById("player_info_div");
+        this.actor_cards = [new actor_card_1.ActorCard(this.player_info_div, this.battle_data)];
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
@@ -69918,6 +69908,10 @@ var Player = /** @class */ (function () {
             target_rotation -= Math.PI * 2;
         }
         this.body.rotation.y += (target_rotation - this.body.rotation.y) * 0.2;
+        this.actor_cards[0].update(this.battle_data);
+        for (var i = 1; i < this.actor_cards.length; i++) {
+            this.actor_cards[i].update(this.recruits[i - 1].battle_data);
+        }
     };
     /// Returns true on a successful move.
     Player.prototype.move = function (steps, map, npcs) {
@@ -69931,9 +69925,9 @@ var Player = /** @class */ (function () {
         if (map.walkable.get(move_coor.x, move_coor.z) == "+") {
             this.battle_data.mod_stats.hp = 0;
             this.battle_data.mod_stats.mp = 0;
-            for (var i = 0; i < this.supports.length; i++) {
-                this.supports[i].battle_data.mod_stats.hp = 0;
-                this.supports[i].battle_data.mod_stats.mp = 0;
+            for (var i = 0; i < this.recruits.length; i++) {
+                this.recruits[i].battle_data.mod_stats.hp = 0;
+                this.recruits[i].battle_data.mod_stats.mp = 0;
             }
         }
         // Reorient towards npcs if going backwards.
@@ -69968,23 +69962,40 @@ var Player = /** @class */ (function () {
             total_exp += from_actors[i].battle_data.get_level();
             total_macca += from_actors[i].battle_data.get_level();
             if (from_actors[i].battle_data.recruited) {
-                from_actors[i].battle_data.side = battle_data_1.BattleSide.Our;
-                this.supports.push(from_actors[i]);
+                this.add_recruit(from_actors[i]);
             }
         }
         var level_delta = this.battle_data.exp.add(total_exp);
-        for (var i = 0; i < this.supports.length; i++) {
-            var level_delta_1 = this.supports[i].battle_data.exp.add(total_exp);
+        for (var i = 0; i < this.recruits.length; i++) {
+            var level_delta_1 = this.recruits[i].battle_data.exp.add(total_exp);
         }
         this.macca += total_macca;
         log_1.Log.push("Gained " + total_exp + " experience.");
         log_1.Log.push("Gained " + total_macca + " macca.");
     };
+    Player.prototype.add_recruit = function (actor) {
+        actor.battle_data.side = battle_data_1.BattleSide.Our;
+        this.recruits.push(actor);
+        this.actor_cards.push(new actor_card_1.ActorCard(this.player_info_div, actor.battle_data));
+    };
+    Player.prototype.get_last_battle_data_clicked = function () {
+        for (var i = 0; i < this.actor_cards.length; i++) {
+            if (this.actor_cards[i].was_clicked()) {
+                if (i == 0) {
+                    return this.battle_data;
+                }
+                else {
+                    return this.recruits[i - 1].battle_data;
+                }
+            }
+        }
+        return null;
+    };
     return Player;
 }());
 exports.Player = Player;
 
-},{"./actor":4,"./battle_data":8,"./constants":11,"./inventory":26,"./jlib":27,"./log":28,"./stats":34,"three":3}],33:[function(require,module,exports){
+},{"./actor":4,"./actor_card":5,"./battle_data":10,"./constants":12,"./inventory":27,"./jlib":28,"./log":29,"./stats":35,"three":3}],34:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
@@ -70030,7 +70041,7 @@ function request_result(target, request) {
 }
 exports.request_result = request_result;
 
-},{"./game":23,"./log":28,"./player":32}],34:[function(require,module,exports){
+},{"./game":24,"./log":29,"./player":33}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -70074,7 +70085,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],35:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -70202,4 +70213,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./actor":4,"./battle_data":8,"./constants":11,"./game":23,"./globals":24,"./jlib":27,"three":3}]},{},[29,1,2]);
+},{"./actor":4,"./battle_data":10,"./constants":12,"./game":24,"./globals":25,"./jlib":28,"three":3}]},{},[30,1,2]);

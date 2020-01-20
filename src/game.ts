@@ -24,7 +24,7 @@ export class Game {
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
   private battle_div: HTMLElement;
   private log_div: HTMLElement;
-  private overlay_div: HTMLElement;
+  private header_div: HTMLElement;
 
   constructor() {
     Game.Instance = this;
@@ -33,7 +33,7 @@ export class Game {
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
     this.log_div = document.getElementById("log_div")!;
-    this.overlay_div = document.getElementById("overlay_div")!;
+    this.header_div = document.getElementById("header_div")!;
   }
 
   public get_battle(): Battle {
@@ -41,11 +41,11 @@ export class Game {
   }
 
   private render() {
-    this.renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
+    this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
     this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
     this.renderer.render(this.scene, this.player.camera);
     this.log_div.innerHTML = "_____LOG<br/>" + Log.as_string();
-    this.overlay_div.innerHTML = "♄" + this.player.macca;
+    this.header_div.innerHTML = "♄" + this.player.macca;
   }
 
   public update(): void {
@@ -84,8 +84,8 @@ export class Game {
           actor => actor.battle_data
         );
         battle_fighters.push(this.player.battle_data);
-        for (let i = 0; i < this.player.supports.length; i++) {
-          battle_fighters.push(this.player.supports[i].battle_data);
+        for (let i = 0; i < this.player.recruits.length; i++) {
+          battle_fighters.push(this.player.recruits[i].battle_data);
         }
         this.battle = new Battle(battle_fighters);
         this.player.movement_locked = true;
@@ -109,5 +109,17 @@ export class Game {
     } else {
       this.battle_div.innerHTML = "YOU DIED";
     }
+  }
+
+  public set_actor_cards_enabled(enabled: boolean, filter: (fighter: BattleData) => boolean = () => true) {
+    if (filter(this.player.battle_data)) {
+      this.player.actor_cards[0].set_name_btn_enabled(enabled);
+    }
+    for (let i = 1; i < this.player.actor_cards.length; i++) {
+      if (filter(this.player.recruits[i - 1].battle_data)) {
+        this.player.actor_cards[i].set_name_btn_enabled(enabled);
+      }
+    }
+    this.battle?.set_actor_cards_enabled(enabled, filter);
   }
 }

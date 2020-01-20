@@ -1,41 +1,20 @@
 import { BattleSide, BattleIndex, BattleData } from "./battle_data";
 import { resolve_skill_effect } from "./data/skill_effect";
-import { BattleTable } from "./battle_table";
 import { ai_take_turn } from "./battle_ai";
 import { Log } from "./log";
 import { Game } from "./game";
-import { MenuEntry, Menu } from "./menu";
-import { Player } from "./player";
 import { ITEM_MAP } from "./data/raw/items";
 import { SKILL_MAP } from "./data/raw/skills";
-import { ItemName } from "./data/item";
-import { Request, try_ai_request, request_result } from "./requests";
+import { try_ai_request, request_result, Request } from "./requests";
 import { set_up_player_turn } from "./battle_player";
-
-export class AttackAction {};
-
-export class InventoryAction {
-  public item_name: ItemName | null;
-  constructor(value: ItemName | null) {
-    this.item_name = value;
-  }
-}
-
-export class SkillAction {
-  public skill_name: string;
-  constructor(value: string) {
-    this.skill_name = value;
-  }
-}
-
-export class RequestAction {
-  public request: Request;
-  constructor(value: Request) {
-    this.request = value;
-  }
-}
-
-export type BattleAction = AttackAction | InventoryAction | SkillAction | RequestAction;
+import {
+  BattleAction,
+  AttackAction,
+  InventoryAction,
+  SkillAction,
+  RequestAction
+} from "./battle_actions";
+import { ActorCard } from "./actor_card";
 
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
@@ -45,8 +24,10 @@ export class Battle {
   private turn_idx: number = 0;
   private battle_idx: number = -1;
 
-  public battle_table: BattleTable;
+  public enemy_actor_cards: ActorCard[];
   public current_action: BattleAction | null = null;
+
+  private enemy_info_div: HTMLElement;
 
   constructor(fighters: BattleData[]) {
     this.fighters = new Map();
@@ -60,10 +41,14 @@ export class Battle {
         new BattleIndex(side, (this.fighters.get(side)?.length || 0) - 1)
       );
     }
-    this.battle_table = new BattleTable(
-      this.fighters.get(BattleSide.Our)!,
-      this.fighters.get(BattleSide.Their)!
-    );
+    this.enemy_info_div = document.getElementById("enemy_info_div")!;
+    this.enemy_actor_cards = [];
+    let enemies = this.fighters.get(BattleSide.Their)!;
+    for (let i = 0; i < enemies.length; i++) {
+      this.enemy_actor_cards.push(
+        new ActorCard(this.enemy_info_div, enemies[i])
+      );
+    }
     Game.Instance.menu.push("You've been attacked by demons!", [
       [
         "Continue",
@@ -76,15 +61,37 @@ export class Battle {
 
   public update() {
     // Check for actor btn click.
-    let last_battle_table_click = this.battle_table.get_last_click();
-    if (last_battle_table_click != null && this.current_action != null) {
-      this.execute_player_turn(last_battle_table_click);
+    let last_battle_data_clicked: BattleData | null =
+      Game.Instance.player.get_last_battle_data_clicked() ||
+      this.get_last_enemy_clicked();
+    if (last_battle_data_clicked != null && this.current_action != null) {
+      this.execute_player_turn(last_battle_data_clicked);
     }
-    // Update table for new fighter values.
-    this.battle_table.update(
-      this.fighters.get(BattleSide.Our)!,
-      this.fighters.get(BattleSide.Their)!
-    );
+    for (let i = 0; i < this.enemy_actor_cards.length; i++) {
+      this.enemy_actor_cards[i].update(
+        this.fighters.get(BattleSide.Their)![i]!
+      );
+    }
+  }
+
+  private get_last_enemy_clicked() {
+    for (let i = 0; i < this.enemy_actor_cards.length; i++) {
+      if (this.enemy_actor_cards[i].was_clicked()) {
+        return this.fighters.get(BattleSide.Their)![i]!;
+      }
+    }
+    return null;
+  }
+
+  public set_actor_cards_enabled(
+    enabled: boolean,
+    filter: (fighter: BattleData) => boolean = () => true
+  ) {
+    for (let i = 0; i < this.enemy_actor_cards.length; i++) {
+      if (filter(this.fighters.get(BattleSide.Their)![i])) {
+        this.enemy_actor_cards[i].set_name_btn_enabled(enabled);
+      }
+    }
   }
 
   // Increment turn index, take turn, render changes.
@@ -151,14 +158,15 @@ export class Battle {
     if (action instanceof AttackAction) {
       Log.push(this.current_fighter().name + " attacked.");
       let damage = Math.floor(
-        fighter.modded_base_stats().st +
-          fighter.modded_base_stats().dx
+        fighter.modded_base_stats().st + fighter.modded_base_stats().dx
       );
       for (let t = 0; t < targets.length; t++) {
         targets[t].take_damage(damage);
       }
     } else if (action instanceof InventoryAction) {
-      Log.push(this.current_fighter().name + " used `" + action.item_name! + "`.");
+      Log.push(
+        this.current_fighter().name + " used `" + action.item_name! + "`."
+      );
       const item = ITEM_MAP.get(action.item_name!);
       for (let t = 0; t < targets.length; t++) {
         item?.effect(targets[t]);
@@ -172,7 +180,11 @@ export class Battle {
       }
     } else if (action instanceof RequestAction) {
       for (let t = 0; t < targets.length; t++) {
-        let request_worked = try_ai_request(fighter, targets[t], action.request);
+        let request_worked = try_ai_request(
+          fighter,
+          targets[t],
+          action.request
+        );
         if (request_worked) {
           request_result(targets[t], action.request);
         } else {
@@ -181,16 +193,14 @@ export class Battle {
       }
     }
     Game.Instance.menu.clear();
-    this.battle_table.set_all_btns_enabled(false);
+    Game.Instance.set_actor_cards_enabled(false);
   }
 
   // returns null if battle is not over.
   public battle_winner(): BattleSide | null {
     let winner: BattleSide | null = BattleSide.Their;
     for (let i = 0; i < this.fighters.get(BattleSide.Our)!.length; i++) {
-      if (
-        this.fighters.get(BattleSide.Our)![i]!.modded_base_stats().hp > 0
-      ) {
+      if (this.fighters.get(BattleSide.Our)![i]!.modded_base_stats().hp > 0) {
         winner = BattleSide.Our;
         break;
       }
@@ -212,6 +222,9 @@ export class Battle {
 
   public end(): void {
     Game.Instance.menu.clear();
+    for (let i = 0; i < this.enemy_actor_cards.length; i++) {
+      this.enemy_info_div.removeChild(this.enemy_actor_cards[i].card_span);
+    }
   }
 }
 

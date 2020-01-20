@@ -11,7 +11,8 @@ var __values = (this && this.__values) || function(o) {
     throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var battle_1 = require("./battle");
+var battle_data_1 = require("./battle_data");
+var battle_actions_1 = require("./battle_actions");
 var game_1 = require("./game");
 var requests_1 = require("./requests");
 function set_up_player_turn(fighter) {
@@ -20,8 +21,8 @@ function set_up_player_turn(fighter) {
             "Attack",
             function () {
                 // Show enemy targets & back button.
-                game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
-                game_1.Game.Instance.get_battle().current_action = new battle_1.AttackAction();
+                game_1.Game.Instance.set_actor_cards_enabled(true, function (d) { return d.side == battle_data_1.BattleSide.Their; });
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.AttackAction();
                 game_1.Game.Instance.menu.push("Attack (Choose Target)", [
                     [
                         "Back",
@@ -36,21 +37,31 @@ function set_up_player_turn(fighter) {
             "Inventory",
             function () {
                 var e_1, _a;
-                game_1.Game.Instance.get_battle().current_action = new battle_1.InventoryAction(null);
-                var menu_entries = [[
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.InventoryAction(null);
+                var menu_entries = [
+                    [
                         "Back",
                         function () {
                             game_1.Game.Instance.menu.pop();
                         }
-                    ]];
+                    ]
+                ];
                 var _loop_2 = function (entry) {
-                    menu_entries.push([entry[0] + "(x" + entry[1] + ")", function () {
-                            game_1.Game.Instance.get_battle().current_action = new battle_1.InventoryAction(entry[0]);
-                            game_1.Game.Instance.get_battle().battle_table.set_all_btns_enabled(true);
+                    menu_entries.push([
+                        entry[0] + "(x" + entry[1] + ")",
+                        function () {
+                            game_1.Game.Instance.get_battle().current_action = new battle_actions_1.InventoryAction(entry[0]);
+                            game_1.Game.Instance.set_actor_cards_enabled(true);
                             game_1.Game.Instance.menu.push("Use item `" + entry[0] + "` (Select target)", [
-                                ["Back", function () { game_1.Game.Instance.menu.pop(); }]
+                                [
+                                    "Back",
+                                    function () {
+                                        game_1.Game.Instance.menu.pop();
+                                    }
+                                ]
                             ]);
-                        }]);
+                        }
+                    ]);
                 };
                 try {
                     for (var _b = __values(game_1.Game.Instance.player.inventory.entries()), _c = _b.next(); !_c.done; _c = _b.next()) {
@@ -71,8 +82,8 @@ function set_up_player_turn(fighter) {
         [
             "Demand Tribute",
             function () {
-                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Tribute);
-                game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.RequestAction(requests_1.Request.Tribute);
+                game_1.Game.Instance.set_actor_cards_enabled(true, function (d) { return d.side == battle_data_1.BattleSide.Their; });
                 game_1.Game.Instance.menu.push("Demand Tribute (Choose Target)", [
                     [
                         "Back",
@@ -86,8 +97,8 @@ function set_up_player_turn(fighter) {
         [
             "Demand Servitude",
             function () {
-                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Join);
-                game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.RequestAction(requests_1.Request.Join);
+                game_1.Game.Instance.set_actor_cards_enabled(true, function (d) { return d.side == battle_data_1.BattleSide.Their; });
                 game_1.Game.Instance.menu.push("Demand Servitude (Choose Target)", [
                     [
                         "Back",
@@ -97,14 +108,14 @@ function set_up_player_turn(fighter) {
                     ]
                 ]);
             }
-        ],
+        ]
     ];
     var _loop_1 = function (i) {
         battle_action_entries.push([
             fighter.skills[i].name,
             function () {
-                game_1.Game.Instance.get_battle().battle_table.set_all_btns_enabled(true);
-                game_1.Game.Instance.get_battle().current_action = new battle_1.SkillAction(fighter.skills[i].name);
+                game_1.Game.Instance.set_actor_cards_enabled(true);
+                game_1.Game.Instance.get_battle().current_action = new battle_actions_1.SkillAction(fighter.skills[i].name);
                 game_1.Game.Instance.menu.push("Use `" + fighter.skills[i].name + "` (Choose Target)", [
                     [
                         "Back",

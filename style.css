@@ -8,6 +8,8 @@ body {
 #overlay_div {
   position: absolute;
   padding: .1em;
+  height: 70%;
+  width: 100%;
 }
 
 #html_div {
@@ -108,4 +110,22 @@ button:disabled {
 .log_result {
   color: #bbb;
   font-style: italic;
+}
+
+.actor_card {
+  background-color: #00000088;
+  padding: 12px 3px;
+  font-size: .7em;
+}
+
+#enemy_info_div {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+}
+
+#player_info_div {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }
