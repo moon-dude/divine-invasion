@@ -200,7 +200,8 @@ export class Battle {
     }
     for (let i = 0; i < this.fighters.get(BattleSide.Their)!.length; i++) {
       if (
-        this.fighters.get(BattleSide.Their)![i]!.modded_base_stats().hp > 0
+        this.fighters.get(BattleSide.Their)![i]!.modded_base_stats().hp > 0 &&
+        !this.fighters.get(BattleSide.Their)![i]!.recruited
       ) {
         winner = null;
         break;

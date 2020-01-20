@@ -41,7 +41,7 @@ export class Game {
   }
 
   private render() {
-    this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
+    this.renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
     this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
     this.renderer.render(this.scene, this.player.camera);
     this.log_div.innerHTML = "_____LOG<br/>" + Log.as_string();
@@ -72,7 +72,10 @@ export class Game {
       let start_battle = false;
       let actors_at_player_coor = this.world.actors_at(this.player.coor);
       for (let i = 0; i < actors_at_player_coor.length; i++) {
-        if (actors_at_player_coor[i].battle_data.side == BattleSide.Their) {
+        if (
+          actors_at_player_coor[i].battle_data.side == BattleSide.Their &&
+          actors_at_player_coor[i].battle_data.modded_base_stats().hp > 0
+        ) {
           start_battle = true;
         }
       }
@@ -82,9 +85,7 @@ export class Game {
         );
         battle_fighters.push(this.player.battle_data);
         for (let i = 0; i < this.player.supports.length; i++) {
-          battle_fighters.push(
-            this.player.supports[i].battle_data
-          );
+          battle_fighters.push(this.player.supports[i].battle_data);
         }
         this.battle = new Battle(battle_fighters);
         this.player.movement_locked = true;
@@ -96,7 +97,7 @@ export class Game {
       this.battle?.next_turn();
     }
   }
-  
+
   private end_battle(winner: BattleSide) {
     this.battle!.end();
     this.battle = null;

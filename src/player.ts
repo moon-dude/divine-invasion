@@ -41,7 +41,7 @@ export class Player {
     this.battle_data = new BattleData(
       PLAYER_NAME,
       BattleSide.Our,
-      1,
+      7,
       stats,
       Stats.new_mod(),
       [],
@@ -115,6 +115,10 @@ export class Player {
     for (let i = 0; i < from_actors.length; i++) {
       total_exp += from_actors[i].battle_data.get_level();
       total_macca += from_actors[i].battle_data.get_level();
+      if (from_actors[i].battle_data.recruited) {
+        from_actors[i].battle_data.side = BattleSide.Our;
+        this.supports.push(from_actors[i]);
+      }
     }
     const level_delta = this.battle_data.exp.add(total_exp);
     for (let i = 0; i < this.supports.length; i++) {

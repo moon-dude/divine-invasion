@@ -12,3 +12,10 @@ http://localhost:8080/
 
 https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
 
+
+
+Refactor project:
+Accomplish:
+- Use inventory out of battle
+- Have demon UI attached to their meshes.
+- Show icons for player and player demons.

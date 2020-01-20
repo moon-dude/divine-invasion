@@ -173,7 +173,8 @@ var Battle = /** @class */ (function () {
             return winner;
         }
         for (var i = 0; i < this.fighters.get(battle_data_1.BattleSide.Their).length; i++) {
-            if (this.fighters.get(battle_data_1.BattleSide.Their)[i].modded_base_stats().hp > 0) {
+            if (this.fighters.get(battle_data_1.BattleSide.Their)[i].modded_base_stats().hp > 0 &&
+                !this.fighters.get(battle_data_1.BattleSide.Their)[i].recruited) {
                 winner = null;
                 break;
             }

@@ -51634,7 +51634,8 @@ var Battle = /** @class */ (function () {
             return winner;
         }
         for (var i = 0; i < this.fighters.get(battle_data_1.BattleSide.Their).length; i++) {
-            if (this.fighters.get(battle_data_1.BattleSide.Their)[i].modded_base_stats().hp > 0) {
+            if (this.fighters.get(battle_data_1.BattleSide.Their)[i].modded_base_stats().hp > 0 &&
+                !this.fighters.get(battle_data_1.BattleSide.Their)[i].recruited) {
                 winner = null;
                 break;
             }
@@ -51941,7 +51942,7 @@ function set_up_player_turn(fighter) {
         [
             "Demand Servitude",
             function () {
-                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Tribute);
+                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Join);
                 game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
                 game_1.Game.Instance.menu.push("Demand Servitude (Choose Target)", [
                     [
@@ -69431,7 +69432,7 @@ var Game = /** @class */ (function () {
         return this.battle;
     };
     Game.prototype.render = function () {
-        this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
+        this.renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
         this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
@@ -69457,7 +69458,8 @@ var Game = /** @class */ (function () {
             var start_battle = false;
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
             for (var i = 0; i < actors_at_player_coor.length; i++) {
-                if (actors_at_player_coor[i].battle_data.side == battle_data_1.BattleSide.Their) {
+                if (actors_at_player_coor[i].battle_data.side == battle_data_1.BattleSide.Their &&
+                    actors_at_player_coor[i].battle_data.modded_base_stats().hp > 0) {
                     start_battle = true;
                 }
             }
@@ -69899,7 +69901,7 @@ var Player = /** @class */ (function () {
         stats.lu = 35;
         stats.ma = 0;
         stats.st = 22;
-        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 1, stats, stats_1.Stats.new_mod(), [], null);
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 7, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
     }
@@ -69965,6 +69967,10 @@ var Player = /** @class */ (function () {
         for (var i = 0; i < from_actors.length; i++) {
             total_exp += from_actors[i].battle_data.get_level();
             total_macca += from_actors[i].battle_data.get_level();
+            if (from_actors[i].battle_data.recruited) {
+                from_actors[i].battle_data.side = battle_data_1.BattleSide.Our;
+                this.supports.push(from_actors[i]);
+            }
         }
         var level_delta = this.battle_data.exp.add(total_exp);
         for (var i = 0; i < this.supports.length; i++) {
@@ -69992,11 +69998,13 @@ var Request;
 })(Request = exports.Request || (exports.Request = {}));
 // Try request to an AI fighter (from player or another AI).
 function try_ai_request(from, to, request) {
+    var base_chance = (from.get_level() - to.get_level()) / 10;
+    log_1.Log.push("base chance: " + base_chance);
     switch (request) {
         case Request.Tribute:
-            return Math.random() < (from.exp.count - to.exp.count) / 100;
+            return Math.random() < base_chance + .5;
         case Request.Join:
-            return Math.random() < (from.exp.count - to.exp.count) / 100;
+            return Math.random() < base_chance;
     }
 }
 exports.try_ai_request = try_ai_request;
@@ -70119,7 +70127,7 @@ var World = /** @class */ (function () {
         this.lights = [];
         for (var x = 1; x < this.map.walkable.width; x += 4) {
             for (var z = 1; z < this.map.walkable.width; z += 4) {
-                var new_light = new THREE.PointLight("#0000ff");
+                var new_light = new THREE.PointLight("#2222cc");
                 new_light.position.x = x * constants_1.TILE_SIZE;
                 new_light.position.z = z * constants_1.TILE_SIZE;
                 new_light.position.y = 1;

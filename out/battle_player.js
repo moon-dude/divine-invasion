@@ -86,7 +86,7 @@ function set_up_player_turn(fighter) {
         [
             "Demand Servitude",
             function () {
-                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Tribute);
+                game_1.Game.Instance.get_battle().current_action = new battle_1.RequestAction(requests_1.Request.Join);
                 game_1.Game.Instance.get_battle().battle_table.set_their_btns_enabled(true);
                 game_1.Game.Instance.menu.push("Demand Servitude (Choose Target)", [
                     [

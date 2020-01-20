@@ -12,11 +12,13 @@ export enum Request {
 
 // Try request to an AI fighter (from player or another AI).
 export function try_ai_request(from: BattleData, to: BattleData, request: Request): boolean {
+  const base_chance = (from.get_level() - to.get_level()) / 10;
+  Log.push("base chance: " + base_chance);
   switch (request) {
     case Request.Tribute:
-      return Math.random() < (from.exp.count - to.exp.count) / 100;
+      return Math.random() < base_chance + .5;
     case Request.Join:
-      return Math.random() < (from.exp.count - to.exp.count) / 100;
+      return Math.random() < base_chance;
   }
 }
 

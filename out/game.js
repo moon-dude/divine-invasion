@@ -38,7 +38,7 @@ var Game = /** @class */ (function () {
         return this.battle;
     };
     Game.prototype.render = function () {
-        this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
+        this.renderer.setSize(window.innerWidth, window.innerHeight * 0.5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
         this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
@@ -64,7 +64,8 @@ var Game = /** @class */ (function () {
             var start_battle = false;
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
             for (var i = 0; i < actors_at_player_coor.length; i++) {
-                if (actors_at_player_coor[i].battle_data.side == battle_data_1.BattleSide.Their) {
+                if (actors_at_player_coor[i].battle_data.side == battle_data_1.BattleSide.Their &&
+                    actors_at_player_coor[i].battle_data.modded_base_stats().hp > 0) {
                     start_battle = true;
                 }
             }

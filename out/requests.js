@@ -11,11 +11,13 @@ var Request;
 })(Request = exports.Request || (exports.Request = {}));
 // Try request to an AI fighter (from player or another AI).
 function try_ai_request(from, to, request) {
+    var base_chance = (from.get_level() - to.get_level()) / 10;
+    log_1.Log.push("base chance: " + base_chance);
     switch (request) {
         case Request.Tribute:
-            return Math.random() < (from.exp.count - to.exp.count) / 100;
+            return Math.random() < base_chance + .5;
         case Request.Join:
-            return Math.random() < (from.exp.count - to.exp.count) / 100;
+            return Math.random() < base_chance;
     }
 }
 exports.try_ai_request = try_ai_request;

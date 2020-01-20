@@ -27,11 +27,11 @@ export class BattleData {
   );
 
   public readonly name: string;
-  public readonly side: BattleSide;
   public readonly base_level: number;
   public readonly base_stats: Stats;
   public readonly skills: Skill[];
 
+  public side: BattleSide;
   public mod_stats: Stats;
   public buffs: Buffs = new Buffs();
   public ailments: Set<SkillEffect> = new Set();
