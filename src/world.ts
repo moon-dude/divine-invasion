@@ -142,4 +142,20 @@ export class World {
     }
     return result;
   }
+
+  public unload(scene: THREE.Scene): void {    
+    scene.remove(this.ambient_light);
+
+    for (let i = 0; i < this.actors.length; i++) {
+      scene.remove(this.actors[i].mesh);
+    }
+
+    for (let i = 0; i < this.map.meshes.length; i++) {
+      scene.remove(this.map.meshes[i]);
+    }
+
+    for (let i = 0; i < this.lights.length; i++) {
+      scene.remove(this.lights[i]);
+    }
+  }
 }

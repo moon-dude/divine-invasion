@@ -7,28 +7,21 @@ var globals_1 = require("../../../globals");
 var map_1 = require("../../../map");
 var area_data_1 = require("../area_data");
 var battle_data_1 = require("../../../battle_data");
-var map_walkable = "//////////" +
-    "/--/--/CI/" +
-    "/-///-/--/" +
-    "/--A--B--/" +
-    "////////-/" +
-    "/-----D--/" +
-    "/HG/E///F/" +
-    "////-///-/" +
-    "/------/-/" +
-    "/K/-//L/-/" +
-    "///-////-/" +
-    "/--J---/-/" +
-    "/------/-/" +
-    "/------/-/" +
-    "/--------/" +
-    "/------/-/" +
-    "//////////";
-var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
+var map_walkable = "####################" +
+    "#     #@# B####    #" +
+    "#     # ## #CI#### #" +
+    "#     #  A    ####F#" +
+    "#     ####### #### #" +
+    "#     #            #" +
+    "###J##### # #D###HG#" +
+    "### #L#K#E##########" +
+    "###        <########" +
+    "####################";
+var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
 var npc_map = new Map([
     [
         "A", new actor_1.Actor("Abel", [
-            new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+            new dialogue_1.Dialogue("Well, well, the new recruit is finally awake.")
                 .set_info("<< SPACE: continue >>").lock(),
             new dialogue_1.Dialogue("You're expected in the Summoning Room.").lock(),
             new dialogue_1.Dialogue("You know where that is right?"),
@@ -86,11 +79,14 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("Are you hurt? Let me tend to your wounds.").lock().set_heal_player().set_actor_block(true),
             new dialogue_1.Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock(),
         ])],
+    ["L", new actor_1.Actor("Leo", [
+            new dialogue_1.Dialogue("You're outta cash? Then don't bother browsing."),
+        ])],
 ]);
 var level1_actors = [];
 npc_map.forEach(function (actor, key, _) {
     for (var x = 0; x < level1_map.walkable.width; x++) {
-        for (var z = 0; z < level1_map.walkable.width; z++) {
+        for (var z = 0; z < level1_map.walkable.depth; z++) {
             if (key == level1_map.walkable.get(x, z)) {
                 actor.coor = new jlib_1.Coor(x, z);
                 actor.pos_index = 2;

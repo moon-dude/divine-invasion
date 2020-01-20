@@ -39,6 +39,12 @@ var Coor = /** @class */ (function () {
     Coor.prototype.equals = function (other) {
         return other != null && this.x == other.x && this.z == other.z;
     };
+    Coor.prototype.offset_by = function (other) {
+        return new Coor(this.x + other.x, this.z + other.z);
+    };
+    Coor.prototype.inverse = function () {
+        return new Coor(-this.x, -this.z);
+    };
     return Coor;
 }());
 exports.Coor = Coor;

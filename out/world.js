@@ -124,6 +124,18 @@ var World = /** @class */ (function () {
         }
         return result;
     };
+    World.prototype.unload = function (scene) {
+        scene.remove(this.ambient_light);
+        for (var i = 0; i < this.actors.length; i++) {
+            scene.remove(this.actors[i].mesh);
+        }
+        for (var i = 0; i < this.map.meshes.length; i++) {
+            scene.remove(this.map.meshes[i]);
+        }
+        for (var i = 0; i < this.lights.length; i++) {
+            scene.remove(this.lights[i]);
+        }
+    };
     return World;
 }());
 exports.World = World;

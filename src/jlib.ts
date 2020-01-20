@@ -48,6 +48,14 @@ export class Coor {
   equals(other: Coor | null): boolean {
     return other != null && this.x == other.x && this.z == other.z;
   }
+
+  offset_by(other: Coor): Coor {
+    return new Coor(this.x + other.x, this.z + other.z);
+  }
+
+  inverse(): Coor {
+    return new Coor(-this.x, -this.z);
+  }
 }
 
 export enum Dir {

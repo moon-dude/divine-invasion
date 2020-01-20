@@ -16,20 +16,22 @@ var battle_data_1 = require("./battle_data");
 var log_1 = require("./log");
 var menu_1 = require("./menu");
 var cave_area_1 = require("./data/areas/1_cave/cave_area");
+var jlib_1 = require("./jlib");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
-        this.player = new player_1.Player();
         this.area = cave_area_1.cave_data;
+        this.level_idx = 1;
         this.battle = null;
         this.input = new input_1.Input();
         // Rendering.
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
         Game.Instance = this;
+        this.world = new world_1.World(this.scene, this.area.levels[this.level_idx]);
+        this.player = new player_1.Player(this.world.map.player_start);
         this.scene.add(this.player.body);
-        this.world = new world_1.World(this.scene, this.area.levels[0]);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
@@ -59,6 +61,26 @@ var Game = /** @class */ (function () {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
         if (result.moved) {
             this.world.dialogue_idx = 0;
+            // check for stairs.
+            var stairs_down = this.world.map.stairs_down.get(this.player.coor.x, this.player.coor.z);
+            var offset = new jlib_1.Coor(0, 0);
+            if (stairs_down) {
+                console.log("Stairs down");
+                this.level_idx -= 1;
+                offset = this.area.levels[this.level_idx].offset_from_above.inverse();
+            }
+            var stairs_up = this.world.map.stairs_up.get(this.player.coor.x, this.player.coor.z);
+            if (stairs_up) {
+                console.log("Stairs up");
+                this.level_idx += 1;
+                offset = this.area.levels[this.level_idx].offset_from_above;
+            }
+            if (stairs_up || stairs_down) {
+                this.world.unload(this.scene);
+                this.world = new world_1.World(this.scene, this.area.levels[this.level_idx]);
+                this.player.coor = this.player.coor.offset_by(offset);
+                return;
+            }
             // check for encounter.
             var start_battle = false;
             var actors_at_player_coor = this.world.actors_at(this.player.coor);

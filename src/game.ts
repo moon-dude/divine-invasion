@@ -8,15 +8,17 @@ import { Log } from "./log";
 import { Menu } from "./menu";
 import { AreaData } from "./data/areas/area_data";
 import { cave_data } from "./data/areas/1_cave/cave_area";
+import { Coor } from "./jlib";
 
 export class Game {
   public static Instance: Game;
 
   public menu: Menu = new Menu("menu_div");
-  public player: Player = new Player();
+  public player: Player;
   public world: World;
 
   private area: AreaData = cave_data;
+  private level_idx: number = 1;
   private battle: Battle | null = null;
   private input: Input = new Input();
 
@@ -28,8 +30,9 @@ export class Game {
 
   constructor() {
     Game.Instance = this;
+    this.world = new World(this.scene, this.area.levels[this.level_idx]);
+    this.player = new Player(this.world.map.player_start!);
     this.scene.add(this.player.body);
-    this.world = new World(this.scene, this.area.levels[0]);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.log_div = document.getElementById("log_div")!;
     this.header_div = document.getElementById("header_div")!;
@@ -67,6 +70,27 @@ export class Game {
     );
     if (result.moved) {
       this.world.dialogue_idx = 0;
+      // check for stairs.
+      const stairs_down = this.world.map.stairs_down.get(this.player.coor.x, this.player.coor.z);
+      let offset = new Coor(0, 0);
+      if (stairs_down) {
+        console.log("Stairs down");
+        this.level_idx -= 1;
+        offset = this.area.levels[this.level_idx].offset_from_above.inverse();
+      }
+      const stairs_up = this.world.map.stairs_up.get(this.player.coor.x, this.player.coor.z);
+      if (stairs_up) {
+        console.log("Stairs up");
+        this.level_idx += 1;
+        offset = this.area.levels[this.level_idx].offset_from_above;
+      }
+      if (stairs_up || stairs_down) {
+        this.world.unload(this.scene);
+        this.world = new World(this.scene, this.area.levels[this.level_idx]);
+        this.player.coor = this.player.coor.offset_by(offset);
+        return;
+      }
+
       // check for encounter.
       let start_battle = false;
       let actors_at_player_coor = this.world.actors_at(this.player.coor);

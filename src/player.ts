@@ -8,11 +8,12 @@ import { Stats } from "./stats";
 import { Inventory } from "./inventory";
 import { Log } from "./log";
 import { ActorCard } from "./actor_card";
+import { WALL_CHAR } from "./data/areas/area_data";
 
 export const PLAYER_NAME: string = "Player";
 
 export class Player {
-  public coor: Coor = new Coor(1, 1);
+  public coor: Coor;
   public dir: Dir = Dir.S;
   public body: THREE.Object3D = new THREE.Object3D();
   public camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
@@ -33,7 +34,10 @@ export class Player {
   private player_info_div: HTMLElement;
   public actor_cards: ActorCard[];
 
-  constructor() {
+  constructor(coor: Coor) {
+    this.coor = coor;
+    this.body.position.x = this.coor.x * TILE_SIZE;
+    this.body.position.z = this.coor.z * TILE_SIZE;
     this.body.add(this.camera);
     //this.body.add(this.light);
     this.light.position.x = 5;
@@ -84,7 +88,7 @@ export class Player {
       return false;
     }
     let move_coor = ApplyDir(this.coor, this.dir, steps);
-    if (map.walkable.get(move_coor.x, move_coor.z) == "/") {
+    if (map.walkable.get(move_coor.x, move_coor.z) == WALL_CHAR) {
       return false;
     }
     if (map.walkable.get(move_coor.x, move_coor.z) == "+") {

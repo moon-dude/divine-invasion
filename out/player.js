@@ -16,10 +16,10 @@ var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
 var log_1 = require("./log");
 var actor_card_1 = require("./actor_card");
+var area_data_1 = require("./data/areas/area_data");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
-    function Player() {
-        this.coor = new jlib_1.Coor(1, 1);
+    function Player(coor) {
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
@@ -27,6 +27,9 @@ var Player = /** @class */ (function () {
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
+        this.coor = coor;
+        this.body.position.x = this.coor.x * constants_1.TILE_SIZE;
+        this.body.position.z = this.coor.z * constants_1.TILE_SIZE;
         this.body.add(this.camera);
         //this.body.add(this.light);
         this.light.position.x = 5;
@@ -67,7 +70,7 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == "/") {
+        if (map.walkable.get(move_coor.x, move_coor.z) == area_data_1.WALL_CHAR) {
             return false;
         }
         if (map.walkable.get(move_coor.x, move_coor.z) == "+") {

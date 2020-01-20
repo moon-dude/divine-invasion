@@ -52092,7 +52092,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var area_data_1 = require("../area_data");
 var cave_b1_1 = require("./cave_b1");
 var cave_b2_1 = require("./cave_b2");
-exports.cave_data = new area_data_1.AreaData([cave_b1_1.level1_data, cave_b2_1.level2_data]);
+exports.cave_data = new area_data_1.AreaData([cave_b2_1.level2_data, cave_b1_1.level1_data]);
 
 },{"../area_data":16,"./cave_b1":14,"./cave_b2":15}],14:[function(require,module,exports){
 "use strict";
@@ -52104,28 +52104,21 @@ var globals_1 = require("../../../globals");
 var map_1 = require("../../../map");
 var area_data_1 = require("../area_data");
 var battle_data_1 = require("../../../battle_data");
-var map_walkable = "//////////" +
-    "/--/--/CI/" +
-    "/-///-/--/" +
-    "/--A--B--/" +
-    "////////-/" +
-    "/-----D--/" +
-    "/HG/E///F/" +
-    "////-///-/" +
-    "/------/-/" +
-    "/K/-//L/-/" +
-    "///-////-/" +
-    "/--J---/-/" +
-    "/------/-/" +
-    "/------/-/" +
-    "/--------/" +
-    "/------/-/" +
-    "//////////";
-var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
+var map_walkable = "####################" +
+    "#     #@# B####    #" +
+    "#     # ## #CI#### #" +
+    "#     #  A    ####F#" +
+    "#     ####### #### #" +
+    "#     #            #" +
+    "###J##### # #D###HG#" +
+    "### #L#K#E##########" +
+    "###        <########" +
+    "####################";
+var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
 var npc_map = new Map([
     [
         "A", new actor_1.Actor("Abel", [
-            new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+            new dialogue_1.Dialogue("Well, well, the new recruit is finally awake.")
                 .set_info("<< SPACE: continue >>").lock(),
             new dialogue_1.Dialogue("You're expected in the Summoning Room.").lock(),
             new dialogue_1.Dialogue("You know where that is right?"),
@@ -52183,11 +52176,14 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("Are you hurt? Let me tend to your wounds.").lock().set_heal_player().set_actor_block(true),
             new dialogue_1.Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock(),
         ])],
+    ["L", new actor_1.Actor("Leo", [
+            new dialogue_1.Dialogue("You're outta cash? Then don't bother browsing."),
+        ])],
 ]);
 var level1_actors = [];
 npc_map.forEach(function (actor, key, _) {
     for (var x = 0; x < level1_map.walkable.width; x++) {
-        for (var z = 0; z < level1_map.walkable.width; z++) {
+        for (var z = 0; z < level1_map.walkable.depth; z++) {
             if (key == level1_map.walkable.get(x, z)) {
                 actor.coor = new jlib_1.Coor(x, z);
                 actor.pos_index = 2;
@@ -52205,22 +52201,20 @@ var map_1 = require("../../../map");
 var jlib_1 = require("../../../jlib");
 var area_data_1 = require("../area_data");
 var encounter_type_1 = require("../../encounter_type");
-var map_walkable = "/-////////////////" +
-    "/^/--------/--/--/" +
-    "/-/-/-///-///-//-/" +
-    "/-----/-/---/----/" +
-    "///////---/-////-/" +
-    "///////////---/--/" +
-    "/////////--/-///-/" +
-    "////////////-///-/" +
-    "/////////-//-/-/-/" +
-    "/----------------/" +
-    "////////////////V/";
-"////////////////-/";
-var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 18));
+var map_walkable = "####################" +
+    "#<#        #  #  ###" +
+    "# # # ### ### ## ###" +
+    "#     # #        ###" +
+    "#######   # #### ###" +
+    "#####   # #   #  ###" +
+    "#########  # ### ###" +
+    "######### ###### ###" +
+    "###########>     ###" +
+    "####################";
+var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
 exports.level2_data = new area_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
-    new encounter_type_1.EncounterType(["Goblin", "Goblin", "Goblin"]),
+    new encounter_type_1.EncounterType(["Strigoii", "Goblin",]),
     new encounter_type_1.EncounterType(["Goblin", "Mandrake"]),
     new encounter_type_1.EncounterType(["Legion"]),
     new encounter_type_1.EncounterType(["Legion", "Onmoraki"]),
@@ -52232,12 +52226,19 @@ exports.level2_data = new area_data_1.LevelData(level2_map, [], [
 },{"../../../jlib":31,"../../../map":34,"../../encounter_type":18,"../area_data":16}],16:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var jlib_1 = require("../../jlib");
+exports.STAIRS_DOWN_CHAR = "<";
+exports.STAIRS_UP_CHAR = ">";
+exports.PLAYER_START_CHAR = "@";
+exports.WALL_CHAR = "#";
 var LevelData = /** @class */ (function () {
-    function LevelData(map, actors, encounter_types, encounter_count) {
+    function LevelData(map, actors, encounter_types, encounter_count, offset_from_above) {
+        if (offset_from_above === void 0) { offset_from_above = new jlib_1.Coor(0, 0); }
         this.map = map;
         this.actors = actors;
         this.encounter_types = encounter_types;
         this.encounter_count = encounter_count;
+        this.offset_from_above = offset_from_above;
     }
     return LevelData;
 }());
@@ -52250,7 +52251,7 @@ var AreaData = /** @class */ (function () {
 }());
 exports.AreaData = AreaData;
 
-},{}],17:[function(require,module,exports){
+},{"../../jlib":31}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -69550,20 +69551,22 @@ var battle_data_1 = require("./battle_data");
 var log_1 = require("./log");
 var menu_1 = require("./menu");
 var cave_area_1 = require("./data/areas/1_cave/cave_area");
+var jlib_1 = require("./jlib");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
-        this.player = new player_1.Player();
         this.area = cave_area_1.cave_data;
+        this.level_idx = 1;
         this.battle = null;
         this.input = new input_1.Input();
         // Rendering.
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
         Game.Instance = this;
+        this.world = new world_1.World(this.scene, this.area.levels[this.level_idx]);
+        this.player = new player_1.Player(this.world.map.player_start);
         this.scene.add(this.player.body);
-        this.world = new world_1.World(this.scene, this.area.levels[0]);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
@@ -69593,6 +69596,26 @@ var Game = /** @class */ (function () {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
         if (result.moved) {
             this.world.dialogue_idx = 0;
+            // check for stairs.
+            var stairs_down = this.world.map.stairs_down.get(this.player.coor.x, this.player.coor.z);
+            var offset = new jlib_1.Coor(0, 0);
+            if (stairs_down) {
+                console.log("Stairs down");
+                this.level_idx -= 1;
+                offset = this.area.levels[this.level_idx].offset_from_above.inverse();
+            }
+            var stairs_up = this.world.map.stairs_up.get(this.player.coor.x, this.player.coor.z);
+            if (stairs_up) {
+                console.log("Stairs up");
+                this.level_idx += 1;
+                offset = this.area.levels[this.level_idx].offset_from_above;
+            }
+            if (stairs_up || stairs_down) {
+                this.world.unload(this.scene);
+                this.world = new world_1.World(this.scene, this.area.levels[this.level_idx]);
+                this.player.coor = this.player.coor.offset_by(offset);
+                return;
+            }
             // check for encounter.
             var start_battle = false;
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
@@ -69646,7 +69669,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./battle":7,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./input":29,"./log":32,"./menu":35,"./player":36,"./world":39,"three":3}],28:[function(require,module,exports){
+},{"./battle":7,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./input":29,"./jlib":31,"./log":32,"./menu":35,"./player":36,"./world":39,"three":3}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
@@ -69773,6 +69796,12 @@ var Coor = /** @class */ (function () {
     }
     Coor.prototype.equals = function (other) {
         return other != null && this.x == other.x && this.z == other.z;
+    };
+    Coor.prototype.offset_by = function (other) {
+        return new Coor(this.x + other.x, this.z + other.z);
+    };
+    Coor.prototype.inverse = function () {
+        return new Coor(-this.x, -this.z);
     };
     return Coor;
 }());
@@ -69918,6 +69947,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
+var area_data_1 = require("./data/areas/area_data");
 var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
 var material = new THREE.MeshStandardMaterial({
     color: 0x221111,
@@ -69927,7 +69957,7 @@ function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
-            if (walkable.get(x, z) == "/") {
+            if (walkable.get(x, z) == area_data_1.WALL_CHAR) {
                 var box = new THREE.Mesh(geometry, material);
                 box.position.x = x * constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
@@ -69941,17 +69971,29 @@ var TileMap = /** @class */ (function () {
     function TileMap(walkable) {
         this.walkable = walkable;
         var visited = [];
+        var stairs_up = [];
+        var stairs_down = [];
+        this.player_start = null;
         while (visited.length < this.walkable.count) {
+            var x = visited.length % this.walkable.width;
+            var z = Math.floor(visited.length / this.walkable.width);
             visited.push(false);
+            stairs_up.push(this.walkable.get(x, z) == area_data_1.STAIRS_UP_CHAR);
+            stairs_down.push(this.walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR);
+            if (this.walkable.get(x, z) == area_data_1.PLAYER_START_CHAR) {
+                this.player_start = new jlib_1.Coor(x, z);
+            }
         }
         this.visited = new jlib_1.Grid(visited, this.walkable.width);
+        this.stairs_up = new jlib_1.Grid(stairs_up, this.walkable.width);
+        this.stairs_down = new jlib_1.Grid(stairs_down, this.walkable.width);
         this.meshes = buildMeshes(this.walkable);
     }
     return TileMap;
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":12,"./jlib":31,"three":3}],35:[function(require,module,exports){
+},{"./constants":12,"./data/areas/area_data":16,"./jlib":31,"three":3}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MenuFrame = /** @class */ (function () {
@@ -70032,10 +70074,10 @@ var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
 var log_1 = require("./log");
 var actor_card_1 = require("./actor_card");
+var area_data_1 = require("./data/areas/area_data");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
-    function Player() {
-        this.coor = new jlib_1.Coor(1, 1);
+    function Player(coor) {
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
@@ -70043,6 +70085,9 @@ var Player = /** @class */ (function () {
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
+        this.coor = coor;
+        this.body.position.x = this.coor.x * constants_1.TILE_SIZE;
+        this.body.position.z = this.coor.z * constants_1.TILE_SIZE;
         this.body.add(this.camera);
         //this.body.add(this.light);
         this.light.position.x = 5;
@@ -70083,7 +70128,7 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == "/") {
+        if (map.walkable.get(move_coor.x, move_coor.z) == area_data_1.WALL_CHAR) {
             return false;
         }
         if (map.walkable.get(move_coor.x, move_coor.z) == "+") {
@@ -70169,7 +70214,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":4,"./actor_card":5,"./battle_data":10,"./constants":12,"./inventory":30,"./jlib":31,"./log":32,"./stats":38,"three":3}],37:[function(require,module,exports){
+},{"./actor":4,"./actor_card":5,"./battle_data":10,"./constants":12,"./data/areas/area_data":16,"./inventory":30,"./jlib":31,"./log":32,"./stats":38,"three":3}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
@@ -70385,6 +70430,18 @@ var World = /** @class */ (function () {
             }
         }
         return result;
+    };
+    World.prototype.unload = function (scene) {
+        scene.remove(this.ambient_light);
+        for (var i = 0; i < this.actors.length; i++) {
+            scene.remove(this.actors[i].mesh);
+        }
+        for (var i = 0; i < this.map.meshes.length; i++) {
+            scene.remove(this.map.meshes[i]);
+        }
+        for (var i = 0; i < this.lights.length; i++) {
+            scene.remove(this.lights[i]);
+        }
     };
     return World;
 }());

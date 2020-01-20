@@ -6,32 +6,25 @@ import { TileMap } from "../../../map";
 import { LevelData } from "../area_data";
 import { BattleData } from "../../../battle_data";
 
-var map_walkable: string = 
-  "//////////" +
-  "/--/--/CI/" +
-  "/-///-/--/" +
-  "/--A--B--/" +
-  "////////-/" +
-  "/-----D--/" +
-  "/HG/E///F/" +
-  "////-///-/" +
-  "/------/-/" +
-  "/K/-//L/-/" +
-  "///-////-/" +
-  "/--J---/-/" +
-  "/------/-/" +
-  "/------/-/" +
-  "/--------/" +
-  "/------/-/" +
-  "//////////";
+var map_walkable: string =
+  "####################" +
+  "#     #@# B####    #" +
+  "#     # ## #CI#### #" +
+  "#     #  A    ####F#" +
+  "#     ####### #### #" +
+  "#     #            #" +
+  "###J##### # #D###HG#" +
+  "### #L#K#E##########" +
+  "###        <########" +
+  "####################";
 
-var level1_map = new TileMap(Grid.from_string(map_walkable, 10));
+var level1_map = new TileMap(Grid.from_string(map_walkable, 20));
 
 var npc_map: Map<string, Actor> = new Map([
   [
     "A", new Actor("Abel", 
       [
-        new Dialogue("Well, well, it looks like the new recruit is finally awake.")
+        new Dialogue("Well, well, the new recruit is finally awake.")
           .set_info("<< SPACE: continue >>").lock(),
         new Dialogue("You're expected in the Summoning Room.").lock(),
         new Dialogue("You know where that is right?"),
@@ -90,12 +83,15 @@ var npc_map: Map<string, Actor> = new Map([
     new Dialogue("Are you hurt? Let me tend to your wounds.").lock().set_heal_player().set_actor_block(true),
     new Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock(),
   ])],
+  ["L", new Actor("Leo", [
+    new Dialogue("You're outta cash? Then don't bother browsing."),
+  ])],
 ]);
 
 var level1_actors: Actor[] = [];
 npc_map.forEach((actor, key, _) => {
   for (let x = 0; x < level1_map.walkable.width; x++) {
-    for (let z = 0; z < level1_map.walkable.width; z++) {
+    for (let z = 0; z < level1_map.walkable.depth; z++) {
       if (key == level1_map.walkable.get(x, z)) {
         actor.coor = new Coor(x, z);
         actor.pos_index = 2;
