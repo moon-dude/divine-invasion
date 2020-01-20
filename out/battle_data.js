@@ -16,7 +16,7 @@ function other_side(side) {
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
-    function BattleData(name, side, base_stats, mod_stats, skills, mood) {
+    function BattleData(name, side, base_level, base_stats, mod_stats, skills, mood) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
@@ -25,6 +25,7 @@ var BattleData = /** @class */ (function () {
         this.did_just_get_damaged = false;
         this.name = name;
         this.side = side;
+        this.base_level = base_level;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
         this.skills = skills;
@@ -101,7 +102,10 @@ var BattleData = /** @class */ (function () {
         this.did_just_get_damaged = false;
         return value;
     };
-    BattleData.IDENTITY = new BattleData("", BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
+    BattleData.prototype.get_level = function () {
+        return this.base_level + this.exp.levels_gained;
+    };
+    BattleData.IDENTITY = new BattleData("", BattleSide.Their, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
 exports.BattleData = BattleData;

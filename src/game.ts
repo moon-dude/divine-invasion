@@ -23,6 +23,7 @@ export class Game {
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
   private battle_div: HTMLElement;
   private log_div: HTMLElement;
+  private overlay_div: HTMLElement;
 
   constructor() {
     this.scene.add(this.player.body);
@@ -30,6 +31,7 @@ export class Game {
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.battle_div = document.getElementById("battle_div")!;
     this.log_div = document.getElementById("log_div")!;
+    this.overlay_div = document.getElementById("overlay_div")!;
   }
 
   private render() {
@@ -37,6 +39,7 @@ export class Game {
     this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
     this.renderer.render(this.scene, this.player.camera);
     this.log_div.innerHTML = "_____LOG<br/>" + Log.as_string();
+    this.overlay_div.innerHTML = "♄" + this.player.macca;
   }
 
   public update(): void {
@@ -48,18 +51,6 @@ export class Game {
       this.end_battle(winner);
     }
     this.render();
-  }
-
-  private end_battle(winner: BattleSide) {
-    Battle.Instance!.end();
-    if (winner == BattleSide.Our) {
-      let actors_at_player_coor = this.world.actors_at(this.player.coor);
-      this.player.movement_locked = false;
-      this.player.party_gain_exp(actors_at_player_coor);
-      this.battle_div.style.visibility = "hidden";
-    } else {
-      this.battle_div.innerHTML = "YOU DIED";
-    }
   }
 
   public key_down(event: any) {
@@ -99,6 +90,18 @@ export class Game {
       if (Battle.Instance != null) {
         Battle.Instance.next_turn();
       }
+    }
+  }
+  
+  private end_battle(winner: BattleSide) {
+    Battle.Instance!.end();
+    if (winner == BattleSide.Our) {
+      let actors_at_player_coor = this.world.actors_at(this.player.coor);
+      this.player.movement_locked = false;
+      this.player.party_gain_loot(actors_at_player_coor);
+      this.battle_div.style.visibility = "hidden";
+    } else {
+      this.battle_div.innerHTML = "YOU DIED";
     }
   }
 }

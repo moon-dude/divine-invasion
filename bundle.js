@@ -51308,7 +51308,7 @@ var Actor = /** @class */ (function () {
         if (side == battle_data_1.BattleSide.Their) {
             mood = emotion_1.Mood.Aggressive;
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.level || 1, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
         return actor;
     };
@@ -51370,17 +51370,19 @@ var Actor = /** @class */ (function () {
                 this.tween.bump();
             }
             if (this.battle_data.just_got_damaged()) {
-                this.tween.set_shake(.1);
+                this.tween.set_shake(0.1);
             }
             this.tween.update(this.mesh, this.position);
         }
-        this.mesh.visible = this.battle_data.modded_base_stats().hp > 0 && !this.battle_data.recruited;
+        this.mesh.visible =
+            this.battle_data.modded_base_stats().hp > 0 &&
+                !this.battle_data.recruited;
     };
     Actor.prototype.get_pos_front_offset = function () {
         if (this.pos_index < 3) {
-            return ACTOR_OFFSET_FRONT * 0.9;
+            return ACTOR_OFFSET_FRONT * 0.9 + this.pos_index * 0.01;
         }
-        return ACTOR_OFFSET_FRONT;
+        return ACTOR_OFFSET_FRONT + this.pos_index * 0.01;
     };
     Actor.prototype.get_pos_side_offset = function () {
         if (this.pos_index == 1) {
@@ -51752,7 +51754,7 @@ function other_side(side) {
 }
 exports.other_side = other_side;
 var BattleData = /** @class */ (function () {
-    function BattleData(name, side, base_stats, mod_stats, skills, mood) {
+    function BattleData(name, side, base_level, base_stats, mod_stats, skills, mood) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
         this.exp = new exp_1.Exp();
@@ -51761,6 +51763,7 @@ var BattleData = /** @class */ (function () {
         this.did_just_get_damaged = false;
         this.name = name;
         this.side = side;
+        this.base_level = base_level;
         this.base_stats = base_stats;
         this.mod_stats = mod_stats;
         this.skills = skills;
@@ -51837,7 +51840,10 @@ var BattleData = /** @class */ (function () {
         this.did_just_get_damaged = false;
         return value;
     };
-    BattleData.IDENTITY = new BattleData("", BattleSide.Their, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
+    BattleData.prototype.get_level = function () {
+        return this.base_level + this.exp.levels_gained;
+    };
+    BattleData.IDENTITY = new BattleData("", BattleSide.Their, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
 exports.BattleData = BattleData;
@@ -69422,12 +69428,14 @@ var Game = /** @class */ (function () {
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
         this.log_div = document.getElementById("log_div");
+        this.overlay_div = document.getElementById("overlay_div");
     }
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
         this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
+        this.overlay_div.innerHTML = "♄" + this.player.macca;
     };
     Game.prototype.update = function () {
         var _a, _b;
@@ -69439,18 +69447,6 @@ var Game = /** @class */ (function () {
             this.end_battle(winner);
         }
         this.render();
-    };
-    Game.prototype.end_battle = function (winner) {
-        battle_1.Battle.Instance.end();
-        if (winner == battle_data_1.BattleSide.Our) {
-            var actors_at_player_coor = this.world.actors_at(this.player.coor);
-            this.player.movement_locked = false;
-            this.player.party_gain_exp(actors_at_player_coor);
-            this.battle_div.style.visibility = "hidden";
-        }
-        else {
-            this.battle_div.innerHTML = "YOU DIED";
-        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
@@ -69480,6 +69476,18 @@ var Game = /** @class */ (function () {
             if (battle_1.Battle.Instance != null) {
                 battle_1.Battle.Instance.next_turn();
             }
+        }
+    };
+    Game.prototype.end_battle = function (winner) {
+        battle_1.Battle.Instance.end();
+        if (winner == battle_data_1.BattleSide.Our) {
+            var actors_at_player_coor = this.world.actors_at(this.player.coor);
+            this.player.movement_locked = false;
+            this.player.party_gain_loot(actors_at_player_coor);
+            this.battle_div.style.visibility = "hidden";
+        }
+        else {
+            this.battle_div.innerHTML = "YOU DIED";
         }
     };
     Game.Menu = new menu_1.Menu("menu_div");
@@ -69871,6 +69879,7 @@ var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
+var log_1 = require("./log");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
@@ -69881,6 +69890,7 @@ var Player = /** @class */ (function () {
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
+        this.macca = 0;
         Player.Instance = this;
         this.body.add(this.camera);
         this.body.add(this.light);
@@ -69890,8 +69900,8 @@ var Player = /** @class */ (function () {
         stats.dx = 30;
         stats.lu = 35;
         stats.ma = 0;
-        stats.st = 20;
-        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
+        stats.st = 22;
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 1, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
     }
@@ -69951,21 +69961,26 @@ var Player = /** @class */ (function () {
         }
         return true;
     };
-    Player.prototype.party_gain_exp = function (from_actors) {
-        // let total_exp = 0;
-        // for (let i = 0; i < from_actors.length; i++) {
-        //   total_exp += from_actors[i].battle_data.get_level();
-        // }
-        // const level_delta = this.battle_data.exp.add(total_exp);
-        // for (let i = 0; i < this.supports.length; i++) {
-        //   const level_delta = this.supports[i].battle_data.exp.add(total_exp);
-        // }
+    Player.prototype.party_gain_loot = function (from_actors) {
+        var total_exp = 0;
+        var total_macca = 0;
+        for (var i = 0; i < from_actors.length; i++) {
+            total_exp += from_actors[i].battle_data.get_level();
+            total_macca += from_actors[i].battle_data.get_level();
+        }
+        var level_delta = this.battle_data.exp.add(total_exp);
+        for (var i = 0; i < this.supports.length; i++) {
+            var level_delta_1 = this.supports[i].battle_data.exp.add(total_exp);
+        }
+        this.macca += total_macca;
+        log_1.Log.push("Gained " + total_exp + " experience.");
+        log_1.Log.push("Gained " + total_macca + " macca.");
     };
     return Player;
 }());
 exports.Player = Player;
 
-},{"./actor":4,"./battle_data":8,"./constants":11,"./inventory":26,"./jlib":27,"./stats":34,"three":3}],33:[function(require,module,exports){
+},{"./actor":4,"./battle_data":8,"./constants":11,"./inventory":26,"./jlib":27,"./log":28,"./stats":34,"three":3}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");

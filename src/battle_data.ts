@@ -19,6 +19,7 @@ export class BattleData {
   public static IDENTITY: BattleData = new BattleData(
     "",
     BattleSide.Their,
+    1,
     Stats.new_base(),
     Stats.new_mod(),
     [],
@@ -27,6 +28,7 @@ export class BattleData {
 
   public readonly name: string;
   public readonly side: BattleSide;
+  public readonly base_level: number;
   public readonly base_stats: Stats;
   public readonly skills: Skill[];
 
@@ -43,6 +45,7 @@ export class BattleData {
   constructor(
     name: string,
     side: BattleSide,
+    base_level: number,
     base_stats: Stats,
     mod_stats: Stats,
     skills: Skill[],
@@ -50,6 +53,7 @@ export class BattleData {
   ) {
     this.name = name;
     this.side = side;
+    this.base_level = base_level;
     this.base_stats = base_stats;
     this.mod_stats = mod_stats;
     this.skills = skills;
@@ -138,6 +142,10 @@ export class BattleData {
     const value = this.did_just_get_damaged;
     this.did_just_get_damaged = false;
     return value;
+  }
+
+  public get_level(): number {
+    return this.base_level + this.exp.levels_gained;
   }
 }
 

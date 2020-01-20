@@ -30,12 +30,14 @@ var Game = /** @class */ (function () {
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.battle_div = document.getElementById("battle_div");
         this.log_div = document.getElementById("log_div");
+        this.overlay_div = document.getElementById("overlay_div");
     }
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * .5);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
         this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
+        this.overlay_div.innerHTML = "♄" + this.player.macca;
     };
     Game.prototype.update = function () {
         var _a, _b;
@@ -47,18 +49,6 @@ var Game = /** @class */ (function () {
             this.end_battle(winner);
         }
         this.render();
-    };
-    Game.prototype.end_battle = function (winner) {
-        battle_1.Battle.Instance.end();
-        if (winner == battle_data_1.BattleSide.Our) {
-            var actors_at_player_coor = this.world.actors_at(this.player.coor);
-            this.player.movement_locked = false;
-            this.player.party_gain_exp(actors_at_player_coor);
-            this.battle_div.style.visibility = "hidden";
-        }
-        else {
-            this.battle_div.innerHTML = "YOU DIED";
-        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
@@ -88,6 +78,18 @@ var Game = /** @class */ (function () {
             if (battle_1.Battle.Instance != null) {
                 battle_1.Battle.Instance.next_turn();
             }
+        }
+    };
+    Game.prototype.end_battle = function (winner) {
+        battle_1.Battle.Instance.end();
+        if (winner == battle_data_1.BattleSide.Our) {
+            var actors_at_player_coor = this.world.actors_at(this.player.coor);
+            this.player.movement_locked = false;
+            this.player.party_gain_loot(actors_at_player_coor);
+            this.battle_div.style.visibility = "hidden";
+        }
+        else {
+            this.battle_div.innerHTML = "YOU DIED";
         }
     };
     Game.Menu = new menu_1.Menu("menu_div");

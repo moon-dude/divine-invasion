@@ -5,6 +5,11 @@ body {
   font-family: 'IBM Plex Mono', monospace;
 }
 
+#overlay_div {
+  position: absolute;
+  padding: .1em;
+}
+
 #html_div {
   max-width: 800px;
   text-align: left;

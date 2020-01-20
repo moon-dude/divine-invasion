@@ -6,6 +6,8 @@ import { Actor } from "./actor";
 import { BattleData, BattleSide } from "./battle_data";
 import { Stats } from "./stats";
 import { Inventory } from "./inventory";
+import { Game } from "./game";
+import { Log } from "./log";
 
 export const PLAYER_NAME: string = "Player";
 
@@ -27,6 +29,7 @@ export class Player {
   public battle_data: BattleData;
   public supports: Actor[];
   public inventory: Inventory = new Inventory();
+  public macca: number = 0;
 
   constructor() {
     Player.Instance = this;
@@ -38,10 +41,11 @@ export class Player {
     stats.dx = 30;
     stats.lu = 35;
     stats.ma = 0;
-    stats.st = 20;
+    stats.st = 22;
     this.battle_data = new BattleData(
       PLAYER_NAME,
       BattleSide.Our,
+      1,
       stats,
       Stats.new_mod(),
       [],
@@ -109,14 +113,19 @@ export class Player {
     return true;
   }
 
-  party_gain_exp(from_actors: Actor[]) {
-    // let total_exp = 0;
-    // for (let i = 0; i < from_actors.length; i++) {
-    //   total_exp += from_actors[i].battle_data.get_level();
-    // }
-    // const level_delta = this.battle_data.exp.add(total_exp);
-    // for (let i = 0; i < this.supports.length; i++) {
-    //   const level_delta = this.supports[i].battle_data.exp.add(total_exp);
-    // }
+  party_gain_loot(from_actors: Actor[]) {
+    let total_exp = 0;
+    let total_macca = 0;
+    for (let i = 0; i < from_actors.length; i++) {
+      total_exp += from_actors[i].battle_data.get_level();
+      total_macca += from_actors[i].battle_data.get_level();
+    }
+    const level_delta = this.battle_data.exp.add(total_exp);
+    for (let i = 0; i < this.supports.length; i++) {
+      const level_delta = this.supports[i].battle_data.exp.add(total_exp);
+    }
+    this.macca += total_macca;
+    Log.push("Gained " + total_exp + " experience.");
+    Log.push("Gained " + total_macca + " macca.");
   }
 }

@@ -14,6 +14,7 @@ var actor_1 = require("./actor");
 var battle_data_1 = require("./battle_data");
 var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
+var log_1 = require("./log");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player() {
@@ -24,6 +25,7 @@ var Player = /** @class */ (function () {
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
+        this.macca = 0;
         Player.Instance = this;
         this.body.add(this.camera);
         this.body.add(this.light);
@@ -33,8 +35,8 @@ var Player = /** @class */ (function () {
         stats.dx = 30;
         stats.lu = 35;
         stats.ma = 0;
-        stats.st = 20;
-        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, stats, stats_1.Stats.new_mod(), [], null);
+        stats.st = 22;
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 1, stats, stats_1.Stats.new_mod(), [], null);
         this.supports = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
     }
@@ -94,15 +96,20 @@ var Player = /** @class */ (function () {
         }
         return true;
     };
-    Player.prototype.party_gain_exp = function (from_actors) {
-        // let total_exp = 0;
-        // for (let i = 0; i < from_actors.length; i++) {
-        //   total_exp += from_actors[i].battle_data.get_level();
-        // }
-        // const level_delta = this.battle_data.exp.add(total_exp);
-        // for (let i = 0; i < this.supports.length; i++) {
-        //   const level_delta = this.supports[i].battle_data.exp.add(total_exp);
-        // }
+    Player.prototype.party_gain_loot = function (from_actors) {
+        var total_exp = 0;
+        var total_macca = 0;
+        for (var i = 0; i < from_actors.length; i++) {
+            total_exp += from_actors[i].battle_data.get_level();
+            total_macca += from_actors[i].battle_data.get_level();
+        }
+        var level_delta = this.battle_data.exp.add(total_exp);
+        for (var i = 0; i < this.supports.length; i++) {
+            var level_delta_1 = this.supports[i].battle_data.exp.add(total_exp);
+        }
+        this.macca += total_macca;
+        log_1.Log.push("Gained " + total_exp + " experience.");
+        log_1.Log.push("Gained " + total_macca + " macca.");
     };
     return Player;
 }());

@@ -61,7 +61,7 @@ var Actor = /** @class */ (function () {
         if (side == battle_data_1.BattleSide.Their) {
             mood = emotion_1.Mood.Aggressive;
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.stats, stats_1.Stats.new_mod(), skills, mood));
+        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.level || 1, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
         return actor;
     };
@@ -123,17 +123,19 @@ var Actor = /** @class */ (function () {
                 this.tween.bump();
             }
             if (this.battle_data.just_got_damaged()) {
-                this.tween.set_shake(.1);
+                this.tween.set_shake(0.1);
             }
             this.tween.update(this.mesh, this.position);
         }
-        this.mesh.visible = this.battle_data.modded_base_stats().hp > 0 && !this.battle_data.recruited;
+        this.mesh.visible =
+            this.battle_data.modded_base_stats().hp > 0 &&
+                !this.battle_data.recruited;
     };
     Actor.prototype.get_pos_front_offset = function () {
         if (this.pos_index < 3) {
-            return ACTOR_OFFSET_FRONT * 0.9;
+            return ACTOR_OFFSET_FRONT * 0.9 + this.pos_index * 0.01;
         }
-        return ACTOR_OFFSET_FRONT;
+        return ACTOR_OFFSET_FRONT + this.pos_index * 0.01;
     };
     Actor.prototype.get_pos_side_offset = function () {
         if (this.pos_index == 1) {
