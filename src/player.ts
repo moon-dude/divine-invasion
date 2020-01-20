@@ -16,7 +16,7 @@ export class Player {
   public dir: Dir = Dir.S;
   public body: THREE.Object3D = new THREE.Object3D();
   public camera: THREE.PerspectiveCamera = new THREE.PerspectiveCamera(
-    120,
+    100,
     1.2,
     0.1,
     1300
@@ -35,7 +35,7 @@ export class Player {
 
   constructor() {
     this.body.add(this.camera);
-    this.body.add(this.light);
+    //this.body.add(this.light);
     this.light.position.x = 5;
     let stats = new Stats(275, 0);
     stats.ag = 25;
@@ -157,5 +157,16 @@ export class Player {
       }
     }
     return null;
+  }
+
+  public fully_heal(): void {
+    if (this.battle_data.mod_stats.hp != 0) {
+      this.battle_data.heal_for(this.battle_data.mod_stats.hp);
+    }
+    for (let i = 0; i < this.recruits.length; i++) {
+      if (this.recruits[i].battle_data.mod_stats.hp != 0) {
+        this.recruits[i].battle_data.heal_for(this.recruits[i].battle_data.mod_stats.hp);
+      }
+    }
   }
 }

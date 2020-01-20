@@ -51403,7 +51403,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./actor_tween":6,"./battle_data":10,"./constants":12,"./data/raw/demons":17,"./data/raw/skills":19,"./emotion":22,"./game":24,"./jlib":28,"./stats":35,"three":3}],5:[function(require,module,exports){
+},{"./actor_tween":6,"./battle_data":10,"./constants":12,"./data/raw/demons":19,"./data/raw/skills":21,"./emotion":25,"./game":27,"./jlib":31,"./stats":38,"three":3}],5:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var emotion_1 = require("./emotion");
@@ -51463,7 +51463,7 @@ var ActorCard = /** @class */ (function () {
 }());
 exports.ActorCard = ActorCard;
 
-},{"./emotion":22}],6:[function(require,module,exports){
+},{"./emotion":25}],6:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51713,7 +51713,7 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./actor_card":5,"./battle_actions":8,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/items":18,"./data/raw/skills":19,"./data/skill_effect":20,"./game":24,"./log":29,"./requests":34}],8:[function(require,module,exports){
+},{"./actor_card":5,"./battle_actions":8,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/items":20,"./data/raw/skills":21,"./data/skill_effect":22,"./game":27,"./log":32,"./requests":37}],8:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var AttackAction = /** @class */ (function () {
@@ -51823,7 +51823,7 @@ function get_attack_target(attacker, fighters) {
         .filter(function (x) { return x.modded_base_stats().hp > 0; }));
 }
 
-},{"./battle_actions":8,"./battle_data":10,"./data/util":21,"./jlib":28}],10:[function(require,module,exports){
+},{"./battle_actions":8,"./battle_data":10,"./data/util":23,"./jlib":31}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -51931,7 +51931,7 @@ var BattleData = /** @class */ (function () {
     BattleData.prototype.get_level = function () {
         return this.base_level + this.exp.levels_gained;
     };
-    BattleData.IDENTITY = new BattleData("", BattleSide.Their, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
+    BattleData.IDENTITY = new BattleData("", BattleSide.Our, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
 exports.BattleData = BattleData;
@@ -51944,7 +51944,7 @@ var BattleIndex = /** @class */ (function () {
 }());
 exports.BattleIndex = BattleIndex;
 
-},{"./data/buffs":13,"./data/skill_effect":20,"./emotion":22,"./exp":23,"./log":29,"./stats":35}],11:[function(require,module,exports){
+},{"./data/buffs":17,"./data/skill_effect":22,"./emotion":25,"./exp":26,"./log":32,"./stats":38}],11:[function(require,module,exports){
 "use strict";
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -52081,12 +52081,176 @@ function set_up_player_turn(fighter) {
 }
 exports.set_up_player_turn = set_up_player_turn;
 
-},{"./battle_actions":8,"./battle_data":10,"./game":24,"./requests":34}],12:[function(require,module,exports){
+},{"./battle_actions":8,"./battle_data":10,"./game":27,"./requests":37}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
 
 },{}],13:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var area_data_1 = require("../area_data");
+var cave_b1_1 = require("./cave_b1");
+var cave_b2_1 = require("./cave_b2");
+exports.cave_data = new area_data_1.AreaData([cave_b1_1.level1_data, cave_b2_1.level2_data]);
+
+},{"../area_data":16,"./cave_b1":14,"./cave_b2":15}],14:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var jlib_1 = require("../../../jlib");
+var actor_1 = require("../../../actor");
+var dialogue_1 = require("../../../dialogue");
+var globals_1 = require("../../../globals");
+var map_1 = require("../../../map");
+var area_data_1 = require("../area_data");
+var battle_data_1 = require("../../../battle_data");
+var map_walkable = "//////////" +
+    "/--/--/CI/" +
+    "/-///-/--/" +
+    "/--A--B--/" +
+    "////////-/" +
+    "/-----D--/" +
+    "/HG/E///F/" +
+    "////-///-/" +
+    "/------/-/" +
+    "/K/-//L/-/" +
+    "///-////-/" +
+    "/--J---/-/" +
+    "/------/-/" +
+    "/------/-/" +
+    "/--------/" +
+    "/------/-/" +
+    "//////////";
+var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 10));
+var npc_map = new Map([
+    [
+        "A", new actor_1.Actor("Abel", [
+            new dialogue_1.Dialogue("Well, well, it looks like the new recruit is finally awake.")
+                .set_info("<< SPACE: continue >>").lock(),
+            new dialogue_1.Dialogue("You're expected in the Summoning Room.").lock(),
+            new dialogue_1.Dialogue("You know where that is right?"),
+        ])
+    ],
+    ["B", new actor_1.Actor("Beth", [
+            new dialogue_1.Dialogue("My head hurts..."),
+            new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
+        ])],
+    ["C", new actor_1.Actor("Chloe", [
+            new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
+        ])],
+    ["I", new actor_1.Actor("Incubus", [
+            new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You are!?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
+                .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
+                .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
+            new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
+        ], actor_1.DEMON_MAT, battle_data_1.BattleData.IDENTITY)],
+    ["D", new actor_1.Actor("Daniel", [
+            new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
+            new dialogue_1.Dialogue("Have you practiced your rites?"),
+        ])],
+    ["E", new actor_1.Actor("Eve", [
+            new dialogue_1.Dialogue("The Summoning Room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
+            new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Well go find some demon blood!").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().flag('demon_blood'),
+            new dialogue_1.Dialogue("Find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Wow, you really just drew blood from Chloe's Incubus?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Anyway, you got demon blood so come on through.").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
+        ])],
+    ["F", new actor_1.Actor("Frederick", [
+            new dialogue_1.Dialogue("Step back. New recruits aren't allowed any further.").lock().set_actor_block(true),
+        ])],
+    ["G", new actor_1.Actor("George", [
+            new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
+        ])],
+    ["H", new actor_1.Actor("Hilde", [
+            new dialogue_1.Dialogue("Let's see how your laws fare against my boot!").set_actor_block(true),
+        ])],
+    ["J", new actor_1.Actor("Jacques", [
+            new dialogue_1.Dialogue("Oh, it's you, the *NEW* recruit. what have you go there?").lock().set_actor_block(true),
+            new dialogue_1.Dialogue("Imp's blood? No, no, no! It can't be any old demon blood!").lock(),
+            new dialogue_1.Dialogue("It has to be the blood of Katakirauwa, the pig spirit!").lock(),
+            new dialogue_1.Dialogue("You see, Taotie is very particular and much enjoys the taste of Katakirauwa!").lock(),
+            new dialogue_1.Dialogue("You may be able to find Katakirauwa somewhere in the depths of the cave.").lock(),
+            new dialogue_1.Dialogue("Hurry along!").lock(),
+        ])],
+    ["K", new actor_1.Actor("Katherine", [
+            new dialogue_1.Dialogue("Hello, dear, what's the matter?"),
+            new dialogue_1.Dialogue("Are you hurt? Let me tend to your wounds.").lock().set_heal_player().set_actor_block(true),
+            new dialogue_1.Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock(),
+        ])],
+]);
+var level1_actors = [];
+npc_map.forEach(function (actor, key, _) {
+    for (var x = 0; x < level1_map.walkable.width; x++) {
+        for (var z = 0; z < level1_map.walkable.width; z++) {
+            if (key == level1_map.walkable.get(x, z)) {
+                actor.coor = new jlib_1.Coor(x, z);
+                actor.pos_index = 2;
+                level1_actors.push(actor);
+            }
+        }
+    }
+});
+exports.level1_data = new area_data_1.LevelData(level1_map, level1_actors, [], 0);
+
+},{"../../../actor":4,"../../../battle_data":10,"../../../dialogue":24,"../../../globals":28,"../../../jlib":31,"../../../map":34,"../area_data":16}],15:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var map_1 = require("../../../map");
+var jlib_1 = require("../../../jlib");
+var area_data_1 = require("../area_data");
+var encounter_type_1 = require("../../encounter_type");
+var map_walkable = "/-////////////////" +
+    "/^/--------/--/--/" +
+    "/-/-/-///-///-//-/" +
+    "/-----/-/---/----/" +
+    "///////---/-////-/" +
+    "///////////---/--/" +
+    "/////////--/-///-/" +
+    "////////////-///-/" +
+    "/////////-//-/-/-/" +
+    "/----------------/" +
+    "////////////////V/";
+"////////////////-/";
+var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 18));
+exports.level2_data = new area_data_1.LevelData(level2_map, [], [
+    new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
+    new encounter_type_1.EncounterType(["Goblin", "Goblin", "Goblin"]),
+    new encounter_type_1.EncounterType(["Goblin", "Mandrake"]),
+    new encounter_type_1.EncounterType(["Legion"]),
+    new encounter_type_1.EncounterType(["Legion", "Onmoraki"]),
+    new encounter_type_1.EncounterType(["Onmoraki"]),
+    new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
+    new encounter_type_1.EncounterType(["Strigoii"]),
+], 20);
+
+},{"../../../jlib":31,"../../../map":34,"../../encounter_type":18,"../area_data":16}],16:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var LevelData = /** @class */ (function () {
+    function LevelData(map, actors, encounter_types, encounter_count) {
+        this.map = map;
+        this.actors = actors;
+        this.encounter_types = encounter_types;
+        this.encounter_count = encounter_count;
+    }
+    return LevelData;
+}());
+exports.LevelData = LevelData;
+var AreaData = /** @class */ (function () {
+    function AreaData(levels) {
+        this.levels = levels;
+    }
+    return AreaData;
+}());
+exports.AreaData = AreaData;
+
+},{}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -52125,7 +52289,7 @@ var Buffs = /** @class */ (function () {
 }());
 exports.Buffs = Buffs;
 
-},{}],14:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
@@ -52136,51 +52300,7 @@ var EncounterType = /** @class */ (function () {
 }());
 exports.EncounterType = EncounterType;
 
-},{}],15:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var map_1 = require("../../map");
-var jlib_1 = require("../../jlib");
-var level_data_1 = require("./level_data");
-var encounter_type_1 = require("../encounter_type");
-var map_walkable = "//////////////////" +
-    "/+/--------/--/--/" +
-    "/-/-/-///-///-//-/" +
-    "/-----/-/---/----/" +
-    "///////---/-////-/" +
-    "///////////---/--/" +
-    "/////////--/-///-/" +
-    "////////////-///-/" +
-    "/////////-//-/-/-/" +
-    "/----------------/" +
-    "////////////////`/";
-var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 18));
-exports.level2_data = new level_data_1.LevelData(level2_map, [], [
-    new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
-    new encounter_type_1.EncounterType(["Goblin", "Goblin", "Goblin"]),
-    new encounter_type_1.EncounterType(["Goblin", "Mandrake"]),
-    new encounter_type_1.EncounterType(["Legion"]),
-    new encounter_type_1.EncounterType(["Legion", "Onmoraki"]),
-    new encounter_type_1.EncounterType(["Onmoraki"]),
-    new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
-    new encounter_type_1.EncounterType(["Strigoii"]),
-], 20);
-
-},{"../../jlib":28,"../../map":31,"../encounter_type":14,"./level_data":16}],16:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var LevelData = /** @class */ (function () {
-    function LevelData(map, actors, encounter_types, encounter_count) {
-        this.map = map;
-        this.actors = actors;
-        this.encounter_types = encounter_types;
-        this.encounter_count = encounter_count;
-    }
-    return LevelData;
-}());
-exports.LevelData = LevelData;
-
-},{}],17:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -66341,7 +66461,7 @@ var DEMONS = [{
     }];
 exports.DEMON_MAP = new Map(DEMONS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":20}],18:[function(require,module,exports){
+},{"../skill_effect":22}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../util");
@@ -66356,7 +66476,7 @@ var ITEMS = [
 ];
 exports.ITEM_MAP = new Map(ITEMS.map(function (i) { return [i.name, i]; }));
 
-},{"../util":21}],19:[function(require,module,exports){
+},{"../util":23}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -69106,7 +69226,7 @@ var SKILLS = [
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":20,"../util":21}],20:[function(require,module,exports){
+},{"../skill_effect":22,"../util":23}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var log_1 = require("../log");
@@ -69297,7 +69417,7 @@ function handy_ailment_handler(target, effect, positive) {
     }
 }
 
-},{"../log":29}],21:[function(require,module,exports){
+},{"../log":32}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Target;
@@ -69311,7 +69431,49 @@ var Target;
     Target[Target["Self"] = 6] = "Self";
 })(Target = exports.Target || (exports.Target = {}));
 
-},{}],22:[function(require,module,exports){
+},{}],24:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+/// These are stored in a list in each actor.
+var Dialogue = /** @class */ (function () {
+    function Dialogue(speech) {
+        this.info = "";
+        this.trigger_criteria = function () { return true; };
+        this.lock_player = false;
+        this.flags = [];
+        this.actor_block = undefined;
+        this.heal_player = false;
+        this.speech = speech;
+    }
+    Dialogue.prototype.flag = function (s) {
+        this.flags.push(s);
+        return this;
+    };
+    Dialogue.prototype.lock = function () {
+        this.lock_player = true;
+        return this;
+    };
+    Dialogue.prototype.set_info = function (val) {
+        this.info = val;
+        return this;
+    };
+    Dialogue.prototype.set_actor_block = function (val) {
+        this.actor_block = val;
+        return this;
+    };
+    Dialogue.prototype.set_criteria = function (trigger_criteria) {
+        this.trigger_criteria = trigger_criteria;
+        return this;
+    };
+    Dialogue.prototype.set_heal_player = function () {
+        this.heal_player = true;
+        return this;
+    };
+    return Dialogue;
+}());
+exports.Dialogue = Dialogue;
+
+},{}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mood;
@@ -69346,7 +69508,7 @@ exports.mood_string = mood_string;
 // - threaten
 // - peace offer
 
-},{}],23:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -69369,7 +69531,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":35}],24:[function(require,module,exports){
+},{"./stats":38}],27:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69383,16 +69545,17 @@ var THREE = __importStar(require("three"));
 var input_1 = require("./input");
 var player_1 = require("./player");
 var world_1 = require("./world");
-var level2_1 = require("./data/levels/level2");
 var battle_1 = require("./battle");
 var battle_data_1 = require("./battle_data");
 var log_1 = require("./log");
 var menu_1 = require("./menu");
+var cave_area_1 = require("./data/areas/1_cave/cave_area");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.player = new player_1.Player();
+        this.area = cave_area_1.cave_data;
         this.battle = null;
         this.input = new input_1.Input();
         // Rendering.
@@ -69400,7 +69563,7 @@ var Game = /** @class */ (function () {
         this.renderer = new THREE.WebGLRenderer();
         Game.Instance = this;
         this.scene.add(this.player.body);
-        this.world = new world_1.World(this.scene, level2_1.level2_data);
+        this.world = new world_1.World(this.scene, this.area.levels[0]);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
@@ -69427,7 +69590,6 @@ var Game = /** @class */ (function () {
         this.render();
     };
     Game.prototype.key_down = function (event) {
-        var _a;
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
         if (result.moved) {
             this.world.dialogue_idx = 0;
@@ -69452,7 +69614,7 @@ var Game = /** @class */ (function () {
         }
         if (result.actioned) {
             this.world.dialogue_idx += 1;
-            (_a = this.battle) === null || _a === void 0 ? void 0 : _a.next_turn();
+            // this.battle?.next_turn();
         }
     };
     Game.prototype.end_battle = function (winner) {
@@ -69484,12 +69646,12 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./battle":7,"./battle_data":10,"./data/levels/level2":15,"./input":26,"./log":29,"./menu":32,"./player":33,"./world":36,"three":3}],25:[function(require,module,exports){
+},{"./battle":7,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./input":29,"./log":32,"./menu":35,"./player":36,"./world":39,"three":3}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],26:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69535,7 +69697,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],27:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Inventory = /** @class */ (function () {
@@ -69570,7 +69732,7 @@ var Inventory = /** @class */ (function () {
 }());
 exports.Inventory = Inventory;
 
-},{}],28:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -69709,7 +69871,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],29:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOG_INDENT_CHAR = "&#8619";
@@ -69727,7 +69889,7 @@ var Log = /** @class */ (function () {
 }());
 exports.Log = Log;
 
-},{}],30:[function(require,module,exports){
+},{}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69743,7 +69905,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":24}],31:[function(require,module,exports){
+},{"./game":27}],34:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69789,7 +69951,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":12,"./jlib":28,"three":3}],32:[function(require,module,exports){
+},{"./constants":12,"./jlib":31,"three":3}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MenuFrame = /** @class */ (function () {
@@ -69851,7 +70013,7 @@ var Menu = /** @class */ (function () {
 }());
 exports.Menu = Menu;
 
-},{}],33:[function(require,module,exports){
+},{}],36:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69876,13 +70038,13 @@ var Player = /** @class */ (function () {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
-        this.camera = new THREE.PerspectiveCamera(120, 1.2, 0.1, 1300);
+        this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
         this.body.add(this.camera);
-        this.body.add(this.light);
+        //this.body.add(this.light);
         this.light.position.x = 5;
         var stats = new stats_1.Stats(275, 0);
         stats.ag = 25;
@@ -69993,11 +70155,21 @@ var Player = /** @class */ (function () {
         }
         return null;
     };
+    Player.prototype.fully_heal = function () {
+        if (this.battle_data.mod_stats.hp != 0) {
+            this.battle_data.heal_for(this.battle_data.mod_stats.hp);
+        }
+        for (var i = 0; i < this.recruits.length; i++) {
+            if (this.recruits[i].battle_data.mod_stats.hp != 0) {
+                this.recruits[i].battle_data.heal_for(this.recruits[i].battle_data.mod_stats.hp);
+            }
+        }
+    };
     return Player;
 }());
 exports.Player = Player;
 
-},{"./actor":4,"./actor_card":5,"./battle_data":10,"./constants":12,"./inventory":27,"./jlib":28,"./log":29,"./stats":35,"three":3}],34:[function(require,module,exports){
+},{"./actor":4,"./actor_card":5,"./battle_data":10,"./constants":12,"./inventory":30,"./jlib":31,"./log":32,"./stats":38,"three":3}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
@@ -70043,7 +70215,7 @@ function request_result(target, request) {
 }
 exports.request_result = request_result;
 
-},{"./game":24,"./log":29,"./player":33}],35:[function(require,module,exports){
+},{"./game":27,"./log":32,"./player":36}],38:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -70087,7 +70259,7 @@ function apply_stats_mod(base, mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],36:[function(require,module,exports){
+},{}],39:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -70189,6 +70361,9 @@ var World = /** @class */ (function () {
             else {
                 game_1.Game.Instance.player.movement_locked = false;
             }
+            if (dialogue.heal_player) {
+                game_1.Game.Instance.player.fully_heal();
+            }
             actor.is_blocking =
                 dialogue.actor_block != undefined
                     ? dialogue.actor_block
@@ -70215,4 +70390,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./actor":4,"./battle_data":10,"./constants":12,"./game":24,"./globals":25,"./jlib":28,"three":3}]},{},[30,1,2]);
+},{"./actor":4,"./battle_data":10,"./constants":12,"./game":27,"./globals":28,"./jlib":31,"three":3}]},{},[33,1,2]);

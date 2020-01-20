@@ -11,16 +11,17 @@ var THREE = __importStar(require("three"));
 var input_1 = require("./input");
 var player_1 = require("./player");
 var world_1 = require("./world");
-var level2_1 = require("./data/levels/level2");
 var battle_1 = require("./battle");
 var battle_data_1 = require("./battle_data");
 var log_1 = require("./log");
 var menu_1 = require("./menu");
+var cave_area_1 = require("./data/areas/1_cave/cave_area");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.player = new player_1.Player();
+        this.area = cave_area_1.cave_data;
         this.battle = null;
         this.input = new input_1.Input();
         // Rendering.
@@ -28,7 +29,7 @@ var Game = /** @class */ (function () {
         this.renderer = new THREE.WebGLRenderer();
         Game.Instance = this;
         this.scene.add(this.player.body);
-        this.world = new world_1.World(this.scene, level2_1.level2_data);
+        this.world = new world_1.World(this.scene, this.area.levels[0]);
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
@@ -55,7 +56,6 @@ var Game = /** @class */ (function () {
         this.render();
     };
     Game.prototype.key_down = function (event) {
-        var _a;
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
         if (result.moved) {
             this.world.dialogue_idx = 0;
@@ -80,7 +80,7 @@ var Game = /** @class */ (function () {
         }
         if (result.actioned) {
             this.world.dialogue_idx += 1;
-            (_a = this.battle) === null || _a === void 0 ? void 0 : _a.next_turn();
+            // this.battle?.next_turn();
         }
     };
     Game.prototype.end_battle = function (winner) {

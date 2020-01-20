@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { TileMap } from "./map";
 import { Actor } from "./actor";
 import { flags } from "./globals";
-import { LevelData } from "./data/levels/level_data";
+import { LevelData } from "./data/areas/area_data";
 import { Coor, shuffle_array, random_array_element } from "./jlib";
 import { TILE_SIZE } from "./constants";
 import { BattleSide } from "./battle_data";
@@ -114,6 +114,9 @@ export class World {
         Game.Instance.player.movement_locked = true;
       } else {
         Game.Instance.player.movement_locked = false;
+      }
+      if (dialogue.heal_player) {
+        Game.Instance.player.fully_heal();
       }
       actor.is_blocking =
         dialogue.actor_block != undefined

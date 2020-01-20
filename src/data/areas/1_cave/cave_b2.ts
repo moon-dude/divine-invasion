@@ -1,11 +1,11 @@
-import { TileMap } from "../../map";
-import { Grid } from "../../jlib";
-import { LevelData } from "./level_data";
-import { EncounterType } from "../encounter_type";
+import { TileMap } from "../../../map";
+import { Grid } from "../../../jlib";
+import { LevelData } from "../area_data";
+import { EncounterType } from "../../encounter_type";
 
 var map_walkable: string = 
-  "//////////////////" +
-  "/+/--------/--/--/" +
+  "/-////////////////" +
+  "/^/--------/--/--/" +
   "/-/-/-///-///-//-/" +
   "/-----/-/---/----/" +
   "///////---/-////-/" +
@@ -14,7 +14,8 @@ var map_walkable: string =
   "////////////-///-/" +
   "/////////-//-/-/-/" +
   "/----------------/" +
-  "////////////////`/";
+  "////////////////V/";
+  "////////////////-/";
 
 var level2_map = new TileMap(Grid.from_string(map_walkable, 18));
 

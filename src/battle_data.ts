@@ -18,7 +18,7 @@ export function other_side(side: BattleSide): BattleSide {
 export class BattleData {
   public static IDENTITY: BattleData = new BattleData(
     "",
-    BattleSide.Their,
+    BattleSide.Our,
     1,
     Stats.new_base(),
     Stats.new_mod(),

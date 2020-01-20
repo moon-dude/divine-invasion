@@ -20,3 +20,11 @@ export class LevelData {
     this.encounter_count = encounter_count;
   }
 }
+
+export class AreaData {
+  public levels: LevelData[];
+
+  constructor(levels: LevelData[]) {
+    this.levels = levels;
+  }
+}

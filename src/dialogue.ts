@@ -1,3 +1,5 @@
+import { Game } from "./game";
+
 /// These are stored in a list in each actor.
 export class Dialogue {
   public speech: string;
@@ -6,6 +8,7 @@ export class Dialogue {
   public lock_player: boolean = false;
   public flags: string[] = [];
   public actor_block?: boolean = undefined;
+  public heal_player: boolean = false;
 
   constructor(speech: string) {
     this.speech = speech;
@@ -33,6 +36,11 @@ export class Dialogue {
 
   public set_criteria(trigger_criteria: () => boolean): Dialogue {
     this.trigger_criteria = trigger_criteria;
+    return this;
+  }
+
+  public set_heal_player(): Dialogue {
+    this.heal_player = true;
     return this;
   }
 }

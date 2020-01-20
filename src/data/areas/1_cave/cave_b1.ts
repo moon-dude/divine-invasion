@@ -1,10 +1,10 @@
-import { Grid, Coor } from "../../jlib";
-import { Actor, DEMON_MAT } from "../../actor";
-import { Dialogue } from "../../dialogue";
-import { flags } from "../../globals";
-import { TileMap } from "../../map";
-import { LevelData } from "./level_data";
-import { BattleData } from "../../battle_data";
+import { Grid, Coor } from "../../../jlib";
+import { Actor, DEMON_MAT } from "../../../actor";
+import { Dialogue } from "../../../dialogue";
+import { flags } from "../../../globals";
+import { TileMap } from "../../../map";
+import { LevelData } from "../area_data";
+import { BattleData } from "../../../battle_data";
 
 var map_walkable: string = 
   "//////////" +
@@ -16,8 +16,14 @@ var map_walkable: string =
   "/HG/E///F/" +
   "////-///-/" +
   "/------/-/" +
-  "/-/-//-/-/" +
-  "////////-/";
+  "/K/-//L/-/" +
+  "///-////-/" +
+  "/--J---/-/" +
+  "/------/-/" +
+  "/------/-/" +
+  "/--------/" +
+  "/------/-/" +
+  "//////////";
 
 var level1_map = new TileMap(Grid.from_string(map_walkable, 10));
 
@@ -27,7 +33,7 @@ var npc_map: Map<string, Actor> = new Map([
       [
         new Dialogue("Well, well, it looks like the new recruit is finally awake.")
           .set_info("<< SPACE: continue >>").lock(),
-        new Dialogue("You're expected in the divination room.").lock(),
+        new Dialogue("You're expected in the Summoning Room.").lock(),
         new Dialogue("You know where that is right?"),
       ]
     )
@@ -54,22 +60,35 @@ var npc_map: Map<string, Actor> = new Map([
     new Dialogue("Have you practiced your rites?"),
   ])],
   ["E", new Actor("Eve", [
-    new Dialogue("The divination room? It's through here.").set_criteria(() => !flags.has('has_demon_blood')).lock().set_actor_block(true),
+    new Dialogue("The Summoning Room? It's through here.").set_criteria(() => !flags.has('has_demon_blood')).lock().set_actor_block(true),
     new Dialogue("Do you have your demon blood? You don't?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
-    new Dialogue("Well you'll have to go find demon blood somewhere...").set_criteria(() => !flags.has('has_demon_blood')).lock().flag('demon_blood'),
-    new Dialogue("Go find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')).lock(),
-    new Dialogue("Wow, did you just draw blood from Chloe's Incubus?").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("Well go find some demon blood!").set_criteria(() => !flags.has('has_demon_blood')).lock().flag('demon_blood'),
+    new Dialogue("Find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')).lock(),
+    new Dialogue("Wow, you really just drew blood from Chloe's Incubus?").set_criteria(() => flags.has('has_demon_blood')).lock(),
     new Dialogue("You're a psychopath!").set_criteria(() => flags.has('has_demon_blood')).lock(),
-    new Dialogue("Anyway, come on through, but don't kill anybody!").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
+    new Dialogue("Anyway, you got demon blood so come on through.").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
   ])],
   ["F", new Actor("Frederick", [
-    new Dialogue("New recruits aren't allowed any further.").lock().set_actor_block(true),
+    new Dialogue("Step back. New recruits aren't allowed any further.").lock().set_actor_block(true),
   ])],
   ["G", new Actor("George", [
     new Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
   ])],
-  ["H", new Actor("Harold", [
-    new Dialogue("Let's see how your laws do against my fist!").set_actor_block(true),
+  ["H", new Actor("Hilde", [
+    new Dialogue("Let's see how your laws fare against my boot!").set_actor_block(true),
+  ])],
+  ["J", new Actor("Jacques", [
+    new Dialogue("Oh, it's you, the *NEW* recruit. what have you go there?").lock().set_actor_block(true),
+    new Dialogue("Imp's blood? No, no, no! It can't be any old demon blood!").lock(),
+    new Dialogue("It has to be the blood of Katakirauwa, the pig spirit!").lock(),
+    new Dialogue("You see, Taotie is very particular and much enjoys the taste of Katakirauwa!").lock(),
+    new Dialogue("You may be able to find Katakirauwa somewhere in the depths of the cave.").lock(),
+    new Dialogue("Hurry along!").lock(),
+  ])],
+  ["K", new Actor("Katherine", [
+    new Dialogue("Hello, dear, what's the matter?"),
+    new Dialogue("Are you hurt? Let me tend to your wounds.").lock().set_heal_player().set_actor_block(true),
+    new Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock(),
   ])],
 ]);
 
@@ -79,6 +98,7 @@ npc_map.forEach((actor, key, _) => {
     for (let z = 0; z < level1_map.walkable.width; z++) {
       if (key == level1_map.walkable.get(x, z)) {
         actor.coor = new Coor(x, z);
+        actor.pos_index = 2;
         level1_actors.push(actor);
       }
     }

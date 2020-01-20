@@ -22,13 +22,13 @@ var Player = /** @class */ (function () {
         this.coor = new jlib_1.Coor(1, 1);
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
-        this.camera = new THREE.PerspectiveCamera(120, 1.2, 0.1, 1300);
+        this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
         this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
         this.body.add(this.camera);
-        this.body.add(this.light);
+        //this.body.add(this.light);
         this.light.position.x = 5;
         var stats = new stats_1.Stats(275, 0);
         stats.ag = 25;
@@ -138,6 +138,16 @@ var Player = /** @class */ (function () {
             }
         }
         return null;
+    };
+    Player.prototype.fully_heal = function () {
+        if (this.battle_data.mod_stats.hp != 0) {
+            this.battle_data.heal_for(this.battle_data.mod_stats.hp);
+        }
+        for (var i = 0; i < this.recruits.length; i++) {
+            if (this.recruits[i].battle_data.mod_stats.hp != 0) {
+                this.recruits[i].battle_data.heal_for(this.recruits[i].battle_data.mod_stats.hp);
+            }
+        }
     };
     return Player;
 }());

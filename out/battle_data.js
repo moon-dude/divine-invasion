@@ -105,7 +105,7 @@ var BattleData = /** @class */ (function () {
     BattleData.prototype.get_level = function () {
         return this.base_level + this.exp.levels_gained;
     };
-    BattleData.IDENTITY = new BattleData("", BattleSide.Their, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
+    BattleData.IDENTITY = new BattleData("", BattleSide.Our, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
 }());
 exports.BattleData = BattleData;

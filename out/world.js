@@ -99,6 +99,9 @@ var World = /** @class */ (function () {
             else {
                 game_1.Game.Instance.player.movement_locked = false;
             }
+            if (dialogue.heal_player) {
+                game_1.Game.Instance.player.fully_heal();
+            }
             actor.is_blocking =
                 dialogue.actor_block != undefined
                     ? dialogue.actor_block

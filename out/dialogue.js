@@ -8,6 +8,7 @@ var Dialogue = /** @class */ (function () {
         this.lock_player = false;
         this.flags = [];
         this.actor_block = undefined;
+        this.heal_player = false;
         this.speech = speech;
     }
     Dialogue.prototype.flag = function (s) {
@@ -28,6 +29,10 @@ var Dialogue = /** @class */ (function () {
     };
     Dialogue.prototype.set_criteria = function (trigger_criteria) {
         this.trigger_criteria = trigger_criteria;
+        return this;
+    };
+    Dialogue.prototype.set_heal_player = function () {
+        this.heal_player = true;
         return this;
     };
     return Dialogue;

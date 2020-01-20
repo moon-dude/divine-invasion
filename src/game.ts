@@ -2,12 +2,12 @@ import * as THREE from "three";
 import { Input } from "./input";
 import { Player } from "./player";
 import { World } from "./world";
-import { level1_data } from "./data/levels/level1";
-import { level2_data } from "./data/levels/level2";
 import { Battle } from "./battle";
 import { BattleSide, BattleData } from "./battle_data";
 import { Log } from "./log";
 import { Menu } from "./menu";
+import { AreaData } from "./data/areas/area_data";
+import { cave_data } from "./data/areas/1_cave/cave_area";
 
 export class Game {
   public static Instance: Game;
@@ -16,6 +16,7 @@ export class Game {
   public player: Player = new Player();
   public world: World;
 
+  private area: AreaData = cave_data;
   private battle: Battle | null = null;
   private input: Input = new Input();
 
@@ -28,7 +29,7 @@ export class Game {
   constructor() {
     Game.Instance = this;
     this.scene.add(this.player.body);
-    this.world = new World(this.scene, level2_data);
+    this.world = new World(this.scene, this.area.levels[0]);
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.log_div = document.getElementById("log_div")!;
     this.header_div = document.getElementById("header_div")!;
@@ -91,7 +92,7 @@ export class Game {
     }
     if (result.actioned) {
       this.world.dialogue_idx += 1;
-      this.battle?.next_turn();
+      // this.battle?.next_turn();
     }
   }
 
