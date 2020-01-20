@@ -8,9 +8,9 @@ import { BattleData } from "../../../battle_data";
 
 var map_walkable: string =
   "####################" +
-  "#     #@# B####    #" +
-  "#     # ## #CI#### #" +
-  "#     #  A    ####F#" +
+  "#     #@# B#####   #" +
+  "#     # ## #  C### #" +
+  "#     #  A    I###F#" +
   "#     ####### #### #" +
   "#     #            #" +
   "###J##### # #D###HG#" +
@@ -36,13 +36,13 @@ var npc_map: Map<string, Actor> = new Map([
     new Dialogue("Think I'm possessed by a demon?"),
   ])],
   [ "C", new Actor("Chloe", [
-    new Dialogue("Isn't my incubus beautiful?..."),
+    new Dialogue("Isn't my Goblin beautiful?..."),
   ])],
-  ["I", new Actor("Incubus", [
+  ["I", new Actor("Goblin", [
     new Dialogue("Need demon blood?").set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("You are!?").set_criteria(() => flags.has('demon_blood')).lock(),
-    new Dialogue("<< You attacked Incubus and damaged it! >>")
+    new Dialogue("<< You attacked Goblin and damaged it! >>")
       .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
       .set_criteria(() => flags.has('demon_blood')).lock(),
     new Dialogue("<< Recieved demon blood! >>").set_criteria(() => flags.has('demon_blood')).flag("has_demon_blood"),
@@ -57,7 +57,7 @@ var npc_map: Map<string, Actor> = new Map([
     new Dialogue("Do you have your demon blood? You don't?").set_criteria(() => !flags.has('has_demon_blood')).lock(),
     new Dialogue("Well go find some demon blood!").set_criteria(() => !flags.has('has_demon_blood')).lock().flag('demon_blood'),
     new Dialogue("Find some demon blood and I'll let you through.").set_criteria(() => !flags.has('has_demon_blood')).lock(),
-    new Dialogue("Wow, you really just drew blood from Chloe's Incubus?").set_criteria(() => flags.has('has_demon_blood')).lock(),
+    new Dialogue("Wow, you really just drew blood from Chloe's Goblin?").set_criteria(() => flags.has('has_demon_blood')).lock(),
     new Dialogue("You're a psychopath!").set_criteria(() => flags.has('has_demon_blood')).lock(),
     new Dialogue("Anyway, you got demon blood so come on through.").set_criteria(() => flags.has('has_demon_blood')).set_actor_block(false),
   ])],

@@ -7,6 +7,7 @@ export const STAIRS_DOWN_CHAR = "<";
 export const STAIRS_UP_CHAR = ">";
 export const PLAYER_START_CHAR = "@";
 export const WALL_CHAR = "#";
+export const EMPTY_SPACE_CHAR = " ";
 
 export class LevelData {
   map: TileMap;

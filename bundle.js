@@ -52105,9 +52105,9 @@ var map_1 = require("../../../map");
 var area_data_1 = require("../area_data");
 var battle_data_1 = require("../../../battle_data");
 var map_walkable = "####################" +
-    "#     #@# B####    #" +
-    "#     # ## #CI#### #" +
-    "#     #  A    ####F#" +
+    "#     #@# B#####   #" +
+    "#     # ## #  C### #" +
+    "#     #  A    I###F#" +
     "#     ####### #### #" +
     "#     #            #" +
     "###J##### # #D###HG#" +
@@ -52129,13 +52129,13 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
         ])],
     ["C", new actor_1.Actor("Chloe", [
-            new dialogue_1.Dialogue("Isn't my incubus beautiful?..."),
+            new dialogue_1.Dialogue("Isn't my Goblin beautiful?..."),
         ])],
-    ["I", new actor_1.Actor("Incubus", [
+    ["I", new actor_1.Actor("Goblin", [
             new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("You are!?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("<< You attacked Incubus and damaged it! >>")
+            new dialogue_1.Dialogue("<< You attacked Goblin and damaged it! >>")
                 .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
                 .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
             new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
@@ -52150,7 +52150,7 @@ var npc_map = new Map([
             new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Well go find some demon blood!").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().flag('demon_blood'),
             new dialogue_1.Dialogue("Find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Wow, you really just drew blood from Chloe's Incubus?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Wow, you really just drew blood from Chloe's Goblin?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
             new dialogue_1.Dialogue("Anyway, you got demon blood so come on through.").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
         ])],
@@ -52202,11 +52202,11 @@ var jlib_1 = require("../../../jlib");
 var area_data_1 = require("../area_data");
 var encounter_type_1 = require("../../encounter_type");
 var map_walkable = "####################" +
-    "#<#        #  #  ###" +
+    "# #        #  #  ###" +
     "# # # ### ### ## ###" +
     "#     # #        ###" +
-    "#######   # #### ###" +
-    "#####   # #   #  ###" +
+    "### ###   # #### ###" +
+    "###<#   # #   #  ###" +
     "#########  # ### ###" +
     "######### ###### ###" +
     "###########>     ###" +
@@ -52231,6 +52231,7 @@ exports.STAIRS_DOWN_CHAR = "<";
 exports.STAIRS_UP_CHAR = ">";
 exports.PLAYER_START_CHAR = "@";
 exports.WALL_CHAR = "#";
+exports.EMPTY_SPACE_CHAR = " ";
 var LevelData = /** @class */ (function () {
     function LevelData(map, actors, encounter_types, encounter_count, offset_from_above) {
         if (offset_from_above === void 0) { offset_from_above = new jlib_1.Coor(0, 0); }
@@ -70317,6 +70318,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var actor_1 = require("./actor");
 var globals_1 = require("./globals");
+var area_data_1 = require("./data/areas/area_data");
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var battle_data_1 = require("./battle_data");
@@ -70368,7 +70370,7 @@ var World = /** @class */ (function () {
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {
-        var open_coors = map.walkable.filter_eq("-");
+        var open_coors = map.walkable.filter_eq(area_data_1.EMPTY_SPACE_CHAR);
         jlib_1.shuffle_array(open_coors);
         var result = [];
         for (var i = 0; i < count && i < open_coors.length; i++) {
@@ -70447,4 +70449,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./actor":4,"./battle_data":10,"./constants":12,"./game":27,"./globals":28,"./jlib":31,"three":3}]},{},[33,1,2]);
+},{"./actor":4,"./battle_data":10,"./constants":12,"./data/areas/area_data":16,"./game":27,"./globals":28,"./jlib":31,"three":3}]},{},[33,1,2]);

@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
 var actor_1 = require("./actor");
 var globals_1 = require("./globals");
+var area_data_1 = require("./data/areas/area_data");
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var battle_data_1 = require("./battle_data");
@@ -61,7 +62,7 @@ var World = /** @class */ (function () {
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {
-        var open_coors = map.walkable.filter_eq("-");
+        var open_coors = map.walkable.filter_eq(area_data_1.EMPTY_SPACE_CHAR);
         jlib_1.shuffle_array(open_coors);
         var result = [];
         for (var i = 0; i < count && i < open_coors.length; i++) {
