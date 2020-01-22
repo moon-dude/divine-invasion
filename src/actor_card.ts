@@ -6,6 +6,7 @@ export class ActorCard {
 
   private name_btn: HTMLButtonElement;
   private mood_span: HTMLSpanElement;
+  private level: HTMLSpanElement;
   private health: HTMLSpanElement;
   private mana: HTMLSpanElement;
   private name_btn_clicked: boolean = false;
@@ -30,6 +31,8 @@ export class ActorCard {
     this.card_span.appendChild(this.name_btn);
     this.name_btn.appendChild(this.mood_span);
     this.show_stats = show_stats;
+    this.level = document.createElement("span");
+    this.card_span.appendChild(this.level);
     this.health = document.createElement("span");
     this.card_span.appendChild(this.health);
     this.mana = document.createElement("span");
@@ -47,6 +50,7 @@ export class ActorCard {
     } else {
       this.mood_span.innerHTML = get_mood_string(fighter_data.mood);
     }
+    this.level.innerHTML = "<span class=\"sub\"> lv.</span>" + fighter_data.get_level() + " ";
     if (this.show_stats) {
       this.health.innerHTML =
         fighter_data.modded_base_stats().hp +

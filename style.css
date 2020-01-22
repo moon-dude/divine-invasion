@@ -127,6 +127,6 @@ button:disabled {
 
 #player_info_div {
   position: absolute;
-  bottom: 0;
+  bottom: 2em;
   width: 100%;
 }

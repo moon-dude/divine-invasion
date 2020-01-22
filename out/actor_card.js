@@ -19,6 +19,8 @@ var ActorCard = /** @class */ (function () {
         this.card_span.appendChild(this.name_btn);
         this.name_btn.appendChild(this.mood_span);
         this.show_stats = show_stats;
+        this.level = document.createElement("span");
+        this.card_span.appendChild(this.level);
         this.health = document.createElement("span");
         this.card_span.appendChild(this.health);
         this.mana = document.createElement("span");
@@ -35,6 +37,7 @@ var ActorCard = /** @class */ (function () {
         else {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
+        this.level.innerHTML = "<span class=\"sub\"> lv.</span>" + fighter_data.get_level() + " ";
         if (this.show_stats) {
             this.health.innerHTML =
                 fighter_data.modded_base_stats().hp +
