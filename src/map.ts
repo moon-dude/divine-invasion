@@ -8,19 +8,47 @@ import {
   PLAYER_START_CHAR
 } from "./data/areas/area_data";
 
-const geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE);
-const material = new THREE.MeshStandardMaterial({
-  color: 0x221111,
-  roughness: 0.8
+const box_geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE);
+const wall_material = new THREE.MeshStandardMaterial({
+  color: 0x090011,
+  roughness: 0.9
+});
+const ground_material = new THREE.MeshStandardMaterial({
+  color: 0x040008,
+  roughness: 0.9
 });
 
 function buildMeshes(walkable: Grid<string>): THREE.Mesh[] {
   var meshes: THREE.Mesh[] = [];
   for (let x = 0; x < walkable.width; x++) {
     for (let z = 0; z < walkable.depth; z++) {
+      // Wall.
       if (walkable.get(x, z) == WALL_CHAR) {
-        var box = new THREE.Mesh(geometry, material);
+        var box = new THREE.Mesh(box_geometry, wall_material);
         box.position.x = x * TILE_SIZE;
+        box.position.z = z * TILE_SIZE;
+        meshes.push(box);
+      }
+      if (walkable.get(x, z) == STAIRS_DOWN_CHAR || walkable.get(x, z) == STAIRS_UP_CHAR) {
+        // Stairs.
+        var box = new THREE.Mesh(box_geometry, wall_material);
+        box.scale.setScalar(1.4);
+        box.position.x = x * TILE_SIZE;
+        box.position.y = TILE_SIZE * 0.35 * (walkable.get(x, z) == STAIRS_DOWN_CHAR ? 1 : -1);
+        box.position.z = z * TILE_SIZE;
+        if (walkable.get(x - 1, z) != WALL_CHAR || walkable.get(x + 1, z) != WALL_CHAR) {
+          box.rotation.z = Math.PI / 4;
+          box.scale.x = 1;
+        } else {
+          box.rotation.x = Math.PI / 4;
+          box.scale.x = 1;
+        }
+        meshes.push(box);
+      } else {
+        // Ground.
+        var box = new THREE.Mesh(box_geometry, ground_material);
+        box.position.x = x * TILE_SIZE;
+        box.position.y = -TILE_SIZE;
         box.position.z = z * TILE_SIZE;
         meshes.push(box);
       }

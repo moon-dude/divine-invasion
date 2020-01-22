@@ -11,18 +11,48 @@ var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var area_data_1 = require("./data/areas/area_data");
-var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
-var material = new THREE.MeshStandardMaterial({
-    color: 0x221111,
-    roughness: 0.8
+var box_geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
+var wall_material = new THREE.MeshStandardMaterial({
+    color: 0x090011,
+    roughness: 0.9
+});
+var ground_material = new THREE.MeshStandardMaterial({
+    color: 0x040008,
+    roughness: 0.9
 });
 function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
+            // Wall.
             if (walkable.get(x, z) == area_data_1.WALL_CHAR) {
-                var box = new THREE.Mesh(geometry, material);
+                var box = new THREE.Mesh(box_geometry, wall_material);
                 box.position.x = x * constants_1.TILE_SIZE;
+                box.position.z = z * constants_1.TILE_SIZE;
+                meshes.push(box);
+            }
+            if (walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR || walkable.get(x, z) == area_data_1.STAIRS_UP_CHAR) {
+                // Stairs.
+                var box = new THREE.Mesh(box_geometry, wall_material);
+                box.scale.setScalar(1.4);
+                box.position.x = x * constants_1.TILE_SIZE;
+                box.position.y = constants_1.TILE_SIZE * 0.35 * (walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR ? 1 : -1);
+                box.position.z = z * constants_1.TILE_SIZE;
+                if (walkable.get(x - 1, z) != area_data_1.WALL_CHAR || walkable.get(x + 1, z) != area_data_1.WALL_CHAR) {
+                    box.rotation.z = Math.PI / 4;
+                    box.scale.x = 1;
+                }
+                else {
+                    box.rotation.x = Math.PI / 4;
+                    box.scale.x = 1;
+                }
+                meshes.push(box);
+            }
+            else {
+                // Ground.
+                var box = new THREE.Mesh(box_geometry, ground_material);
+                box.position.x = x * constants_1.TILE_SIZE;
+                box.position.y = -constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
                 meshes.push(box);
             }

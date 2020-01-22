@@ -13,9 +13,9 @@ var map_walkable: string =
   "#     #  A    I###F#" +
   "#     ####### #### #" +
   "#     #            #" +
-  "###J##### # #D###HG#" +
-  "### #L#K#E##########" +
-  "###        <########" +
+  "### ###E###L#D###HG#" +
+  "### ### #K##########" +
+  "###  J        <#####" +
   "####################";
 
 var level1_map = new TileMap(Grid.from_string(map_walkable, 20));

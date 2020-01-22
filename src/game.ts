@@ -18,7 +18,7 @@ export class Game {
   public world: World;
 
   private area: AreaData = cave_data;
-  private level_idx: number = 1;
+  private level_idx: number = 0;
   private battle: Battle | null = null;
   private input: Input = new Input();
 

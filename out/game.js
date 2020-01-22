@@ -22,7 +22,7 @@ var Game = /** @class */ (function () {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
-        this.level_idx = 1;
+        this.level_idx = 0;
         this.battle = null;
         this.input = new input_1.Input();
         // Rendering.

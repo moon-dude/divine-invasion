@@ -19,7 +19,7 @@ const cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
 export const CULTIST_MAT = new THREE.MeshStandardMaterial({
   map: cultist_texture,
   transparent: true,
-  roughness: 0.3
+  roughness: 0.8
 });
 
 const demon_texture = new THREE.TextureLoader().load("assets/demon.png");
@@ -148,7 +148,7 @@ export class Actor {
         }
         this.position = new THREE.Vector3(
           (this.coor.x + offset_x) * TILE_SIZE,
-          -0.7,
+          -0.5,
           (this.coor.z + offset_z) * TILE_SIZE
         );
       }

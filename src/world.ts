@@ -45,13 +45,12 @@ export class World {
       }
     }
 
-    this.ambient_light = new THREE.AmbientLight("#222299", 0.8);
+    this.ambient_light = new THREE.AmbientLight("#0022aa", 2);
+    scene.add(this.ambient_light);
 
     this.speaker_div = document.getElementById("dialogue_speaker")!;
     this.speech_div = document.getElementById("dialogue_speech")!;
     this.info_div = document.getElementById("dialogue_info")!;
-
-    scene.add(this.ambient_light);
 
     for (let i = 0; i < this.actors.length; i++) {
       scene.add(this.actors[i].mesh);
@@ -62,16 +61,16 @@ export class World {
     }
 
     this.lights = [];
-    for (let x = 1; x < this.map.walkable.width; x += 4) {
-      for (let z = 1; z < this.map.walkable.width; z += 4) {
-        const new_light = new THREE.PointLight("#2222cc");
-        new_light.position.x = x * TILE_SIZE;
-        new_light.position.z = z * TILE_SIZE;
-        new_light.position.y = 1;
-        this.lights.push(new_light);
-        scene.add(new_light);
-      }
-    }
+    // for (let x = 1; x < this.map.walkable.width; x += 4) {
+    //   for (let z = 1; z < this.map.walkable.width; z += 4) {
+    //     const new_light = new THREE.PointLight("#2222cc");
+    //     new_light.position.x = x * TILE_SIZE;
+    //     new_light.position.z = z * TILE_SIZE;
+    //     new_light.position.y = 1;
+    //     this.lights.push(new_light);
+    //     scene.add(new_light);
+    //   }
+    // }
   }
 
   /// Identify all of the open tiles and pick a random unique set.

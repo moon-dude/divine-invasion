@@ -12,7 +12,6 @@ var actor_1 = require("./actor");
 var globals_1 = require("./globals");
 var area_data_1 = require("./data/areas/area_data");
 var jlib_1 = require("./jlib");
-var constants_1 = require("./constants");
 var battle_data_1 = require("./battle_data");
 var game_1 = require("./game");
 var World = /** @class */ (function () {
@@ -37,11 +36,11 @@ var World = /** @class */ (function () {
         for (var i = 0; i < encounter_coors.length; i++) {
             _loop_1(i);
         }
-        this.ambient_light = new THREE.AmbientLight("#222299", 0.8);
+        this.ambient_light = new THREE.AmbientLight("#0022aa", 2);
+        scene.add(this.ambient_light);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
-        scene.add(this.ambient_light);
         for (var i = 0; i < this.actors.length; i++) {
             scene.add(this.actors[i].mesh);
         }
@@ -49,16 +48,16 @@ var World = /** @class */ (function () {
             scene.add(this.map.meshes[i]);
         }
         this.lights = [];
-        for (var x = 1; x < this.map.walkable.width; x += 4) {
-            for (var z = 1; z < this.map.walkable.width; z += 4) {
-                var new_light = new THREE.PointLight("#2222cc");
-                new_light.position.x = x * constants_1.TILE_SIZE;
-                new_light.position.z = z * constants_1.TILE_SIZE;
-                new_light.position.y = 1;
-                this.lights.push(new_light);
-                scene.add(new_light);
-            }
-        }
+        // for (let x = 1; x < this.map.walkable.width; x += 4) {
+        //   for (let z = 1; z < this.map.walkable.width; z += 4) {
+        //     const new_light = new THREE.PointLight("#2222cc");
+        //     new_light.position.x = x * TILE_SIZE;
+        //     new_light.position.z = z * TILE_SIZE;
+        //     new_light.position.y = 1;
+        //     this.lights.push(new_light);
+        //     scene.add(new_light);
+        //   }
+        // }
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {

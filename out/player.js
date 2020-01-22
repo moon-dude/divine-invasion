@@ -23,7 +23,7 @@ var Player = /** @class */ (function () {
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
-        this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
+        this.light = new THREE.PointLight("#ee5500", 10, 15);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
@@ -31,8 +31,7 @@ var Player = /** @class */ (function () {
         this.body.position.x = this.coor.x * constants_1.TILE_SIZE;
         this.body.position.z = this.coor.z * constants_1.TILE_SIZE;
         this.body.add(this.camera);
-        //this.body.add(this.light);
-        this.light.position.x = 5;
+        this.body.add(this.light);
         var stats = new stats_1.Stats(275, 0);
         stats.ag = 25;
         stats.dx = 30;

@@ -13,9 +13,9 @@ var map_walkable = "####################" +
     "#     #  A    I###F#" +
     "#     ####### #### #" +
     "#     #            #" +
-    "###J##### # #D###HG#" +
-    "### #L#K#E##########" +
-    "###        <########" +
+    "### ###E###L#D###HG#" +
+    "### ### #K##########" +
+    "###  J        <#####" +
     "####################";
 var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
 var npc_map = new Map([

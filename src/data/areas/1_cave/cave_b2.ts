@@ -3,9 +3,6 @@ import { Grid, Coor } from "../../../jlib";
 import { LevelData } from "../area_data";
 import { EncounterType } from "../../encounter_type";
 
-
-
-
 var map_walkable: string = 
   "####################" +
   "# #        #  #  ###" +
@@ -15,7 +12,7 @@ var map_walkable: string =
   "###<#   # #   #  ###" +
   "#########  # ### ###" +
   "######### ###### ###" +
-  "###########>     ###" +
+  "###########> @    ##" +
   "####################";
 
 var level2_map = new TileMap(Grid.from_string(map_walkable, 20));

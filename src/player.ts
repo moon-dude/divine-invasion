@@ -22,7 +22,7 @@ export class Player {
     0.1,
     1300
   );
-  private light: THREE.PointLight = new THREE.PointLight("#ff9911", 1, 20, 0.5);
+  private light: THREE.PointLight = new THREE.PointLight("#ee5500", 10, 15);
   
   public movement_locked: boolean = false;
   public battle_data: BattleData;
@@ -39,8 +39,7 @@ export class Player {
     this.body.position.x = this.coor.x * TILE_SIZE;
     this.body.position.z = this.coor.z * TILE_SIZE;
     this.body.add(this.camera);
-    //this.body.add(this.light);
-    this.light.position.x = 5;
+    this.body.add(this.light);
     let stats = new Stats(275, 0);
     stats.ag = 25;
     stats.dx = 30;

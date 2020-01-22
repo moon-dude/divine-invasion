@@ -51270,7 +51270,7 @@ var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
 exports.CULTIST_MAT = new THREE.MeshStandardMaterial({
     map: cultist_texture,
     transparent: true,
-    roughness: 0.3
+    roughness: 0.8
 });
 var demon_texture = new THREE.TextureLoader().load("assets/demon.png");
 exports.DEMON_MAT = new THREE.MeshStandardMaterial({
@@ -51362,7 +51362,7 @@ var Actor = /** @class */ (function () {
                         offset_z = this.get_pos_front_offset();
                         break;
                 }
-                this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.7, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
+                this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.5, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
             }
         }
         if (this.position != null) {
@@ -52110,9 +52110,9 @@ var map_walkable = "####################" +
     "#     #  A    I###F#" +
     "#     ####### #### #" +
     "#     #            #" +
-    "###J##### # #D###HG#" +
-    "### #L#K#E##########" +
-    "###        <########" +
+    "### ###E###L#D###HG#" +
+    "### ### #K##########" +
+    "###  J        <#####" +
     "####################";
 var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
 var npc_map = new Map([
@@ -52209,7 +52209,7 @@ var map_walkable = "####################" +
     "###<#   # #   #  ###" +
     "#########  # ### ###" +
     "######### ###### ###" +
-    "###########>     ###" +
+    "###########> @    ##" +
     "####################";
 var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
 exports.level2_data = new area_data_1.LevelData(level2_map, [], [
@@ -69558,7 +69558,7 @@ var Game = /** @class */ (function () {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
-        this.level_idx = 1;
+        this.level_idx = 0;
         this.battle = null;
         this.input = new input_1.Input();
         // Rendering.
@@ -69949,18 +69949,48 @@ var THREE = __importStar(require("three"));
 var jlib_1 = require("./jlib");
 var constants_1 = require("./constants");
 var area_data_1 = require("./data/areas/area_data");
-var geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
-var material = new THREE.MeshStandardMaterial({
-    color: 0x221111,
-    roughness: 0.8
+var box_geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
+var wall_material = new THREE.MeshStandardMaterial({
+    color: 0x090011,
+    roughness: 0.9
+});
+var ground_material = new THREE.MeshStandardMaterial({
+    color: 0x040008,
+    roughness: 0.9
 });
 function buildMeshes(walkable) {
     var meshes = [];
     for (var x = 0; x < walkable.width; x++) {
         for (var z = 0; z < walkable.depth; z++) {
+            // Wall.
             if (walkable.get(x, z) == area_data_1.WALL_CHAR) {
-                var box = new THREE.Mesh(geometry, material);
+                var box = new THREE.Mesh(box_geometry, wall_material);
                 box.position.x = x * constants_1.TILE_SIZE;
+                box.position.z = z * constants_1.TILE_SIZE;
+                meshes.push(box);
+            }
+            if (walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR || walkable.get(x, z) == area_data_1.STAIRS_UP_CHAR) {
+                // Stairs.
+                var box = new THREE.Mesh(box_geometry, wall_material);
+                box.scale.setScalar(1.4);
+                box.position.x = x * constants_1.TILE_SIZE;
+                box.position.y = constants_1.TILE_SIZE * 0.35 * (walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR ? 1 : -1);
+                box.position.z = z * constants_1.TILE_SIZE;
+                if (walkable.get(x - 1, z) != area_data_1.WALL_CHAR || walkable.get(x + 1, z) != area_data_1.WALL_CHAR) {
+                    box.rotation.z = Math.PI / 4;
+                    box.scale.x = 1;
+                }
+                else {
+                    box.rotation.x = Math.PI / 4;
+                    box.scale.x = 1;
+                }
+                meshes.push(box);
+            }
+            else {
+                // Ground.
+                var box = new THREE.Mesh(box_geometry, ground_material);
+                box.position.x = x * constants_1.TILE_SIZE;
+                box.position.y = -constants_1.TILE_SIZE;
                 box.position.z = z * constants_1.TILE_SIZE;
                 meshes.push(box);
             }
@@ -70082,7 +70112,7 @@ var Player = /** @class */ (function () {
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
-        this.light = new THREE.PointLight("#ff9911", 1, 20, 0.5);
+        this.light = new THREE.PointLight("#ee5500", 10, 15);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
@@ -70090,8 +70120,7 @@ var Player = /** @class */ (function () {
         this.body.position.x = this.coor.x * constants_1.TILE_SIZE;
         this.body.position.z = this.coor.z * constants_1.TILE_SIZE;
         this.body.add(this.camera);
-        //this.body.add(this.light);
-        this.light.position.x = 5;
+        this.body.add(this.light);
         var stats = new stats_1.Stats(275, 0);
         stats.ag = 25;
         stats.dx = 30;
@@ -70320,7 +70349,6 @@ var actor_1 = require("./actor");
 var globals_1 = require("./globals");
 var area_data_1 = require("./data/areas/area_data");
 var jlib_1 = require("./jlib");
-var constants_1 = require("./constants");
 var battle_data_1 = require("./battle_data");
 var game_1 = require("./game");
 var World = /** @class */ (function () {
@@ -70345,11 +70373,11 @@ var World = /** @class */ (function () {
         for (var i = 0; i < encounter_coors.length; i++) {
             _loop_1(i);
         }
-        this.ambient_light = new THREE.AmbientLight("#222299", 0.8);
+        this.ambient_light = new THREE.AmbientLight("#0022aa", 2);
+        scene.add(this.ambient_light);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");
         this.info_div = document.getElementById("dialogue_info");
-        scene.add(this.ambient_light);
         for (var i = 0; i < this.actors.length; i++) {
             scene.add(this.actors[i].mesh);
         }
@@ -70357,16 +70385,16 @@ var World = /** @class */ (function () {
             scene.add(this.map.meshes[i]);
         }
         this.lights = [];
-        for (var x = 1; x < this.map.walkable.width; x += 4) {
-            for (var z = 1; z < this.map.walkable.width; z += 4) {
-                var new_light = new THREE.PointLight("#2222cc");
-                new_light.position.x = x * constants_1.TILE_SIZE;
-                new_light.position.z = z * constants_1.TILE_SIZE;
-                new_light.position.y = 1;
-                this.lights.push(new_light);
-                scene.add(new_light);
-            }
-        }
+        // for (let x = 1; x < this.map.walkable.width; x += 4) {
+        //   for (let z = 1; z < this.map.walkable.width; z += 4) {
+        //     const new_light = new THREE.PointLight("#2222cc");
+        //     new_light.position.x = x * TILE_SIZE;
+        //     new_light.position.z = z * TILE_SIZE;
+        //     new_light.position.y = 1;
+        //     this.lights.push(new_light);
+        //     scene.add(new_light);
+        //   }
+        // }
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {
@@ -70449,4 +70477,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./actor":4,"./battle_data":10,"./constants":12,"./data/areas/area_data":16,"./game":27,"./globals":28,"./jlib":31,"three":3}]},{},[33,1,2]);
+},{"./actor":4,"./battle_data":10,"./data/areas/area_data":16,"./game":27,"./globals":28,"./jlib":31,"three":3}]},{},[33,1,2]);

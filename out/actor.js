@@ -23,7 +23,7 @@ var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
 exports.CULTIST_MAT = new THREE.MeshStandardMaterial({
     map: cultist_texture,
     transparent: true,
-    roughness: 0.3
+    roughness: 0.8
 });
 var demon_texture = new THREE.TextureLoader().load("assets/demon.png");
 exports.DEMON_MAT = new THREE.MeshStandardMaterial({
@@ -115,7 +115,7 @@ var Actor = /** @class */ (function () {
                         offset_z = this.get_pos_front_offset();
                         break;
                 }
-                this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.7, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
+                this.position = new THREE.Vector3((this.coor.x + offset_x) * constants_1.TILE_SIZE, -0.5, (this.coor.z + offset_z) * constants_1.TILE_SIZE);
             }
         }
         if (this.position != null) {
