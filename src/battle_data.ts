@@ -91,12 +91,23 @@ export class BattleData {
     this.did_just_get_damaged = true;
   }
 
+  public revive() {
+    if (this.mod_stats.hp <= -this.base_stats.hp) {
+      this.mod_stats.hp = -this.base_stats.hp + 1;
+    }
+    if (this.side == BattleSide.Our) {
+      this.mood = null;
+    } else {
+      this.mood = Mood.Aggressive;
+    }
+  }
+
   public heal_for(amount: number) {
     if (this.mod_stats.hp == 0) {
       this.log_result("is already fully healed.");
     }
-    if (amount < 0 || this.modded_base_stats().hp == 0) {
-      this.log_result("could not be healed.");
+    if (amount < 0 || this.modded_base_stats().hp <= 0) {
+      this.log_result("could not be healed. (value=" + amount + ")");
       return;
     }
     amount = Math.floor(amount);

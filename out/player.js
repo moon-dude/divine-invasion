@@ -143,11 +143,18 @@ var Player = /** @class */ (function () {
     };
     Player.prototype.fully_heal = function () {
         if (this.battle_data.mod_stats.hp != 0) {
-            this.battle_data.heal_for(this.battle_data.mod_stats.hp);
+            var amount = -this.battle_data.mod_stats.hp;
+            if (amount > 0) {
+                this.battle_data.heal_for(amount);
+            }
         }
         for (var i = 0; i < this.recruits.length; i++) {
             if (this.recruits[i].battle_data.mod_stats.hp != 0) {
-                this.recruits[i].battle_data.heal_for(this.recruits[i].battle_data.mod_stats.hp);
+                var amount = -this.recruits[i].battle_data.mod_stats.hp;
+                if (amount > 0) {
+                    this.recruits[i].battle_data.revive();
+                    this.recruits[i].battle_data.heal_for(amount);
+                }
             }
         }
     };

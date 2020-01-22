@@ -51883,12 +51883,23 @@ var BattleData = /** @class */ (function () {
         }
         this.did_just_get_damaged = true;
     };
+    BattleData.prototype.revive = function () {
+        if (this.mod_stats.hp <= -this.base_stats.hp) {
+            this.mod_stats.hp = -this.base_stats.hp + 1;
+        }
+        if (this.side == BattleSide.Our) {
+            this.mood = null;
+        }
+        else {
+            this.mood = emotion_1.Mood.Aggressive;
+        }
+    };
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
             this.log_result("is already fully healed.");
         }
-        if (amount < 0 || this.modded_base_stats().hp == 0) {
-            this.log_result("could not be healed.");
+        if (amount < 0 || this.modded_base_stats().hp <= 0) {
+            this.log_result("could not be healed. (value=" + amount + ")");
             return;
         }
         amount = Math.floor(amount);
@@ -70280,11 +70291,18 @@ var Player = /** @class */ (function () {
     };
     Player.prototype.fully_heal = function () {
         if (this.battle_data.mod_stats.hp != 0) {
-            this.battle_data.heal_for(this.battle_data.mod_stats.hp);
+            var amount = -this.battle_data.mod_stats.hp;
+            if (amount > 0) {
+                this.battle_data.heal_for(amount);
+            }
         }
         for (var i = 0; i < this.recruits.length; i++) {
             if (this.recruits[i].battle_data.mod_stats.hp != 0) {
-                this.recruits[i].battle_data.heal_for(this.recruits[i].battle_data.mod_stats.hp);
+                var amount = -this.recruits[i].battle_data.mod_stats.hp;
+                if (amount > 0) {
+                    this.recruits[i].battle_data.revive();
+                    this.recruits[i].battle_data.heal_for(amount);
+                }
             }
         }
     };
