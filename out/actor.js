@@ -23,13 +23,13 @@ var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
 exports.CULTIST_MAT = new THREE.MeshStandardMaterial({
     map: cultist_texture,
     transparent: true,
-    roughness: 0.8
+    roughness: 0.7
 });
 var demon_texture = new THREE.TextureLoader().load("assets/demon.png");
 exports.DEMON_MAT = new THREE.MeshStandardMaterial({
     map: demon_texture,
     transparent: true,
-    roughness: 0.3
+    roughness: 0.7
 });
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {

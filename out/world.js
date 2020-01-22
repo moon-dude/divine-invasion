@@ -36,7 +36,7 @@ var World = /** @class */ (function () {
         for (var i = 0; i < encounter_coors.length; i++) {
             _loop_1(i);
         }
-        this.ambient_light = new THREE.AmbientLight("#0022aa", 2);
+        this.ambient_light = new THREE.AmbientLight("#001155", 2);
         scene.add(this.ambient_light);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");

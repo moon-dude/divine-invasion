@@ -90,7 +90,7 @@ var Battle = /** @class */ (function () {
             // Otherwise, let AI choose.
             var result = battle_ai_1.ai_take_turn(fighter, this.fighters);
             if (result[0] != null) {
-                this.take_battle_action(fighter, result[0], result[1]);
+                game_1.Game.Instance.take_action(fighter, result[1], result[0]);
             }
             // Take the resulting action.
             fighter.before_end_of_turn();
@@ -108,15 +108,13 @@ var Battle = /** @class */ (function () {
         var turn_index = this.turn_order[this.battle_idx];
         return this.fighters.get(turn_index.side)[turn_index.index];
     };
-    Battle.prototype.execute_player_turn = function (last_battle_table_click, current_action) {
+    Battle.prototype.execute_player_turn = function (target, current_action) {
         game_1.Game.Instance.menu.clear();
-        this.take_battle_action(this.current_fighter(), current_action, [
-            last_battle_table_click
-        ]);
+        game_1.Game.Instance.take_action(this.current_fighter(), [target], current_action);
         game_1.Game.Instance.clear_current_action();
         this.set_auto_next_interval();
     };
-    Battle.prototype.take_battle_action = function (fighter, action, targets) {
+    Battle.prototype.take_battle_action = function (fighter, targets, action) {
         var _a;
         fighter.mark_just_acted();
         if (action instanceof actions_1.AttackAction) {

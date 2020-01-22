@@ -16,6 +16,7 @@ import {
   RequestAction
 } from "./actions";
 import { Exploration } from "./exploration";
+import { ITEM_MAP } from "./data/raw/items";
 
 export type GameAction = AttackAction | InventoryAction | SkillAction | RequestAction;
 
@@ -77,6 +78,33 @@ export class Game {
       this.end_battle(winner);
     }
     this.render();
+  }
+
+  public take_action(
+    actor: BattleData,
+    targets: BattleData[],
+    action: GameAction | null = null,
+  ): void {
+    if (action == null) {
+      if (this.current_action == null) {
+        return;
+      }
+      action = this.current_action;
+    }
+    actor.mark_just_acted();
+    if (action instanceof InventoryAction) {
+      Log.push(
+        actor.name + " used `" + action.item_name! + "`."
+      );
+      const item = ITEM_MAP.get(action.item_name!);
+      for (let t = 0; t < targets.length; t++) {
+        item?.effect(targets[t]);
+      }
+    } else {
+      if (this.state instanceof Battle) {
+        this.state.take_battle_action(actor, targets, action);
+      }
+    }
   }
 
   public key_down(event: any) {

@@ -13,12 +13,12 @@ var constants_1 = require("./constants");
 var area_data_1 = require("./data/areas/area_data");
 var box_geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
 var wall_material = new THREE.MeshStandardMaterial({
-    color: 0x090011,
-    roughness: 0.9
+    color: 0x330022,
+    roughness: 0.8
 });
 var ground_material = new THREE.MeshStandardMaterial({
-    color: 0x040008,
-    roughness: 0.9
+    color: 0x110011,
+    roughness: 0.7
 });
 function buildMeshes(walkable) {
     var meshes = [];

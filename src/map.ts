@@ -10,12 +10,12 @@ import {
 
 const box_geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE);
 const wall_material = new THREE.MeshStandardMaterial({
-  color: 0x090011,
-  roughness: 0.9
+  color: 0x330022,
+  roughness: 0.8
 });
 const ground_material = new THREE.MeshStandardMaterial({
-  color: 0x040008,
-  roughness: 0.9
+  color: 0x110011,
+  roughness: 0.7
 });
 
 function buildMeshes(walkable: Grid<string>): THREE.Mesh[] {

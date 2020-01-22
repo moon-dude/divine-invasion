@@ -17,7 +17,9 @@ var log_1 = require("./log");
 var menu_1 = require("./menu");
 var cave_area_1 = require("./data/areas/1_cave/cave_area");
 var jlib_1 = require("./jlib");
+var actions_1 = require("./actions");
 var exploration_1 = require("./exploration");
+var items_1 = require("./data/raw/items");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -64,6 +66,29 @@ var Game = /** @class */ (function () {
             this.end_battle(winner);
         }
         this.render();
+    };
+    Game.prototype.take_action = function (actor, targets, action) {
+        if (action === void 0) { action = null; }
+        var _a;
+        if (action == null) {
+            if (this.current_action == null) {
+                return;
+            }
+            action = this.current_action;
+        }
+        actor.mark_just_acted();
+        if (action instanceof actions_1.InventoryAction) {
+            log_1.Log.push(actor.name + " used `" + action.item_name + "`.");
+            var item = items_1.ITEM_MAP.get(action.item_name);
+            for (var t = 0; t < targets.length; t++) {
+                (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
+            }
+        }
+        else {
+            if (this.state instanceof battle_1.Battle) {
+                this.state.take_battle_action(actor, targets, action);
+            }
+        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);

@@ -112,7 +112,7 @@ export class Battle {
       // Otherwise, let AI choose.
       let result = ai_take_turn(fighter, this.fighters);
       if (result[0] != null) {
-        this.take_battle_action(fighter, result[0], result[1]);
+        Game.Instance.take_action(fighter, result[1], result[0]);
       }
       // Take the resulting action.
       fighter.before_end_of_turn();
@@ -138,19 +138,17 @@ export class Battle {
     return this.fighters.get(turn_index.side)![turn_index.index]!;
   }
 
-  private execute_player_turn(last_battle_table_click: BattleData, current_action: GameAction) {
+  private execute_player_turn(target: BattleData, current_action: GameAction) {
     Game.Instance.menu.clear();
-    this.take_battle_action(this.current_fighter(), current_action, [
-      last_battle_table_click
-    ]);
+    Game.Instance.take_action(this.current_fighter(), [target], current_action);
     Game.Instance.clear_current_action();
     this.set_auto_next_interval();
   }
 
-  private take_battle_action(
+  public take_battle_action(
     fighter: BattleData,
-    action: GameAction,
-    targets: BattleData[]
+    targets: BattleData[],
+    action: GameAction
   ): void {
     fighter.mark_just_acted();
     if (action instanceof AttackAction) {

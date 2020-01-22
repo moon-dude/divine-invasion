@@ -19,14 +19,14 @@ const cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
 export const CULTIST_MAT = new THREE.MeshStandardMaterial({
   map: cultist_texture,
   transparent: true,
-  roughness: 0.8
+  roughness: 0.7
 });
 
 const demon_texture = new THREE.TextureLoader().load("assets/demon.png");
 export const DEMON_MAT = new THREE.MeshStandardMaterial({
   map: demon_texture,
   transparent: true,
-  roughness: 0.3
+  roughness: 0.7
 });
 
 const geometry = new THREE.PlaneGeometry(2.5, 3.5);

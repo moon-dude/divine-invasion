@@ -51302,13 +51302,13 @@ var cultist_texture = new THREE.TextureLoader().load("assets/cultist.png");
 exports.CULTIST_MAT = new THREE.MeshStandardMaterial({
     map: cultist_texture,
     transparent: true,
-    roughness: 0.8
+    roughness: 0.7
 });
 var demon_texture = new THREE.TextureLoader().load("assets/demon.png");
 exports.DEMON_MAT = new THREE.MeshStandardMaterial({
     map: demon_texture,
     transparent: true,
-    roughness: 0.3
+    roughness: 0.7
 });
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {
@@ -51643,7 +51643,7 @@ var Battle = /** @class */ (function () {
             // Otherwise, let AI choose.
             var result = battle_ai_1.ai_take_turn(fighter, this.fighters);
             if (result[0] != null) {
-                this.take_battle_action(fighter, result[0], result[1]);
+                game_1.Game.Instance.take_action(fighter, result[1], result[0]);
             }
             // Take the resulting action.
             fighter.before_end_of_turn();
@@ -51661,15 +51661,13 @@ var Battle = /** @class */ (function () {
         var turn_index = this.turn_order[this.battle_idx];
         return this.fighters.get(turn_index.side)[turn_index.index];
     };
-    Battle.prototype.execute_player_turn = function (last_battle_table_click, current_action) {
+    Battle.prototype.execute_player_turn = function (target, current_action) {
         game_1.Game.Instance.menu.clear();
-        this.take_battle_action(this.current_fighter(), current_action, [
-            last_battle_table_click
-        ]);
+        game_1.Game.Instance.take_action(this.current_fighter(), [target], current_action);
         game_1.Game.Instance.clear_current_action();
         this.set_auto_next_interval();
     };
-    Battle.prototype.take_battle_action = function (fighter, action, targets) {
+    Battle.prototype.take_battle_action = function (fighter, targets, action) {
         var _a;
         fighter.mark_just_acted();
         if (action instanceof actions_1.AttackAction) {
@@ -69513,7 +69511,9 @@ var log_1 = require("./log");
 var menu_1 = require("./menu");
 var cave_area_1 = require("./data/areas/1_cave/cave_area");
 var jlib_1 = require("./jlib");
+var actions_1 = require("./actions");
 var exploration_1 = require("./exploration");
+var items_1 = require("./data/raw/items");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
@@ -69560,6 +69560,29 @@ var Game = /** @class */ (function () {
             this.end_battle(winner);
         }
         this.render();
+    };
+    Game.prototype.take_action = function (actor, targets, action) {
+        if (action === void 0) { action = null; }
+        var _a;
+        if (action == null) {
+            if (this.current_action == null) {
+                return;
+            }
+            action = this.current_action;
+        }
+        actor.mark_just_acted();
+        if (action instanceof actions_1.InventoryAction) {
+            log_1.Log.push(actor.name + " used `" + action.item_name + "`.");
+            var item = items_1.ITEM_MAP.get(action.item_name);
+            for (var t = 0; t < targets.length; t++) {
+                (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
+            }
+        }
+        else {
+            if (this.state instanceof battle_1.Battle) {
+                this.state.take_battle_action(actor, targets, action);
+            }
+        }
     };
     Game.prototype.key_down = function (event) {
         var result = this.input.check(event, this.player, this.world.map, this.world.actors);
@@ -69638,7 +69661,7 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./battle":8,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./exploration":27,"./input":30,"./jlib":32,"./log":33,"./menu":36,"./player":37,"./world":40,"three":3}],29:[function(require,module,exports){
+},{"./actions":4,"./battle":8,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./data/raw/items":20,"./exploration":27,"./input":30,"./jlib":32,"./log":33,"./menu":36,"./player":37,"./world":40,"three":3}],29:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
@@ -69976,12 +69999,12 @@ var constants_1 = require("./constants");
 var area_data_1 = require("./data/areas/area_data");
 var box_geometry = new THREE.BoxGeometry(constants_1.TILE_SIZE, constants_1.TILE_SIZE, constants_1.TILE_SIZE);
 var wall_material = new THREE.MeshStandardMaterial({
-    color: 0x090011,
-    roughness: 0.9
+    color: 0x330022,
+    roughness: 0.8
 });
 var ground_material = new THREE.MeshStandardMaterial({
-    color: 0x040008,
-    roughness: 0.9
+    color: 0x110011,
+    roughness: 0.7
 });
 function buildMeshes(walkable) {
     var meshes = [];
@@ -70137,7 +70160,7 @@ var Player = /** @class */ (function () {
         this.dir = jlib_1.Dir.S;
         this.body = new THREE.Object3D();
         this.camera = new THREE.PerspectiveCamera(100, 1.2, 0.1, 1300);
-        this.light = new THREE.PointLight("#ee5500", 10, 15);
+        this.light = new THREE.PointLight("#ee5500", 2, 4 * constants_1.TILE_SIZE);
         this.movement_locked = false;
         this.inventory = new inventory_1.Inventory();
         this.macca = 0;
@@ -70398,7 +70421,7 @@ var World = /** @class */ (function () {
         for (var i = 0; i < encounter_coors.length; i++) {
             _loop_1(i);
         }
-        this.ambient_light = new THREE.AmbientLight("#0022aa", 2);
+        this.ambient_light = new THREE.AmbientLight("#001155", 2);
         scene.add(this.ambient_light);
         this.speaker_div = document.getElementById("dialogue_speaker");
         this.speech_div = document.getElementById("dialogue_speech");

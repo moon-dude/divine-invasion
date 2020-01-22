@@ -45,7 +45,7 @@ export class World {
       }
     }
 
-    this.ambient_light = new THREE.AmbientLight("#0022aa", 2);
+    this.ambient_light = new THREE.AmbientLight("#001155", 2);
     scene.add(this.ambient_light);
 
     this.speaker_div = document.getElementById("dialogue_speaker")!;
