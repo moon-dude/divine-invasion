@@ -23,5 +23,3 @@ export class RequestAction {
     this.request = value;
   }
 }
-
-export type BattleAction = AttackAction | InventoryAction | SkillAction | RequestAction;

@@ -2,18 +2,17 @@ import { BattleSide, BattleIndex, BattleData } from "./battle_data";
 import { resolve_skill_effect } from "./data/skill_effect";
 import { ai_take_turn } from "./battle_ai";
 import { Log } from "./log";
-import { Game } from "./game";
+import { Game, GameAction } from "./game";
 import { ITEM_MAP } from "./data/raw/items";
 import { SKILL_MAP } from "./data/raw/skills";
 import { try_ai_request, request_result, Request } from "./requests";
 import { set_up_player_turn } from "./battle_player";
 import {
-  BattleAction,
   AttackAction,
   InventoryAction,
   SkillAction,
   RequestAction
-} from "./battle_actions";
+} from "./actions";
 import { ActorCard } from "./actor_card";
 
 // This class should be instantiated and destroyed without any move
@@ -25,7 +24,6 @@ export class Battle {
   private battle_idx: number = -1;
 
   public enemy_actor_cards: ActorCard[];
-  public current_action: BattleAction | null = null;
 
   private enemy_info_div: HTMLElement;
 
@@ -53,19 +51,19 @@ export class Battle {
       [
         "Continue",
         () => {
-          Game.Instance.get_battle().next_turn();
+          Game.Instance.get_battle()?.next_turn();
         }
       ]
     ]);
   }
 
-  public update() {
+  public update(current_action: GameAction | null) {
     // Check for actor btn click.
     let last_battle_data_clicked: BattleData | null =
       Game.Instance.player.get_last_battle_data_clicked() ||
       this.get_last_enemy_clicked();
-    if (last_battle_data_clicked != null && this.current_action != null) {
-      this.execute_player_turn(last_battle_data_clicked);
+    if (last_battle_data_clicked != null && current_action != null) {
+      this.execute_player_turn(last_battle_data_clicked, current_action);
     }
     for (let i = 0; i < this.enemy_actor_cards.length; i++) {
       this.enemy_actor_cards[i].update(
@@ -140,18 +138,18 @@ export class Battle {
     return this.fighters.get(turn_index.side)![turn_index.index]!;
   }
 
-  private execute_player_turn(last_battle_table_click: BattleData) {
+  private execute_player_turn(last_battle_table_click: BattleData, current_action: GameAction) {
     Game.Instance.menu.clear();
-    this.take_battle_action(this.current_fighter(), this.current_action!, [
+    this.take_battle_action(this.current_fighter(), current_action, [
       last_battle_table_click
     ]);
-    this.current_action = null;
+    Game.Instance.clear_current_action();
     this.set_auto_next_interval();
   }
 
   private take_battle_action(
     fighter: BattleData,
-    action: BattleAction,
+    action: GameAction,
     targets: BattleData[]
   ): void {
     fighter.mark_just_acted();

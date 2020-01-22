@@ -5,9 +5,10 @@ import {
   InventoryAction,
   SkillAction,
   RequestAction
-} from "./battle_actions";
+} from "./actions";
 import { Game } from "./game";
 import { Request } from "./requests";
+import { inventory_btn_on_click } from "./inventory";
 
 export function set_up_player_turn(fighter: BattleData) {
   let battle_action_entries: MenuEntry[] = [
@@ -19,7 +20,7 @@ export function set_up_player_turn(fighter: BattleData) {
           true,
           d => d.side == BattleSide.Their
         );
-        Game.Instance.get_battle().current_action = new AttackAction();
+        Game.Instance.set_current_action(new AttackAction());
         Game.Instance.menu.push("Attack (Choose Target)", [
           [
             "Back",
@@ -32,47 +33,14 @@ export function set_up_player_turn(fighter: BattleData) {
     ],
     [
       "Inventory",
-      () => {
-        Game.Instance.get_battle().current_action = new InventoryAction(null);
-        let menu_entries: MenuEntry[] = [
-          [
-            "Back",
-            () => {
-              Game.Instance.menu.pop();
-            }
-          ]
-        ];
-        for (const entry of Game.Instance.player.inventory.entries()) {
-          menu_entries.push([
-            entry[0] + "(x" + entry[1] + ")",
-            () => {
-              Game.Instance.get_battle().current_action = new InventoryAction(
-                entry[0]
-              );
-              Game.Instance.set_actor_cards_enabled(true);
-              Game.Instance.menu.push(
-                "Use item `" + entry[0] + "` (Select target)",
-                [
-                  [
-                    "Back",
-                    () => {
-                      Game.Instance.menu.pop();
-                    }
-                  ]
-                ]
-              );
-            }
-          ]);
-        }
-        Game.Instance.menu.push("Inventory (Choose Item)", menu_entries);
-      }
+      inventory_btn_on_click
     ],
     [
       "Demand Tribute",
       () => {
-        Game.Instance.get_battle().current_action = new RequestAction(
+        Game.Instance.set_current_action(new RequestAction(
           Request.Tribute
-        );
+        ));
         Game.Instance.set_actor_cards_enabled(true, d => d.side == BattleSide.Their);
         Game.Instance.menu.push("Demand Tribute (Choose Target)", [
           [
@@ -87,9 +55,9 @@ export function set_up_player_turn(fighter: BattleData) {
     [
       "Demand Servitude",
       () => {
-        Game.Instance.get_battle().current_action = new RequestAction(
+        Game.Instance.set_current_action(new RequestAction(
           Request.Join
-        );
+        ));
         Game.Instance.set_actor_cards_enabled(true, d => d.side == BattleSide.Their);
         Game.Instance.menu.push("Demand Servitude (Choose Target)", [
           [
@@ -107,9 +75,9 @@ export function set_up_player_turn(fighter: BattleData) {
       fighter.skills[i].name,
       () => {
         Game.Instance.set_actor_cards_enabled(true);
-        Game.Instance.get_battle().current_action = new SkillAction(
+        Game.Instance.set_current_action(new SkillAction(
           fighter.skills[i].name
-        );
+        ));
         Game.Instance.menu.push(
           "Use `" + fighter.skills[i].name + "` (Choose Target)",
           [

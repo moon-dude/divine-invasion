@@ -9,7 +9,7 @@ var items_1 = require("./data/raw/items");
 var skills_1 = require("./data/raw/skills");
 var requests_1 = require("./requests");
 var battle_player_1 = require("./battle_player");
-var battle_actions_1 = require("./battle_actions");
+var actions_1 = require("./actions");
 var actor_card_1 = require("./actor_card");
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
@@ -18,7 +18,6 @@ var Battle = /** @class */ (function () {
         var _a, _b;
         this.turn_idx = 0;
         this.battle_idx = -1;
-        this.current_action = null;
         this.fighters = new Map();
         this.fighters.set(battle_data_1.BattleSide.Our, []);
         this.fighters.set(battle_data_1.BattleSide.Their, []);
@@ -38,17 +37,18 @@ var Battle = /** @class */ (function () {
             [
                 "Continue",
                 function () {
-                    game_1.Game.Instance.get_battle().next_turn();
+                    var _a;
+                    (_a = game_1.Game.Instance.get_battle()) === null || _a === void 0 ? void 0 : _a.next_turn();
                 }
             ]
         ]);
     }
-    Battle.prototype.update = function () {
+    Battle.prototype.update = function (current_action) {
         // Check for actor btn click.
         var last_battle_data_clicked = game_1.Game.Instance.player.get_last_battle_data_clicked() ||
             this.get_last_enemy_clicked();
-        if (last_battle_data_clicked != null && this.current_action != null) {
-            this.execute_player_turn(last_battle_data_clicked);
+        if (last_battle_data_clicked != null && current_action != null) {
+            this.execute_player_turn(last_battle_data_clicked, current_action);
         }
         for (var i = 0; i < this.enemy_actor_cards.length; i++) {
             this.enemy_actor_cards[i].update(this.fighters.get(battle_data_1.BattleSide.Their)[i]);
@@ -108,32 +108,32 @@ var Battle = /** @class */ (function () {
         var turn_index = this.turn_order[this.battle_idx];
         return this.fighters.get(turn_index.side)[turn_index.index];
     };
-    Battle.prototype.execute_player_turn = function (last_battle_table_click) {
+    Battle.prototype.execute_player_turn = function (last_battle_table_click, current_action) {
         game_1.Game.Instance.menu.clear();
-        this.take_battle_action(this.current_fighter(), this.current_action, [
+        this.take_battle_action(this.current_fighter(), current_action, [
             last_battle_table_click
         ]);
-        this.current_action = null;
+        game_1.Game.Instance.clear_current_action();
         this.set_auto_next_interval();
     };
     Battle.prototype.take_battle_action = function (fighter, action, targets) {
         var _a;
         fighter.mark_just_acted();
-        if (action instanceof battle_actions_1.AttackAction) {
+        if (action instanceof actions_1.AttackAction) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.modded_base_stats().st + fighter.modded_base_stats().dx);
             for (var t = 0; t < targets.length; t++) {
                 targets[t].take_damage(damage);
             }
         }
-        else if (action instanceof battle_actions_1.InventoryAction) {
+        else if (action instanceof actions_1.InventoryAction) {
             log_1.Log.push(this.current_fighter().name + " used `" + action.item_name + "`.");
             var item = items_1.ITEM_MAP.get(action.item_name);
             for (var t = 0; t < targets.length; t++) {
                 (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
         }
-        else if (action instanceof battle_actions_1.SkillAction) {
+        else if (action instanceof actions_1.SkillAction) {
             var skill = skills_1.SKILL_MAP.get(action.skill_name);
             fighter.mod_stats.mp -= skill.cost;
             log_1.Log.push(this.current_fighter().name + " used `" + skill.name + "`.");
@@ -141,7 +141,7 @@ var Battle = /** @class */ (function () {
                 skill_effect_1.resolve_skill_effect(fighter, skill, targets[t]);
             }
         }
-        else if (action instanceof battle_actions_1.RequestAction) {
+        else if (action instanceof actions_1.RequestAction) {
             for (var t = 0; t < targets.length; t++) {
                 var request_worked = requests_1.try_ai_request(fighter, targets[t], action.request);
                 if (request_worked) {

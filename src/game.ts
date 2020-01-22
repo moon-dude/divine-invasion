@@ -9,6 +9,15 @@ import { Menu } from "./menu";
 import { AreaData } from "./data/areas/area_data";
 import { cave_data } from "./data/areas/1_cave/cave_area";
 import { Coor } from "./jlib";
+import {
+  InventoryAction,
+  AttackAction,
+  SkillAction,
+  RequestAction
+} from "./actions";
+import { Exploration } from "./exploration";
+
+export type GameAction = AttackAction | InventoryAction | SkillAction | RequestAction;
 
 export class Game {
   public static Instance: Game;
@@ -19,8 +28,9 @@ export class Game {
 
   private area: AreaData = cave_data;
   private level_idx: number = 0;
-  private battle: Battle | null = null;
+  private state: Battle | Exploration = new Exploration();
   private input: Input = new Input();
+  private current_action: GameAction | null = null;
 
   // Rendering.
   private scene: THREE.Scene = new THREE.Scene();
@@ -38,8 +48,16 @@ export class Game {
     this.header_div = document.getElementById("header_div")!;
   }
 
-  public get_battle(): Battle {
-    return this.battle!;
+  public get_battle(): Battle | null {
+    return this.state instanceof Battle ? this.state : null;
+  }
+
+  public set_current_action(action: GameAction) {
+    this.current_action = action;
+  }
+
+  public clear_current_action() {
+    this.current_action = null;
   }
 
   private render() {
@@ -53,8 +71,8 @@ export class Game {
   public update(): void {
     this.player.update();
     this.world.update();
-    this.battle?.update();
-    const winner = this.battle?.battle_winner();
+    this.state?.update(this.current_action);
+    const winner = this.get_battle()?.battle_winner();
     if (winner != null && winner != undefined) {
       this.end_battle(winner);
     }
@@ -71,14 +89,20 @@ export class Game {
     if (result.moved) {
       this.world.dialogue_idx = 0;
       // check for stairs.
-      const stairs_down = this.world.map.stairs_down.get(this.player.coor.x, this.player.coor.z);
+      const stairs_down = this.world.map.stairs_down.get(
+        this.player.coor.x,
+        this.player.coor.z
+      );
       let offset = new Coor(0, 0);
       if (stairs_down) {
         console.log("Stairs down");
         this.level_idx -= 1;
         offset = this.area.levels[this.level_idx].offset_from_above.inverse();
       }
-      const stairs_up = this.world.map.stairs_up.get(this.player.coor.x, this.player.coor.z);
+      const stairs_up = this.world.map.stairs_up.get(
+        this.player.coor.x,
+        this.player.coor.z
+      );
       if (stairs_up) {
         console.log("Stairs up");
         this.level_idx += 1;
@@ -110,7 +134,7 @@ export class Game {
         for (let i = 0; i < this.player.recruits.length; i++) {
           battle_fighters.push(this.player.recruits[i].battle_data);
         }
-        this.battle = new Battle(battle_fighters);
+        this.state = new Battle(battle_fighters);
         this.player.movement_locked = true;
       }
     }
@@ -121,8 +145,8 @@ export class Game {
   }
 
   private end_battle(winner: BattleSide) {
-    this.battle!.end();
-    this.battle = null;
+    this.get_battle()!.end();
+    this.state = new Exploration();
     if (winner == BattleSide.Our) {
       let actors_at_player_coor = this.world.actors_at(this.player.coor);
       this.player.movement_locked = false;
@@ -132,7 +156,10 @@ export class Game {
     }
   }
 
-  public set_actor_cards_enabled(enabled: boolean, filter: (fighter: BattleData) => boolean = () => true) {
+  public set_actor_cards_enabled(
+    enabled: boolean,
+    filter: (fighter: BattleData) => boolean = () => true
+  ) {
     if (filter(this.player.battle_data)) {
       this.player.actor_cards[0].set_name_btn_enabled(enabled);
     }
@@ -141,6 +168,6 @@ export class Game {
         this.player.actor_cards[i].set_name_btn_enabled(enabled);
       }
     }
-    this.battle?.set_actor_cards_enabled(enabled, filter);
+    this.get_battle()?.set_actor_cards_enabled(enabled, filter);
   }
 }

@@ -1,4 +1,7 @@
 import { Item, ItemName } from "./data/item";
+import { InventoryAction } from "./actions";
+import { MenuEntry } from "./menu";
+import { Game } from "./game";
 
 export class Inventory {
   private items: Map<ItemName, number> = new Map();
@@ -27,4 +30,39 @@ export class Inventory {
   public entries() {
     return this.items.entries();
   }
+}
+
+export function inventory_btn_on_click() {
+  Game.Instance.set_current_action(new InventoryAction(null));
+  let menu_entries: MenuEntry[] = [
+    [
+      "Back",
+      () => {
+        Game.Instance.menu.pop();
+      }
+    ]
+  ];
+  for (const entry of Game.Instance.player.inventory.entries()) {
+    menu_entries.push([
+      entry[0] + "(x" + entry[1] + ")",
+      () => {
+        Game.Instance.set_current_action(new InventoryAction(
+          entry[0]
+        ));
+        Game.Instance.set_actor_cards_enabled(true);
+        Game.Instance.menu.push(
+          "Use item `" + entry[0] + "` (Select target)",
+          [
+            [
+              "Back",
+              () => {
+                Game.Instance.menu.pop();
+              }
+            ]
+          ]
+        );
+      }
+    ]);
+  }
+  Game.Instance.menu.push("Inventory (Choose Item)", menu_entries);
 }

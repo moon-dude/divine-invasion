@@ -17,14 +17,16 @@ var log_1 = require("./log");
 var menu_1 = require("./menu");
 var cave_area_1 = require("./data/areas/1_cave/cave_area");
 var jlib_1 = require("./jlib");
+var exploration_1 = require("./exploration");
 var Game = /** @class */ (function () {
     function Game() {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
         this.level_idx = 0;
-        this.battle = null;
+        this.state = new exploration_1.Exploration();
         this.input = new input_1.Input();
+        this.current_action = null;
         // Rendering.
         this.scene = new THREE.Scene();
         this.renderer = new THREE.WebGLRenderer();
@@ -37,7 +39,13 @@ var Game = /** @class */ (function () {
         this.header_div = document.getElementById("header_div");
     }
     Game.prototype.get_battle = function () {
-        return this.battle;
+        return this.state instanceof battle_1.Battle ? this.state : null;
+    };
+    Game.prototype.set_current_action = function (action) {
+        this.current_action = action;
+    };
+    Game.prototype.clear_current_action = function () {
+        this.current_action = null;
     };
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
@@ -50,8 +58,8 @@ var Game = /** @class */ (function () {
         var _a, _b;
         this.player.update();
         this.world.update();
-        (_a = this.battle) === null || _a === void 0 ? void 0 : _a.update();
-        var winner = (_b = this.battle) === null || _b === void 0 ? void 0 : _b.battle_winner();
+        (_a = this.state) === null || _a === void 0 ? void 0 : _a.update(this.current_action);
+        var winner = (_b = this.get_battle()) === null || _b === void 0 ? void 0 : _b.battle_winner();
         if (winner != null && winner != undefined) {
             this.end_battle(winner);
         }
@@ -96,7 +104,7 @@ var Game = /** @class */ (function () {
                 for (var i = 0; i < this.player.recruits.length; i++) {
                     battle_fighters.push(this.player.recruits[i].battle_data);
                 }
-                this.battle = new battle_1.Battle(battle_fighters);
+                this.state = new battle_1.Battle(battle_fighters);
                 this.player.movement_locked = true;
             }
         }
@@ -106,8 +114,8 @@ var Game = /** @class */ (function () {
         }
     };
     Game.prototype.end_battle = function (winner) {
-        this.battle.end();
-        this.battle = null;
+        this.get_battle().end();
+        this.state = new exploration_1.Exploration();
         if (winner == battle_data_1.BattleSide.Our) {
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
             this.player.movement_locked = false;
@@ -128,7 +136,7 @@ var Game = /** @class */ (function () {
                 this.player.actor_cards[i].set_name_btn_enabled(enabled);
             }
         }
-        (_a = this.battle) === null || _a === void 0 ? void 0 : _a.set_actor_cards_enabled(enabled, filter);
+        (_a = this.get_battle()) === null || _a === void 0 ? void 0 : _a.set_actor_cards_enabled(enabled, filter);
     };
     return Game;
 }());

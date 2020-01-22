@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
 var battle_data_1 = require("./battle_data");
 var jlib_1 = require("./jlib");
-var battle_actions_1 = require("./battle_actions");
+var actions_1 = require("./actions");
 function ai_take_turn(fighter, fighters) {
     // Choose whether to attack or use skill.
     var chosen_skill = choose_skill(fighter);
@@ -49,10 +49,10 @@ function ai_take_turn(fighter, fighters) {
         }
     }
     if (chosen_skill == null) {
-        return [new battle_actions_1.AttackAction(), targets];
+        return [new actions_1.AttackAction(), targets];
     }
     else {
-        return [new battle_actions_1.SkillAction(chosen_skill.name), targets];
+        return [new actions_1.SkillAction(chosen_skill.name), targets];
     }
 }
 exports.ai_take_turn = ai_take_turn;

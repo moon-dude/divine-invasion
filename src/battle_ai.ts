@@ -2,12 +2,13 @@ import { Target } from "./data/util";
 import { BattleSide, other_side, BattleData } from "./battle_data";
 import { random_array_element } from "./jlib";
 import { Skill } from "./data/skill";
-import { BattleAction, AttackAction, SkillAction } from "./battle_actions";
+import { AttackAction, SkillAction } from "./actions";
+import { GameAction } from "./game";
 
 export function ai_take_turn(
   fighter: BattleData,
   fighters: Map<BattleSide, BattleData[]>
-): [BattleAction | null, BattleData[]] {
+): [GameAction | null, BattleData[]] {
   // Choose whether to attack or use skill.
   let chosen_skill = choose_skill(fighter);
   let targets: BattleData[] = [];
