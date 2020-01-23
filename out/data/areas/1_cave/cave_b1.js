@@ -26,7 +26,7 @@ var npc_map = new Map([
         "A",
         new actor_1.Actor("Abel", [
             new dialogue_1.Dialogue("Well, well, the new recruit is finally awake.")
-                .set_info("<< SPACE: continue >>")
+                .set_info("<< E: continue >>")
                 .lock(),
             new dialogue_1.Dialogue("You're expected in the Summoning Room.").lock(),
             new dialogue_1.Dialogue("You know where that is right?")

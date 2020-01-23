@@ -56,6 +56,12 @@ function set_up_player_turn(fighter) {
                     ]
                 ]);
             }
+        ],
+        [
+            "Run",
+            function () {
+                game_1.Game.Instance.end_battle(null);
+            }
         ]
     ];
     var _loop_1 = function (i) {

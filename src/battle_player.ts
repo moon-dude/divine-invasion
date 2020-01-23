@@ -67,6 +67,12 @@ export function set_up_player_turn(fighter: BattleData) {
           ]
         ]);
       }
+    ],
+    [
+      "Run",
+      () => {
+        Game.Instance.end_battle(null);
+      }
     ]
   ];
   for (let i = 0; i < fighter.skills.length; i++) {

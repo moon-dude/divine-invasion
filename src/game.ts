@@ -185,15 +185,17 @@ export class Game {
     }
   }
 
-  private end_battle(winner: BattleSide) {
+  public end_battle(winner: BattleSide | null) {
     this.get_battle()!.end();
     this.state = new Exploration();
-    if (winner == BattleSide.Our) {
-      let actors_at_player_coor = this.world.actors_at(this.player.coor);
-      this.player.movement_locked = false;
-      this.player.party_gain_loot(actors_at_player_coor);
-    } else {
+    if (winner == BattleSide.Their) {
       Log.push("YOU DIED");
+    } else {
+      this.player.movement_locked = false;
+      if (winner == BattleSide.Our) {
+        let actors_at_player_coor = this.world.actors_at(this.player.coor);
+        this.player.party_gain_loot(actors_at_player_coor);
+      }
     }
   }
 

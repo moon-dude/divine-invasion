@@ -37,8 +37,8 @@ export class Input {
     } else if (keyCode == 83) {
       // S.
       moved = player.move(-1, map, npcs);
-    } else if (keyCode == 32) {
-      // Space.
+    } else if (keyCode == 69) {
+      // E.
       actioned = true;
     }
     return new InputResult(moved, turned, actioned);

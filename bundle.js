@@ -52035,6 +52035,12 @@ function set_up_player_turn(fighter) {
                     ]
                 ]);
             }
+        ],
+        [
+            "Run",
+            function () {
+                game_1.Game.Instance.end_battle(null);
+            }
         ]
     ];
     var _loop_1 = function (i) {
@@ -52103,7 +52109,7 @@ var npc_map = new Map([
         "A",
         new actor_1.Actor("Abel", [
             new dialogue_1.Dialogue("Well, well, the new recruit is finally awake.")
-                .set_info("<< SPACE: continue >>")
+                .set_info("<< E: continue >>")
                 .lock(),
             new dialogue_1.Dialogue("You're expected in the Summoning Room.").lock(),
             new dialogue_1.Dialogue("You know where that is right?")
@@ -69798,13 +69804,15 @@ var Game = /** @class */ (function () {
     Game.prototype.end_battle = function (winner) {
         this.get_battle().end();
         this.state = new exploration_1.Exploration();
-        if (winner == battle_data_1.BattleSide.Our) {
-            var actors_at_player_coor = this.world.actors_at(this.player.coor);
-            this.player.movement_locked = false;
-            this.player.party_gain_loot(actors_at_player_coor);
+        if (winner == battle_data_1.BattleSide.Their) {
+            log_1.Log.push("YOU DIED");
         }
         else {
-            log_1.Log.push("YOU DIED");
+            this.player.movement_locked = false;
+            if (winner == battle_data_1.BattleSide.Our) {
+                var actors_at_player_coor = this.world.actors_at(this.player.coor);
+                this.player.party_gain_loot(actors_at_player_coor);
+            }
         }
     };
     Game.prototype.set_actor_cards_enabled = function (enabled, filter) {
@@ -69865,8 +69873,8 @@ var Input = /** @class */ (function () {
             // S.
             moved = player.move(-1, map, npcs);
         }
-        else if (keyCode == 32) {
-            // Space.
+        else if (keyCode == 69) {
+            // E.
             actioned = true;
         }
         return new InputResult(moved, turned, actioned);

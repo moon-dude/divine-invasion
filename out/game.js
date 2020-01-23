@@ -153,13 +153,15 @@ var Game = /** @class */ (function () {
     Game.prototype.end_battle = function (winner) {
         this.get_battle().end();
         this.state = new exploration_1.Exploration();
-        if (winner == battle_data_1.BattleSide.Our) {
-            var actors_at_player_coor = this.world.actors_at(this.player.coor);
-            this.player.movement_locked = false;
-            this.player.party_gain_loot(actors_at_player_coor);
+        if (winner == battle_data_1.BattleSide.Their) {
+            log_1.Log.push("YOU DIED");
         }
         else {
-            log_1.Log.push("YOU DIED");
+            this.player.movement_locked = false;
+            if (winner == battle_data_1.BattleSide.Our) {
+                var actors_at_player_coor = this.world.actors_at(this.player.coor);
+                this.player.party_gain_loot(actors_at_player_coor);
+            }
         }
     };
     Game.prototype.set_actor_cards_enabled = function (enabled, filter) {

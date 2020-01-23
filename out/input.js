@@ -33,8 +33,8 @@ var Input = /** @class */ (function () {
             // S.
             moved = player.move(-1, map, npcs);
         }
-        else if (keyCode == 32) {
-            // Space.
+        else if (keyCode == 69) {
+            // E.
             actioned = true;
         }
         return new InputResult(moved, turned, actioned);
