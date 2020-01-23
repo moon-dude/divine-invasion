@@ -18,7 +18,7 @@ var World = /** @class */ (function () {
     function World(scene, level_data) {
         this.dialogue_idx = 0;
         this.map = level_data.map;
-        this.actors = level_data.actors;
+        this.actors = level_data.actors.slice();
         // this.encounter_types = level_data.encounter_types;
         var encounter_coors = this.make_encounters(this.map, level_data.encounter_count);
         var _loop_1 = function (i) {
@@ -48,16 +48,6 @@ var World = /** @class */ (function () {
             scene.add(this.map.meshes[i]);
         }
         this.lights = [];
-        // for (let x = 1; x < this.map.walkable.width; x += 4) {
-        //   for (let z = 1; z < this.map.walkable.width; z += 4) {
-        //     const new_light = new THREE.PointLight("#2222cc");
-        //     new_light.position.x = x * TILE_SIZE;
-        //     new_light.position.z = z * TILE_SIZE;
-        //     new_light.position.y = 1;
-        //     this.lights.push(new_light);
-        //     scene.add(new_light);
-        //   }
-        // }
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {

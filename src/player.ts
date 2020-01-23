@@ -8,7 +8,6 @@ import { Stats } from "./stats";
 import { Inventory } from "./inventory";
 import { Log } from "./log";
 import { ActorCard } from "./actor_card";
-import { WALL_CHAR } from "./data/areas/area_data";
 
 export const PLAYER_NAME: string = "Player";
 

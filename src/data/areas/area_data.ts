@@ -9,6 +9,7 @@ export const PLAYER_START_CHAR = "@";
 export const WALL_CHAR = "#";
 export const EMPTY_SPACE_CHAR = " ";
 export const ENCOUNTER_CHAR = "."
+export const TREASURE_CHAR = "$";
 
 export class LevelData {
   map: TileMap;

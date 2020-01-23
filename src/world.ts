@@ -3,9 +3,8 @@ import * as THREE from "three";
 import { TileMap } from "./map";
 import { Actor } from "./actor";
 import { flags } from "./globals";
-import { LevelData, EMPTY_SPACE_CHAR, ENCOUNTER_CHAR } from "./data/areas/area_data";
+import { LevelData, ENCOUNTER_CHAR } from "./data/areas/area_data";
 import { Coor, shuffle_array, random_array_element } from "./jlib";
-import { TILE_SIZE } from "./constants";
 import { BattleSide } from "./battle_data";
 import { Game } from "./game";
 
@@ -26,7 +25,7 @@ export class World {
 
   constructor(scene: THREE.Scene, level_data: LevelData) {
     this.map = level_data.map;
-    this.actors = level_data.actors;
+    this.actors = level_data.actors.slice();
 
     // this.encounter_types = level_data.encounter_types;
     const encounter_coors: Coor[] = this.make_encounters(
@@ -61,16 +60,6 @@ export class World {
     }
 
     this.lights = [];
-    // for (let x = 1; x < this.map.walkable.width; x += 4) {
-    //   for (let z = 1; z < this.map.walkable.width; z += 4) {
-    //     const new_light = new THREE.PointLight("#2222cc");
-    //     new_light.position.x = x * TILE_SIZE;
-    //     new_light.position.z = z * TILE_SIZE;
-    //     new_light.position.y = 1;
-    //     this.lights.push(new_light);
-    //     scene.add(new_light);
-    //   }
-    // }
   }
 
   /// Identify all of the open tiles and pick a random unique set.
