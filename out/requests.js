@@ -27,12 +27,10 @@ function request_result(target, request) {
             // TODO: Other items?
             if (target.name != player_1.PLAYER_NAME) {
                 game_1.Game.Instance.player.inventory.add_item("Life Stone");
-                log_1.Log.push("Player recieved a Life Stone.");
             }
             else {
                 // TODO: All of the edge cases.
                 game_1.Game.Instance.player.inventory.destroy_item("Life Stone");
-                log_1.Log.push("Player gave away a Life Stone.");
             }
             break;
         case Request.Join:

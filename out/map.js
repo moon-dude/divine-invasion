@@ -61,14 +61,15 @@ function buildMeshes(walkable) {
     return meshes;
 }
 var TileMap = /** @class */ (function () {
-    function TileMap(string_grid) {
+    function TileMap(string_grid, items) {
         this.string_grid = string_grid;
         var visited = [];
-        var walkable = [];
         var stairs_up = [];
         var stairs_down = [];
         var encounter = [];
         this.player_start = null;
+        this.items = [];
+        var item_idx = 0;
         while (visited.length < this.string_grid.count) {
             var x = visited.length % this.string_grid.width;
             var z = Math.floor(visited.length / this.string_grid.width);
@@ -79,6 +80,12 @@ var TileMap = /** @class */ (function () {
                 this.player_start = new jlib_1.Coor(x, z);
             }
             encounter.push(this.string_grid.get(x, z) == area_data_1.ENCOUNTER_CHAR);
+            if (this.string_grid.get(x, z) == area_data_1.TREASURE_CHAR) {
+                if (item_idx < items.length) {
+                    this.items.push([new jlib_1.Coor(x, z), items[item_idx]]);
+                }
+                item_idx += 1;
+            }
         }
         this.visited = new jlib_1.Grid(visited, this.string_grid.width);
         this.stairs_up = new jlib_1.Grid(stairs_up, this.string_grid.width);
@@ -88,6 +95,14 @@ var TileMap = /** @class */ (function () {
     }
     TileMap.prototype.is_walkable = function (x, z) {
         return this.string_grid.get(x, z) != area_data_1.WALL_CHAR;
+    };
+    TileMap.prototype.item_at = function (x, z) {
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i][0].x == x && this.items[i][0].z == z) {
+                return this.items[i][1];
+            }
+        }
+        return null;
     };
     return TileMap;
 }());

@@ -9,13 +9,12 @@ exports.EMPTY_SPACE_CHAR = " ";
 exports.ENCOUNTER_CHAR = ".";
 exports.TREASURE_CHAR = "$";
 var LevelData = /** @class */ (function () {
-    function LevelData(map, actors, encounter_types, encounter_count, offset_from_above) {
-        if (offset_from_above === void 0) { offset_from_above = new jlib_1.Coor(0, 0); }
+    function LevelData(map, actors, encounter_types, encounter_count) {
+        this.offset_from_above = new jlib_1.Coor(0, 0);
         this.map = map;
         this.actors = actors;
         this.encounter_types = encounter_types;
         this.encounter_count = encounter_count;
-        this.offset_from_above = offset_from_above;
     }
     return LevelData;
 }());

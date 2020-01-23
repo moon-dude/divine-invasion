@@ -13,6 +13,7 @@ var __values = (this && this.__values) || function(o) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = require("./actions");
 var game_1 = require("./game");
+var log_1 = require("./log");
 var Inventory = /** @class */ (function () {
     function Inventory() {
         this.items = new Map();
@@ -26,6 +27,7 @@ var Inventory = /** @class */ (function () {
             this.items.set(item, 0);
         }
         this.items.set(item, this.items.get(item) + count);
+        log_1.Log.push("Recieved " + item + (count > 1 ? " x" + count : "") + ".");
     };
     Inventory.prototype.destroy_item = function (item, count) {
         if (count === void 0) { count = 1; }
@@ -37,6 +39,7 @@ var Inventory = /** @class */ (function () {
             return false;
         }
         this.items.set(item, this.items.get(item) - count);
+        log_1.Log.push("Lost " + item + (count > 1 ? " x" + count : "") + ".");
         return true;
     };
     Inventory.prototype.entries = function () {

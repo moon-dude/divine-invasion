@@ -6,8 +6,10 @@ import {
   STAIRS_DOWN_CHAR,
   STAIRS_UP_CHAR,
   PLAYER_START_CHAR,
-  ENCOUNTER_CHAR
+  ENCOUNTER_CHAR,
+  TREASURE_CHAR
 } from "./data/areas/area_data";
+import { ItemName } from "./data/item";
 
 const box_geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE);
 const wall_material = new THREE.MeshStandardMaterial({
@@ -65,17 +67,19 @@ export class TileMap {
   stairs_down: Grid<boolean>;
   encounter: Grid<boolean>;
   player_start: Coor | null;
+  private items: [Coor, ItemName][];
 
   meshes: THREE.Mesh[];
 
-  constructor(string_grid: Grid<string>) {
+  constructor(string_grid: Grid<string>, items: ItemName[]) {
     this.string_grid = string_grid;
     let visited = [];
-    let walkable = [];
     let stairs_up = [];
     let stairs_down = [];
     let encounter = [];
     this.player_start = null;
+    this.items = [];
+    let item_idx = 0;
     while (visited.length < this.string_grid.count) {
       const x = visited.length % this.string_grid.width;
       const z = Math.floor(visited.length / this.string_grid.width);
@@ -86,6 +90,12 @@ export class TileMap {
         this.player_start = new Coor(x, z);
       }
       encounter.push(this.string_grid.get(x, z) == ENCOUNTER_CHAR);
+      if (this.string_grid.get(x, z) == TREASURE_CHAR) {
+        if (item_idx < items.length) {
+          this.items.push([new Coor(x, z), items[item_idx]]);
+        }
+        item_idx += 1;
+      }
     }
     this.visited = new Grid<boolean>(visited, this.string_grid.width);
     this.stairs_up = new Grid<boolean>(stairs_up, this.string_grid.width);
@@ -96,5 +106,14 @@ export class TileMap {
 
   public is_walkable(x: number, z: number): boolean {
     return this.string_grid.get(x, z) != WALL_CHAR;
+  }
+
+  public item_at(x: number, z: number): ItemName | null {
+    for (let i = 0; i < this.items.length; i++) {
+      if (this.items[i][0].x == x && this.items[i][0].z == z) {
+        return this.items[i][1];
+      }
+    }
+    return null;
   }
 }

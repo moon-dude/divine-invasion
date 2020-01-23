@@ -9,6 +9,20 @@ const ITEMS: Item[] = [
     effect: (target: BattleData) => {
       target.heal_for(50);
     }
+  },
+  {
+    name: "Chakra Drop",
+    target: Target.SingleAlly,
+    effect: (target: BattleData) => {
+      target.restore_mp_for(15);
+    }
+  },
+  {
+    name: "Revival Bead",
+    target: Target.SingleAlly,
+    effect: (target: BattleData) => {
+      target.revive();
+    }
   }
 ];
 

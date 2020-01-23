@@ -121,6 +121,11 @@ var Game = /** @class */ (function () {
                 this.player.coor = this.player.coor.offset_by(offset);
                 return;
             }
+            // check for items.
+            var maybe_item = this.world.map.item_at(this.player.coor.x, this.player.coor.z);
+            if (maybe_item != null) {
+                this.player.inventory.add_item(maybe_item);
+            }
             // check for encounter.
             var start_battle = false;
             var actors_at_player_coor = this.world.actors_at(this.player.coor);

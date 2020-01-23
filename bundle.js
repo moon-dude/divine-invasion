@@ -51900,6 +51900,7 @@ var BattleData = /** @class */ (function () {
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
             this.log_result("is already fully healed.");
+            return;
         }
         if (amount < 0 || this.modded_base_stats().hp <= 0) {
             this.log_result("could not be healed. (value=" + amount + ")");
@@ -51909,6 +51910,20 @@ var BattleData = /** @class */ (function () {
         amount = Math.min(amount, -this.mod_stats.hp);
         this.mod_stats.hp += amount;
         this.log_result("healed for " + amount + ". ");
+    };
+    BattleData.prototype.restore_mp_for = function (amount) {
+        if (this.mod_stats.mp == 0) {
+            this.log_result("already has full mp.");
+            return;
+        }
+        if (amount < 0 || this.modded_base_stats().hp <= 0) {
+            this.log_result("could not restore mp. (value=" + amount + ")");
+            return;
+        }
+        amount = Math.floor(amount);
+        amount = Math.min(amount, -this.mod_stats.mp);
+        this.mod_stats.mp += amount;
+        this.log_result("restored " + amount + " mp. ");
     };
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.exp.get_stat_bonus(), this.mod_stats);
@@ -52070,80 +52085,145 @@ var map_1 = require("../../../map");
 var area_data_1 = require("../area_data");
 var battle_data_1 = require("../../../battle_data");
 var map_walkable = "####################" +
-    "#     #@# B#####   #" +
+    "#     #@# B#####<  #" +
     "#     # ## #  C### #" +
     "#     #  A    I###F#" +
-    "#     ####### #### #" +
+    "#     ####### ##$# #" +
     "#     #            #" +
-    "### ###E###L#D###HG#" +
+    "### ###E###L#D#$#HG#" +
     "### ### #K##########" +
     "###  J        <#####" +
     "####################";
-var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
+var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20), [
+    "Life Stone",
+    "Life Stone"
+]);
 var npc_map = new Map([
     [
-        "A", new actor_1.Actor("Abel", [
+        "A",
+        new actor_1.Actor("Abel", [
             new dialogue_1.Dialogue("Well, well, the new recruit is finally awake.")
-                .set_info("<< SPACE: continue >>").lock(),
+                .set_info("<< SPACE: continue >>")
+                .lock(),
             new dialogue_1.Dialogue("You're expected in the Summoning Room.").lock(),
-            new dialogue_1.Dialogue("You know where that is right?"),
+            new dialogue_1.Dialogue("You know where that is right?")
         ])
     ],
-    ["B", new actor_1.Actor("Beth", [
+    [
+        "B",
+        new actor_1.Actor("Beth", [
             new dialogue_1.Dialogue("My head hurts..."),
-            new dialogue_1.Dialogue("Think I'm possessed by a demon?"),
-        ])],
-    ["C", new actor_1.Actor("Chloe", [
-            new dialogue_1.Dialogue("Isn't my Goblin beautiful?..."),
-        ])],
-    ["I", new actor_1.Actor("Goblin", [
-            new dialogue_1.Dialogue("Need demon blood?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("You are!?").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
+            new dialogue_1.Dialogue("Think I'm possessed by a demon?")
+        ])
+    ],
+    ["C", new actor_1.Actor("Chloe", [new dialogue_1.Dialogue("Isn't my Goblin beautiful?...")])],
+    [
+        "I",
+        new actor_1.Actor("Goblin", [
+            new dialogue_1.Dialogue("Need demon blood?")
+                .set_criteria(function () { return globals_1.flags.has("demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("Well I'm the only demon around, you gonna take it from me?")
+                .set_criteria(function () { return globals_1.flags.has("demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("You are!?")
+                .set_criteria(function () { return globals_1.flags.has("demon_blood"); })
+                .lock(),
             new dialogue_1.Dialogue("<< You attacked Goblin and damaged it! >>")
                 .set_info("TODO: Replace this with an actual battle sequence to give player a taste of it.")
-                .set_criteria(function () { return globals_1.flags.has('demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("<< Recieved demon blood! >>").set_criteria(function () { return globals_1.flags.has('demon_blood'); }).flag("has_demon_blood"),
-            new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has('demon_blood'); }),
-        ], actor_1.DEMON_MAT, battle_data_1.BattleData.IDENTITY)],
-    ["D", new actor_1.Actor("Daniel", [
+                .set_criteria(function () { return globals_1.flags.has("demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("<< Recieved demon blood! >>")
+                .set_criteria(function () { return globals_1.flags.has("demon_blood"); })
+                .flag("has_demon_blood"),
+            new dialogue_1.Dialogue("Hee hee hee...").set_criteria(function () { return !globals_1.flags.has("demon_blood"); })
+        ], actor_1.DEMON_MAT, battle_data_1.BattleData.IDENTITY)
+    ],
+    [
+        "D",
+        new actor_1.Actor("Daniel", [
             new dialogue_1.Dialogue("I can't wait until we start the summoning ritual!"),
-            new dialogue_1.Dialogue("Have you practiced your rites?"),
-        ])],
-    ["E", new actor_1.Actor("Eve", [
-            new dialogue_1.Dialogue("The Summoning Room? It's through here.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().set_actor_block(true),
-            new dialogue_1.Dialogue("Do you have your demon blood? You don't?").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Well go find some demon blood!").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock().flag('demon_blood'),
-            new dialogue_1.Dialogue("Find some demon blood and I'll let you through.").set_criteria(function () { return !globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Wow, you really just drew blood from Chloe's Goblin?").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("You're a psychopath!").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).lock(),
-            new dialogue_1.Dialogue("Anyway, you got demon blood so come on through.").set_criteria(function () { return globals_1.flags.has('has_demon_blood'); }).set_actor_block(false),
-        ])],
-    ["F", new actor_1.Actor("Frederick", [
-            new dialogue_1.Dialogue("Step back. New recruits aren't allowed any further.").lock().set_actor_block(true),
-        ])],
-    ["G", new actor_1.Actor("George", [
-            new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true),
-        ])],
-    ["H", new actor_1.Actor("Hilde", [
-            new dialogue_1.Dialogue("Let's see how your laws fare against my boot!").set_actor_block(true),
-        ])],
-    ["J", new actor_1.Actor("Jacques", [
-            new dialogue_1.Dialogue("Oh, it's you, the *NEW* recruit. what have you go there?").lock().set_actor_block(true),
+            new dialogue_1.Dialogue("Have you practiced your rites?")
+        ])
+    ],
+    [
+        "E",
+        new actor_1.Actor("Eve", [
+            new dialogue_1.Dialogue("The Summoning Room? It's through here.")
+                .set_criteria(function () { return !globals_1.flags.has("has_demon_blood"); })
+                .lock()
+                .set_actor_block(true),
+            new dialogue_1.Dialogue("Do you have your demon blood? You don't?")
+                .set_criteria(function () { return !globals_1.flags.has("has_demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("Well go find some demon blood!")
+                .set_criteria(function () { return !globals_1.flags.has("has_demon_blood"); })
+                .lock()
+                .flag("demon_blood"),
+            new dialogue_1.Dialogue("Find some demon blood and I'll let you through.")
+                .set_criteria(function () { return !globals_1.flags.has("has_demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("Wow, you really just drew blood from Chloe's Goblin?")
+                .set_criteria(function () { return globals_1.flags.has("has_demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("You're a psychopath!")
+                .set_criteria(function () { return globals_1.flags.has("has_demon_blood"); })
+                .lock(),
+            new dialogue_1.Dialogue("Anyway, you got demon blood so come on through.")
+                .set_criteria(function () { return globals_1.flags.has("has_demon_blood"); })
+                .set_actor_block(false)
+        ])
+    ],
+    [
+        "F",
+        new actor_1.Actor("Frederick", [
+            new dialogue_1.Dialogue("Step back. New recruits aren't allowed any further.")
+                .lock()
+                .set_actor_block(true)
+        ])
+    ],
+    [
+        "G",
+        new actor_1.Actor("George", [
+            new dialogue_1.Dialogue("You don't get it! Without our divine laws, our cult would collapse!").set_actor_block(true)
+        ])
+    ],
+    [
+        "H",
+        new actor_1.Actor("Hilde", [
+            new dialogue_1.Dialogue("Let's see how your laws fare against my boot!").set_actor_block(true)
+        ])
+    ],
+    [
+        "J",
+        new actor_1.Actor("Jacques", [
+            new dialogue_1.Dialogue("Oh, it's you, the *NEW* recruit. what have you go there?")
+                .lock()
+                .set_actor_block(true),
             new dialogue_1.Dialogue("Imp's blood? No, no, no! It can't be any old demon blood!").lock(),
             new dialogue_1.Dialogue("It has to be the blood of Katakirauwa, the pig spirit!").lock(),
             new dialogue_1.Dialogue("You see, Taotie is very particular and much enjoys the taste of Katakirauwa!").lock(),
             new dialogue_1.Dialogue("You may be able to find Katakirauwa somewhere in the depths of the cave.").lock(),
-            new dialogue_1.Dialogue("Hurry along!").lock(),
-        ])],
-    ["K", new actor_1.Actor("Katherine", [
+            new dialogue_1.Dialogue("Hurry along!").lock()
+        ])
+    ],
+    [
+        "K",
+        new actor_1.Actor("Katherine", [
             new dialogue_1.Dialogue("Hello, dear, what's the matter?"),
-            new dialogue_1.Dialogue("Are you hurt? Let me tend to your wounds.").lock().set_heal_player().set_actor_block(true),
-            new dialogue_1.Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock(),
-        ])],
-    ["L", new actor_1.Actor("Leo", [
-            new dialogue_1.Dialogue("You're outta cash? Then don't bother browsing."),
-        ])],
+            new dialogue_1.Dialogue("Are you hurt? Let me tend to your wounds.")
+                .lock()
+                .set_heal_player()
+                .set_actor_block(true),
+            new dialogue_1.Dialogue("Now you're looking sharp! Go kill some demons for me, sweetie!").lock()
+        ])
+    ],
+    [
+        "L",
+        new actor_1.Actor("Leo", [
+            new dialogue_1.Dialogue("You're outta cash? Then don't bother browsing.")
+        ])
+    ]
 ]);
 var level1_actors = [];
 npc_map.forEach(function (actor, key, _) {
@@ -52174,18 +52254,23 @@ var map_walkable = "####################" +
     "###<#...#.#...#..###" +
     "###### ##  # ### ###" +
     "######    ###### ###" +
-    "######$####> @    ##" +
+    "######$######>@   ##" +
     "####################";
-var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20));
+var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20), [
+    "Life Stone",
+    "Chakra Drop",
+    "Revival Bead",
+    "Life Stone"
+]);
 exports.level2_data = new area_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
-    new encounter_type_1.EncounterType(["Strigoii", "Goblin",]),
+    new encounter_type_1.EncounterType(["Strigoii", "Goblin"]),
     new encounter_type_1.EncounterType(["Goblin", "Mandrake"]),
     new encounter_type_1.EncounterType(["Legion"]),
     new encounter_type_1.EncounterType(["Legion", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
-    new encounter_type_1.EncounterType(["Strigoii"]),
+    new encounter_type_1.EncounterType(["Strigoii"])
 ], 12);
 // goblin Fairy devilish
 // mandrake Wood aggressive
@@ -52203,13 +52288,12 @@ exports.EMPTY_SPACE_CHAR = " ";
 exports.ENCOUNTER_CHAR = ".";
 exports.TREASURE_CHAR = "$";
 var LevelData = /** @class */ (function () {
-    function LevelData(map, actors, encounter_types, encounter_count, offset_from_above) {
-        if (offset_from_above === void 0) { offset_from_above = new jlib_1.Coor(0, 0); }
+    function LevelData(map, actors, encounter_types, encounter_count) {
+        this.offset_from_above = new jlib_1.Coor(0, 0);
         this.map = map;
         this.actors = actors;
         this.encounter_types = encounter_types;
         this.encounter_count = encounter_count;
-        this.offset_from_above = offset_from_above;
     }
     return LevelData;
 }());
@@ -66444,6 +66528,20 @@ var ITEMS = [
         effect: function (target) {
             target.heal_for(50);
         }
+    },
+    {
+        name: "Chakra Drop",
+        target: util_1.Target.SingleAlly,
+        effect: function (target) {
+            target.restore_mp_for(15);
+        }
+    },
+    {
+        name: "Revival Bead",
+        target: util_1.Target.SingleAlly,
+        effect: function (target) {
+            target.revive();
+        }
     }
 ];
 exports.ITEM_MAP = new Map(ITEMS.map(function (i) { return [i.name, i]; }));
@@ -69668,6 +69766,11 @@ var Game = /** @class */ (function () {
                 this.player.coor = this.player.coor.offset_by(offset);
                 return;
             }
+            // check for items.
+            var maybe_item = this.world.map.item_at(this.player.coor.x, this.player.coor.z);
+            if (maybe_item != null) {
+                this.player.inventory.add_item(maybe_item);
+            }
             // check for encounter.
             var start_battle = false;
             var actors_at_player_coor = this.world.actors_at(this.player.coor);
@@ -69788,6 +69891,7 @@ var __values = (this && this.__values) || function(o) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var actions_1 = require("./actions");
 var game_1 = require("./game");
+var log_1 = require("./log");
 var Inventory = /** @class */ (function () {
     function Inventory() {
         this.items = new Map();
@@ -69801,6 +69905,7 @@ var Inventory = /** @class */ (function () {
             this.items.set(item, 0);
         }
         this.items.set(item, this.items.get(item) + count);
+        log_1.Log.push("Recieved " + item + (count > 1 ? " x" + count : "") + ".");
     };
     Inventory.prototype.destroy_item = function (item, count) {
         if (count === void 0) { count = 1; }
@@ -69812,6 +69917,7 @@ var Inventory = /** @class */ (function () {
             return false;
         }
         this.items.set(item, this.items.get(item) - count);
+        log_1.Log.push("Lost " + item + (count > 1 ? " x" + count : "") + ".");
         return true;
     };
     Inventory.prototype.entries = function () {
@@ -69865,7 +69971,7 @@ function inventory_btn_on_click() {
 }
 exports.inventory_btn_on_click = inventory_btn_on_click;
 
-},{"./actions":4,"./game":28}],32:[function(require,module,exports){
+},{"./actions":4,"./game":28,"./log":33}],32:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -70108,14 +70214,15 @@ function buildMeshes(walkable) {
     return meshes;
 }
 var TileMap = /** @class */ (function () {
-    function TileMap(string_grid) {
+    function TileMap(string_grid, items) {
         this.string_grid = string_grid;
         var visited = [];
-        var walkable = [];
         var stairs_up = [];
         var stairs_down = [];
         var encounter = [];
         this.player_start = null;
+        this.items = [];
+        var item_idx = 0;
         while (visited.length < this.string_grid.count) {
             var x = visited.length % this.string_grid.width;
             var z = Math.floor(visited.length / this.string_grid.width);
@@ -70126,6 +70233,12 @@ var TileMap = /** @class */ (function () {
                 this.player_start = new jlib_1.Coor(x, z);
             }
             encounter.push(this.string_grid.get(x, z) == area_data_1.ENCOUNTER_CHAR);
+            if (this.string_grid.get(x, z) == area_data_1.TREASURE_CHAR) {
+                if (item_idx < items.length) {
+                    this.items.push([new jlib_1.Coor(x, z), items[item_idx]]);
+                }
+                item_idx += 1;
+            }
         }
         this.visited = new jlib_1.Grid(visited, this.string_grid.width);
         this.stairs_up = new jlib_1.Grid(stairs_up, this.string_grid.width);
@@ -70135,6 +70248,14 @@ var TileMap = /** @class */ (function () {
     }
     TileMap.prototype.is_walkable = function (x, z) {
         return this.string_grid.get(x, z) != area_data_1.WALL_CHAR;
+    };
+    TileMap.prototype.item_at = function (x, z) {
+        for (var i = 0; i < this.items.length; i++) {
+            if (this.items[i][0].x == x && this.items[i][0].z == z) {
+                return this.items[i][1];
+            }
+        }
+        return null;
     };
     return TileMap;
 }());
@@ -70391,12 +70512,10 @@ function request_result(target, request) {
             // TODO: Other items?
             if (target.name != player_1.PLAYER_NAME) {
                 game_1.Game.Instance.player.inventory.add_item("Life Stone");
-                log_1.Log.push("Player recieved a Life Stone.");
             }
             else {
                 // TODO: All of the edge cases.
                 game_1.Game.Instance.player.inventory.destroy_item("Life Stone");
-                log_1.Log.push("Player gave away a Life Stone.");
             }
             break;
         case Request.Join:

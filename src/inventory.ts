@@ -2,6 +2,7 @@ import { Item, ItemName } from "./data/item";
 import { InventoryAction } from "./actions";
 import { MenuEntry } from "./menu";
 import { Game } from "./game";
+import { Log } from "./log";
 
 export class Inventory {
   private items: Map<ItemName, number> = new Map();
@@ -14,6 +15,7 @@ export class Inventory {
       this.items.set(item, 0);
     }
     this.items.set(item, this.items.get(item)! + count);
+    Log.push("Recieved " + item + (count > 1 ? " x" + count : "") + ".");
   }
 
   public destroy_item(item: ItemName, count: number = 1): boolean {
@@ -25,6 +27,7 @@ export class Inventory {
       return false;
     }
     this.items.set(item, this.items.get(item)! - count);
+    Log.push("Lost " + item + (count > 1 ? " x" + count : "") + ".");
     return true;
   }
 
@@ -47,21 +50,16 @@ export function inventory_btn_on_click() {
     menu_entries.push([
       entry[0] + "(x" + entry[1] + ")",
       () => {
-        Game.Instance.set_current_action(new InventoryAction(
-          entry[0]
-        ));
+        Game.Instance.set_current_action(new InventoryAction(entry[0]));
         Game.Instance.set_actor_cards_enabled(true);
-        Game.Instance.menu.push(
-          "Use item `" + entry[0] + "` (Select target)",
+        Game.Instance.menu.push("Use item `" + entry[0] + "` (Select target)", [
           [
-            [
-              "Back",
-              () => {
-                Game.Instance.menu.pop();
-              }
-            ]
+            "Back",
+            () => {
+              Game.Instance.menu.pop();
+            }
           ]
-        );
+        ]);
       }
     ]);
   }

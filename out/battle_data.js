@@ -73,6 +73,7 @@ var BattleData = /** @class */ (function () {
     BattleData.prototype.heal_for = function (amount) {
         if (this.mod_stats.hp == 0) {
             this.log_result("is already fully healed.");
+            return;
         }
         if (amount < 0 || this.modded_base_stats().hp <= 0) {
             this.log_result("could not be healed. (value=" + amount + ")");
@@ -82,6 +83,20 @@ var BattleData = /** @class */ (function () {
         amount = Math.min(amount, -this.mod_stats.hp);
         this.mod_stats.hp += amount;
         this.log_result("healed for " + amount + ". ");
+    };
+    BattleData.prototype.restore_mp_for = function (amount) {
+        if (this.mod_stats.mp == 0) {
+            this.log_result("already has full mp.");
+            return;
+        }
+        if (amount < 0 || this.modded_base_stats().hp <= 0) {
+            this.log_result("could not restore mp. (value=" + amount + ")");
+            return;
+        }
+        amount = Math.floor(amount);
+        amount = Math.min(amount, -this.mod_stats.mp);
+        this.mod_stats.mp += amount;
+        this.log_result("restored " + amount + " mp. ");
     };
     BattleData.prototype.modded_base_stats = function () {
         return stats_1.apply_stats_mod(this.base_stats, this.exp.get_stat_bonus(), this.mod_stats);

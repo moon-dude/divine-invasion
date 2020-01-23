@@ -150,6 +150,12 @@ export class Game {
         return;
       }
 
+      // check for items.
+      const maybe_item = this.world.map.item_at(this.player.coor.x, this.player.coor.z);
+      if (maybe_item != null) {
+        this.player.inventory.add_item(maybe_item);
+      }
+
       // check for encounter.
       let start_battle = false;
       let actors_at_player_coor = this.world.actors_at(this.player.coor);

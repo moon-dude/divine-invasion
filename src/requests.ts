@@ -28,11 +28,9 @@ export function request_result(target: BattleData, request: Request): void {
       // TODO: Other items?
       if (target.name != PLAYER_NAME) {
         Game.Instance.player.inventory.add_item("Life Stone");
-        Log.push("Player recieved a Life Stone.");
       } else {
         // TODO: All of the edge cases.
         Game.Instance.player.inventory.destroy_item("Life Stone");
-        Log.push("Player gave away a Life Stone.");
       }
       break;
     case Request.Join:

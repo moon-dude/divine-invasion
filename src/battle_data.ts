@@ -106,6 +106,7 @@ export class BattleData {
   public heal_for(amount: number) {
     if (this.mod_stats.hp == 0) {
       this.log_result("is already fully healed.");
+      return;
     }
     if (amount < 0 || this.modded_base_stats().hp <= 0) {
       this.log_result("could not be healed. (value=" + amount + ")");
@@ -115,6 +116,21 @@ export class BattleData {
     amount = Math.min(amount, -this.mod_stats.hp);
     this.mod_stats.hp += amount;
     this.log_result("healed for " + amount + ". ");
+  }
+
+  public restore_mp_for(amount: number) {
+    if (this.mod_stats.mp == 0) {
+      this.log_result("already has full mp.");
+      return;
+    }
+    if (amount < 0 || this.modded_base_stats().hp <= 0) {
+      this.log_result("could not restore mp. (value=" + amount + ")");
+      return;
+    }
+    amount = Math.floor(amount);
+    amount = Math.min(amount, -this.mod_stats.mp);
+    this.mod_stats.mp += amount;
+    this.log_result("restored " + amount + " mp. ");
   }
 
   public modded_base_stats(): Stats {
