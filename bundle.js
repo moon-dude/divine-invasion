@@ -51570,7 +51570,6 @@ var skill_effect_1 = require("./data/skill_effect");
 var battle_ai_1 = require("./battle_ai");
 var log_1 = require("./log");
 var game_1 = require("./game");
-var items_1 = require("./data/raw/items");
 var skills_1 = require("./data/raw/skills");
 var requests_1 = require("./requests");
 var battle_player_1 = require("./battle_player");
@@ -51680,20 +51679,12 @@ var Battle = /** @class */ (function () {
         this.set_auto_next_interval();
     };
     Battle.prototype.take_battle_action = function (fighter, targets, action) {
-        var _a;
         fighter.mark_just_acted();
         if (action instanceof actions_1.AttackAction) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.modded_base_stats().st + fighter.modded_base_stats().dx);
             for (var t = 0; t < targets.length; t++) {
                 targets[t].take_damage(damage);
-            }
-        }
-        else if (action instanceof actions_1.InventoryAction) {
-            log_1.Log.push(this.current_fighter().name + " used `" + action.item_name + "`.");
-            var item = items_1.ITEM_MAP.get(action.item_name);
-            for (var t = 0; t < targets.length; t++) {
-                (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
         }
         else if (action instanceof actions_1.SkillAction) {
@@ -51755,7 +51746,7 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./actions":4,"./actor_card":6,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/items":20,"./data/raw/skills":21,"./data/skill_effect":22,"./game":28,"./log":33,"./requests":38}],9:[function(require,module,exports){
+},{"./actions":4,"./actor_card":6,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/skills":21,"./data/skill_effect":22,"./game":28,"./log":33,"./requests":38}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
@@ -69534,16 +69525,26 @@ exports.Exp = Exp;
 },{"./stats":39}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var game_1 = require("./game");
+var inventory_1 = require("./inventory");
 var Exploration = /** @class */ (function () {
     function Exploration() {
+        var menu_entries = [["Inventory", inventory_1.inventory_btn_on_click]];
+        game_1.Game.Instance.menu.push("", menu_entries);
     }
-    Exploration.prototype.update = function (current_action) {
+    Exploration.prototype.update = function () {
+        var last_battle_data_clicked = game_1.Game.Instance.player.get_last_battle_data_clicked();
+        if (last_battle_data_clicked != null) {
+            game_1.Game.Instance.take_action(game_1.Game.Instance.player.battle_data, [
+                last_battle_data_clicked
+            ]);
+        }
     };
     return Exploration;
 }());
 exports.Exploration = Exploration;
 
-},{}],28:[function(require,module,exports){
+},{"./game":28,"./inventory":31}],28:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69572,7 +69573,7 @@ var Game = /** @class */ (function () {
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
         this.level_idx = 0;
-        this.state = new exploration_1.Exploration();
+        this.state = null;
         this.input = new input_1.Input();
         this.current_action = null;
         // Rendering.
@@ -69604,6 +69605,9 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.update = function () {
         var _a, _b;
+        if (this.state == null) {
+            this.state = new exploration_1.Exploration();
+        }
         this.player.update();
         this.world.update();
         (_a = this.state) === null || _a === void 0 ? void 0 : _a.update(this.current_action);
@@ -69629,6 +69633,10 @@ var Game = /** @class */ (function () {
             for (var t = 0; t < targets.length; t++) {
                 (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
+            this.player.inventory.destroy_item(action.item_name);
+            this.menu.pop();
+            this.menu.pop();
+            this.set_actor_cards_enabled(false);
         }
         else {
             if (this.state instanceof battle_1.Battle) {
@@ -69800,6 +69808,7 @@ var Inventory = /** @class */ (function () {
             return true;
         }
         if (this.items.get(item) == undefined || this.items.get(item) < count) {
+            console.log("Error destroying item: " + item + " (" + count + ")");
             return false;
         }
         this.items.set(item, this.items.get(item) - count);

@@ -26,7 +26,7 @@ var Game = /** @class */ (function () {
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
         this.level_idx = 0;
-        this.state = new exploration_1.Exploration();
+        this.state = null;
         this.input = new input_1.Input();
         this.current_action = null;
         // Rendering.
@@ -58,6 +58,9 @@ var Game = /** @class */ (function () {
     };
     Game.prototype.update = function () {
         var _a, _b;
+        if (this.state == null) {
+            this.state = new exploration_1.Exploration();
+        }
         this.player.update();
         this.world.update();
         (_a = this.state) === null || _a === void 0 ? void 0 : _a.update(this.current_action);
@@ -83,6 +86,10 @@ var Game = /** @class */ (function () {
             for (var t = 0; t < targets.length; t++) {
                 (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
+            this.player.inventory.destroy_item(action.item_name);
+            this.menu.pop();
+            this.menu.pop();
+            this.set_actor_cards_enabled(false);
         }
         else {
             if (this.state instanceof battle_1.Battle) {

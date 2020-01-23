@@ -33,6 +33,7 @@ var Inventory = /** @class */ (function () {
             return true;
         }
         if (this.items.get(item) == undefined || this.items.get(item) < count) {
+            console.log("Error destroying item: " + item + " (" + count + ")");
             return false;
         }
         this.items.set(item, this.items.get(item) - count);

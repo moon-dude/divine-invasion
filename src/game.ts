@@ -29,7 +29,7 @@ export class Game {
 
   private area: AreaData = cave_data;
   private level_idx: number = 0;
-  private state: Battle | Exploration = new Exploration();
+  private state: Battle | Exploration | null = null;
   private input: Input = new Input();
   private current_action: GameAction | null = null;
 
@@ -70,6 +70,9 @@ export class Game {
   }
 
   public update(): void {
+    if (this.state == null) {
+      this.state = new Exploration();
+    }
     this.player.update();
     this.world.update();
     this.state?.update(this.current_action);
@@ -100,6 +103,10 @@ export class Game {
       for (let t = 0; t < targets.length; t++) {
         item?.effect(targets[t]);
       }
+      this.player.inventory.destroy_item(action.item_name!);
+      this.menu.pop();
+      this.menu.pop();
+      this.set_actor_cards_enabled(false);
     } else {
       if (this.state instanceof Battle) {
         this.state.take_battle_action(actor, targets, action);

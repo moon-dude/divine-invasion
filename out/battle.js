@@ -5,7 +5,6 @@ var skill_effect_1 = require("./data/skill_effect");
 var battle_ai_1 = require("./battle_ai");
 var log_1 = require("./log");
 var game_1 = require("./game");
-var items_1 = require("./data/raw/items");
 var skills_1 = require("./data/raw/skills");
 var requests_1 = require("./requests");
 var battle_player_1 = require("./battle_player");
@@ -115,20 +114,12 @@ var Battle = /** @class */ (function () {
         this.set_auto_next_interval();
     };
     Battle.prototype.take_battle_action = function (fighter, targets, action) {
-        var _a;
         fighter.mark_just_acted();
         if (action instanceof actions_1.AttackAction) {
             log_1.Log.push(this.current_fighter().name + " attacked.");
             var damage = Math.floor(fighter.modded_base_stats().st + fighter.modded_base_stats().dx);
             for (var t = 0; t < targets.length; t++) {
                 targets[t].take_damage(damage);
-            }
-        }
-        else if (action instanceof actions_1.InventoryAction) {
-            log_1.Log.push(this.current_fighter().name + " used `" + action.item_name + "`.");
-            var item = items_1.ITEM_MAP.get(action.item_name);
-            for (var t = 0; t < targets.length; t++) {
-                (_a = item) === null || _a === void 0 ? void 0 : _a.effect(targets[t]);
             }
         }
         else if (action instanceof actions_1.SkillAction) {

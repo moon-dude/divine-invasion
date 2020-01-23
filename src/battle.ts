@@ -159,14 +159,6 @@ export class Battle {
       for (let t = 0; t < targets.length; t++) {
         targets[t].take_damage(damage);
       }
-    } else if (action instanceof InventoryAction) {
-      Log.push(
-        this.current_fighter().name + " used `" + action.item_name! + "`."
-      );
-      const item = ITEM_MAP.get(action.item_name!);
-      for (let t = 0; t < targets.length; t++) {
-        item?.effect(targets[t]);
-      }
     } else if (action instanceof SkillAction) {
       const skill = SKILL_MAP.get(action.skill_name!)!;
       fighter.mod_stats.mp -= skill.cost;
