@@ -11,7 +11,9 @@ var ActorCard = /** @class */ (function () {
         this.name_btn = document.createElement("button");
         this.name_btn.innerHTML = fighter_data.name;
         this.name_btn.disabled = true;
-        this.name_btn.onclick = function () { _this.name_btn_clicked = true; };
+        this.name_btn.onclick = function () {
+            _this.name_btn_clicked = true;
+        };
         this.mood_span = document.createElement("span");
         if (fighter_data.mood != null) {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
@@ -37,18 +39,20 @@ var ActorCard = /** @class */ (function () {
         else {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
-        this.level.innerHTML = "<span class=\"sub\"> lv.</span>" + fighter_data.get_level() + " ";
+        this.level.innerHTML =
+            '<span class="sub"> LV:</span>' + fighter_data.get_level() + " ";
         if (this.show_stats) {
             this.health.innerHTML =
-                fighter_data.modded_base_stats().hp +
+                '<span class="sub">HP:</span>' +
+                    fighter_data.modded_base_stats().hp +
                     '<span class="sub">/' +
                     fighter_data.base_stats.hp +
-                    " HP</span> ";
+                    " MP:</span>";
             this.mana.innerHTML =
                 fighter_data.modded_base_stats().mp +
                     '<span class="sub">/' +
                     fighter_data.base_stats.mp +
-                    " MP</span> ";
+                    "</span> ";
         }
     };
     ActorCard.prototype.was_clicked = function () {

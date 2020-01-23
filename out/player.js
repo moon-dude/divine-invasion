@@ -16,7 +16,6 @@ var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
 var log_1 = require("./log");
 var actor_card_1 = require("./actor_card");
-var area_data_1 = require("./data/areas/area_data");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player(coor) {
@@ -69,20 +68,15 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == area_data_1.WALL_CHAR) {
+        if (!map.is_walkable(move_coor.x, move_coor.z)) {
             return false;
-        }
-        if (map.walkable.get(move_coor.x, move_coor.z) == "+") {
-            this.battle_data.mod_stats.hp = 0;
-            this.battle_data.mod_stats.mp = 0;
-            for (var i = 0; i < this.recruits.length; i++) {
-                this.recruits[i].battle_data.mod_stats.hp = 0;
-                this.recruits[i].battle_data.mod_stats.mp = 0;
-            }
         }
         // Reorient towards npcs if going backwards.
         if (steps < 0) {
             for (var n = 0; n < npcs.length; n++) {
+                if (npcs[n].battle_data.modded_base_stats().hp <= 0) {
+                    continue;
+                }
                 if (move_coor.equals(npcs[n].coor)) {
                     this.dir = jlib_1.DirCW(jlib_1.DirCW(this.dir));
                     break;

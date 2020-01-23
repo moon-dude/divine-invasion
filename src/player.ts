@@ -87,20 +87,15 @@ export class Player {
       return false;
     }
     let move_coor = ApplyDir(this.coor, this.dir, steps);
-    if (map.walkable.get(move_coor.x, move_coor.z) == WALL_CHAR) {
+    if (!map.is_walkable(move_coor.x, move_coor.z)) {
       return false;
-    }
-    if (map.walkable.get(move_coor.x, move_coor.z) == "+") {
-      this.battle_data.mod_stats.hp = 0;
-      this.battle_data.mod_stats.mp = 0;
-      for (let i = 0; i < this.recruits.length; i++) {
-        this.recruits[i].battle_data.mod_stats.hp = 0;
-        this.recruits[i].battle_data.mod_stats.mp = 0;
-      }
     }
     // Reorient towards npcs if going backwards.
     if (steps < 0) {
       for (let n = 0; n < npcs.length; n++) {
+        if (npcs[n].battle_data.modded_base_stats().hp <= 0) {
+          continue;
+        }
         if (move_coor.equals(npcs[n].coor)) {
           this.dir = DirCW(DirCW(this.dir));
           break;

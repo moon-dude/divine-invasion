@@ -61,27 +61,34 @@ function buildMeshes(walkable) {
     return meshes;
 }
 var TileMap = /** @class */ (function () {
-    function TileMap(walkable) {
-        this.walkable = walkable;
+    function TileMap(string_grid) {
+        this.string_grid = string_grid;
         var visited = [];
+        var walkable = [];
         var stairs_up = [];
         var stairs_down = [];
+        var encounter = [];
         this.player_start = null;
-        while (visited.length < this.walkable.count) {
-            var x = visited.length % this.walkable.width;
-            var z = Math.floor(visited.length / this.walkable.width);
+        while (visited.length < this.string_grid.count) {
+            var x = visited.length % this.string_grid.width;
+            var z = Math.floor(visited.length / this.string_grid.width);
             visited.push(false);
-            stairs_up.push(this.walkable.get(x, z) == area_data_1.STAIRS_UP_CHAR);
-            stairs_down.push(this.walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR);
-            if (this.walkable.get(x, z) == area_data_1.PLAYER_START_CHAR) {
+            stairs_up.push(this.string_grid.get(x, z) == area_data_1.STAIRS_UP_CHAR);
+            stairs_down.push(this.string_grid.get(x, z) == area_data_1.STAIRS_DOWN_CHAR);
+            if (this.string_grid.get(x, z) == area_data_1.PLAYER_START_CHAR) {
                 this.player_start = new jlib_1.Coor(x, z);
             }
+            encounter.push(this.string_grid.get(x, z) == area_data_1.ENCOUNTER_CHAR);
         }
-        this.visited = new jlib_1.Grid(visited, this.walkable.width);
-        this.stairs_up = new jlib_1.Grid(stairs_up, this.walkable.width);
-        this.stairs_down = new jlib_1.Grid(stairs_down, this.walkable.width);
-        this.meshes = buildMeshes(this.walkable);
+        this.visited = new jlib_1.Grid(visited, this.string_grid.width);
+        this.stairs_up = new jlib_1.Grid(stairs_up, this.string_grid.width);
+        this.stairs_down = new jlib_1.Grid(stairs_down, this.string_grid.width);
+        this.encounter = new jlib_1.Grid(encounter, this.string_grid.width);
+        this.meshes = buildMeshes(this.string_grid);
     }
+    TileMap.prototype.is_walkable = function (x, z) {
+        return this.string_grid.get(x, z) != area_data_1.WALL_CHAR;
+    };
     return TileMap;
 }());
 exports.TileMap = TileMap;

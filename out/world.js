@@ -61,7 +61,7 @@ var World = /** @class */ (function () {
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {
-        var open_coors = map.walkable.filter_eq(area_data_1.EMPTY_SPACE_CHAR);
+        var open_coors = map.string_grid.filter_eq(area_data_1.ENCOUNTER_CHAR);
         jlib_1.shuffle_array(open_coors);
         var result = [];
         for (var i = 0; i < count && i < open_coors.length; i++) {

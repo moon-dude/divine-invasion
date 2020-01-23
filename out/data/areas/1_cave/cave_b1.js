@@ -85,9 +85,9 @@ var npc_map = new Map([
 ]);
 var level1_actors = [];
 npc_map.forEach(function (actor, key, _) {
-    for (var x = 0; x < level1_map.walkable.width; x++) {
-        for (var z = 0; z < level1_map.walkable.depth; z++) {
-            if (key == level1_map.walkable.get(x, z)) {
+    for (var x = 0; x < level1_map.string_grid.width; x++) {
+        for (var z = 0; z < level1_map.string_grid.depth; z++) {
+            if (key == level1_map.string_grid.get(x, z)) {
                 actor.coor = new jlib_1.Coor(x, z);
                 actor.pos_index = 2;
                 level1_actors.push(actor);

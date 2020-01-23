@@ -51449,7 +51449,9 @@ var ActorCard = /** @class */ (function () {
         this.name_btn = document.createElement("button");
         this.name_btn.innerHTML = fighter_data.name;
         this.name_btn.disabled = true;
-        this.name_btn.onclick = function () { _this.name_btn_clicked = true; };
+        this.name_btn.onclick = function () {
+            _this.name_btn_clicked = true;
+        };
         this.mood_span = document.createElement("span");
         if (fighter_data.mood != null) {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
@@ -51475,18 +51477,20 @@ var ActorCard = /** @class */ (function () {
         else {
             this.mood_span.innerHTML = emotion_1.mood_string(fighter_data.mood);
         }
-        this.level.innerHTML = "<span class=\"sub\"> lv.</span>" + fighter_data.get_level() + " ";
+        this.level.innerHTML =
+            '<span class="sub"> LV:</span>' + fighter_data.get_level() + " ";
         if (this.show_stats) {
             this.health.innerHTML =
-                fighter_data.modded_base_stats().hp +
+                '<span class="sub">HP:</span>' +
+                    fighter_data.modded_base_stats().hp +
                     '<span class="sub">/' +
                     fighter_data.base_stats.hp +
-                    " HP</span> ";
+                    " MP:</span>";
             this.mana.innerHTML =
                 fighter_data.modded_base_stats().mp +
                     '<span class="sub">/' +
                     fighter_data.base_stats.mp +
-                    " MP</span> ";
+                    "</span> ";
         }
     };
     ActorCard.prototype.was_clicked = function () {
@@ -52142,9 +52146,9 @@ var npc_map = new Map([
 ]);
 var level1_actors = [];
 npc_map.forEach(function (actor, key, _) {
-    for (var x = 0; x < level1_map.walkable.width; x++) {
-        for (var z = 0; z < level1_map.walkable.depth; z++) {
-            if (key == level1_map.walkable.get(x, z)) {
+    for (var x = 0; x < level1_map.string_grid.width; x++) {
+        for (var z = 0; z < level1_map.string_grid.depth; z++) {
+            if (key == level1_map.string_grid.get(x, z)) {
                 actor.coor = new jlib_1.Coor(x, z);
                 actor.pos_index = 2;
                 level1_actors.push(actor);
@@ -52162,11 +52166,11 @@ var jlib_1 = require("../../../jlib");
 var area_data_1 = require("../area_data");
 var encounter_type_1 = require("../../encounter_type");
 var map_walkable = "####################" +
-    "# #        #  #  ###" +
-    "# # # ### ### ## ###" +
-    "#     # #        ###" +
-    "### ###   # #### ###" +
-    "###<#   # #   #  ###" +
+    "#.#........#..#..###" +
+    "#.#.#.###.###.##.###" +
+    "#.....#.#......###" +
+    "### ###...#.####.###" +
+    "###<#...#.#...#..###" +
     "#########  # ### ###" +
     "######### ###### ###" +
     "###########> @    ##" +
@@ -52181,7 +52185,7 @@ exports.level2_data = new area_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Strigoii"]),
-], 20);
+], 12);
 
 },{"../../../jlib":32,"../../../map":35,"../../encounter_type":18,"../area_data":16}],16:[function(require,module,exports){
 "use strict";
@@ -52192,6 +52196,7 @@ exports.STAIRS_UP_CHAR = ">";
 exports.PLAYER_START_CHAR = "@";
 exports.WALL_CHAR = "#";
 exports.EMPTY_SPACE_CHAR = " ";
+exports.ENCOUNTER_CHAR = ".";
 var LevelData = /** @class */ (function () {
     function LevelData(map, actors, encounter_types, encounter_count, offset_from_above) {
         if (offset_from_above === void 0) { offset_from_above = new jlib_1.Coor(0, 0); }
@@ -70061,27 +70066,34 @@ function buildMeshes(walkable) {
     return meshes;
 }
 var TileMap = /** @class */ (function () {
-    function TileMap(walkable) {
-        this.walkable = walkable;
+    function TileMap(string_grid) {
+        this.string_grid = string_grid;
         var visited = [];
+        var walkable = [];
         var stairs_up = [];
         var stairs_down = [];
+        var encounter = [];
         this.player_start = null;
-        while (visited.length < this.walkable.count) {
-            var x = visited.length % this.walkable.width;
-            var z = Math.floor(visited.length / this.walkable.width);
+        while (visited.length < this.string_grid.count) {
+            var x = visited.length % this.string_grid.width;
+            var z = Math.floor(visited.length / this.string_grid.width);
             visited.push(false);
-            stairs_up.push(this.walkable.get(x, z) == area_data_1.STAIRS_UP_CHAR);
-            stairs_down.push(this.walkable.get(x, z) == area_data_1.STAIRS_DOWN_CHAR);
-            if (this.walkable.get(x, z) == area_data_1.PLAYER_START_CHAR) {
+            stairs_up.push(this.string_grid.get(x, z) == area_data_1.STAIRS_UP_CHAR);
+            stairs_down.push(this.string_grid.get(x, z) == area_data_1.STAIRS_DOWN_CHAR);
+            if (this.string_grid.get(x, z) == area_data_1.PLAYER_START_CHAR) {
                 this.player_start = new jlib_1.Coor(x, z);
             }
+            encounter.push(this.string_grid.get(x, z) == area_data_1.ENCOUNTER_CHAR);
         }
-        this.visited = new jlib_1.Grid(visited, this.walkable.width);
-        this.stairs_up = new jlib_1.Grid(stairs_up, this.walkable.width);
-        this.stairs_down = new jlib_1.Grid(stairs_down, this.walkable.width);
-        this.meshes = buildMeshes(this.walkable);
+        this.visited = new jlib_1.Grid(visited, this.string_grid.width);
+        this.stairs_up = new jlib_1.Grid(stairs_up, this.string_grid.width);
+        this.stairs_down = new jlib_1.Grid(stairs_down, this.string_grid.width);
+        this.encounter = new jlib_1.Grid(encounter, this.string_grid.width);
+        this.meshes = buildMeshes(this.string_grid);
     }
+    TileMap.prototype.is_walkable = function (x, z) {
+        return this.string_grid.get(x, z) != area_data_1.WALL_CHAR;
+    };
     return TileMap;
 }());
 exports.TileMap = TileMap;
@@ -70167,7 +70179,6 @@ var stats_1 = require("./stats");
 var inventory_1 = require("./inventory");
 var log_1 = require("./log");
 var actor_card_1 = require("./actor_card");
-var area_data_1 = require("./data/areas/area_data");
 exports.PLAYER_NAME = "Player";
 var Player = /** @class */ (function () {
     function Player(coor) {
@@ -70220,20 +70231,15 @@ var Player = /** @class */ (function () {
             return false;
         }
         var move_coor = jlib_1.ApplyDir(this.coor, this.dir, steps);
-        if (map.walkable.get(move_coor.x, move_coor.z) == area_data_1.WALL_CHAR) {
+        if (!map.is_walkable(move_coor.x, move_coor.z)) {
             return false;
-        }
-        if (map.walkable.get(move_coor.x, move_coor.z) == "+") {
-            this.battle_data.mod_stats.hp = 0;
-            this.battle_data.mod_stats.mp = 0;
-            for (var i = 0; i < this.recruits.length; i++) {
-                this.recruits[i].battle_data.mod_stats.hp = 0;
-                this.recruits[i].battle_data.mod_stats.mp = 0;
-            }
         }
         // Reorient towards npcs if going backwards.
         if (steps < 0) {
             for (var n = 0; n < npcs.length; n++) {
+                if (npcs[n].battle_data.modded_base_stats().hp <= 0) {
+                    continue;
+                }
                 if (move_coor.equals(npcs[n].coor)) {
                     this.dir = jlib_1.DirCW(jlib_1.DirCW(this.dir));
                     break;
@@ -70313,7 +70319,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":5,"./actor_card":6,"./battle_data":10,"./constants":12,"./data/areas/area_data":16,"./inventory":31,"./jlib":32,"./log":33,"./stats":39,"three":3}],38:[function(require,module,exports){
+},{"./actor":5,"./actor_card":6,"./battle_data":10,"./constants":12,"./inventory":31,"./jlib":32,"./log":33,"./stats":39,"three":3}],38:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
@@ -70467,7 +70473,7 @@ var World = /** @class */ (function () {
     }
     /// Identify all of the open tiles and pick a random unique set.
     World.prototype.make_encounters = function (map, count) {
-        var open_coors = map.walkable.filter_eq(area_data_1.EMPTY_SPACE_CHAR);
+        var open_coors = map.string_grid.filter_eq(area_data_1.ENCOUNTER_CHAR);
         jlib_1.shuffle_array(open_coors);
         var result = [];
         for (var i = 0; i < count && i < open_coors.length; i++) {

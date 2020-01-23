@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { TileMap } from "./map";
 import { Actor } from "./actor";
 import { flags } from "./globals";
-import { LevelData, EMPTY_SPACE_CHAR } from "./data/areas/area_data";
+import { LevelData, EMPTY_SPACE_CHAR, ENCOUNTER_CHAR } from "./data/areas/area_data";
 import { Coor, shuffle_array, random_array_element } from "./jlib";
 import { TILE_SIZE } from "./constants";
 import { BattleSide } from "./battle_data";
@@ -75,7 +75,7 @@ export class World {
 
   /// Identify all of the open tiles and pick a random unique set.
   private make_encounters(map: TileMap, count: number): Coor[] {
-    let open_coors: Coor[] = map.walkable.filter_eq(EMPTY_SPACE_CHAR);
+    let open_coors: Coor[] = map.string_grid.filter_eq(ENCOUNTER_CHAR);
     shuffle_array(open_coors);
     let result: Coor[] = [];
     for (let i = 0; i < count && i < open_coors.length; i++) {

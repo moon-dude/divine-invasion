@@ -90,9 +90,9 @@ var npc_map: Map<string, Actor> = new Map([
 
 var level1_actors: Actor[] = [];
 npc_map.forEach((actor, key, _) => {
-  for (let x = 0; x < level1_map.walkable.width; x++) {
-    for (let z = 0; z < level1_map.walkable.depth; z++) {
-      if (key == level1_map.walkable.get(x, z)) {
+  for (let x = 0; x < level1_map.string_grid.width; x++) {
+    for (let z = 0; z < level1_map.string_grid.depth; z++) {
+      if (key == level1_map.string_grid.get(x, z)) {
         actor.coor = new Coor(x, z);
         actor.pos_index = 2;
         level1_actors.push(actor);

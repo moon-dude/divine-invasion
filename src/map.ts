@@ -5,7 +5,8 @@ import {
   WALL_CHAR,
   STAIRS_DOWN_CHAR,
   STAIRS_UP_CHAR,
-  PLAYER_START_CHAR
+  PLAYER_START_CHAR,
+  ENCOUNTER_CHAR
 } from "./data/areas/area_data";
 
 const box_geometry = new THREE.BoxGeometry(TILE_SIZE, TILE_SIZE, TILE_SIZE);
@@ -58,33 +59,42 @@ function buildMeshes(walkable: Grid<string>): THREE.Mesh[] {
 }
 
 export class TileMap {
-  walkable: Grid<string>;
+  string_grid: Grid<string>;
   visited: Grid<boolean>;
   stairs_up: Grid<boolean>;
   stairs_down: Grid<boolean>;
+  encounter: Grid<boolean>;
   player_start: Coor | null;
 
   meshes: THREE.Mesh[];
 
-  constructor(walkable: Grid<string>) {
-    this.walkable = walkable;
+  constructor(string_grid: Grid<string>) {
+    this.string_grid = string_grid;
     let visited = [];
+    let walkable = [];
     let stairs_up = [];
     let stairs_down = [];
+    let encounter = [];
     this.player_start = null;
-    while (visited.length < this.walkable.count) {
-      const x = visited.length % this.walkable.width;
-      const z = Math.floor(visited.length / this.walkable.width);
+    while (visited.length < this.string_grid.count) {
+      const x = visited.length % this.string_grid.width;
+      const z = Math.floor(visited.length / this.string_grid.width);
       visited.push(false);
-      stairs_up.push(this.walkable.get(x, z) == STAIRS_UP_CHAR);
-      stairs_down.push(this.walkable.get(x, z) == STAIRS_DOWN_CHAR);
-      if (this.walkable.get(x, z) == PLAYER_START_CHAR) {
+      stairs_up.push(this.string_grid.get(x, z) == STAIRS_UP_CHAR);
+      stairs_down.push(this.string_grid.get(x, z) == STAIRS_DOWN_CHAR);
+      if (this.string_grid.get(x, z) == PLAYER_START_CHAR) {
         this.player_start = new Coor(x, z);
       }
+      encounter.push(this.string_grid.get(x, z) == ENCOUNTER_CHAR);
     }
-    this.visited = new Grid<boolean>(visited, this.walkable.width);
-    this.stairs_up = new Grid<boolean>(stairs_up, this.walkable.width);
-    this.stairs_down = new Grid<boolean>(stairs_down, this.walkable.width);
-    this.meshes = buildMeshes(this.walkable);
+    this.visited = new Grid<boolean>(visited, this.string_grid.width);
+    this.stairs_up = new Grid<boolean>(stairs_up, this.string_grid.width);
+    this.stairs_down = new Grid<boolean>(stairs_down, this.string_grid.width);
+    this.encounter = new Grid<boolean>(encounter, this.string_grid.width);
+    this.meshes = buildMeshes(this.string_grid);
+  }
+
+  public is_walkable(x: number, z: number): boolean {
+    return this.string_grid.get(x, z) != WALL_CHAR;
   }
 }

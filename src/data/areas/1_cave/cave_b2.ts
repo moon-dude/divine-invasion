@@ -5,11 +5,11 @@ import { EncounterType } from "../../encounter_type";
 
 var map_walkable: string = 
   "####################" +
-  "# #        #  #  ###" +
-  "# # # ### ### ## ###" +
-  "#     # #        ###" +
-  "### ###   # #### ###" +
-  "###<#   # #   #  ###" +
+  "#.#........#..#..###" +
+  "#.#.#.###.###.##.###" +
+  "#.....#.#......###" +
+  "### ###...#.####.###" +
+  "###<#...#.#...#..###" +
   "#########  # ### ###" +
   "######### ###### ###" +
   "###########> @    ##" +
@@ -30,5 +30,5 @@ export let level2_data: LevelData = new LevelData(
     new EncounterType(["Onmoraki", "Onmoraki"]),
     new EncounterType(["Strigoii"]),
   ], 
-  20, 
+  12, 
   );
