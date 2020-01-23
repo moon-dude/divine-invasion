@@ -51338,7 +51338,12 @@ var Actor = /** @class */ (function () {
         }
         var mood = null;
         if (side == battle_data_1.BattleSide.Their) {
-            mood = emotion_1.Mood.Aggressive;
+            if (demon.race == "Fairy" || demon.race == "Ghost") {
+                mood = emotion_1.Mood.Devilish;
+            }
+            else {
+                mood = emotion_1.Mood.Aggressive;
+            }
         }
         var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.level || 1, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
@@ -51850,7 +51855,6 @@ var BattleData = /** @class */ (function () {
     function BattleData(name, side, base_level, base_stats, mod_stats, skills, mood) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
-        this.exp = new exp_1.Exp();
         this.recruited = false;
         this.did_just_act = false;
         this.did_just_get_damaged = false;
@@ -51861,6 +51865,7 @@ var BattleData = /** @class */ (function () {
         this.mod_stats = mod_stats;
         this.skills = skills;
         this.mood = mood;
+        this.exp = new exp_1.Exp(base_level);
     }
     BattleData.prototype.log_result = function (s) {
         log_1.Log.push('<span class="log_result">' +
@@ -51915,7 +51920,7 @@ var BattleData = /** @class */ (function () {
         this.log_result("healed for " + amount + ". ");
     };
     BattleData.prototype.modded_base_stats = function () {
-        return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
+        return stats_1.apply_stats_mod(this.base_stats, this.exp.get_stat_bonus(), this.mod_stats);
     };
     BattleData.prototype.will_take_hit = function (attacker_dx, attacker_hit_evade, skill_percent) {
         if (skill_percent === void 0) { skill_percent = 1; }
@@ -51945,7 +51950,12 @@ var BattleData = /** @class */ (function () {
         return value;
     };
     BattleData.prototype.get_level = function () {
-        return this.base_level + this.exp.levels_gained;
+        return this.base_level + this.exp.get_levels_gained();
+    };
+    BattleData.prototype.add_exp = function (value) {
+        if (this.exp.add(value)) {
+            log_1.Log.push(this.name + " achieved level " + this.get_level());
+        }
     };
     BattleData.IDENTITY = new BattleData("", BattleSide.Our, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;
@@ -51969,7 +51979,7 @@ var game_1 = require("./game");
 var requests_1 = require("./requests");
 var inventory_1 = require("./inventory");
 function set_up_player_turn(fighter) {
-    var battle_action_entries = [
+    var menu_entries = [
         [
             "Attack",
             function () {
@@ -52022,7 +52032,7 @@ function set_up_player_turn(fighter) {
         ]
     ];
     var _loop_1 = function (i) {
-        battle_action_entries.push([
+        menu_entries.push([
             fighter.skills[i].name,
             function () {
                 game_1.Game.Instance.set_actor_cards_enabled(true);
@@ -52041,7 +52051,7 @@ function set_up_player_turn(fighter) {
     for (var i = 0; i < fighter.skills.length; i++) {
         _loop_1(i);
     }
-    game_1.Game.Instance.menu.push("Player turn", battle_action_entries);
+    game_1.Game.Instance.menu.push("Player turn", menu_entries);
 }
 exports.set_up_player_turn = set_up_player_turn;
 
@@ -52186,6 +52196,9 @@ exports.level2_data = new area_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 12);
+// goblin Fairy devilish
+// mandrake Wood aggressive
+// Legion aggressive
 
 },{"../../../jlib":32,"../../../map":35,"../../encounter_type":18,"../area_data":16}],16:[function(require,module,exports){
 "use strict";
@@ -69482,18 +69495,37 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
 // 10+2^(x*.3+3)
 var Exp = /** @class */ (function () {
-    function Exp() {
+    function Exp(base_level) {
         this.count = 0;
         this.levels_gained = 0;
         this.stat_bonus = stats_1.Stats.new_exp();
+        this.base_level = base_level;
+        this.base_exp = base_level * base_level + 1;
     }
-    /// Returns the delta levels gained.
+    /// Returns if leveled up.
     Exp.prototype.add = function (value) {
         this.count += value;
-        var new_levels_gained = Math.floor(Math.sqrt(this.count) - 1);
-        var delta = new_levels_gained - this.levels_gained;
-        this.levels_gained = new_levels_gained;
-        return delta;
+        var current_level = Math.floor(Math.sqrt(this.base_exp + this.count) - 1);
+        var delta_levels = current_level - (this.levels_gained + this.base_level);
+        if (delta_levels <= 0) {
+            return false;
+        }
+        this.levels_gained += delta_levels;
+        ;
+        this.stat_bonus.hp += delta_levels * 7;
+        this.stat_bonus.mp += delta_levels * 3;
+        this.stat_bonus.st += delta_levels;
+        this.stat_bonus.ag += delta_levels;
+        this.stat_bonus.lu += delta_levels;
+        this.stat_bonus.dx += delta_levels;
+        this.stat_bonus.ma += delta_levels;
+        return true;
+    };
+    Exp.prototype.get_levels_gained = function () {
+        return this.levels_gained;
+    };
+    Exp.prototype.get_stat_bonus = function () {
+        return this.stat_bonus;
     };
     return Exp;
 }());
@@ -70195,13 +70227,13 @@ var Player = /** @class */ (function () {
         this.body.position.z = this.coor.z * constants_1.TILE_SIZE;
         this.body.add(this.camera);
         this.body.add(this.light);
-        var stats = new stats_1.Stats(275, 0);
-        stats.ag = 25;
-        stats.dx = 30;
-        stats.lu = 35;
+        var stats = new stats_1.Stats(250, 0);
+        stats.ag = 15;
+        stats.dx = 10;
+        stats.lu = 10;
         stats.ma = 0;
         stats.st = 22;
-        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 7, stats, stats_1.Stats.new_mod(), [], null);
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 3, stats, stats_1.Stats.new_mod(), [], null);
         this.recruits = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
         this.player_info_div = document.getElementById("player_info_div");
@@ -70273,13 +70305,13 @@ var Player = /** @class */ (function () {
                 this.add_recruit(from_actors[i]);
             }
         }
-        var level_delta = this.battle_data.exp.add(total_exp);
+        log_1.Log.push("Gained " + total_macca + " macca.");
+        log_1.Log.push("Gained " + total_exp + " experience.");
+        this.battle_data.add_exp(total_exp);
         for (var i = 0; i < this.recruits.length; i++) {
-            var level_delta_1 = this.recruits[i].battle_data.exp.add(total_exp);
+            this.recruits[i].battle_data.add_exp(total_exp);
         }
         this.macca += total_macca;
-        log_1.Log.push("Gained " + total_exp + " experience.");
-        log_1.Log.push("Gained " + total_macca + " macca.");
     };
     Player.prototype.add_recruit = function (actor) {
         actor.battle_data.side = battle_data_1.BattleSide.Our;
@@ -70397,15 +70429,15 @@ var Stats = /** @class */ (function () {
     return Stats;
 }());
 exports.Stats = Stats;
-function apply_stats_mod(base, mod) {
+function apply_stats_mod(base, exp_mod, mult_mod) {
     // hp and mp are added/subtracted.
-    var result = new Stats(Math.max(0, base.hp + mod.hp), Math.max(0, base.mp + mod.mp));
+    var result = new Stats(Math.max(0, base.hp + exp_mod.hp + mult_mod.hp), Math.max(0, base.mp + exp_mod.mp + mult_mod.mp));
     // The rest are multiplied.
-    result.ag = base.ag * mod.ag;
-    result.dx = base.dx * mod.dx;
-    result.lu = base.lu * mod.lu;
-    result.ma = base.ma * mod.ma;
-    result.st = base.st * mod.st;
+    result.ag = (base.ag + exp_mod.ag) * mult_mod.ag;
+    result.dx = (base.dx + exp_mod.dx) * mult_mod.dx;
+    result.lu = (base.lu + exp_mod.lu) * mult_mod.lu;
+    result.ma = (base.ma + exp_mod.ma) * mult_mod.ma;
+    result.st = (base.st + exp_mod.st) * mult_mod.st;
     return result;
 }
 exports.apply_stats_mod = apply_stats_mod;

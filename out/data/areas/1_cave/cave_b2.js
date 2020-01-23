@@ -25,3 +25,6 @@ exports.level2_data = new area_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Strigoii"]),
 ], 12);
+// goblin Fairy devilish
+// mandrake Wood aggressive
+// Legion aggressive

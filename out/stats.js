@@ -28,15 +28,15 @@ var Stats = /** @class */ (function () {
     return Stats;
 }());
 exports.Stats = Stats;
-function apply_stats_mod(base, mod) {
+function apply_stats_mod(base, exp_mod, mult_mod) {
     // hp and mp are added/subtracted.
-    var result = new Stats(Math.max(0, base.hp + mod.hp), Math.max(0, base.mp + mod.mp));
+    var result = new Stats(Math.max(0, base.hp + exp_mod.hp + mult_mod.hp), Math.max(0, base.mp + exp_mod.mp + mult_mod.mp));
     // The rest are multiplied.
-    result.ag = base.ag * mod.ag;
-    result.dx = base.dx * mod.dx;
-    result.lu = base.lu * mod.lu;
-    result.ma = base.ma * mod.ma;
-    result.st = base.st * mod.st;
+    result.ag = (base.ag + exp_mod.ag) * mult_mod.ag;
+    result.dx = (base.dx + exp_mod.dx) * mult_mod.dx;
+    result.lu = (base.lu + exp_mod.lu) * mult_mod.lu;
+    result.ma = (base.ma + exp_mod.ma) * mult_mod.ma;
+    result.st = (base.st + exp_mod.st) * mult_mod.st;
     return result;
 }
 exports.apply_stats_mod = apply_stats_mod;

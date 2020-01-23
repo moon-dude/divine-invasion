@@ -39,16 +39,16 @@ export class Player {
     this.body.position.z = this.coor.z * TILE_SIZE;
     this.body.add(this.camera);
     this.body.add(this.light);
-    let stats = new Stats(275, 0);
-    stats.ag = 25;
-    stats.dx = 30;
-    stats.lu = 35;
+    let stats = new Stats(250, 0);
+    stats.ag = 15;
+    stats.dx = 10;
+    stats.lu = 10;
     stats.ma = 0;
     stats.st = 22;
     this.battle_data = new BattleData(
       PLAYER_NAME,
       BattleSide.Our,
-      7,
+      3,
       stats,
       Stats.new_mod(),
       [],
@@ -128,13 +128,13 @@ export class Player {
         this.add_recruit(from_actors[i]);
       }
     }
-    const level_delta = this.battle_data.exp.add(total_exp);
+    Log.push("Gained " + total_macca + " macca.");
+    Log.push("Gained " + total_exp + " experience.");
+    this.battle_data.add_exp(total_exp);
     for (let i = 0; i < this.recruits.length; i++) {
-      const level_delta = this.recruits[i].battle_data.exp.add(total_exp);
+      this.recruits[i].battle_data.add_exp(total_exp);
     }
     this.macca += total_macca;
-    Log.push("Gained " + total_exp + " experience.");
-    Log.push("Gained " + total_macca + " macca.");
   }
 
   public add_recruit(actor: Actor) {

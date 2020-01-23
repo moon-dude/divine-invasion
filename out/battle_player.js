@@ -6,7 +6,7 @@ var game_1 = require("./game");
 var requests_1 = require("./requests");
 var inventory_1 = require("./inventory");
 function set_up_player_turn(fighter) {
-    var battle_action_entries = [
+    var menu_entries = [
         [
             "Attack",
             function () {
@@ -59,7 +59,7 @@ function set_up_player_turn(fighter) {
         ]
     ];
     var _loop_1 = function (i) {
-        battle_action_entries.push([
+        menu_entries.push([
             fighter.skills[i].name,
             function () {
                 game_1.Game.Instance.set_actor_cards_enabled(true);
@@ -78,6 +78,6 @@ function set_up_player_turn(fighter) {
     for (var i = 0; i < fighter.skills.length; i++) {
         _loop_1(i);
     }
-    game_1.Game.Instance.menu.push("Player turn", battle_action_entries);
+    game_1.Game.Instance.menu.push("Player turn", menu_entries);
 }
 exports.set_up_player_turn = set_up_player_turn;

@@ -31,13 +31,13 @@ var Player = /** @class */ (function () {
         this.body.position.z = this.coor.z * constants_1.TILE_SIZE;
         this.body.add(this.camera);
         this.body.add(this.light);
-        var stats = new stats_1.Stats(275, 0);
-        stats.ag = 25;
-        stats.dx = 30;
-        stats.lu = 35;
+        var stats = new stats_1.Stats(250, 0);
+        stats.ag = 15;
+        stats.dx = 10;
+        stats.lu = 10;
         stats.ma = 0;
         stats.st = 22;
-        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 7, stats, stats_1.Stats.new_mod(), [], null);
+        this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 3, stats, stats_1.Stats.new_mod(), [], null);
         this.recruits = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
         this.inventory.add_item("Life Stone", 5);
         this.player_info_div = document.getElementById("player_info_div");
@@ -109,13 +109,13 @@ var Player = /** @class */ (function () {
                 this.add_recruit(from_actors[i]);
             }
         }
-        var level_delta = this.battle_data.exp.add(total_exp);
+        log_1.Log.push("Gained " + total_macca + " macca.");
+        log_1.Log.push("Gained " + total_exp + " experience.");
+        this.battle_data.add_exp(total_exp);
         for (var i = 0; i < this.recruits.length; i++) {
-            var level_delta_1 = this.recruits[i].battle_data.exp.add(total_exp);
+            this.recruits[i].battle_data.add_exp(total_exp);
         }
         this.macca += total_macca;
-        log_1.Log.push("Gained " + total_exp + " experience.");
-        log_1.Log.push("Gained " + total_macca + " macca.");
     };
     Player.prototype.add_recruit = function (actor) {
         actor.battle_data.side = battle_data_1.BattleSide.Our;

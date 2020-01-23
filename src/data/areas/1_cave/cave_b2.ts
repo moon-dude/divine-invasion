@@ -32,3 +32,7 @@ export let level2_data: LevelData = new LevelData(
   ], 
   12, 
   );
+
+  // goblin Fairy devilish
+  // mandrake Wood aggressive
+  // Legion aggressive

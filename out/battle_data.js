@@ -19,7 +19,6 @@ var BattleData = /** @class */ (function () {
     function BattleData(name, side, base_level, base_stats, mod_stats, skills, mood) {
         this.buffs = new buffs_1.Buffs();
         this.ailments = new Set();
-        this.exp = new exp_1.Exp();
         this.recruited = false;
         this.did_just_act = false;
         this.did_just_get_damaged = false;
@@ -30,6 +29,7 @@ var BattleData = /** @class */ (function () {
         this.mod_stats = mod_stats;
         this.skills = skills;
         this.mood = mood;
+        this.exp = new exp_1.Exp(base_level);
     }
     BattleData.prototype.log_result = function (s) {
         log_1.Log.push('<span class="log_result">' +
@@ -84,7 +84,7 @@ var BattleData = /** @class */ (function () {
         this.log_result("healed for " + amount + ". ");
     };
     BattleData.prototype.modded_base_stats = function () {
-        return stats_1.apply_stats_mod(this.base_stats, this.mod_stats);
+        return stats_1.apply_stats_mod(this.base_stats, this.exp.get_stat_bonus(), this.mod_stats);
     };
     BattleData.prototype.will_take_hit = function (attacker_dx, attacker_hit_evade, skill_percent) {
         if (skill_percent === void 0) { skill_percent = 1; }
@@ -114,7 +114,12 @@ var BattleData = /** @class */ (function () {
         return value;
     };
     BattleData.prototype.get_level = function () {
-        return this.base_level + this.exp.levels_gained;
+        return this.base_level + this.exp.get_levels_gained();
+    };
+    BattleData.prototype.add_exp = function (value) {
+        if (this.exp.add(value)) {
+            log_1.Log.push(this.name + " achieved level " + this.get_level());
+        }
     };
     BattleData.IDENTITY = new BattleData("", BattleSide.Our, 1, stats_1.Stats.new_base(), stats_1.Stats.new_mod(), [], emotion_1.Mood.Aggressive);
     return BattleData;

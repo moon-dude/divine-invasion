@@ -5,7 +5,7 @@ import { Log } from "./log";
 import { Game, GameAction } from "./game";
 import { ITEM_MAP } from "./data/raw/items";
 import { SKILL_MAP } from "./data/raw/skills";
-import { try_ai_request, request_result, Request } from "./requests";
+import { try_ai_request, request_result } from "./requests";
 import { set_up_player_turn } from "./battle_player";
 import {
   AttackAction,

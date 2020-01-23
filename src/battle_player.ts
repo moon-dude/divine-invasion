@@ -2,7 +2,6 @@ import { BattleData, BattleSide } from "./battle_data";
 import { MenuEntry } from "./menu";
 import {
   AttackAction,
-  InventoryAction,
   SkillAction,
   RequestAction
 } from "./actions";
@@ -11,7 +10,7 @@ import { Request } from "./requests";
 import { inventory_btn_on_click } from "./inventory";
 
 export function set_up_player_turn(fighter: BattleData) {
-  let battle_action_entries: MenuEntry[] = [
+  let menu_entries: MenuEntry[] = [
     [
       "Attack",
       () => {
@@ -71,7 +70,7 @@ export function set_up_player_turn(fighter: BattleData) {
     ]
   ];
   for (let i = 0; i < fighter.skills.length; i++) {
-    battle_action_entries.push([
+    menu_entries.push([
       fighter.skills[i].name,
       () => {
         Game.Instance.set_actor_cards_enabled(true);
@@ -92,5 +91,5 @@ export function set_up_player_turn(fighter: BattleData) {
       }
     ]);
   }
-  Game.Instance.menu.push("Player turn", battle_action_entries);
+  Game.Instance.menu.push("Player turn", menu_entries);
 }

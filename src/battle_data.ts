@@ -35,10 +35,10 @@ export class BattleData {
   public mod_stats: Stats;
   public buffs: Buffs = new Buffs();
   public ailments: Set<SkillEffect> = new Set();
-  public exp: Exp = new Exp();
   public mood: Mood | null;
   public recruited: boolean = false;
 
+  private exp: Exp;
   private did_just_act: boolean = false;
   private did_just_get_damaged: boolean = false;
 
@@ -58,6 +58,7 @@ export class BattleData {
     this.mod_stats = mod_stats;
     this.skills = skills;
     this.mood = mood;
+    this.exp = new Exp(base_level);
   }
 
   private log_result(s: string): void {
@@ -117,7 +118,7 @@ export class BattleData {
   }
 
   public modded_base_stats(): Stats {
-    return apply_stats_mod(this.base_stats, this.mod_stats);
+    return apply_stats_mod(this.base_stats, this.exp.get_stat_bonus(), this.mod_stats);
   }
 
   public will_take_hit(
@@ -156,7 +157,13 @@ export class BattleData {
   }
 
   public get_level(): number {
-    return this.base_level + this.exp.levels_gained;
+    return this.base_level + this.exp.get_levels_gained();
+  }
+
+  public add_exp(value: number): void {
+    if (this.exp.add(value)) {
+      Log.push(this.name + " achieved level " + this.get_level());
+    }
   }
 }
 

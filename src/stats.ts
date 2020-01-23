@@ -29,19 +29,19 @@ export class Stats {
   }
 }
 
-export function apply_stats_mod(base: Stats, mod: Stats): Stats {
+export function apply_stats_mod(base: Stats, exp_mod: Stats, mult_mod: Stats): Stats {
   // hp and mp are added/subtracted.
   let result = new Stats(
-    Math.max(0, base.hp + mod.hp),
-    Math.max(0, base.mp + mod.mp)
+    Math.max(0, base.hp + exp_mod.hp + mult_mod.hp),
+    Math.max(0, base.mp + exp_mod.mp + mult_mod.mp)
   );
 
   // The rest are multiplied.
-  result.ag = base.ag * mod.ag;
-  result.dx = base.dx * mod.dx;
-  result.lu = base.lu * mod.lu;
-  result.ma = base.ma * mod.ma;
-  result.st = base.st * mod.st;
+  result.ag = (base.ag + exp_mod.ag) * mult_mod.ag;
+  result.dx = (base.dx + exp_mod.dx) * mult_mod.dx;
+  result.lu = (base.lu + exp_mod.lu) * mult_mod.lu;
+  result.ma = (base.ma + exp_mod.ma) * mult_mod.ma;
+  result.st = (base.st + exp_mod.st) * mult_mod.st;
 
   return result;
 }

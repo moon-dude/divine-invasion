@@ -72,7 +72,11 @@ export class Actor {
     }
     let mood: Mood | null = null;
     if (side == BattleSide.Their) {
-      mood = Mood.Aggressive;
+      if (demon.race == "Fairy" || demon.race == "Ghost") {
+        mood = Mood.Devilish;
+      } else {
+        mood = Mood.Aggressive;
+      }
     }
     let actor = new Actor(
       name,
