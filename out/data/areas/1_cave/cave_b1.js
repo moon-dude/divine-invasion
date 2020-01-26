@@ -15,7 +15,7 @@ var map_walkable = "####################" +
     "#     #            #" +
     "### ###E###L#D#$#HG#" +
     "### ### #K##########" +
-    "###  J        <#####" +
+    "###  J       <######" +
     "####################";
 var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20), [
     "Life Stone",

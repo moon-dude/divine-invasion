@@ -7,22 +7,22 @@ import { LevelData } from "../area_data";
 import { BattleData } from "../../../battle_data";
 import { EncounterType } from "../../encounter_type";
 
-// B2
-// Natural cooridoors.
+// B3
+// Summoning room, priest quarters, 
 
 var map_walkable: string =
 "####################" +
-"#$...$# ####<  >####" +
-"##.#### #########M #" +
-"#$.##   ....  $### #" +
-"##....#######  N#  #" +
-"##.########## ####L#" +
-"##...<#$. ..# .    #" +
+"# #        >##    ##" +
+"#   # # #####      #" +
+"## ####            #" +
+"#    ########      #" +
+"## ########## #  # #" +
+"##  ##>     #      #" +
 "### ##### ######## #" +
-"##O       $#>  @   #" +
+"#                  #" +
 "####################";
 
-var level2_map = new TileMap(Grid.from_string(map_walkable, 20), [
+var level3_map = new TileMap(Grid.from_string(map_walkable, 20), [
   "Life Stone",
   "Life Stone"
 ]);
@@ -64,32 +64,31 @@ var npc_map: Map<string, Actor> = new Map([
 ]);
 
 
-var level2_actors: Actor[] = [];
+var level3_actors: Actor[] = [];
 npc_map.forEach((actor, key, _) => {
-  for (let x = 0; x < level2_map.string_grid.width; x++) {
-    for (let z = 0; z < level2_map.string_grid.depth; z++) {
-      if (key == level2_map.string_grid.get(x, z)) {
+  for (let x = 0; x < level3_map.string_grid.width; x++) {
+    for (let z = 0; z < level3_map.string_grid.depth; z++) {
+      if (key == level3_map.string_grid.get(x, z)) {
         actor.coor = new Coor(x, z);
         actor.pos_index = 2;
-        level2_actors.push(actor);
+        level3_actors.push(actor);
       }
     }
   }
 });
 
-export let level2_data: LevelData = new LevelData(
-  level2_map,
-  level2_actors,
+export let level3_data: LevelData = new LevelData(
+  level3_map,
+  level3_actors,
   [
-    new EncounterType(["Goblin", "Goblin"]),
-    new EncounterType(["Strigoii", "Goblin"]),
-    new EncounterType(["Goblin", "Mandrake"]),
-    new EncounterType(["Legion"]),
-    new EncounterType(["Legion", "Onmoraki"]),
-    new EncounterType(["Onmoraki"]),
-    new EncounterType(["Onmoraki", "Onmoraki"]),
-    new EncounterType(["Onmoraki", "Mandrake"]),
-    new EncounterType(["Strigoii"])
+    new EncounterType(["Fomorian", "Fomorian"]),
+    new EncounterType(["Kabuso", "Goblin"]),
+    new EncounterType(["Pele", "Porewit"]),
+    new EncounterType(["Porewit", "Kabuso"]),
+    new EncounterType(["Garrote", "Garrote"]),
+    new EncounterType(["Erthys"]),
+    new EncounterType(["Onmoraki", "Kabuso"]),
+    new EncounterType(["Strigoii", "Goblin", "Goblin"]),
   ],
   8
 );

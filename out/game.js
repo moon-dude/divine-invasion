@@ -25,7 +25,7 @@ var Game = /** @class */ (function () {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
-        this.level_idx = 0;
+        this.level_idx = 1;
         this.state = null;
         this.input = new input_1.Input();
         this.current_action = null;
@@ -53,7 +53,7 @@ var Game = /** @class */ (function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
-        this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
+        this.log_div.innerHTML = log_1.Log.as_string();
         this.header_div.innerHTML = "♄" + this.player.macca;
     };
     Game.prototype.update = function () {

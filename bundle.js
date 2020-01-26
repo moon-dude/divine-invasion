@@ -51440,7 +51440,7 @@ var Actor = /** @class */ (function () {
 }());
 exports.Actor = Actor;
 
-},{"./actor_tween":7,"./battle_data":10,"./constants":12,"./data/raw/demons":19,"./data/raw/skills":21,"./emotion":25,"./game":28,"./jlib":32,"./stats":39,"three":3}],6:[function(require,module,exports){
+},{"./actor_tween":7,"./battle_data":10,"./constants":12,"./data/raw/demons":20,"./data/raw/skills":22,"./emotion":26,"./game":29,"./jlib":33,"./stats":40,"three":3}],6:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var emotion_1 = require("./emotion");
@@ -51507,7 +51507,7 @@ var ActorCard = /** @class */ (function () {
 }());
 exports.ActorCard = ActorCard;
 
-},{"./emotion":25}],7:[function(require,module,exports){
+},{"./emotion":26}],7:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -51746,7 +51746,7 @@ function auto_next_interval_callback(idx) {
     }
 }
 
-},{"./actions":4,"./actor_card":6,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/skills":21,"./data/skill_effect":22,"./game":28,"./log":33,"./requests":38}],9:[function(require,module,exports){
+},{"./actions":4,"./actor_card":6,"./battle_ai":9,"./battle_data":10,"./battle_player":11,"./data/raw/skills":22,"./data/skill_effect":23,"./game":29,"./log":34,"./requests":39}],9:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("./data/util");
@@ -51824,7 +51824,7 @@ function get_attack_target(attacker, fighters) {
         .filter(function (x) { return x.modded_base_stats().hp > 0; }));
 }
 
-},{"./actions":4,"./battle_data":10,"./data/util":23,"./jlib":32}],10:[function(require,module,exports){
+},{"./actions":4,"./battle_data":10,"./data/util":24,"./jlib":33}],10:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -51976,7 +51976,7 @@ var BattleIndex = /** @class */ (function () {
 }());
 exports.BattleIndex = BattleIndex;
 
-},{"./data/buffs":17,"./data/skill_effect":22,"./emotion":25,"./exp":26,"./log":33,"./stats":39}],11:[function(require,module,exports){
+},{"./data/buffs":18,"./data/skill_effect":23,"./emotion":26,"./exp":27,"./log":34,"./stats":40}],11:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var battle_data_1 = require("./battle_data");
@@ -52067,7 +52067,7 @@ function set_up_player_turn(fighter) {
 }
 exports.set_up_player_turn = set_up_player_turn;
 
-},{"./actions":4,"./battle_data":10,"./game":28,"./inventory":31,"./requests":38}],12:[function(require,module,exports){
+},{"./actions":4,"./battle_data":10,"./game":29,"./inventory":32,"./requests":39}],12:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_SIZE = 4;
@@ -52078,9 +52078,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var area_data_1 = require("../area_data");
 var cave_b1_1 = require("./cave_b1");
 var cave_b2_1 = require("./cave_b2");
-exports.cave_data = new area_data_1.AreaData([cave_b2_1.level2_data, cave_b1_1.level1_data]);
+var cave_b3_1 = require("./cave_b3");
+exports.cave_data = new area_data_1.AreaData([cave_b3_1.level3_data, cave_b2_1.level2_data, cave_b1_1.level1_data]);
 
-},{"../area_data":16,"./cave_b1":14,"./cave_b2":15}],14:[function(require,module,exports){
+},{"../area_data":17,"./cave_b1":14,"./cave_b2":15,"./cave_b3":16}],14:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("../../../jlib");
@@ -52098,7 +52099,7 @@ var map_walkable = "####################" +
     "#     #            #" +
     "### ###E###L#D#$#HG#" +
     "### ### #K##########" +
-    "###  J        <#####" +
+    "###  J       <######" +
     "####################";
 var level1_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20), [
     "Life Stone",
@@ -52245,30 +52246,78 @@ npc_map.forEach(function (actor, key, _) {
 });
 exports.level1_data = new area_data_1.LevelData(level1_map, level1_actors, [], 0);
 
-},{"../../../actor":5,"../../../battle_data":10,"../../../dialogue":24,"../../../globals":29,"../../../jlib":32,"../../../map":35,"../area_data":16}],15:[function(require,module,exports){
+},{"../../../actor":5,"../../../battle_data":10,"../../../dialogue":25,"../../../globals":30,"../../../jlib":33,"../../../map":36,"../area_data":17}],15:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var map_1 = require("../../../map");
 var jlib_1 = require("../../../jlib");
+var actor_1 = require("../../../actor");
+var dialogue_1 = require("../../../dialogue");
+var map_1 = require("../../../map");
 var area_data_1 = require("../area_data");
 var encounter_type_1 = require("../../encounter_type");
+// B2
+// Natural cooridoors.
 var map_walkable = "####################" +
-    "#$#........#$.##$###" +
-    "#.#.#.###.###.##.###" +
-    "#.....#.#........###" +
-    "### ###...#.####.###" +
-    "###<#...#.#...#..###" +
-    "###### ##  # ### ###" +
-    "######    ###### ###" +
-    "######$######>@   ##" +
+    "#$...$# ####<  >####" +
+    "##.#### #########M #" +
+    "#$.##   ....  $### #" +
+    "##....#######  N#  #" +
+    "##.########## ####L#" +
+    "##...<#$. ..# .    #" +
+    "### ##### ######## #" +
+    "##O       $#>  @   #" +
     "####################";
 var level2_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20), [
     "Life Stone",
-    "Chakra Drop",
-    "Revival Bead",
     "Life Stone"
 ]);
-exports.level2_data = new area_data_1.LevelData(level2_map, [], [
+var npc_map = new Map([
+    [
+        "L",
+        new actor_1.Actor("Lazarus", [
+            new dialogue_1.Dialogue("Is it safe down here?"),
+            new dialogue_1.Dialogue("I swear I've been seeing things..."),
+            new dialogue_1.Dialogue("Strange creatures that I know not of..."),
+        ])
+    ],
+    [
+        "M",
+        new actor_1.Actor("Mary", [
+            new dialogue_1.Dialogue("I heard a cultist was found dead recently..."),
+            new dialogue_1.Dialogue("He was scrathed up pretty bad. Think a demon did it?"),
+        ])
+    ],
+    [
+        "N",
+        new actor_1.Actor("Nathanial", [
+            new dialogue_1.Dialogue("You ever kill a demon before?"),
+            new dialogue_1.Dialogue("It's easy, and don't worry about it too much."),
+            new dialogue_1.Dialogue("They're sentient but they don't have souls."),
+        ])
+    ],
+    [
+        "O",
+        new actor_1.Actor("Orpheus", [
+            new dialogue_1.Dialogue("Katakirauwa? You mean the pig thing?"),
+            new dialogue_1.Dialogue("Yeah, you're gonna have to go deeper to find that."),
+            new dialogue_1.Dialogue("This cave has stronger demons the further you go down."),
+            new dialogue_1.Dialogue("They say the bottom is Hell itself!"),
+        ])
+    ],
+]);
+var level2_actors = [];
+npc_map.forEach(function (actor, key, _) {
+    for (var x = 0; x < level2_map.string_grid.width; x++) {
+        for (var z = 0; z < level2_map.string_grid.depth; z++) {
+            if (key == level2_map.string_grid.get(x, z)) {
+                actor.coor = new jlib_1.Coor(x, z);
+                actor.pos_index = 2;
+                level2_actors.push(actor);
+            }
+        }
+    }
+});
+exports.level2_data = new area_data_1.LevelData(level2_map, level2_actors, [
     new encounter_type_1.EncounterType(["Goblin", "Goblin"]),
     new encounter_type_1.EncounterType(["Strigoii", "Goblin"]),
     new encounter_type_1.EncounterType(["Goblin", "Mandrake"]),
@@ -52276,13 +52325,93 @@ exports.level2_data = new area_data_1.LevelData(level2_map, [], [
     new encounter_type_1.EncounterType(["Legion", "Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki"]),
     new encounter_type_1.EncounterType(["Onmoraki", "Onmoraki"]),
+    new encounter_type_1.EncounterType(["Onmoraki", "Mandrake"]),
     new encounter_type_1.EncounterType(["Strigoii"])
-], 12);
-// goblin Fairy devilish
-// mandrake Wood aggressive
-// Legion aggressive
+], 8);
 
-},{"../../../jlib":32,"../../../map":35,"../../encounter_type":18,"../area_data":16}],16:[function(require,module,exports){
+},{"../../../actor":5,"../../../dialogue":25,"../../../jlib":33,"../../../map":36,"../../encounter_type":19,"../area_data":17}],16:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var jlib_1 = require("../../../jlib");
+var actor_1 = require("../../../actor");
+var dialogue_1 = require("../../../dialogue");
+var map_1 = require("../../../map");
+var area_data_1 = require("../area_data");
+var encounter_type_1 = require("../../encounter_type");
+// B3
+// Summoning room, priest quarters, 
+var map_walkable = "####################" +
+    "# #        >##    ##" +
+    "#   # # #####      #" +
+    "## ####            #" +
+    "#    ########      #" +
+    "## ########## #  # #" +
+    "##  ##>     #      #" +
+    "### ##### ######## #" +
+    "#                  #" +
+    "####################";
+var level3_map = new map_1.TileMap(jlib_1.Grid.from_string(map_walkable, 20), [
+    "Life Stone",
+    "Life Stone"
+]);
+var npc_map = new Map([
+    [
+        "L",
+        new actor_1.Actor("Lazarus", [
+            new dialogue_1.Dialogue("Is it safe down here?"),
+            new dialogue_1.Dialogue("I swear I've been seeing things..."),
+            new dialogue_1.Dialogue("Strange creatures that I know not of..."),
+        ])
+    ],
+    [
+        "M",
+        new actor_1.Actor("Mary", [
+            new dialogue_1.Dialogue("I heard a cultist was found dead recently..."),
+            new dialogue_1.Dialogue("He was scrathed up pretty bad. Think a demon did it?"),
+        ])
+    ],
+    [
+        "N",
+        new actor_1.Actor("Nathanial", [
+            new dialogue_1.Dialogue("You ever kill a demon before?"),
+            new dialogue_1.Dialogue("It's easy, and don't worry about it too much."),
+            new dialogue_1.Dialogue("They're sentient but they don't have souls."),
+        ])
+    ],
+    [
+        "O",
+        new actor_1.Actor("Orpheus", [
+            new dialogue_1.Dialogue("Katakirauwa? You mean the pig thing?"),
+            new dialogue_1.Dialogue("Yeah, you're gonna have to go deeper to find that."),
+            new dialogue_1.Dialogue("This cave has stronger demons the further you go down."),
+            new dialogue_1.Dialogue("They say the bottom is Hell itself!"),
+        ])
+    ],
+]);
+var level3_actors = [];
+npc_map.forEach(function (actor, key, _) {
+    for (var x = 0; x < level3_map.string_grid.width; x++) {
+        for (var z = 0; z < level3_map.string_grid.depth; z++) {
+            if (key == level3_map.string_grid.get(x, z)) {
+                actor.coor = new jlib_1.Coor(x, z);
+                actor.pos_index = 2;
+                level3_actors.push(actor);
+            }
+        }
+    }
+});
+exports.level3_data = new area_data_1.LevelData(level3_map, level3_actors, [
+    new encounter_type_1.EncounterType(["Fomorian", "Fomorian"]),
+    new encounter_type_1.EncounterType(["Kabuso", "Goblin"]),
+    new encounter_type_1.EncounterType(["Pele", "Porewit"]),
+    new encounter_type_1.EncounterType(["Porewit", "Kabuso"]),
+    new encounter_type_1.EncounterType(["Garrote", "Garrote"]),
+    new encounter_type_1.EncounterType(["Erthys"]),
+    new encounter_type_1.EncounterType(["Onmoraki", "Kabuso"]),
+    new encounter_type_1.EncounterType(["Strigoii", "Goblin", "Goblin"]),
+], 8);
+
+},{"../../../actor":5,"../../../dialogue":25,"../../../jlib":33,"../../../map":36,"../../encounter_type":19,"../area_data":17}],17:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var jlib_1 = require("../../jlib");
@@ -52312,7 +52441,7 @@ var AreaData = /** @class */ (function () {
 }());
 exports.AreaData = AreaData;
 
-},{"../../jlib":32}],17:[function(require,module,exports){
+},{"../../jlib":33}],18:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Buffable = /** @class */ (function () {
@@ -52351,7 +52480,7 @@ var Buffs = /** @class */ (function () {
 }());
 exports.Buffs = Buffs;
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var EncounterType = /** @class */ (function () {
@@ -52362,7 +52491,7 @@ var EncounterType = /** @class */ (function () {
 }());
 exports.EncounterType = EncounterType;
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -66523,7 +66652,7 @@ var DEMONS = [{
     }];
 exports.DEMON_MAP = new Map(DEMONS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":22}],20:[function(require,module,exports){
+},{"../skill_effect":23}],21:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var util_1 = require("../util");
@@ -66552,7 +66681,7 @@ var ITEMS = [
 ];
 exports.ITEM_MAP = new Map(ITEMS.map(function (i) { return [i.name, i]; }));
 
-},{"../util":23}],21:[function(require,module,exports){
+},{"../util":24}],22:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var skill_effect_1 = require("../skill_effect");
@@ -69302,7 +69431,7 @@ var SKILLS = [
 ];
 exports.SKILL_MAP = new Map(SKILLS.map(function (x) { return [x.name, x]; }));
 
-},{"../skill_effect":22,"../util":23}],22:[function(require,module,exports){
+},{"../skill_effect":23,"../util":24}],23:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var log_1 = require("../log");
@@ -69493,7 +69622,7 @@ function handy_ailment_handler(target, effect, positive) {
     }
 }
 
-},{"../log":33}],23:[function(require,module,exports){
+},{"../log":34}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Target;
@@ -69507,7 +69636,7 @@ var Target;
     Target[Target["Self"] = 6] = "Self";
 })(Target = exports.Target || (exports.Target = {}));
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /// These are stored in a list in each actor.
@@ -69549,7 +69678,7 @@ var Dialogue = /** @class */ (function () {
 }());
 exports.Dialogue = Dialogue;
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Mood;
@@ -69584,7 +69713,7 @@ exports.mood_string = mood_string;
 // - threaten
 // - peace offer
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var stats_1 = require("./stats");
@@ -69626,7 +69755,7 @@ var Exp = /** @class */ (function () {
 }());
 exports.Exp = Exp;
 
-},{"./stats":39}],27:[function(require,module,exports){
+},{"./stats":40}],28:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -69648,7 +69777,7 @@ var Exploration = /** @class */ (function () {
 }());
 exports.Exploration = Exploration;
 
-},{"./game":28,"./inventory":31}],28:[function(require,module,exports){
+},{"./game":29,"./inventory":32}],29:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -69676,7 +69805,7 @@ var Game = /** @class */ (function () {
         var _a;
         this.menu = new menu_1.Menu("menu_div");
         this.area = cave_area_1.cave_data;
-        this.level_idx = 0;
+        this.level_idx = 1;
         this.state = null;
         this.input = new input_1.Input();
         this.current_action = null;
@@ -69704,7 +69833,7 @@ var Game = /** @class */ (function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
         this.renderer.render(this.scene, this.player.camera);
-        this.log_div.innerHTML = "_____LOG<br/>" + log_1.Log.as_string();
+        this.log_div.innerHTML = log_1.Log.as_string();
         this.header_div.innerHTML = "♄" + this.player.macca;
     };
     Game.prototype.update = function () {
@@ -69832,12 +69961,12 @@ var Game = /** @class */ (function () {
 }());
 exports.Game = Game;
 
-},{"./actions":4,"./battle":8,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./data/raw/items":20,"./exploration":27,"./input":30,"./jlib":32,"./log":33,"./menu":36,"./player":37,"./world":40,"three":3}],29:[function(require,module,exports){
+},{"./actions":4,"./battle":8,"./battle_data":10,"./data/areas/1_cave/cave_area":13,"./data/raw/items":21,"./exploration":28,"./input":31,"./jlib":33,"./log":34,"./menu":37,"./player":38,"./world":41,"three":3}],30:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.flags = new Set();
 
-},{}],30:[function(require,module,exports){
+},{}],31:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var InputResult = /** @class */ (function () {
@@ -69883,7 +70012,7 @@ var Input = /** @class */ (function () {
 }());
 exports.Input = Input;
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 "use strict";
 var __values = (this && this.__values) || function(o) {
     var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
@@ -69979,7 +70108,7 @@ function inventory_btn_on_click() {
 }
 exports.inventory_btn_on_click = inventory_btn_on_click;
 
-},{"./actions":4,"./game":28,"./log":33}],32:[function(require,module,exports){
+},{"./actions":4,"./game":29,"./log":34}],33:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Grid = /** @class */ (function () {
@@ -70124,7 +70253,7 @@ var Unsigned = /** @class */ (function () {
 }());
 exports.Unsigned = Unsigned;
 
-},{}],33:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.LOG_INDENT_CHAR = "&#8619";
@@ -70142,7 +70271,7 @@ var Log = /** @class */ (function () {
 }());
 exports.Log = Log;
 
-},{}],34:[function(require,module,exports){
+},{}],35:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var game_1 = require("./game");
@@ -70158,7 +70287,7 @@ function update() {
 // Kick off update loop.
 update();
 
-},{"./game":28}],35:[function(require,module,exports){
+},{"./game":29}],36:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -70269,7 +70398,7 @@ var TileMap = /** @class */ (function () {
 }());
 exports.TileMap = TileMap;
 
-},{"./constants":12,"./data/areas/area_data":16,"./jlib":32,"three":3}],36:[function(require,module,exports){
+},{"./constants":12,"./data/areas/area_data":17,"./jlib":33,"three":3}],37:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var MenuFrame = /** @class */ (function () {
@@ -70331,7 +70460,7 @@ var Menu = /** @class */ (function () {
 }());
 exports.Menu = Menu;
 
-},{}],37:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -70490,7 +70619,7 @@ var Player = /** @class */ (function () {
 }());
 exports.Player = Player;
 
-},{"./actor":5,"./actor_card":6,"./battle_data":10,"./constants":12,"./inventory":31,"./jlib":32,"./log":33,"./stats":39,"three":3}],38:[function(require,module,exports){
+},{"./actor":5,"./actor_card":6,"./battle_data":10,"./constants":12,"./inventory":32,"./jlib":33,"./log":34,"./stats":40,"three":3}],39:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var player_1 = require("./player");
@@ -70534,7 +70663,7 @@ function request_result(target, request) {
 }
 exports.request_result = request_result;
 
-},{"./game":28,"./log":33,"./player":37}],39:[function(require,module,exports){
+},{"./game":29,"./log":34,"./player":38}],40:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Stats = /** @class */ (function () {
@@ -70578,7 +70707,7 @@ function apply_stats_mod(base, exp_mod, mult_mod) {
 }
 exports.apply_stats_mod = apply_stats_mod;
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
@@ -70711,4 +70840,4 @@ var World = /** @class */ (function () {
 }());
 exports.World = World;
 
-},{"./actor":5,"./battle_data":10,"./data/areas/area_data":16,"./game":28,"./globals":29,"./jlib":32,"three":3}]},{},[34,1,2]);
+},{"./actor":5,"./battle_data":10,"./data/areas/area_data":17,"./game":29,"./globals":30,"./jlib":33,"three":3}]},{},[35,1,2]);

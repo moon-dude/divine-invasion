@@ -28,7 +28,7 @@ export class Game {
   public world: World;
 
   private area: AreaData = cave_data;
-  private level_idx: number = 0;
+  private level_idx: number = 1;
   private state: Battle | Exploration | null = null;
   private input: Input = new Input();
   private current_action: GameAction | null = null;
@@ -65,7 +65,7 @@ export class Game {
     this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
     this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
     this.renderer.render(this.scene, this.player.camera);
-    this.log_div.innerHTML = "_____LOG<br/>" + Log.as_string();
+    this.log_div.innerHTML = Log.as_string();
     this.header_div.innerHTML = "♄" + this.player.macca;
   }
 
