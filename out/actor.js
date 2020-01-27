@@ -31,6 +31,18 @@ exports.DEMON_MAT = new THREE.MeshStandardMaterial({
     transparent: true,
     roughness: 0.7
 });
+var legion_texture = new THREE.TextureLoader().load("assets/legion.png");
+exports.LEGION_MAT = new THREE.MeshStandardMaterial({
+    map: legion_texture,
+    transparent: true,
+    roughness: 0.7
+});
+var mandrake_texture = new THREE.TextureLoader().load("assets/mandrake.png");
+exports.MANDRAKE_MAT = new THREE.MeshStandardMaterial({
+    map: mandrake_texture,
+    transparent: true,
+    roughness: 0.7
+});
 var geometry = new THREE.PlaneGeometry(2.5, 3.5);
 var Actor = /** @class */ (function () {
     function Actor(name, dialogue, material, battle_data) {
@@ -66,7 +78,12 @@ var Actor = /** @class */ (function () {
                 mood = emotion_1.Mood.Aggressive;
             }
         }
-        var actor = new Actor(name, [], exports.DEMON_MAT, new battle_data_1.BattleData(name, side, demon.level || 1, demon.stats, stats_1.Stats.new_mod(), skills, mood));
+        var material = demon.name == "Legion"
+            ? exports.LEGION_MAT
+            : demon.name == "Mandrake"
+                ? exports.MANDRAKE_MAT
+                : exports.DEMON_MAT;
+        var actor = new Actor(name, [], material, new battle_data_1.BattleData(name, side, demon.level || 1, demon.stats, stats_1.Stats.new_mod(), skills, mood));
         actor.coor = coor;
         return actor;
     };

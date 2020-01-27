@@ -29,6 +29,20 @@ export const DEMON_MAT = new THREE.MeshStandardMaterial({
   roughness: 0.7
 });
 
+const legion_texture = new THREE.TextureLoader().load("assets/legion.png");
+export const LEGION_MAT = new THREE.MeshStandardMaterial({
+  map: legion_texture,
+  transparent: true,
+  roughness: 0.7
+});
+
+const mandrake_texture = new THREE.TextureLoader().load("assets/mandrake.png");
+export const MANDRAKE_MAT = new THREE.MeshStandardMaterial({
+  map: mandrake_texture,
+  transparent: true,
+  roughness: 0.7
+});
+
 const geometry = new THREE.PlaneGeometry(2.5, 3.5);
 
 export class Actor {
@@ -78,10 +92,16 @@ export class Actor {
         mood = Mood.Aggressive;
       }
     }
+    let material =
+      demon.name == "Legion"
+        ? LEGION_MAT
+        : demon.name == "Mandrake"
+        ? MANDRAKE_MAT
+        : DEMON_MAT;
     let actor = new Actor(
       name,
       [],
-      DEMON_MAT,
+      material,
       new BattleData(
         name,
         side,

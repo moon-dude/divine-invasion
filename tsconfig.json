@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "CommonJS",
+    "module": "commonJS",
     "rootDir": "./src",
     "outDir": "./out",
     "strict": true,
@@ -10,6 +10,6 @@
     "moduleResolution": "node",
     "lib" : ["es2015", "es2015.iterable", "dom"],
     "resolveJsonModule": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
   }
 }

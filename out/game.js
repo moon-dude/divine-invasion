@@ -8,6 +8,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var THREE = __importStar(require("three"));
+var EffectComposer_js_1 = require("three/examples/jsm/postprocessing/EffectComposer.js");
+var RenderPass_js_1 = require("three/examples/jsm/postprocessing/RenderPass.js");
+var GlitchPass_js_1 = require("three/examples/jsm/postprocessing/GlitchPass.js");
 var input_1 = require("./input");
 var player_1 = require("./player");
 var world_1 = require("./world");
@@ -39,6 +42,11 @@ var Game = /** @class */ (function () {
         (_a = document.getElementById("three_div")) === null || _a === void 0 ? void 0 : _a.appendChild(this.renderer.domElement);
         this.log_div = document.getElementById("log_div");
         this.header_div = document.getElementById("header_div");
+        this.composer = new EffectComposer_js_1.EffectComposer(this.renderer);
+        var renderPass = new RenderPass_js_1.RenderPass(this.scene, this.player.camera);
+        this.composer.addPass(renderPass);
+        var glitchPass = new GlitchPass_js_1.GlitchPass();
+        this.composer.addPass(glitchPass);
     }
     Game.prototype.get_battle = function () {
         return this.state instanceof battle_1.Battle ? this.state : null;
@@ -52,7 +60,7 @@ var Game = /** @class */ (function () {
     Game.prototype.render = function () {
         this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
         this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
-        this.renderer.render(this.scene, this.player.camera);
+        this.composer.render();
         this.log_div.innerHTML = log_1.Log.as_string();
         this.header_div.innerHTML = "♄" + this.player.macca;
     };

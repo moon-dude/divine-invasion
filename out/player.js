@@ -38,11 +38,11 @@ var Player = /** @class */ (function () {
         stats.ma = 0;
         stats.st = 22;
         this.battle_data = new battle_data_1.BattleData(exports.PLAYER_NAME, battle_data_1.BattleSide.Our, 3, stats, stats_1.Stats.new_mod(), [], null);
-        this.recruits = [actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our)];
+        this.recruits = [];
         this.inventory.add_item("Life Stone", 5);
         this.player_info_div = document.getElementById("player_info_div");
         this.actor_cards = [new actor_card_1.ActorCard(this.player_info_div, this.battle_data, true)];
-        this.add_recruit(this.recruits[0]);
+        this.add_recruit(actor_1.Actor.from_demon("Pixie", battle_data_1.BattleSide.Our));
     }
     Player.prototype.update = function () {
         var target_x = this.coor.x * constants_1.TILE_SIZE;
