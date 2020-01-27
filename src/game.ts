@@ -1,7 +1,4 @@
 import * as THREE from "three";
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { GlitchPass } from 'three/examples/jsm/postprocessing/GlitchPass.js';
 import { Input } from "./input";
 import { Player } from "./player";
 import { World } from "./world";
@@ -42,7 +39,6 @@ export class Game {
   private renderer: THREE.WebGLRenderer = new THREE.WebGLRenderer();
   private log_div: HTMLElement;
   private header_div: HTMLElement;
-  private composer: EffectComposer;
 
   constructor() {
     Game.Instance = this;
@@ -52,12 +48,6 @@ export class Game {
     document.getElementById("three_div")?.appendChild(this.renderer.domElement);
     this.log_div = document.getElementById("log_div")!;
     this.header_div = document.getElementById("header_div")!;
-    
-    this.composer = new EffectComposer(this.renderer);
-    var renderPass = new RenderPass(this.scene, this.player.camera);
-    this.composer.addPass(renderPass);
-    var glitchPass = new GlitchPass();
-    this.composer.addPass(glitchPass);
   }
 
   public get_battle(): Battle | null {
@@ -75,7 +65,7 @@ export class Game {
   private render() {
     this.renderer.setSize(window.innerWidth, window.innerHeight * 0.7);
     this.player.camera.scale.setX(window.innerWidth / window.innerHeight);
-    this.composer.render();
+    this.renderer.render(this.scene, this.player.camera);
     this.log_div.innerHTML = Log.as_string();
     this.header_div.innerHTML = "♄" + this.player.macca;
   }

@@ -8,8 +8,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tsc": "tsc -p src/tsconfig.json --watch",
-    "watch": "watchify src/out/main.js lib/require.js node_modules/three/build/three.js -o bundle.js",
+    "tsc": "tsc -p tsconfig.json --watch",
+    "watch": "watchify out/main.js lib/require.js lib/three.js -o bundle.js",
     "server": "node server.js",
     "dev-all": "npm run-script tsc & npm run-script watch & npm runs-script server"
   },
