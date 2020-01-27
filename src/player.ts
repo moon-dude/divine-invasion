@@ -21,7 +21,7 @@ export class Player {
     0.1,
     1300
   );
-  private light: THREE.PointLight = new THREE.PointLight("#ee5500", 2, 4 * TILE_SIZE);
+  private light: THREE.PointLight = new THREE.PointLight("#ee5500", 3.5, 4 * TILE_SIZE);
   
   public movement_locked: boolean = false;
   public battle_data: BattleData;
