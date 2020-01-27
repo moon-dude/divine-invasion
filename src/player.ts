@@ -8,6 +8,7 @@ import { Stats } from "./stats";
 import { Inventory } from "./inventory";
 import { Log } from "./log";
 import { ActorCard } from "./actor_card";
+import { World } from "./world";
 
 export const PLAYER_NAME: string = "Player";
 
@@ -81,16 +82,17 @@ export class Player {
   }
 
   /// Returns true on a successful move.
-  move(steps: number, map: TileMap, npcs: Actor[]): boolean {
+  move(steps: number, world: World): boolean {
     if (this.movement_locked) {
       return false;
     }
     let move_coor = ApplyDir(this.coor, this.dir, steps);
-    if (!map.is_walkable(move_coor.x, move_coor.z)) {
+    if (!world.map.is_walkable(move_coor.x, move_coor.z)) {
       return false;
     }
     // Reorient towards npcs if going backwards.
     if (steps < 0) {
+      const npcs = world.actors_at(move_coor);
       for (let n = 0; n < npcs.length; n++) {
         if (npcs[n].battle_data.modded_base_stats().hp <= 0) {
           continue;

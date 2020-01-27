@@ -13,4 +13,9 @@ http://localhost:8080/
 https://threejs.org/docs/#manual/en/introduction/Creating-a-scene
 
 
-
+TODO:
+- demon permadeath
+- save/load
+- player skills?
+- player control friendly demons
+- shop

@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { Input } from "./input";
 import { Player } from "./player";
 import { World } from "./world";
 import { Battle } from "./battle";
@@ -17,6 +16,7 @@ import {
 } from "./actions";
 import { Exploration } from "./exploration";
 import { ITEM_MAP } from "./data/raw/items";
+import { Actor } from "./actor";
 
 
 export type GameAction = AttackAction | InventoryAction | SkillAction | RequestAction;
@@ -31,7 +31,6 @@ export class Game {
   private area: AreaData = cave_data;
   private level_idx: number = 1;
   private state: Battle | Exploration | null = null;
-  private input: Input = new Input();
   private current_action: GameAction | null = null;
 
   // Rendering.
@@ -116,73 +115,8 @@ export class Game {
   }
 
   public key_down(event: any) {
-    const result = this.input.check(
-      event,
-      this.player,
-      this.world.map,
-      this.world.actors
-    );
-    if (result.moved) {
-      this.world.dialogue_idx = 0;
-      // check for stairs.
-      const stairs_down = this.world.map.stairs_down.get(
-        this.player.coor.x,
-        this.player.coor.z
-      );
-      let offset = new Coor(0, 0);
-      if (stairs_down) {
-        console.log("Stairs down");
-        this.level_idx -= 1;
-        offset = this.area.levels[this.level_idx].offset_from_above.inverse();
-      }
-      const stairs_up = this.world.map.stairs_up.get(
-        this.player.coor.x,
-        this.player.coor.z
-      );
-      if (stairs_up) {
-        console.log("Stairs up");
-        this.level_idx += 1;
-        offset = this.area.levels[this.level_idx].offset_from_above;
-      }
-      if (stairs_up || stairs_down) {
-        this.world.unload(this.scene);
-        this.world = new World(this.scene, this.area.levels[this.level_idx]);
-        this.player.coor = this.player.coor.offset_by(offset);
-        return;
-      }
-
-      // check for items.
-      const maybe_item = this.world.map.item_at(this.player.coor.x, this.player.coor.z);
-      if (maybe_item != null) {
-        this.player.inventory.add_item(maybe_item);
-      }
-
-      // check for encounter.
-      let start_battle = false;
-      let actors_at_player_coor = this.world.actors_at(this.player.coor);
-      for (let i = 0; i < actors_at_player_coor.length; i++) {
-        if (
-          actors_at_player_coor[i].battle_data.side == BattleSide.Their &&
-          actors_at_player_coor[i].battle_data.modded_base_stats().hp > 0
-        ) {
-          start_battle = true;
-        }
-      }
-      if (start_battle) {
-        let battle_fighters: BattleData[] = actors_at_player_coor.map(
-          actor => actor.battle_data
-        );
-        battle_fighters.push(this.player.battle_data);
-        for (let i = 0; i < this.player.recruits.length; i++) {
-          battle_fighters.push(this.player.recruits[i].battle_data);
-        }
-        this.state = new Battle(battle_fighters);
-        this.player.movement_locked = true;
-      }
-    }
-    if (result.actioned) {
-      this.world.dialogue_idx += 1;
-      // this.battle?.next_turn();
+    if (this.state instanceof Exploration) {
+      this.state.key_down(event);
     }
   }
 
@@ -213,5 +147,23 @@ export class Game {
       }
     }
     this.get_battle()?.set_actor_cards_enabled(enabled, filter);
+  }
+
+  public change_level(delta: number) {
+    this.level_idx += delta;
+    Game.Instance.world.unload(this.scene);
+    Game.Instance.world = new World(this.scene, this.area.levels[this.level_idx]);
+  }
+
+  public start_battle(actors: Actor[]) {
+    let battle_fighters: BattleData[] = actors.map(
+      actor => actor.battle_data
+    );
+    battle_fighters.push(Game.Instance.player.battle_data);
+    for (let i = 0; i < Game.Instance.player.recruits.length; i++) {
+      battle_fighters.push(Game.Instance.player.recruits[i].battle_data);
+    }
+    this.state = new Battle(battle_fighters);
+    this.player.movement_locked = true;
   }
 }

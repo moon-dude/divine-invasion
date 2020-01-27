@@ -94,7 +94,7 @@ export class World {
       if (!meets_criteria) {
         if (actor.is_blocking) {
           Game.Instance.player.movement_locked = false;
-          Game.Instance.player.move(-1, this.map, this.actors);
+          Game.Instance.player.move(-1, this);
         }
         continue;
       }
