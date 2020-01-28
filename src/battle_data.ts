@@ -133,6 +133,13 @@ export class BattleData {
     this.log_result("restored " + amount + " mp. ");
   }
 
+  public reduce_mp_by(amount: number) {
+    if (amount < 0) {
+      return;
+    }
+    this.mod_stats.mp -= amount;
+  }
+
   public modded_base_stats(): Stats {
     return apply_stats_mod(this.base_stats, this.exp.get_stat_bonus(), this.mod_stats);
   }

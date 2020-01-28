@@ -18,4 +18,5 @@ TODO:
 - save/load
 - player skills?
 - player control friendly demons
-- shop
+- shop?? (Or just have demon negotiation be the shop)
+- more back and forth in negotiation.

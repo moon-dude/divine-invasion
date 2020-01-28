@@ -3,13 +3,12 @@ import { resolve_skill_effect } from "./data/skill_effect";
 import { ai_take_turn } from "./battle_ai";
 import { Log } from "./log";
 import { Game, GameAction } from "./game";
-import { ITEM_MAP } from "./data/raw/items";
+import { Negotiation } from "./negotiation";
 import { SKILL_MAP } from "./data/raw/skills";
 import { try_ai_request, request_result } from "./requests";
 import { set_up_player_turn } from "./battle_player";
 import {
   AttackAction,
-  InventoryAction,
   SkillAction,
   RequestAction
 } from "./actions";
@@ -22,6 +21,7 @@ export class Battle {
   private turn_order: BattleIndex[];
   private turn_idx: number = 0;
   private battle_idx: number = -1;
+  private negotiation: Negotiation | null = null;
 
   public enemy_actor_cards: ActorCard[];
 
@@ -182,6 +182,14 @@ export class Battle {
     }
     Game.Instance.menu.clear();
     Game.Instance.set_actor_cards_enabled(false);
+  }
+
+  public accept_negotiation_request() {
+
+  }
+
+  public refuse_negotiation_request() {
+    
   }
 
   // returns null if battle is not over.

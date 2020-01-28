@@ -175,4 +175,12 @@ export class Player {
       }
     }
   }
+
+  public add_macca(value: number): boolean {
+    if (this.macca < -value) {
+      return false;
+    }
+    this.macca += value;
+    return true;
+  }
 }
