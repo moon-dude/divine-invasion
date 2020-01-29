@@ -69,9 +69,9 @@ export function set_up_player_turn(fighter: BattleData) {
       }
     ],
     [
-      "Run",
+      "<u>R</u>un",
       () => {
-        Game.Instance.end_battle(null);
+        Game.Instance.get_battle()?.run_away();
       }
     ]
   ];

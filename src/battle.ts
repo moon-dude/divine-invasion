@@ -13,6 +13,7 @@ import {
   RequestAction
 } from "./actions";
 import { ActorCard } from "./actor_card";
+import { PLAYER_NAME } from "./player";
 
 // This class should be instantiated and destroyed without any move
 // happening or Actors being destroyed.
@@ -22,6 +23,7 @@ export class Battle {
   private turn_idx: number = 0;
   private battle_idx: number = -1;
   private negotiation: Negotiation | null = null;
+  private next_allowed: boolean = true;
 
   public enemy_actor_cards: ActorCard[];
 
@@ -49,7 +51,7 @@ export class Battle {
     }
     Game.Instance.menu.push("You've been attacked by demons!", [
       [
-        "Continue",
+        "N<u>e</u>xt",
         () => {
           Game.Instance.get_battle()?.next_turn();
         }
@@ -97,6 +99,7 @@ export class Battle {
     this.turn_idx += 1;
     this.battle_idx = (this.battle_idx + 1) % this.turn_order.length;
     this.set_up_turn();
+    this.next_allowed = false;
   }
 
   private set_up_turn() {
@@ -220,6 +223,26 @@ export class Battle {
     Game.Instance.menu.clear();
     for (let i = 0; i < this.enemy_actor_cards.length; i++) {
       this.enemy_info_div.removeChild(this.enemy_actor_cards[i].card_span);
+    }
+  }
+
+  public run_away() {
+    Game.Instance.end_battle(null);
+  }
+
+  public key_down(event: any) {
+    const key_code = event.which;
+    if (key_code == 69) {
+      // E.
+      if (this.next_allowed) {
+        Game.Instance.get_battle()?.next_turn();
+      }
+    }
+    else if (key_code == 82) {
+      // R
+      if (this.current_fighter().name == PLAYER_NAME) {
+        Game.Instance.get_battle()?.run_away();
+      }
     }
   }
 }

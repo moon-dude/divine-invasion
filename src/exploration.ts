@@ -23,7 +23,7 @@ export class Exploration {
       ["⟳", () => {
         Game.Instance.player.turn(true);
       }],
-      ["Inventory", inventory_btn_on_click],
+      ["<u>I</u>nventory", inventory_btn_on_click],
     ];
     Game.Instance.menu.push("", menu_entries);
   }
@@ -57,6 +57,9 @@ export class Exploration {
     } else if (key_code == 69) {
       // E.
       Game.Instance.world.dialogue_idx += 1;
+    } else if (key_code == 73) {
+      // I.
+      inventory_btn_on_click();
     }
     if (moved) {
       this.after_player_move();

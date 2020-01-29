@@ -115,9 +115,7 @@ export class Game {
   }
 
   public key_down(event: any) {
-    if (this.state instanceof Exploration) {
-      this.state.key_down(event);
-    }
+    this.state?.key_down(event);
   }
 
   public end_battle(winner: BattleSide | null) {
