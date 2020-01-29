@@ -6,7 +6,25 @@ import { World } from "./world";
 
 export class Exploration {
   constructor() {
-    let menu_entries: MenuEntry[] = [["Inventory", inventory_btn_on_click]];
+    let menu_entries: MenuEntry[] = [
+      ["↑", () => {
+        if (Game.Instance.player.move(1, Game.Instance.world)) {
+          this.after_player_move();
+        }
+      }],
+      ["↓", () => {
+        if (Game.Instance.player.move(-1, Game.Instance.world)) {
+          this.after_player_move();
+        }
+      }],
+      ["⟲", () => {
+        Game.Instance.player.turn(false);
+      }],
+      ["⟳", () => {
+        Game.Instance.player.turn(true);
+      }],
+      ["Inventory", inventory_btn_on_click],
+    ];
     Game.Instance.menu.push("", menu_entries);
   }
 
